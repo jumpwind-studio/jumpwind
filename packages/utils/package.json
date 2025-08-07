@@ -1,0 +1,22 @@
+{
+  "name": "@jumpwind/utils",
+  "version": "0.0.1",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./src/*": "./src/*.ts",
+    "./internal/*": null,
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "format": "biome check",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  }
+}

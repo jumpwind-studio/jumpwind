@@ -1,0 +1,60 @@
+{
+  "name": "jumpwind",
+  "type": "module",
+  "private": true,
+  "description": "Monorepo for all things Jumpwind",
+  "scripts": {
+    "build": "turbo run build",
+    "check": "biome check .",
+    "check:fix": "biome check . --fix",
+    "clean": "git clean -xdf node_modules",
+    "clean:workspaces": "turbo run clean",
+    "dev": "turbo run dev --ui=stream",
+    "format": "biome format .",
+    "format:fix": "biome format . --fix",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint . --fix",
+    "lint:circular": "madge --circular .",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck --ui=stream"
+  },
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "catalog": {
+      "typescript": "^5.9.2"
+    },
+    "catalogs": {
+      "effect": {
+        "effect": "3.17.6"
+      },
+      "frontend": {
+        "@corvu/utils": "^0.4.2",
+        "@kobalte/core": "^0.13.10",
+        "@tailwindcss/vite": "^4.1.11",
+        "clsx": "^2.1.1",
+        "corvu": "^0.7.2",
+        "lucide-solid": "^0.534.0",
+        "solid-js": "^1.9.7",
+        "solid-devtools": "^0.34.3",
+        "tailwind-variants": "^2.0.0",
+        "tailwind-merge": "^3.3.1",
+        "tailwindcss": "^4.1.11",
+        "tw-animate-css": "^1.3.5",
+        "vite": "^7.0.6",
+        "vite-plugin-solid": "^2.11.8",
+        "vite-tsconfig-paths": "^5.1.4"
+      }
+    }
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.1.3",
+    "@turbo/gen": "^2.5.5",
+    "@types/bun": "latest",
+    "madge": "^8.0.0",
+    "turbo": "^2.5.5",
+    "typescript": "5.8.3"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "@jumpwind/www",
+  "version": "0.0.1",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "dev": "bunx --bun vite dev",
+    "dev:debug": "bunx --bun vite dev --debug",
+    "build": "vite build && tsc --noEmit",
+    "start": "vite start"
+  },
+  "dependencies": {
+    "@corvu/utils": "catalog:frontend",
+    "@kobalte/core": "catalog:frontend",
+    "@jumpwind/ui": "workspace:*",
+    "corvu": "catalog:frontend",
+    "lucide-solid": "catalog:frontend",
+    "solid-js": "catalog:frontend",
+    "tailwind-merge": "catalog:frontend",
+    "tailwind-variants": "catalog:frontend"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "catalog:frontend",
+    "rollup-plugin-visualizer": "^6.0.3",
+    "solid-devtools": "catalog:frontend",
+    "tailwindcss": "catalog:frontend",
+    "tw-animate-css": "catalog:frontend",
+    "typescript": "catalog:",
+    "vite": "catalog:frontend",
+    "vite-plugin-solid": "catalog:frontend",
+    "vite-tsconfig-paths": "catalog:frontend"
+  }
+}
