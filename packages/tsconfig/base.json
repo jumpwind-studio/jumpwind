@@ -22,7 +22,10 @@
 
     "module": "preserve",
     "moduleResolution": "bundler",
-    "noEmit": true
+    "noEmit": true,
+
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js"
   },
   "exclude": ["node_modules", "${configDir}/node_modules", "build", "dist"]
 }
