@@ -1,5 +1,5 @@
 import * as NumberFieldPrimitive from "@kobalte/core/number-field";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import ChevronDownIcon from "lucide-solid/icons/chevron-down";
 import ChevronUpIcon from "lucide-solid/icons/chevron-up";
 import { type ComponentProps, splitProps } from "solid-js";

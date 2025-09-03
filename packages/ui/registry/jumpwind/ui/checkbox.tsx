@@ -1,5 +1,5 @@
 import * as CheckboxPrimitive from "@kobalte/core/checkbox";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import CheckIcon from "lucide-solid/icons/check";
 import { type ComponentProps, splitProps } from "solid-js";
 

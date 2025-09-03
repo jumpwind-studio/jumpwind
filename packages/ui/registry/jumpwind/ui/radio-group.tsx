@@ -1,5 +1,5 @@
 import * as RadioGroupPrimitive from "@kobalte/core/radio-group";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import DotIcon from "lucide-solid/icons/dot";
 import { type ComponentProps, For, splitProps } from "solid-js";
 

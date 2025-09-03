@@ -1,5 +1,5 @@
 import { Polymorphic, type PolymorphicProps } from "@kobalte/core/polymorphic";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import type { ComponentProps, ValidComponent } from "solid-js";
 import { splitProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";

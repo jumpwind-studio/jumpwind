@@ -1,7 +1,7 @@
 import type { PolymorphicProps } from "@kobalte/core/polymorphic";
 import * as TextFieldPrimitive from "@kobalte/core/text-field";
 import { Label, type LabelVariantProps, labelVariants } from "@/components/ui/label";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import type { ValidComponent } from "solid-js";
 import { splitProps } from "solid-js";
 

@@ -1,4 +1,4 @@
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import type { Component, ComponentProps } from "solid-js";
 import { mergeProps, splitProps } from "solid-js";
 

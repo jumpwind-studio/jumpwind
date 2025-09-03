@@ -1,4 +1,4 @@
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import * as DialogPrimitive from "corvu/dialog";
 import XIcon from "lucide-solid/icons/x";
 import { type ComponentProps, splitProps } from "solid-js";

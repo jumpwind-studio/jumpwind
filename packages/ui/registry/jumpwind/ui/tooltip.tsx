@@ -1,4 +1,4 @@
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import * as TooltipPrimitive from "corvu/tooltip";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
 

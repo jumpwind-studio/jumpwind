@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import { Command as CommandPrimitive } from "cmdk-solid";
 import SearchIcon from "lucide-solid/icons/search";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";

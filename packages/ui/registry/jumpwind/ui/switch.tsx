@@ -1,5 +1,5 @@
 import * as SwitchPrimitive from "@kobalte/core/switch";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import { type ComponentProps, splitProps } from "solid-js";
 
 const FormSwitchLabel = SwitchPrimitive.Label;

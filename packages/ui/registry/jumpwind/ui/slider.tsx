@@ -1,5 +1,5 @@
 import * as SliderPrimitive from "@kobalte/core/slider";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import {
   type ComponentProps,
   createMemo,

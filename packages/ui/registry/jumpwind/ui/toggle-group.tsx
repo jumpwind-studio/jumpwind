@@ -1,6 +1,6 @@
 import * as ToggleGroupPrimitive from "@kobalte/core/toggle-group";
 import { type ToggleVariantProps, toggleVariants } from "@/components/ui/toggle";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import {
   type ComponentProps,
   createContext,

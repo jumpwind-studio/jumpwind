@@ -1,5 +1,5 @@
 import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import * as CalendarPrimitive from "corvu/calendar";
 import ChevronLeftIcon from "lucide-solid/icons/chevron-left";
 import ChevronRightIcon from "lucide-solid/icons/chevron-right";

@@ -1,6 +1,6 @@
 import * as SelectPrimitive from "@kobalte/core/select";
 import * as SeparatorPrimitive from "@kobalte/core/separator";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import CheckIcon from "lucide-solid/icons/check";
 import ChevronDownIcon from "lucide-solid/icons/chevron-down";
 import {

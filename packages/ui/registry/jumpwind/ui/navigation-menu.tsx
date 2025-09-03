@@ -1,5 +1,5 @@
 import * as NavigationMenuPrimitive from "@kobalte/core/navigation-menu";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import { createLink, type LinkComponent } from "@tanstack/solid-router";
 import { tv } from "tailwind-variants";
 import ChevronDownIcon from "lucide-solid/icons/chevron-down";

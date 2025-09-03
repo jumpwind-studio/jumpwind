@@ -15,7 +15,7 @@ import {
   CalendarTable,
 } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import CalendarIcon from "lucide-solid/icons/calendar";
 import { createSignal, Show } from "solid-js";
 

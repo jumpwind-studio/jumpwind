@@ -1,5 +1,5 @@
 import * as HoverCardPrimitive from "@kobalte/core/hover-card";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
 
 function HoverCard(props: ComponentProps<typeof HoverCardPrimitive.Root>) {

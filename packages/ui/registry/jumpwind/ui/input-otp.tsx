@@ -1,4 +1,4 @@
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import * as OtpPrimitive from "corvu/otp-field";
 import { type ComponentProps, Show, splitProps } from "solid-js";
 

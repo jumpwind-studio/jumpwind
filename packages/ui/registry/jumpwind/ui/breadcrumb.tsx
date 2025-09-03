@@ -1,5 +1,5 @@
 import { Link } from "@/components/ui/link";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import type { RegisteredRouter, RouteIds } from "@tanstack/solid-router";
 import ChevronRightIcon from "lucide-solid/icons/chevron-right";
 import MoreHorizontalIcon from "lucide-solid/icons/more-horizontal";

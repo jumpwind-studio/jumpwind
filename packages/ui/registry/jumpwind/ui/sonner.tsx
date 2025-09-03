@@ -1,4 +1,4 @@
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import { type ComponentProps, type JSX, splitProps } from "solid-js";
 import { Toaster as Sonner, toast as sonner } from "solid-sonner";
 

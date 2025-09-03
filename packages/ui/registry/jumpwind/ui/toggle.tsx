@@ -1,5 +1,5 @@
 import * as TogglePrimitive from "@kobalte/core/toggle-button";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import { type ComponentProps, splitProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 

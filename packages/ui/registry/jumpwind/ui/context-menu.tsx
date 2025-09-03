@@ -1,5 +1,5 @@
 import * as ContextMenuPrimitive from "@kobalte/core/context-menu";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import CheckIcon from "lucide-solid/icons/check";
 import ChevronRightIcon from "lucide-solid/icons/chevron-right";
 import CircleIcon from "lucide-solid/icons/circle";

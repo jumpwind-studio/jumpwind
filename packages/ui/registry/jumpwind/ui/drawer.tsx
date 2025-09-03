@@ -1,4 +1,4 @@
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import * as DrawerPrimitive from "corvu/drawer";
 import { type ComponentProps, splitProps } from "solid-js";
 

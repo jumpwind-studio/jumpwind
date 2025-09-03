@@ -1,5 +1,5 @@
 import * as AvatarPrimitive from "@kobalte/core/image";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import { type ComponentProps, splitProps } from "solid-js";
 
 function Avatar(props: ComponentProps<typeof AvatarPrimitive.Root>) {

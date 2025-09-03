@@ -1,5 +1,5 @@
 import * as TabsPrimitive from "@kobalte/core/tabs";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import { type ComponentProps, splitProps } from "solid-js";
 
 function Tabs(props: ComponentProps<typeof TabsPrimitive.Root>) {

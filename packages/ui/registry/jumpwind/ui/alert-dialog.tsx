@@ -1,7 +1,10 @@
-import { type ButtonVariantProps, buttonVariants } from "@/components/ui/button";
-import { cn } from "@/components/ui/utils";
 import * as AlertDialogPrimitive from "corvu/dialog";
 import { type ComponentProps, splitProps } from "solid-js";
+import {
+  type ButtonVariantProps,
+  buttonVariants,
+} from "@/components/ui/button";
+import { cn } from "@/registry/jumpwind/lib/utils";
 
 const useAlertDialog = AlertDialogPrimitive.useContext;
 

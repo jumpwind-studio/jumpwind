@@ -1,4 +1,4 @@
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import * as PopoverPrimitive from "corvu/popover";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
 

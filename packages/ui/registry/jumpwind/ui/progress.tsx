@@ -1,5 +1,5 @@
 import * as ProgressPrimitive from "@kobalte/core/progress";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import { type ComponentProps, splitProps } from "solid-js";
 
 function Progress(props: ComponentProps<typeof ProgressPrimitive.Root>) {

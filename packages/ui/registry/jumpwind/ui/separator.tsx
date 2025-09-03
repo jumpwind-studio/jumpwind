@@ -1,5 +1,5 @@
 import { Dynamic, type DynamicProps } from "@corvu/utils/dynamic";
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import type { ComponentProps, ValidComponent } from "solid-js";
 import { mergeProps, splitProps } from "solid-js";
 

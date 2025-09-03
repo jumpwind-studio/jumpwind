@@ -1,4 +1,4 @@
-import { cn } from "@/components/ui/utils";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import * as ResizablePrimitive from "corvu/resizable";
 import GripVerticalIcon from "lucide-solid/icons/grip-vertical";
 import { type ComponentProps, Show, splitProps } from "solid-js";
