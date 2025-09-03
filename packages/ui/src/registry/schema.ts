@@ -1,13 +1,16 @@
 import * as S from "effect/Schema";
 
-// Note: if you edit the schema here, you must also edit the schema in the
-// apps/www/public/schema/registry-item.json file.
-
 const RegistryItemTemplateLiteral = S.TemplateLiteralParser(
-  S.Literal("registry"),
-  S.Literal(":"),
+  S.Literal("registry:"),
   S.NonEmptyString,
 );
+
+const RegistryType = S.transform(RegistryItemTemplateLiteral, S.String, {
+  // optional but you get better error messages from TypeScript
+  strict: true,
+  decode: ([_, type]) => type,
+  encode: (type) => ["registry:", type] as const,
+});
 
 export const RegistryItemKind = S.Literal(
   ...([
@@ -29,45 +32,35 @@ export const RegistryItemKind = S.Literal(
   >),
 );
 
-class BaseRegistryItem extends S.Class<BaseRegistryItem>("BaseRegistryItem")({
-  path: S.String,
-  content: S.String.pipe(S.optional),
-  type: RegistryItemTemplateLiteral,
-}) {}
-
-S;
-
-class RegistryItemWithTarget extends BaseRegistryItem.extend<RegistryItemWithTarget>(
-  "RegistryItemWithTarget",
-)({
-  target: S.String.pipe(S.optional),
-  type: RegistryItemKind.pipe(
-    S.pickLiteral(
-      "registry:lib",
-      "registry:block",
-      "registry:component",
-      "registry:ui",
-      "registry:hook",
-      "registry:theme",
-      "registry:style",
-      "registry:item",
-      // Internal use only
-      "registry:example",
-      "registry:internal",
-    ),
-  ),
-}) {}
-
-class RegistryItemWithoutTarget extends BaseRegistryItem.extend<RegistryItemWithoutTarget>(
-  "RegistryItemWithoutTarget",
-)({
-  target: S.String,
-  type: RegistryItemKind.pipe(S.pickLiteral("registry:page", "registry:file")),
-}) {}
-
 const RegistryItemFile = S.Union(
-  RegistryItemWithTarget,
-  RegistryItemWithoutTarget,
+  S.Struct({
+    path: S.String,
+    content: S.String.pipe(S.optional),
+    target: S.String,
+    type: RegistryItemKind.pipe(
+      S.pickLiteral("registry:page", "registry:file"),
+    ),
+  }),
+  S.Struct({
+    path: S.String,
+    content: S.String.pipe(S.optional),
+    target: S.String.pipe(S.optional),
+    type: RegistryItemKind.pipe(
+      S.pickLiteral(
+        "registry:lib",
+        "registry:block",
+        "registry:component",
+        "registry:ui",
+        "registry:hook",
+        "registry:theme",
+        "registry:style",
+        "registry:item",
+        // Internal use only
+        "registry:example",
+        "registry:internal",
+      ),
+    ),
+  }),
 );
 
 export const RegistryItemTailwind = S.Struct({
@@ -95,7 +88,6 @@ const CssValue = S.Union(
     (): S.Schema<CssValueType> => S.Record({ key: S.String, value: CssValue }),
   ),
 );
-type CssValue = S.Schema.Type<typeof CssValue>;
 
 export const RegistryItemCss = S.Record({ key: S.String, value: CssValue });
 
@@ -109,13 +101,15 @@ export class RegistryItem extends S.Class<RegistryItem>("RegistryItem")({
   extends: S.String.pipe(S.optional),
   name: S.String,
   type: RegistryItemKind,
-  title: S.String.pipe(S.optional),
-  author: S.String.pipe(S.minLength(2), S.optional),
-  description: S.String.pipe(S.optional),
   dependencies: S.Array(S.String).pipe(S.optional),
   devDependencies: S.Array(S.String).pipe(S.optional),
   registryDependencies: S.Array(S.String).pipe(S.optional),
   files: S.Array(RegistryItemFile).pipe(S.optional),
+  // Metadata
+  title: S.String.pipe(S.optional),
+  author: S.String.pipe(S.minLength(2), S.optional),
+  description: S.String.pipe(S.optional),
+  // Extra
   tailwind: RegistryItemTailwind.pipe(S.optional),
   cssVars: RegistryItemCssVars.pipe(S.optional),
   css: RegistryItemCss.pipe(S.optional),
@@ -243,7 +237,7 @@ export class Config extends BaseConfig.extend<Config>("Config")({
 
 // TODO: type the key.
 // Okay for now since I don't want a breaking change.
-export const WorkspaceConfig = S.Record({ key: Config, value: S.Any });
+// export const WorkspaceConfig = S.Record({ key: Config, value: S.Any });
 
 export const SearchResultItem = S.Struct({
   name: S.String,
