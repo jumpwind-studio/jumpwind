@@ -16,6 +16,7 @@
     "lint:fix": "biome lint . --fix",
     "lint:circular": "madge --circular .",
     "test": "turbo run test",
+    "test:watch": "turbo run test:watch",
     "typecheck": "turbo run typecheck --ui=stream"
   },
   "workspaces": {
@@ -32,18 +33,20 @@
       },
       "frontend": {
         "@corvu/utils": "^0.4.2",
+        "@effect/vitest": "^0.25.1",
         "@kobalte/core": "^0.13.10",
         "@tailwindcss/vite": "^4.1.11",
         "clsx": "^2.1.1",
         "corvu": "^0.7.2",
         "lucide-solid": "^0.534.0",
-        "solid-js": "^1.9.7",
+        "solid-js": "^1.9.9",
         "solid-devtools": "^0.34.3",
         "tailwind-variants": "^2.0.0",
         "tailwind-merge": "^3.3.1",
         "tailwindcss": "^4.1.11",
         "tw-animate-css": "^1.3.5",
         "vite": "^7.0.6",
+        "vitest": "^3.2.4",
         "vite-plugin-solid": "^2.11.8",
         "vite-tsconfig-paths": "^5.1.4"
       }
@@ -55,6 +58,7 @@
     "@types/bun": "latest",
     "madge": "^8.0.0",
     "turbo": "^2.5.5",
-    "typescript": "5.8.3"
-  }
+    "typescript": "catalog:"
+  },
+  "packageManager": "bun@1.2.19"
 }
