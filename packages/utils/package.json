@@ -13,10 +13,16 @@
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "format": "biome check",
-    "test": "vitest",
+    "test": "bun run vitest run",
+    "test:watch": "bun run vitest --watch",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "effect": "catalog:effect"
+  },
   "devDependencies": {
-    "typescript": "catalog:"
+    "@effect/vitest": "catalog:frontend",
+    "typescript": "catalog:",
+    "vitest": "catalog:frontend"
   }
 }
