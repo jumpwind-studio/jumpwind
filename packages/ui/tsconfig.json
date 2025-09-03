@@ -2,7 +2,10 @@
   "extends": "@jumpwind/tsconfig/base.json",
   "compilerOptions": {
     "moduleResolution": "bundler",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

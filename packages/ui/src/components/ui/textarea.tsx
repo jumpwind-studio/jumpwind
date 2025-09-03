@@ -1,0 +1,19 @@
+import { cn } from "@/components/ui/utils";
+import { type ComponentProps, splitProps } from "solid-js";
+
+function Textarea(props: ComponentProps<"textarea">) {
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <textarea
+      class={cn(
+        "field-sizing-content flex min-h-16 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-xs outline-ring/50 ring-ring/10 transition-[color,box-shadow] placeholder:text-muted-foreground focus-visible:outline-1 focus-visible:ring-4 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive/60 aria-invalid:outline-destructive/60 aria-invalid:ring-destructive/20 aria-invalid:focus-visible:outline-none aria-invalid:focus-visible:ring-[3px] md:text-sm dark:outline-ring/40 dark:ring-ring/20 dark:aria-invalid:border-destructive dark:aria-invalid:outline-destructive dark:aria-invalid:ring-destructive/40 dark:aria-invalid:ring-destructive/50 dark:aria-invalid:focus-visible:ring-4",
+        local.class,
+      )}
+      data-slot="textarea"
+      {...rest}
+    />
+  );
+}
+
+export { Textarea };

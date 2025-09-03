@@ -17,9 +17,16 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@corvu/utils": "catalog:frontend",
+    "@kobalte/core": "catalog:frontend",
     "clsx": "catalog:frontend",
+    "corvu": "catalog:frontend",
+    "lucide-solid": "catalog:frontend",
+    "solid-js": "catalog:frontend",
     "tailwind-merge": "catalog:frontend",
-    "tailwind-variants": "^2.0.0"
+    "tailwind-variants": "catalog:frontend",
+    "tailwindcss": "catalog:frontend",
+    "tw-animate-css": "catalog:frontend"
   },
   "devDependencies": {
     "typescript": "catalog:"
