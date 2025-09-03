@@ -1,15 +1,17 @@
 import * as ToggleGroupPrimitive from "@kobalte/core/toggle-group";
-import { type ToggleVariantProps, toggleVariants } from "@/components/ui/toggle";
-import { cn } from "@/registry/jumpwind/lib/utils";
 import {
   type ComponentProps,
   createContext,
   splitProps,
   useContext,
 } from "solid-js";
-import type { VariantProps } from "tailwind-variants";
+import { cn } from "@/registry/jumpwind/lib/utils";
+import {
+  type ToggleVariantProps,
+  toggleVariants,
+} from "@/registry/jumpwind/ui/toggle";
 
-const ToggleGroupContext = createContext<VariantProps<typeof toggleVariants>>({
+const ToggleGroupContext = createContext<ToggleVariantProps>({
   size: "default",
   variant: "default",
 });
@@ -23,7 +25,8 @@ function useToggleGroup() {
 }
 
 function ToggleGroup(
-  props: ComponentProps<typeof ToggleGroupPrimitive.Root> & ToggleVariantProps,
+  props: ComponentProps<typeof ToggleGroupPrimitive.Root<"div">> &
+    ToggleVariantProps,
 ) {
   const [local, rest] = splitProps(props, [
     "class",
@@ -34,13 +37,14 @@ function ToggleGroup(
 
   return (
     <ToggleGroupPrimitive.Root
+      as="div"
+      data-slot="toggle-group"
+      data-size={local.size}
+      data-variant={local.variant}
       class={cn(
         "group/toggle-group flex w-fit items-center rounded-md data-[variant=outline]:shadow-xs",
         local.class,
       )}
-      data-size={local.size}
-      data-slot="toggle-group"
-      data-variant={local.variant}
       {...rest}
     >
       <ToggleGroupContext.Provider
@@ -56,7 +60,8 @@ function ToggleGroup(
 }
 
 function ToggleGroupItem(
-  props: ComponentProps<typeof ToggleGroupPrimitive.Item> & ToggleVariantProps,
+  props: ComponentProps<typeof ToggleGroupPrimitive.Item<"button">> &
+    ToggleVariantProps,
 ) {
   const [local, rest] = splitProps(props, [
     "class",
@@ -66,20 +71,23 @@ function ToggleGroupItem(
   ]);
 
   const context = useContext(ToggleGroupContext);
+  const size = () => context?.size ?? local.size;
+  const variant = () => context?.variant ?? local.variant;
 
   return (
     <ToggleGroupPrimitive.Item
-      class={cn(
-        toggleVariants({
-          variant: context.variant || local.variant,
-          size: context.size || local.size,
-        }),
-        "min-w-0 flex-1 shrink-0 rounded-none shadow-none first:rounded-l-md last:rounded-r-md focus:z-10 focus-visible:z-10 data-[variant=outline]:border-l-0 data-[variant=outline]:first:border-l",
-        local.class,
-      )}
-      data-size={context.size || local.size}
+      as="button"
       data-slot="toggle-group-item"
-      data-variant={context.variant || local.variant}
+      data-size={size()}
+      data-variant={variant()}
+      class={toggleVariants({
+        size: size(),
+        variant: variant(),
+        class: [
+          "min-w-0 flex-1 shrink-0 rounded-none shadow-none first:rounded-l-md last:rounded-r-md focus:z-10 focus-visible:z-10 data-[variant=outline]:border-l-0 data-[variant=outline]:first:border-l",
+          local.class,
+        ],
+      })}
       {...rest}
     >
       {local.children}
@@ -87,4 +95,9 @@ function ToggleGroupItem(
   );
 }
 
-export { ToggleGroup, ToggleGroupItem, useToggleGroup };
+export {
+  ToggleGroup,
+  ToggleGroupItem,
+  // Hooks
+  useToggleGroup,
+};

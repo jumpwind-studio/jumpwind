@@ -1,6 +1,6 @@
-import { cn } from "@/registry/jumpwind/lib/utils";
 import * as TooltipPrimitive from "corvu/tooltip";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
+import { cn } from "@/registry/jumpwind/lib/utils";
 
 const useTooltip = TooltipPrimitive.useContext;
 
@@ -9,7 +9,7 @@ function Tooltip(props: ComponentProps<typeof TooltipPrimitive.Root>) {
     {
       openDelay: 0,
       skipDelayDuration: 300, // Match Radix default
-    } satisfies Omit<ComponentProps<typeof TooltipPrimitive.Root>, "children">,
+    } satisfies Partial<typeof props>,
     props,
   );
 
@@ -33,24 +33,31 @@ function Tooltip(props: ComponentProps<typeof TooltipPrimitive.Root>) {
 }
 
 function TooltipTrigger(
-  props: ComponentProps<typeof TooltipPrimitive.Trigger>,
+  props: ComponentProps<typeof TooltipPrimitive.Trigger<"button">>,
 ) {
-  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
+  return (
+    <TooltipPrimitive.Trigger
+      as="button"
+      data-slot="tooltip-trigger"
+      {...props}
+    />
+  );
 }
 
 function TooltipContent(
-  props: ComponentProps<typeof TooltipPrimitive.Content>,
+  props: ComponentProps<typeof TooltipPrimitive.Content<"div">>,
 ) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <TooltipPrimitive.Portal>
       <TooltipPrimitive.Content
+        as="div"
+        data-slot="tooltip-content"
         class={cn(
           "fade-in-0 zoom-in-95 data-closed:fade-out-0 data-closed:zoom-out-95 data-[placement*=bottom]:slide-in-from-top-2 data-[placement*=left]:slide-in-from-right-2 data-[placement*=right]:slide-in-from-left-2 data-[placement*=top]:slide-in-from-bottom-2 z-50 w-fit animate-in text-balance rounded-md bg-primary px-3 py-1.5 text-primary-foreground text-xs data-closed:animate-out",
           local.class,
         )}
-        data-slot="tooltip-content"
         {...rest}
       >
         {local.children}
@@ -60,4 +67,10 @@ function TooltipContent(
   );
 }
 
-export { Tooltip, TooltipTrigger, TooltipContent, useTooltip };
+export {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  // Hooks
+  useTooltip,
+};

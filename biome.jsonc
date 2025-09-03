@@ -18,6 +18,7 @@
   "linter": {
     "enabled": true,
     "domains": {
+      "solid": "all",
       "project": "all",
       "test": "all"
     },
@@ -33,7 +34,7 @@
         "noExplicitAny": { "level": "warn" }
       },
       "correctness": {
-        "noUnusedVariables": "info",
+        "noUnusedVariables": "off",
         "noUnusedImports": "error"
       },
       "style": {

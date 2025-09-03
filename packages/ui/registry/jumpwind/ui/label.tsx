@@ -1,11 +1,9 @@
-import { Polymorphic, type PolymorphicProps } from "@kobalte/core/polymorphic";
-import { cn } from "@/registry/jumpwind/lib/utils";
-import type { ComponentProps, ValidComponent } from "solid-js";
-import { splitProps } from "solid-js";
+import { type ComponentProps, splitProps, type ValidComponent } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
+import { Dynamic, type DynamicProps } from "@/registry/jumpwind/ui/dynamic";
 
 export const labelVariants = tv({
-  base: "flex select-none items-center gap-2 font-medium text-sm leading-none disabled:pointer-events-none disabled:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 group-data-disabled:pointer-events-none group-data-disabled:opacity-50",
+  base: "flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
   variants: {
     variant: {
       label: "data-invalid:text-destructive",
@@ -20,21 +18,16 @@ export const labelVariants = tv({
 
 export type LabelVariantProps = VariantProps<typeof labelVariants>;
 
-export type LabelProps<T extends ValidComponent = "label"> = ComponentProps<T> &
-  LabelVariantProps & {
-    class?: string;
-  };
-
 export const Label = <T extends ValidComponent = "label">(
-  props: PolymorphicProps<T, LabelProps<T>>,
+  props: DynamicProps<T, ComponentProps<T>> & LabelVariantProps,
 ) => {
-  const [local, rest] = splitProps(props as LabelProps, ["class", "variant"]);
+  const [local, rest] = splitProps(props, ["class", "variant"]);
 
   return (
-    <Polymorphic
+    <Dynamic
       as="label"
-      class={cn(labelVariants({ variant: local.variant }), local.class)}
       data-slot="label"
+      class={labelVariants({ variant: local.variant, class: local.class })}
       {...rest}
     />
   );

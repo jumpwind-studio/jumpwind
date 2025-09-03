@@ -1,6 +1,6 @@
 import * as HoverCardPrimitive from "@kobalte/core/hover-card";
-import { cn } from "@/registry/jumpwind/lib/utils";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
+import { cn } from "@/registry/jumpwind/lib/utils";
 
 function HoverCard(props: ComponentProps<typeof HoverCardPrimitive.Root>) {
   const defaultedProps = mergeProps(
@@ -23,26 +23,31 @@ function HoverCard(props: ComponentProps<typeof HoverCardPrimitive.Root>) {
 }
 
 function HoverCardTrigger(
-  props: ComponentProps<typeof HoverCardPrimitive.Trigger>,
+  props: ComponentProps<typeof HoverCardPrimitive.Trigger<"a">>,
 ) {
   return (
-    <HoverCardPrimitive.Trigger data-slot="hover-card-trigger" {...props} />
+    <HoverCardPrimitive.Trigger
+      as="a"
+      data-slot="hover-card-trigger"
+      {...props}
+    />
   );
 }
 
 function HoverCardContent(
-  props: ComponentProps<typeof HoverCardPrimitive.Content>,
+  props: ComponentProps<typeof HoverCardPrimitive.Content<"div">>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <HoverCardPrimitive.Portal data-slot="hover-card-portal">
       <HoverCardPrimitive.Content
+        as="div"
+        data-slot="hover-card-content"
         class={cn(
           "data-closed:fade-out-0 data-expanded:fade-in-0 data-closed:zoom-out-95 data-expanded:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-64 origin-(--kb-hovercard-content-transform-origin) rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-hidden data-closed:animate-out data-expanded:animate-in",
           local.class,
         )}
-        data-slot="hover-card-content"
         {...rest}
       />
     </HoverCardPrimitive.Portal>

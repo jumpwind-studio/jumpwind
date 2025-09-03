@@ -1,8 +1,21 @@
-import type { DynamicProps } from "@corvu/utils/dynamic";
-import { cn } from "@/registry/jumpwind/lib/utils";
-import { type ComponentProps, splitProps, type ValidComponent } from "solid-js";
-import { Dynamic } from "solid-js/web";
+import {
+  type ComponentProps,
+  createMemo,
+  splitProps,
+  type ValidComponent,
+} from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
+import { createTagName } from "@/registry/jumpwind/lib/utils";
+import { Dynamic, type DynamicProps } from "@/registry/jumpwind/ui/dynamic";
+
+const BUTTON_INPUT_TYPES = [
+  "button",
+  "color",
+  "file",
+  "image",
+  "reset",
+  "submit",
+] as const;
 
 const buttonVariants = tv({
   base: "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm outline-none transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
@@ -33,31 +46,50 @@ const buttonVariants = tv({
   },
 });
 
-export type ButtonVariantProps = VariantProps<typeof buttonVariants>;
+type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 
-export type ButtonProps<T extends ValidComponent = "button"> =
-  ComponentProps<T> & ButtonVariantProps;
-
+/** An accessible button that sets `type` and `role` properly based on if it's a native button. */
 function Button<T extends ValidComponent = "button">(
-  props: DynamicProps<T, ButtonProps<T>>,
+  props: DynamicProps<T, ComponentProps<T>> &
+    ButtonVariantProps & {
+      type?: string;
+    },
 ) {
-  const [local, rest] = splitProps(props as ButtonProps, [
+  const [local, rest] = splitProps(props, [
     "class",
     "variant",
     "size",
+    "type",
+    "role",
   ]);
+
+  const tagName = createTagName({
+    element: () => rest.ref ?? null,
+    fallback: "button",
+  });
+
+  const isButton = createMemo(() => {
+    if (tagName() === "button") return true;
+    if (tagName() === "input" && local.type !== undefined) {
+      return BUTTON_INPUT_TYPES.indexOf(local.type) !== -1;
+    }
+    return false;
+  });
 
   return (
     <Dynamic
-      class={cn(
-        buttonVariants({ variant: local.variant, size: local.size }),
-        local.class,
-      )}
-      component="button"
+      as="button"
       data-slot="button"
+      type={local.type ?? (isButton() ? "button" : undefined)}
+      role={local.role ?? (!isButton() ? "button" : undefined)}
+      class={buttonVariants({
+        variant: local.variant,
+        size: local.size,
+        class: local.class,
+      })}
       {...rest}
     />
   );
 }
 
-export { Button, buttonVariants };
+export { Button, buttonVariants, type ButtonVariantProps };

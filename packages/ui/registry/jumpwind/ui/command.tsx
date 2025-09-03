@@ -1,25 +1,25 @@
+import { Command as CommandPrimitive } from "cmdk-solid";
+import SearchIcon from "lucide-solid/icons/search";
+import { type ComponentProps, mergeProps, splitProps } from "solid-js";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { cn } from "@/registry/jumpwind/lib/utils";
-import { Command as CommandPrimitive } from "cmdk-solid";
-import SearchIcon from "lucide-solid/icons/search";
-import { type ComponentProps, mergeProps, splitProps } from "solid-js";
+} from "@/registry/jumpwind/ui/dialog";
 
 function Command(props: ComponentProps<typeof CommandPrimitive>) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <CommandPrimitive
+      data-slot="command"
       class={cn(
         "flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground",
         local.class,
       )}
-      data-slot="command"
       {...rest}
     />
   );
@@ -74,16 +74,16 @@ function CommandInput(props: ComponentProps<typeof CommandPrimitive.Input>) {
 
   return (
     <div
-      class="flex h-9 items-center gap-2 border-b px-3"
       data-slot="command-input-wrapper"
+      class="flex h-9 items-center gap-2 border-b px-3"
     >
       <SearchIcon class="size-4 shrink-0 opacity-50" />
       <CommandPrimitive.Input
+        data-slot="command-input"
         class={cn(
           "flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
           local.class,
         )}
-        data-slot="command-input"
         {...rest}
       />
     </div>
@@ -95,11 +95,11 @@ function CommandList(props: ComponentProps<typeof CommandPrimitive.List>) {
 
   return (
     <CommandPrimitive.List
+      data-slot="command-list"
       class={cn(
         "max-h-[300px] scroll-py-1 overflow-y-auto overflow-x-hidden",
         local.class,
       )}
-      data-slot="command-list"
       {...rest}
     />
   );
@@ -110,8 +110,8 @@ function CommandEmpty(props: ComponentProps<typeof CommandPrimitive.Empty>) {
 
   return (
     <CommandPrimitive.Empty
-      class={cn("py-6 text-center text-sm", local.class)}
       data-slot="command-empty"
+      class={cn("py-6 text-center text-sm", local.class)}
       {...rest}
     />
   );
@@ -122,11 +122,11 @@ function CommandGroup(props: ComponentProps<typeof CommandPrimitive.Group>) {
 
   return (
     <CommandPrimitive.Group
+      data-slot="command-group"
       class={cn(
         "overflow-hidden p-1 text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:text-xs",
         local.class,
       )}
-      data-slot="command-group"
       {...rest}
     />
   );
@@ -139,8 +139,8 @@ function CommandSeparator(
 
   return (
     <CommandPrimitive.Separator
-      class={cn("-mx-1 h-px bg-border", local.class)}
       data-slot="command-separator"
+      class={cn("-mx-1 h-px bg-border", local.class)}
       {...rest}
     />
   );
@@ -151,11 +151,11 @@ function CommandItem(props: ComponentProps<typeof CommandPrimitive.Item>) {
 
   return (
     <CommandPrimitive.Item
+      data-slot="command-item"
       class={cn(
         "relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0",
         local.class,
       )}
-      data-slot="command-item"
       {...rest}
     />
   );
@@ -166,11 +166,11 @@ function CommandShortcut(props: ComponentProps<"span">) {
 
   return (
     <span
+      data-slot="command-shortcut"
       class={cn(
         "ml-auto text-muted-foreground text-xs tracking-widest",
         local.class,
       )}
-      data-slot="command-shortcut"
       {...rest}
     />
   );

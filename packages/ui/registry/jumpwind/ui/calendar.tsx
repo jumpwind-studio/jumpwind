@@ -1,5 +1,3 @@
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/registry/jumpwind/lib/utils";
 import * as CalendarPrimitive from "corvu/calendar";
 import ChevronLeftIcon from "lucide-solid/icons/chevron-left";
 import ChevronRightIcon from "lucide-solid/icons/chevron-right";
@@ -11,6 +9,8 @@ import {
   Show,
   splitProps,
 } from "solid-js";
+import { cn } from "@/registry/jumpwind/lib/utils";
+import { buttonVariants } from "@/registry/jumpwind/ui/button";
 
 const useCalendar = CalendarPrimitive.useContext;
 
@@ -36,12 +36,14 @@ function CalendarNav(props: ComponentProps<typeof CalendarPrimitive.Nav>) {
 
   return (
     <CalendarPrimitive.Nav
-      class={cn(
-        buttonVariants({ variant: "outline" }),
-        "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
-        local.class,
-      )}
       data-slot="calendar-nav"
+      class={buttonVariants({
+        variant: "outline",
+        class: [
+          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
+          local.class,
+        ],
+      })}
       {...rest}
     >
       {local.children}
@@ -65,8 +67,8 @@ function CalendarLabel(props: ComponentProps<typeof CalendarPrimitive.Label>) {
 
   return (
     <CalendarPrimitive.Label
-      class={cn("font-medium text-sm", local.class)}
       data-slot="calendar-label"
+      class={cn("font-medium text-sm", local.class)}
       {...rest}
     >
       <Show fallback={value()} when={local.children}>
@@ -83,10 +85,10 @@ function CalendarPrevMonth(
 
   return (
     <CalendarNav
+      data-slot="calendar-prev-month"
       action="prev-month"
       aria-label="Go to previous month"
       class={cn("absolute start-1", local.class)}
-      data-slot="calendar-prev-month"
       {...rest}
     >
       <Show
@@ -106,10 +108,10 @@ function CalendarNextMonth(
 
   return (
     <CalendarNav
+      data-slot="calendar-next-month"
       action="next-month"
       aria-label="Go to next month"
       class={cn("absolute end-1", local.class)}
-      data-slot="calendar-next-month"
       {...rest}
     >
       <Show
@@ -127,8 +129,8 @@ function CalendarHeader(props: ComponentProps<"div">) {
 
   return (
     <div
-      class={cn("flex items-center space-x-1", local.class)}
       data-slot="calendar-header"
+      class={cn("flex items-center space-x-1", local.class)}
       {...rest}
     >
       {local.children}
@@ -141,8 +143,8 @@ function CalendarTable(props: ComponentProps<typeof CalendarPrimitive.Table>) {
 
   return (
     <CalendarPrimitive.Table
-      class={cn("w-full border-collapse space-y-1", local.class)}
       data-slot="calendar-table"
+      class={cn("w-full border-collapse space-y-1", local.class)}
       {...rest}
     >
       {local.children}
@@ -154,7 +156,7 @@ function CalendarHead(props: ComponentProps<"thead">) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <thead class={cn("flex", local.class)} data-slot="calendar-head" {...rest}>
+    <thead data-slot="calendar-head" class={cn("flex", local.class)} {...rest}>
       {local.children}
     </thead>
   );
@@ -171,8 +173,8 @@ function CalendarHeadRow(
 
   return (
     <tr
-      class={cn("relative flex items-center justify-center pt-1", local.class)}
       data-slot="calendar-head-row"
+      class={cn("relative flex items-center justify-center pt-1", local.class)}
       {...rest}
     >
       <Index each={context.weekdays()}>
@@ -189,11 +191,11 @@ function CalendarHeadCell(
 
   return (
     <CalendarPrimitive.HeadCell
+      data-slot="calendar-head-cell"
       class={cn(
         "w-9 rounded-md font-normal text-[0.8rem] text-muted-foreground",
         local.class,
       )}
-      data-slot="calendar-head-cell"
       {...rest}
     >
       {local.children}
@@ -211,8 +213,8 @@ function CalendarBody(
 
   return (
     <tbody
-      class={cn("flex flex-col", local.class)}
       data-slot="calendar-body"
+      class={cn("flex flex-col", local.class)}
       {...rest}
     >
       <Index each={context.weeks()}>
@@ -232,8 +234,8 @@ function CalendarRow(
 
   return (
     <tr
-      class={cn("mt-2 flex w-full", local.class)}
       data-slot="calendar-row"
+      class={cn("mt-2 flex w-full", local.class)}
       {...rest}
     >
       <Index each={local.week}>{(day) => local.children(() => day())}</Index>
@@ -246,11 +248,11 @@ function CalendarCell(props: ComponentProps<typeof CalendarPrimitive.Cell>) {
 
   return (
     <CalendarPrimitive.Cell
+      data-slot="calendar-cell"
       class={cn(
         "relative h-9 w-9 p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected].day-range-end)]:rounded-r-md",
         local.class,
       )}
-      data-slot="calendar-cell"
       {...rest}
     >
       {local.children({ day: local.day })}
@@ -266,6 +268,7 @@ function CalendarCellTrigger(
 
   return (
     <CalendarPrimitive.CellTrigger
+      data-slot="calendar-cell-trigger"
       class={cn(
         buttonVariants({ variant: "ghost" }),
         "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
@@ -279,7 +282,6 @@ function CalendarCellTrigger(
         "data-in-range:aria-selected:bg-accent data-in-range:aria-selected:text-accent-foreground",
         local.class,
       )}
-      data-slot="calendar-cell-trigger"
       {...rest}
     >
       {local.children}

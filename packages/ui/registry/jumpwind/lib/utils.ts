@@ -1,3 +1,10 @@
+import {
+  type Accessor,
+  createMemo,
+  type Ref,
+  type ComponentProps as SolidComponentProps,
+  type ValidComponent,
+} from "solid-js";
 import { type ClassValue, cnBase } from "tailwind-variants";
 
 /**
@@ -6,6 +13,67 @@ import { type ClassValue, cnBase } from "tailwind-variants";
  * @param classes - The classes to combine.
  * @returns The combined classes.
  */
-export function cn(...classes: ClassValue[]) {
+export function cn(...classes: ClassValue[]): string | undefined {
   return cnBase(classes);
+}
+
+export type ComponentProps<T extends ValidComponent> =
+  SolidComponentProps<T> & { class?: string };
+
+export type MaybeAccessor<T> = T | (() => T);
+
+export type MaybeAccessorValue<T extends MaybeAccessor<unknown>> =
+  T extends () => unknown ? ReturnType<T> : T;
+
+export type EventHandlerEvent<T, E extends Event> = E & {
+  currentTarget: T;
+  target: Element;
+};
+
+export type ElementOf<T> = T extends keyof HTMLElementTagNameMap
+  ? HTMLElementTagNameMap[T]
+  : any;
+
+export function access<T extends MaybeAccessor<unknown>>(
+  v: T,
+): MaybeAccessorValue<T> {
+  return typeof v === "function" ? v() : (v as MaybeAccessorValue<T>);
+}
+
+export function chain<Args extends [] | unknown[]>(callbacks: {
+  [Symbol.iterator]: () => IterableIterator<
+    ((...args: Args) => unknown) | undefined
+  >;
+}): (...args: Args) => void {
+  return (...args: Args) => {
+    for (const callback of callbacks) callback?.(...args);
+  };
+}
+
+export function mergeRefs<T>(...refs: Ref<T>[]): (el: T) => void {
+  return chain(refs as ((el: T) => void)[]);
+}
+
+export function some(...signals: Accessor<unknown>[]) {
+  return signals.some((signal) => !!signal());
+}
+
+/**
+ * Returns a signal with the tag name of the element.
+ *
+ * @param props.element - The element to get the tag name of.
+ * @param props.fallback - The fallback tag name to use if the element is `null`.
+ * @returns ```typescript
+ * Accessor<string>
+ * ```
+ */
+export function createTagName(props: {
+  element: MaybeAccessor<HTMLElement | null>;
+  fallback: string;
+}): Accessor<string> {
+  const tagName = createMemo(
+    () => access(props.element)?.tagName.toLowerCase() ?? props.fallback,
+  );
+
+  return tagName;
 }

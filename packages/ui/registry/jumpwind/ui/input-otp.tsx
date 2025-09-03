@@ -1,32 +1,31 @@
-import { cn } from "@/registry/jumpwind/lib/utils";
 import * as OtpPrimitive from "corvu/otp-field";
 import { type ComponentProps, Show, splitProps } from "solid-js";
+import { cn } from "@/registry/jumpwind/lib/utils";
 
 const useOtp = OtpPrimitive.useContext;
 
-function Otp(props: ComponentProps<typeof OtpPrimitive.Root>) {
-  const [local, rest] = splitProps(props, ["class", "containerClass"]);
+function Otp(props: ComponentProps<typeof OtpPrimitive.Root<"div">>) {
+  const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <OtpPrimitive.Root
-      class={cn("disabled:cursor-not-allowed", local.class)}
-      containerClass={cn(
-        "flex items-center gap-2 has-disabled:opacity-50",
-        local.containerClass,
-      )}
       data-slot="otp"
+      class={cn("flex items-center gap-2 has-disabled:opacity-50", local.class)}
       {...rest}
     />
   );
 }
 
-function OtpHiddenInput(props: ComponentProps<typeof OtpPrimitive.Input>) {
+function OtpHiddenInput(
+  props: ComponentProps<typeof OtpPrimitive.Input<"input">>,
+) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <OtpPrimitive.Input
-      class={cn(local.class)}
+      as="input"
       data-slot="otp-hidden-input"
+      class={cn(local.class)}
       {...rest}
     />
   );
@@ -37,8 +36,8 @@ function OtpGroup(props: ComponentProps<"div">) {
 
   return (
     <div
-      class={cn("flex items-center", local.class)}
       data-slot="otp-group"
+      class={cn("flex items-center", local.class)}
       {...rest}
     />
   );
@@ -65,12 +64,13 @@ function OtpSlot(
 
   return (
     <div
+      data-slot="otp-slot"
       class={cn(
         "relative flex h-9 w-9 items-center justify-center border-input border-y border-r text-sm shadow-xs outline-ring/50 ring-ring/10 transition-all first:rounded-l-md first:border-l last:rounded-r-md data-active:z-10 data-active:outline-1 data-active:ring-4 dark:outline-ring/40 dark:ring-ring/20",
+        "disabled:cursor-not-allowed",
         local.class,
       )}
       bool:data-active={isActive()}
-      data-slot="otp-slot"
       {...rest}
     >
       {char()}
@@ -87,4 +87,12 @@ function OtpSeparator(props: ComponentProps<"hr">) {
   return <hr data-slot="otp-separator" {...props} />;
 }
 
-export { Otp, OtpGroup, OtpHiddenInput, OtpSlot, OtpSeparator, useOtp };
+export {
+  Otp,
+  OtpGroup,
+  OtpHiddenInput,
+  OtpSlot,
+  OtpSeparator,
+  // Hooks
+  useOtp,
+};

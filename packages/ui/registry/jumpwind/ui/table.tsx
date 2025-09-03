@@ -1,5 +1,5 @@
-import { cn } from "@/registry/jumpwind/lib/utils";
 import { type ComponentProps, splitProps } from "solid-js";
+import { cn } from "@/registry/jumpwind/lib/utils";
 
 function Table(props: ComponentProps<"table">) {
   const [local, rest] = splitProps(props, ["class"]);
@@ -20,8 +20,8 @@ function TableHeader(props: ComponentProps<"thead">) {
 
   return (
     <thead
-      class={cn("[&_tr]:border-b", local.class)}
       data-slot="table-header"
+      class={cn("[&_tr]:border-b", local.class)}
       {...rest}
     />
   );
@@ -32,8 +32,8 @@ function TableBody(props: ComponentProps<"tbody">) {
 
   return (
     <tbody
-      class={cn("[&_tr:last-child]:border-0", local.class)}
       data-slot="table-body"
+      class={cn("[&_tr:last-child]:border-0", local.class)}
       {...rest}
     />
   );
@@ -44,11 +44,11 @@ function TableFooter(props: ComponentProps<"tfoot">) {
 
   return (
     <tfoot
+      data-slot="table-footer"
       class={cn(
         "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0",
         local.class,
       )}
-      data-slot="table-footer"
       {...rest}
     />
   );
@@ -59,11 +59,11 @@ function TableRow(props: ComponentProps<"tr">) {
 
   return (
     <tr
+      data-slot="table-row"
       class={cn(
         "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
         local.class,
       )}
-      data-slot="table-row"
       {...rest}
     />
   );
@@ -89,11 +89,11 @@ function TableCell(props: ComponentProps<"td">) {
 
   return (
     <td
+      data-slot="table-cell"
       class={cn(
         "whitespace-nowrap p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         local.class,
       )}
-      data-slot="table-cell"
       {...rest}
     />
   );
@@ -104,8 +104,8 @@ function TableCaption(props: ComponentProps<"caption">) {
 
   return (
     <caption
-      class={cn("mt-4 text-muted-foreground text-sm", local.class)}
       data-slot="table-caption"
+      class={cn("mt-4 text-muted-foreground text-sm", local.class)}
       {...rest}
     />
   );

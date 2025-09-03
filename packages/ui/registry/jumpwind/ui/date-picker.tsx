@@ -1,4 +1,7 @@
-import { Button } from "@/components/ui/button";
+import CalendarIcon from "lucide-solid/icons/calendar";
+import { createSignal, Show } from "solid-js";
+import { cn } from "@/registry/jumpwind/lib/utils";
+import { Button } from "@/registry/jumpwind/ui/button";
 import {
   Calendar,
   CalendarBody,
@@ -13,11 +16,12 @@ import {
   CalendarPrevMonth,
   CalendarRow,
   CalendarTable,
-} from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn } from "@/registry/jumpwind/lib/utils";
-import CalendarIcon from "lucide-solid/icons/calendar";
-import { createSignal, Show } from "solid-js";
+} from "@/registry/jumpwind/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/registry/jumpwind/ui/popover";
 
 export function DatePicker() {
   const [date, setDate] = createSignal<Date>();
@@ -33,7 +37,7 @@ export function DatePicker() {
         variant="outline"
       >
         <CalendarIcon class="mr-2 h-4 w-4" />
-        <Show when={date()} fallback={<span>Pick a date</span>} >
+        <Show when={date()} fallback={<span>Pick a date</span>}>
           {(date) => date()}
         </Show>
       </PopoverTrigger>

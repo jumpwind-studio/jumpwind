@@ -1,6 +1,7 @@
 {
   "extends": "@jumpwind/tsconfig/base.json",
   "compilerOptions": {
+    "lib": ["ES2022", "dom", "dom.iterable"],
     "moduleResolution": "bundler",
     "baseUrl": ".",
     "paths": {

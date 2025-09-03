@@ -1,16 +1,16 @@
-import { cn } from "@/registry/jumpwind/lib/utils";
 import { type ComponentProps, splitProps } from "solid-js";
+import { cn } from "@/registry/jumpwind/lib/utils";
 
 function Card(props: ComponentProps<"div">) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <div
+      data-slot="card"
       class={cn(
         "flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground shadow-sm",
         local.class,
       )}
-      data-slot="card"
       {...rest}
     />
   );
@@ -21,11 +21,11 @@ function CardHeader(props: ComponentProps<"div">) {
 
   return (
     <div
+      data-slot="card-header"
       class={cn(
         "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
         local.class,
       )}
-      data-slot="card-header"
       {...rest}
     />
   );
@@ -36,8 +36,8 @@ function CardTitle(props: ComponentProps<"div">) {
 
   return (
     <div
-      class={cn("font-semibold leading-none", local.class)}
       data-slot="card-title"
+      class={cn("font-semibold leading-none", local.class)}
       {...rest}
     />
   );
@@ -48,8 +48,8 @@ function CardDescription(props: ComponentProps<"div">) {
 
   return (
     <div
-      class={cn("text-muted-foreground text-sm", local.class)}
       data-slot="card-description"
+      class={cn("text-muted-foreground text-sm", local.class)}
       {...rest}
     />
   );
@@ -59,11 +59,11 @@ function CardAction(props: ComponentProps<"div">) {
 
   return (
     <div
+      data-slot="card-action"
       class={cn(
         "col-start-2 row-span-2 row-start-1 self-start justify-self-end",
         local.class,
       )}
-      data-slot="card-action"
       {...rest}
     />
   );
@@ -73,7 +73,7 @@ function CardContent(props: ComponentProps<"div">) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
-    <div class={cn("px-6", local.class)} data-slot="card-content" {...rest} />
+    <div data-slot="card-content" class={cn("px-6", local.class)} {...rest} />
   );
 }
 
@@ -82,8 +82,8 @@ function CardFooter(props: ComponentProps<"div">) {
 
   return (
     <div
-      class={cn("flex items-center px-6 [.border-t]:pt-6", local.class)}
       data-slot="card-footer"
+      class={cn("flex items-center px-6 [.border-t]:pt-6", local.class)}
       {...rest}
     />
   );

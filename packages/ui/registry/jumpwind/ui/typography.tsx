@@ -1,11 +1,11 @@
-import { cn } from "@/registry/jumpwind/lib/utils";
 import {
   type ComponentProps,
   type FlowProps,
   splitProps,
   type ValidComponent,
 } from "solid-js";
-import { Dynamic, type DynamicProps } from "solid-js/web";
+import type { DynamicProps } from "solid-js/web";
+import { cn } from "@/registry/jumpwind/lib/utils";
 
 export type TypographyProps<T extends ValidComponent> = FlowProps<
   Omit<DynamicProps<T, ComponentProps<T>>, "component">
@@ -14,223 +14,187 @@ export type TypographyProps<T extends ValidComponent> = FlowProps<
   class?: string;
 };
 
-export const H1 = <T extends ValidComponent = "h1">(
-  props: TypographyProps<T>,
-) => {
-  const [local, rest] = splitProps(props, ["as", "class", "children"]);
+export const H1 = (props: ComponentProps<"h1">) => {
+  const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <Dynamic
+    <h1
+      data-slot="heading-1"
       class={cn(
         "scroll-m-20 font-extrabold text-4xl tracking-tight lg:text-5xl",
         local.class,
       )}
-      component={local.as ?? "h1"}
-      data-slot="heading-1"
       {...rest}
     >
       {local.children}
-    </Dynamic>
+    </h1>
   );
 };
 
-export const H2 = <T extends ValidComponent = "h2">(
-  props: TypographyProps<T>,
-) => {
-  const [local, rest] = splitProps(props, ["as", "class", "children"]);
+export const H2 = (props: TypographyProps<"h2">) => {
+  const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <Dynamic
+    <h2
+      data-slot="heading-2"
       class={cn(
         "scroll-m-20 border-b pb-2 font-semibold text-3xl tracking-tight first:mt-0",
         local.class,
       )}
-      component={local.as ?? "h2"}
-      data-slot="heading-2"
       {...rest}
     >
       {local.children}
-    </Dynamic>
+    </h2>
   );
 };
 
-export const H3 = <T extends ValidComponent = "h3">(
-  props: TypographyProps<T>,
-) => {
-  const [local, rest] = splitProps(props, ["as", "class", "children"]);
+export const H3 = (props: ComponentProps<"h3">) => {
+  const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <Dynamic
+    <h3
       class={cn(
         "scroll-m-20 font-semibold text-2xl tracking-tight",
         local.class,
       )}
-      component={local.as ?? "h3"}
       {...rest}
     >
       {local.children}
-    </Dynamic>
+    </h3>
   );
 };
 
-export const H4 = <T extends ValidComponent = "h4">(
-  props: TypographyProps<T>,
-) => {
-  const [local, rest] = splitProps(props, ["as", "class", "children"]);
+export const H4 = (props: ComponentProps<"h4">) => {
+  const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <Dynamic
+    <h4
+      data-slot="heading-4"
       class={cn(
         "scroll-m-20 font-semibold text-xl tracking-tight",
         local.class,
       )}
-      component={local.as ?? "h4"}
-      data-slot="heading-4"
       {...rest}
     >
       {local.children}
-    </Dynamic>
+    </h4>
   );
 };
 
-export const Lead = <T extends ValidComponent = "p">(
-  props: TypographyProps<T>,
-) => {
-  const [local, rest] = splitProps(props, ["as", "class", "children"]);
+export const Lead = (props: ComponentProps<"p">) => {
+  const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <Dynamic
-      class={cn("text-muted-foreground text-xl", local.class)}
-      component={local.as ?? "p"}
+    <p
       data-slot="lead"
+      class={cn("text-muted-foreground text-xl", local.class)}
       {...rest}
     >
       {local.children}
-    </Dynamic>
+    </p>
   );
 };
 
-export const P = <T extends ValidComponent = "p">(
-  props: TypographyProps<T>,
-) => {
-  const [local, rest] = splitProps(props, ["as", "class", "children"]);
+export const P = (props: ComponentProps<"p">) => {
+  const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <Dynamic
-      class={cn("not-first:mt-6 leading-7", local.class)}
-      component={local.as ?? "p"}
+    <p
       data-slot="paragraph"
+      class={cn("not-first:mt-6 leading-7", local.class)}
       {...rest}
     >
       {local.children}
-    </Dynamic>
+    </p>
   );
 };
 
-export const Large = <T extends ValidComponent = "p">(
-  props: TypographyProps<T>,
-) => {
-  const [local, rest] = splitProps(props, ["as", "class", "children"]);
+export const Large = (props: ComponentProps<"p">) => {
+  const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <Dynamic
-      class={cn("font-semibold text-lg", local.class)}
-      component={local.as ?? "p"}
+    <p
       data-slot="large"
+      class={cn("font-semibold text-lg", local.class)}
       {...rest}
     >
       {local.children}
-    </Dynamic>
+    </p>
   );
 };
 
-export const Small = <T extends ValidComponent = "p">(
-  props: TypographyProps<T>,
-) => {
-  const [local, rest] = splitProps(props, ["as", "class", "children"]);
+export const Small = (props: ComponentProps<"p">) => {
+  const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <Dynamic
-      class={cn("font-medium text-sm leading-none", local.class)}
-      component={local.as ?? "p"}
+    <p
       data-slot="small"
+      class={cn("font-medium text-sm leading-none", local.class)}
       {...rest}
     >
       {local.children}
-    </Dynamic>
+    </p>
   );
 };
 
-export const Muted = <T extends ValidComponent = "span">(
-  props: TypographyProps<T>,
-) => {
-  const [local, rest] = splitProps(props, ["as", "class", "children"]);
+export const Muted = (props: ComponentProps<"span">) => {
+  const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <Dynamic
-      class={cn("text-muted-foreground text-sm", local.class)}
-      component={local.as ?? "span"}
+    <span
       data-slot="muted"
+      class={cn("text-muted-foreground text-sm", local.class)}
       {...rest}
     >
       {local.children}
-    </Dynamic>
+    </span>
   );
 };
 
-export const InlineCode = <T extends ValidComponent = "code">(
-  props: TypographyProps<T>,
-) => {
-  const [local, rest] = splitProps(props, ["as", "class", "children"]);
+export const InlineCode = (props: ComponentProps<"code">) => {
+  const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <Dynamic
+    <code
+      data-slot="inline-code"
       class={cn(
         "relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono font-semibold text-sm",
         local.class,
       )}
-      component={local.as ?? "code"}
-      data-slot="inline-code"
       {...rest}
     >
       {local.children}
-    </Dynamic>
+    </code>
   );
 };
 
-export const List = <T extends ValidComponent = "ul">(
-  props: TypographyProps<T>,
-) => {
-  const [local, rest] = splitProps(props, ["as", "class", "children"]);
+export const List = (props: ComponentProps<"ul">) => {
+  const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <Dynamic
-      class={cn("my-6 ml-6 list-disc [&>li]:mt-2", local.class)}
-      component={local.as ?? "ul"}
+    <ul
       data-slot="list"
+      class={cn("my-6 ml-6 list-disc [&>li]:mt-2", local.class)}
       {...rest}
     >
       {local.children}
-    </Dynamic>
+    </ul>
   );
 };
 
-export const Quote = <T extends ValidComponent = "blockquote">(
-  props: TypographyProps<T>,
-) => {
-  const [local, rest] = splitProps(props, ["as", "class", "children"]);
+export const Quote = (props: ComponentProps<"blockquote">) => {
+  const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <Dynamic
+    <blockquote
+      data-slot="quote"
       class={cn(
         "mt-6 border-l-2 pl-6 text-muted-foreground italic",
         local.class,
       )}
-      component={local.as ?? "blockquote"}
-      data-slot="quote"
       {...rest}
     >
       {local.children}
-    </Dynamic>
+    </blockquote>
   );
 };

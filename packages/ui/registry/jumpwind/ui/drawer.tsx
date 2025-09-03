@@ -1,6 +1,6 @@
-import { cn } from "@/registry/jumpwind/lib/utils";
 import * as DrawerPrimitive from "corvu/drawer";
 import { type ComponentProps, splitProps } from "solid-js";
+import { cn } from "@/registry/jumpwind/lib/utils";
 
 const useDrawer = DrawerPrimitive.useContext;
 const useDrawerDialog = DrawerPrimitive.useDialogContext;
@@ -26,11 +26,11 @@ function DrawerOverlay(props: ComponentProps<typeof DrawerPrimitive.Overlay>) {
 
   return (
     <DrawerPrimitive.Overlay
+      data-slot="drawer-overlay"
       class={cn(
         "data-closed:fade-out-0 data-open:fade-in-0 fixed inset-0 z-50 bg-black/50 data-closed:animate-out data-open:animate-in",
         local.class,
       )}
-      data-slot="drawer-overlay"
       {...rest}
     />
   );
@@ -43,6 +43,7 @@ function DrawerContent(props: ComponentProps<typeof DrawerPrimitive.Content>) {
     <DrawerPortal data-slot="drawer-portal">
       <DrawerOverlay />
       <DrawerPrimitive.Content
+        data-slot="drawer-content"
         class={cn(
           "group/drawer-content fixed z-50 flex h-auto flex-col bg-background",
           "data-side=top:inset-x-0 data-side=top:top-0 data-side=top:mb-24 data-side=top:max-h-[80vh] data-side=top:rounded-b-lg",
@@ -51,7 +52,6 @@ function DrawerContent(props: ComponentProps<typeof DrawerPrimitive.Content>) {
           "data-side=left:inset-y-0 data-side=left:left-0 data-side=left:w-3/4 data-side=left:sm:max-w-sm",
           local.class,
         )}
-        data-slot="drawer-content"
         {...rest}
       >
         <div class="mx-auto mt-4 hidden h-2 w-[100px] shrink-0 rounded-full bg-muted group-data-side=bottom/drawer-content:block" />
@@ -66,8 +66,8 @@ function DrawerHeader(props: ComponentProps<"div">) {
 
   return (
     <div
-      class={cn("flex flex-col gap-1.5 p-4", local.class)}
       data-slot="drawer-header"
+      class={cn("flex flex-col gap-1.5 p-4", local.class)}
       {...rest}
     />
   );
@@ -78,8 +78,8 @@ function DrawerFooter(props: ComponentProps<"div">) {
 
   return (
     <div
-      class={cn("mt-auto flex flex-col gap-2 p-4", local.class)}
       data-slot="drawer-footer"
+      class={cn("mt-auto flex flex-col gap-2 p-4", local.class)}
       {...rest}
     />
   );
@@ -90,8 +90,8 @@ function DrawerTitle(props: ComponentProps<typeof DrawerPrimitive.Label>) {
 
   return (
     <DrawerPrimitive.Label
-      class={cn("font-semibold text-foreground", local.class)}
       data-slot="drawer-title"
+      class={cn("font-semibold text-foreground", local.class)}
       {...rest}
     />
   );
@@ -104,8 +104,8 @@ function DrawerDescription(
 
   return (
     <DrawerPrimitive.Description
-      class={cn("text-muted-foreground text-sm", local.class)}
       data-slot="drawer-description"
+      class={cn("text-muted-foreground text-sm", local.class)}
       {...rest}
     />
   );
@@ -122,6 +122,7 @@ export {
   DrawerFooter,
   DrawerTitle,
   DrawerDescription,
+  // Hooks
   useDrawer,
   useDrawerDialog,
 };

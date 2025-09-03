@@ -1,6 +1,6 @@
-import { cn } from "@/registry/jumpwind/lib/utils";
 import type { ComponentProps } from "solid-js";
 import { mergeProps, splitProps } from "solid-js";
+import { cn } from "@/registry/jumpwind/lib/utils";
 
 type JustifyContent =
   | "start"

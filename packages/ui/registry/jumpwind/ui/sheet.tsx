@@ -1,7 +1,7 @@
-import { cn } from "@/registry/jumpwind/lib/utils";
 import * as SheetPrimitive from "corvu/dialog";
 import XIcon from "lucide-solid/icons/x";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
+import { cn } from "@/registry/jumpwind/lib/utils";
 
 const useSheet = SheetPrimitive.useContext;
 
@@ -9,28 +9,39 @@ function Sheet(props: ComponentProps<typeof SheetPrimitive.Root>) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />;
 }
 
-function SheetTrigger(props: ComponentProps<typeof SheetPrimitive.Trigger>) {
-  return <SheetPrimitive.Trigger data-slot="sheet-trigger" {...props} />;
+function SheetTrigger(
+  props: ComponentProps<typeof SheetPrimitive.Trigger<"button">>,
+) {
+  return (
+    <SheetPrimitive.Trigger as="button" data-slot="sheet-trigger" {...props} />
+  );
 }
 
-function SheetClose(props: ComponentProps<typeof SheetPrimitive.Close>) {
-  return <SheetPrimitive.Close data-slot="sheet-close" {...props} />;
+function SheetClose(
+  props: ComponentProps<typeof SheetPrimitive.Close<"button">>,
+) {
+  return (
+    <SheetPrimitive.Close as="button" data-slot="sheet-close" {...props} />
+  );
 }
 
 function SheetPortal(props: ComponentProps<typeof SheetPrimitive.Portal>) {
   return <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />;
 }
 
-function SheetOverlay(props: ComponentProps<typeof SheetPrimitive.Overlay>) {
+function SheetOverlay(
+  props: ComponentProps<typeof SheetPrimitive.Overlay<"div">>,
+) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <SheetPrimitive.Overlay
+      as="div"
+      data-slot="sheet-overlay"
       class={cn(
         "data-closed:fade-out-0 data-open:fade-in-0 fixed inset-0 z-50 bg-black/80 data-closed:animate-out data-open:animate-in",
         local.class,
       )}
-      data-slot="sheet-overlay"
       {...rest}
     />
   );
@@ -42,9 +53,7 @@ function SheetContent(
   },
 ) {
   const defaultedProps = mergeProps(
-    {
-      side: "right",
-    } satisfies ComponentProps<typeof SheetPrimitive.Content>,
+    { side: "right" } satisfies typeof props,
     props,
   );
   const [local, rest] = splitProps(defaultedProps, [
@@ -57,6 +66,7 @@ function SheetContent(
     <SheetPortal>
       <SheetOverlay />
       <SheetPrimitive.Content
+        data-slot="sheet-content"
         class={cn(
           "fixed z-50 flex flex-col gap-4 bg-background shadow-lg transition ease-in-out data-closed:animate-out data-open:animate-in data-closed:duration-300 data-open:duration-500",
           local.side === "right" &&
@@ -69,7 +79,6 @@ function SheetContent(
             "data-closed:slide-out-to-bottom data-open:slide-in-from-bottom inset-x-0 bottom-0 h-auto border-t",
           local.class,
         )}
-        data-slot="sheet-content"
         {...rest}
       >
         {local.children}
@@ -87,8 +96,8 @@ function SheetHeader(props: ComponentProps<"div">) {
 
   return (
     <div
-      class={cn("flex flex-col gap-1.5 p-4", local.class)}
       data-slot="sheet-header"
+      class={cn("flex flex-col gap-1.5 p-4", local.class)}
       {...rest}
     />
   );
@@ -99,34 +108,36 @@ function SheetFooter(props: ComponentProps<"div">) {
 
   return (
     <div
-      class={cn("mt-auto flex flex-col gap-2 p-4", local.class)}
       data-slot="sheet-footer"
+      class={cn("mt-auto flex flex-col gap-2 p-4", local.class)}
       {...rest}
     />
   );
 }
 
-function SheetTitle(props: ComponentProps<typeof SheetPrimitive.Label>) {
+function SheetTitle(props: ComponentProps<typeof SheetPrimitive.Label<"h2">>) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <SheetPrimitive.Label
-      class={cn("font-semibold text-foreground tracking-tight", local.class)}
+      as="h2"
       data-slot="sheet-title"
+      class={cn("font-semibold text-foreground tracking-tight", local.class)}
       {...rest}
     />
   );
 }
 
 function SheetDescription(
-  props: ComponentProps<typeof SheetPrimitive.Description>,
+  props: ComponentProps<typeof SheetPrimitive.Description<"p">>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <SheetPrimitive.Description
-      class={cn("text-muted-foreground text-sm", local.class)}
+      as="p"
       data-slot="sheet-description"
+      class={cn("text-muted-foreground text-sm", local.class)}
       {...rest}
     />
   );

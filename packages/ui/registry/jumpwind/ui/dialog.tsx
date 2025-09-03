@@ -1,7 +1,7 @@
-import { cn } from "@/registry/jumpwind/lib/utils";
 import * as DialogPrimitive from "corvu/dialog";
 import XIcon from "lucide-solid/icons/x";
 import { type ComponentProps, splitProps } from "solid-js";
+import { cn } from "@/registry/jumpwind/lib/utils";
 
 const useDialog = DialogPrimitive.useContext;
 
@@ -46,12 +46,12 @@ function DialogOverlay(props: ComponentProps<typeof DialogPrimitive.Overlay>) {
 
   return (
     <DialogPrimitive.Overlay
+      data-slot="dialog-overlay"
       class={cn(
         // "data-closed:fade-out-0 data-open:fade-in-0 fixed inset-0 z-50 bg-black/80 data-closed:animate-out data-open:animate-in",
         "data-closed:fade-out-0 data-open:fade-in-0 fixed inset-0 z-50 bg-black/50 data-closed:animate-out data-open:animate-in",
         local.class,
       )}
-      data-slot="dialog-overlay"
       {...rest}
     />
   );
@@ -68,11 +68,11 @@ function DialogContent(
     <DialogPortal data-slot="dialog-portal">
       <DialogOverlay />
       <DialogPrimitive.Content
+        data-slot="dialog-content"
         class={cn(
           "data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border bg-background p-6 shadow-lg duration-200 data-closed:animate-out data-open:animate-in sm:max-w-lg",
           local.class,
         )}
-        data-slot="dialog-content"
         {...rest}
       >
         {local.children}
@@ -93,8 +93,8 @@ function DialogHeader(props: ComponentProps<"div">) {
 
   return (
     <div
-      class={cn("flex flex-col gap-2 text-center sm:text-left", local.class)}
       data-slot="dialog-header"
+      class={cn("flex flex-col gap-2 text-center sm:text-left", local.class)}
       {...rest}
     />
   );
@@ -105,11 +105,11 @@ function DialogFooter(props: ComponentProps<"div">) {
 
   return (
     <div
+      data-slot="dialog-footer"
       class={cn(
         "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
         local.class,
       )}
-      data-slot="dialog-footer"
       {...rest}
     />
   );
@@ -120,8 +120,8 @@ function DialogTitle(props: ComponentProps<typeof DialogPrimitive.Label>) {
 
   return (
     <DialogPrimitive.Label
-      class={cn("font-semibold text-lg leading-none", local.class)}
       data-slot="dialog-title"
+      class={cn("font-semibold text-lg leading-none", local.class)}
       {...rest}
     />
   );
@@ -134,8 +134,8 @@ function DialogDescription(
 
   return (
     <DialogPrimitive.Description
-      class={cn("text-muted-foreground text-sm", local.class)}
       data-slot="dialog-description"
+      class={cn("text-muted-foreground text-sm", local.class)}
       {...rest}
     />
   );
@@ -152,5 +152,6 @@ export {
   DialogPortal,
   DialogTitle,
   DialogTrigger,
+  // Hooks
   useDialog,
 };

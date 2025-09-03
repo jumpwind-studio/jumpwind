@@ -1,15 +1,19 @@
-import { type ButtonProps, buttonVariants } from "@/components/ui/button";
-import { cn } from "@/registry/jumpwind/lib/utils";
 import ChevronLeftIcon from "lucide-solid/icons/chevron-left";
 import ChevronRightIcon from "lucide-solid/icons/chevron-right";
 import MoreHorizontalIcon from "lucide-solid/icons/more-horizontal";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
+import { cn } from "@/registry/jumpwind/lib/utils";
+import {
+  type ButtonVariantProps,
+  buttonVariants,
+} from "@/registry/jumpwind/ui/button";
 
 const Pagination = (props: ComponentProps<"nav">) => {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <nav
+      data-slot="pagination"
       aria-label="pagination"
       class={cn("mx-auto flex w-full justify-center", local.class)}
       {...rest}
@@ -21,25 +25,26 @@ const PaginationContent = (props: ComponentProps<"ul">) => {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
-    <ul class={cn("flex flex-row items-center gap-1", local.class)} {...rest} />
+    <ul
+      data-slot="pagination-content"
+      class={cn("flex flex-row items-center gap-1", local.class)}
+      {...rest}
+    />
   );
 };
 
 const PaginationItem = (props: ComponentProps<"li">) => {
-  const [local, rest] = splitProps(props, ["class"]);
-  return <li class={cn("", local.class)} {...rest} />;
+  return <li data-class="pagination-item" {...props} />;
 };
 
-type PaginationLinkProps = {
-  isActive?: boolean;
-} & Pick<ButtonProps, "size"> &
-  ComponentProps<"a">;
-
-const PaginationLink = (props: PaginationLinkProps) => {
+const PaginationLink = (
+  props: ComponentProps<"a"> &
+    ButtonVariantProps & {
+      isActive?: boolean;
+    },
+) => {
   const defaultedProps = mergeProps(
-    {
-      size: "icon",
-    } satisfies PaginationLinkProps,
+    { size: "icon" } satisfies typeof props,
     props,
   );
 
@@ -47,18 +52,19 @@ const PaginationLink = (props: PaginationLinkProps) => {
     "class",
     "isActive",
     "size",
+    "variant",
   ]);
 
   return (
     <a
+      data-slot="pagination-link"
       aria-current={local.isActive ? "page" : undefined}
-      class={cn(
-        buttonVariants({
-          variant: local.isActive ? "outline" : "ghost",
-          size: local.size,
-        }),
-        local.class,
-      )}
+      bool:data-active={local.isActive}
+      class={buttonVariants({
+        variant: local.variant ?? (local.isActive ? "outline" : "ghost"),
+        size: local.size,
+        class: local.class,
+      })}
       {...rest}
     />
   );
@@ -69,9 +75,10 @@ const PaginationPrevious = (props: ComponentProps<typeof PaginationLink>) => {
 
   return (
     <PaginationLink
+      data-slot="pagination-previous"
       aria-label="Go to previous page"
-      class={cn("gap-1 pl-2.5", local.class)}
       size="default"
+      class={cn("gap-1 px-2.5 sm:pl-2.5", local.class)}
       {...rest}
     >
       <ChevronLeftIcon class="h-4 w-4" />
@@ -85,9 +92,10 @@ const PaginationNext = (props: ComponentProps<typeof PaginationLink>) => {
 
   return (
     <PaginationLink
+      data-slot="pagination-next"
       aria-label="Go to next page"
-      class={cn("gap-1 pr-2.5", local.class)}
       size="default"
+      class={cn("gap-1 px-2.5 sm:pl-2.5", local.class)}
       {...rest}
     >
       <span>Next</span>
@@ -101,6 +109,7 @@ const PaginationEllipsis = (props: ComponentProps<"span">) => {
 
   return (
     <span
+      data-slot="pagination-ellipsis"
       aria-hidden
       class={cn("flex h-9 w-9 items-center justify-center", local.class)}
       {...rest}

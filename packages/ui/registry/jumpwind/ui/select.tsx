@@ -1,27 +1,25 @@
 import * as SelectPrimitive from "@kobalte/core/select";
 import * as SeparatorPrimitive from "@kobalte/core/separator";
-import { cn } from "@/registry/jumpwind/lib/utils";
 import CheckIcon from "lucide-solid/icons/check";
 import ChevronDownIcon from "lucide-solid/icons/chevron-down";
-import {
-  type ComponentProps,
-  mergeProps,
-  splitProps,
-  type ValidComponent,
-} from "solid-js";
-import { Dynamic } from "solid-js/web";
+import { type ComponentProps, mergeProps, splitProps } from "solid-js";
+import { cn } from "@/registry/jumpwind/lib/utils";
 
-const FormSelectLabel = SelectPrimitive.Label;
-const FormSelectDescription = SelectPrimitive.Description;
-const FormSelectMessage = SelectPrimitive.ErrorMessage;
+const SelectLabel = SelectPrimitive.Label;
+const SelectDescription = SelectPrimitive.Description;
+const SelectMessage = SelectPrimitive.ErrorMessage;
 
 function Select<TOption, TGroup = never>(
-  props: ComponentProps<typeof SelectPrimitive.Root<TOption, TGroup>>,
+  props: ComponentProps<typeof SelectPrimitive.Root<TOption, TGroup, "div">>,
 ) {
   const [local, rest] = splitProps(props, ["children"]);
 
   return (
-    <SelectPrimitive.Root<TOption, TGroup> data-slot="select" {...rest}>
+    <SelectPrimitive.Root<TOption, TGroup>
+      as="div"
+      data-slot="select"
+      {...rest}
+    >
       <SelectPrimitive.HiddenSelect />
       {local.children}
     </SelectPrimitive.Root>
@@ -29,20 +27,26 @@ function Select<TOption, TGroup = never>(
 }
 
 function SelectValue<TOption>(
-  props: ComponentProps<typeof SelectPrimitive.Value<TOption>>,
+  props: ComponentProps<typeof SelectPrimitive.Value<TOption, "span">>,
 ) {
-  return <SelectPrimitive.Value<TOption> data-slot="select-value" {...props} />;
+  return (
+    <SelectPrimitive.Value<TOption>
+      as="span"
+      data-slot="select-value"
+      {...props}
+    />
+  );
 }
 
 function SelectTrigger(
-  props: ComponentProps<typeof SelectPrimitive.Trigger> & {
+  props: ComponentProps<typeof SelectPrimitive.Trigger<"button">> & {
     size?: "sm" | "default";
   },
 ) {
   const defaultedProps = mergeProps(
     {
       size: "default",
-    } satisfies ComponentProps<typeof SelectPrimitive.Trigger>,
+    } satisfies Partial<typeof props>,
     props,
   );
 
@@ -54,12 +58,13 @@ function SelectTrigger(
 
   return (
     <SelectPrimitive.Trigger
+      as="button"
+      data-slot="select-trigger"
+      data-size={local.size}
       class={cn(
         "flex w-fit items-center justify-between gap-2 whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 data-[size=default]:h-9 data-[size=sm]:h-8 data-placeholder:text-muted-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 dark:bg-input/30 dark:aria-invalid:ring-destructive/40 dark:hover:bg-input/50 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0",
         local.class,
       )}
-      data-size={local.size}
-      data-slot="select-trigger"
       {...rest}
     >
       {local.children}
@@ -71,14 +76,14 @@ function SelectTrigger(
 }
 
 function SelectContent(
-  props: ComponentProps<typeof SelectPrimitive.Content> & {
+  props: ComponentProps<typeof SelectPrimitive.Content<"div">> & {
     position?: "item-aligned" | "popper";
   },
 ) {
   const defaultedProps = mergeProps(
     {
       position: "popper",
-    } satisfies ComponentProps<typeof SelectPrimitive.Content>,
+    } satisfies typeof props,
     props,
   );
 
@@ -91,14 +96,15 @@ function SelectContent(
   return (
     <SelectPrimitive.Portal>
       <SelectPrimitive.Content
+        as="div"
+        data-slot="select-content"
+        data-position={local.position}
         class={cn(
           "data-closed:fade-out-0 data-expanded:fade-in-0 data-closed:zoom-out-95 data-expanded:zoom-in-95 data-[placement*=bottom]:slide-in-from-top-2 data-[placement*=left]:slide-in-from-right-2 data-[placement*=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2 relative z-50 max-h-(-kb-popper-available-height) min-w-32 origin-(--kb-select-content-transform-origin) overflow-y-auto overflow-x-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-closed:animate-out data-expanded:animate-in",
           local.position === "popper" &&
             "data-[placement*=left]:-translate-x-1 data-[placement*=top]:-translate-y-1 data-[placement*=right]:translate-x-1 data-[placement*=bottom]:translate-y-1",
           local.class,
         )}
-        data-slot="select-content"
-        position={local.position}
         {...rest}
       >
         <SelectPrimitive.Listbox
@@ -113,43 +119,40 @@ function SelectContent(
   );
 }
 
-function SelectSection(props: ComponentProps<typeof SelectPrimitive.Section>) {
+function SelectSection(
+  props: ComponentProps<typeof SelectPrimitive.Section<"li">>,
+) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <SelectPrimitive.Section
-      class={cn("px-2 py-1.5 text-muted-foreground text-xs", local.class)}
+      as="li"
       data-slot="select-section"
+      class={cn("px-2 py-1.5 text-muted-foreground text-xs", local.class)}
       {...rest}
     />
   );
 }
 
-function SelectItem(
-  props: ComponentProps<typeof SelectPrimitive.Item> & {
-    Icon?: ValidComponent;
-  },
-) {
-  const [local, rest] = splitProps(props, ["class", "children", "Icon"]);
+function SelectItem(props: ComponentProps<typeof SelectPrimitive.Item<"li">>) {
+  const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <SelectPrimitive.Item
+      as="li"
+      data-slot="select-item"
       class={cn(
-        "relative flex w-full cursor-default select-none items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
         local.class,
       )}
-      data-slot="select-item"
       {...rest}
     >
       <span class="absolute right-2 flex size-3.5 items-center justify-center">
         <SelectPrimitive.ItemIndicator>
-          <Dynamic class="size-4" component={local.Icon ?? CheckIcon} />
+          <CheckIcon class="size-4" />
         </SelectPrimitive.ItemIndicator>
       </span>
       <SelectPrimitive.ItemLabel>{local.children}</SelectPrimitive.ItemLabel>
-      {/* <SelectPrimitive.ItemDescription class="text-muted-foreground"> */}
-      {/*   {props.description} */}
-      {/* </SelectPrimitive.ItemDescription> */}
     </SelectPrimitive.Item>
   );
 }
@@ -161,8 +164,8 @@ function SelectSeparator(
 
   return (
     <SeparatorPrimitive.Root
-      class={cn("-mx-1 pointer-events-none my-1 h-px bg-border", local.class)}
       data-slot="select-separator"
+      class={cn("-mx-1 pointer-events-none my-1 h-px bg-border", local.class)}
       {...rest}
     />
   );
@@ -177,7 +180,7 @@ export {
   SelectTrigger,
   SelectValue,
   // Forms
-  FormSelectLabel,
-  FormSelectDescription,
-  FormSelectMessage,
+  SelectLabel,
+  SelectDescription,
+  SelectMessage,
 };

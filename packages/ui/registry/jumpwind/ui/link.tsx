@@ -1,8 +1,7 @@
 import * as LinkPrimitive from "@kobalte/core/link";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/registry/jumpwind/lib/utils";
 import { type ComponentProps, splitProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
+import { buttonVariants } from "@/registry/jumpwind/ui/button";
 
 const linkVariants = tv({
   extend: buttonVariants,
@@ -20,11 +19,13 @@ function Link(
 
   return (
     <LinkPrimitive.Root
-      class={cn(
-        linkVariants({ variant: local.variant, size: local.size }),
-        local.class,
-      )}
+      as="a"
       data-slot="link"
+      class={linkVariants({
+        variant: local.variant,
+        size: local.size,
+        class: local.class,
+      })}
       {...rest}
     />
   );

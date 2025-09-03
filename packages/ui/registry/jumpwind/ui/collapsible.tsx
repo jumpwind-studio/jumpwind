@@ -32,4 +32,10 @@ function CollapsibleContent(
   );
 }
 
-export { Collapsible, CollapsibleTrigger, CollapsibleContent, useCollapsible };
+export {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+  // Hooks
+  useCollapsible,
+};

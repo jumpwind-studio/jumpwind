@@ -1,6 +1,6 @@
-import { cn } from "@/registry/jumpwind/lib/utils";
 import { type ComponentProps, type JSX, splitProps } from "solid-js";
 import { Toaster as Sonner, toast as sonner } from "solid-sonner";
+import { cn } from "@/registry/jumpwind/lib/utils";
 
 const toast = sonner;
 
@@ -9,6 +9,7 @@ function Toaster(props: ComponentProps<typeof Sonner>) {
 
   return (
     <Sonner
+      data-class="toaster"
       class={cn("toaster group", local.class)}
       position="top-right"
       style={

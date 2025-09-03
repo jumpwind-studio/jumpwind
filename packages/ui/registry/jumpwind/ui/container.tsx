@@ -1,7 +1,6 @@
-import { Dynamic, type DynamicProps } from "@corvu/utils/dynamic";
-import { cn } from "@/registry/jumpwind/lib/utils";
 import { type ComponentProps, splitProps, type ValidComponent } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
+import { Dynamic, type DynamicProps } from "@/registry/jumpwind/ui/dynamic";
 
 const containerVariants = tv({
   base: "@container mx-auto w-full max-w-7xl lg:max-w-(--breakpoint-xl) 2xl:max-w-(--breakpoint-2xl)",
@@ -18,22 +17,16 @@ const containerVariants = tv({
 
 export type ContainerVariantProps = VariantProps<typeof containerVariants>;
 
-export type ContainerProps<T extends ValidComponent = "span"> =
-  ComponentProps<T> & ContainerVariantProps;
-
 export function Container<T extends ValidComponent = "span">(
-  props: DynamicProps<T, ContainerProps<T>>,
+  props: DynamicProps<T, ComponentProps<T>> & ContainerVariantProps,
 ) {
-  const [local, rest] = splitProps(props as ContainerProps, [
-    "class",
-    "intent",
-  ]);
+  const [local, rest] = splitProps(props, ["class", "intent"]);
 
   return (
     <Dynamic
       as="div"
       data-slot="container"
-      class={cn(containerVariants({ intent: local.intent }), local.class)}
+      class={containerVariants({ intent: local.intent, class: local.class })}
       {...rest}
     />
   );
