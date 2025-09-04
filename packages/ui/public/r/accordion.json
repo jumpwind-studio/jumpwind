@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accordion",
+  "type": "registry:ui",
+  "dependencies": [
+    "corvu/accordion",
+    "corvu",
+    "lucide-solid",
+    "solid-js",
+    "tailwind-variants"
+  ],
+  "files": [
+    {
+      "path": "registry/jumpwind/ui/accordion.tsx",
+      "content": "import * as AccordionPrimitive from \"corvu/accordion\";\nimport ChevronDownIcon from \"lucide-solid/icons/chevron-down\";\nimport { type ComponentProps, splitProps } from \"solid-js\";\nimport { cn } from \"@/registry/jumpwind/lib/utils\";\n\nconst useAccordion = AccordionPrimitive.useContext;\nconst useAccordionItem = AccordionPrimitive.useItemContext;\nconst useAccordionDisclosure = AccordionPrimitive.useDisclosureContext;\n\nfunction Accordion(props: ComponentProps<typeof AccordionPrimitive.Root>) {\n  return <AccordionPrimitive.Root data-slot=\"accordion\" {...props} />;\n}\n\nfunction AccordionItem(props: ComponentProps<typeof AccordionPrimitive.Item>) {\n  const [local, rest] = splitProps(props, [\"class\"]);\n\n  return (\n    <AccordionPrimitive.Item\n      data-slot=\"accordion-item\"\n      class={cn(\"border-b last:border-b-0\", local.class)}\n      {...rest}\n    />\n  );\n}\n\nfunction AccordionTrigger(\n  props: ComponentProps<typeof AccordionPrimitive.Trigger<\"button\">>,\n) {\n  const [local, rest] = splitProps(props, [\"class\", \"children\"]);\n\n  return (\n    <AccordionPrimitive.Trigger\n      as=\"button\"\n      data-slot=\"accordion-trigger\"\n      class={cn(\n        \"flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left font-medium text-sm outline-none transition-all hover:underline focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&[data-open]>svg]:rotate-180\",\n        local.class,\n      )}\n      {...rest}\n    >\n      {local.children}\n      <ChevronDownIcon class=\"pointer-events-none size-4 shrink-0 translate-y-0.5 text-muted-foreground transition-transform duration-200\" />\n    </AccordionPrimitive.Trigger>\n  );\n}\n\nfunction AccordionContent(\n  props: ComponentProps<typeof AccordionPrimitive.Content<\"div\">>,\n) {\n  const [local, rest] = splitProps(props, [\"class\", \"children\"]);\n\n  return (\n    <AccordionPrimitive.Content\n      as=\"div\"\n      data-slot=\"accordion-content\"\n      class=\"overflow-hidden text-sm data-closed:animate-accordion-up data-open:animate-accordion-down\"\n      {...rest}\n    >\n      <div class={cn(\"pt-0 pb-4\", local.class)}>{local.children}</div>\n    </AccordionPrimitive.Content>\n  );\n}\n\nexport {\n  Accordion,\n  AccordionItem,\n  AccordionTrigger,\n  AccordionContent,\n  // Hooks\n  useAccordion,\n  useAccordionItem,\n  useAccordionDisclosure,\n};\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/jumpwind/lib/utils.ts",
+      "content": "import { type Accessor, createMemo, type Ref } from \"solid-js\";\nimport { type ClassValue, cnBase } from \"tailwind-variants\";\n\n/**\n * Combines multiple class strings into one single string.\n *\n * @param classes - The classes to combine.\n * @returns The combined classes.\n */\nexport function cn(...classes: ClassValue[]): string | undefined {\n  return cnBase(classes);\n}\n\nexport type MaybeAccessor<T> = T | (() => T);\n\nexport type MaybeAccessorValue<T extends MaybeAccessor<unknown>> =\n  T extends () => unknown ? ReturnType<T> : T;\n\nexport function access<T extends MaybeAccessor<unknown>>(\n  v: T,\n): MaybeAccessorValue<T> {\n  return typeof v === \"function\" ? v() : (v as MaybeAccessorValue<T>);\n}\n\nexport function chain<Args extends [] | unknown[]>(callbacks: {\n  [Symbol.iterator]: () => IterableIterator<\n    ((...args: Args) => unknown) | undefined\n  >;\n}): (...args: Args) => void {\n  return (...args: Args) => {\n    for (const callback of callbacks) callback?.(...args);\n  };\n}\n\nexport function mergeRefs<T>(...refs: Ref<T>[]): (el: T) => void {\n  return chain(refs as ((el: T) => void)[]);\n}\n\nexport function some(...signals: Accessor<unknown>[]) {\n  return signals.some((signal) => !!signal());\n}\n\n/**\n * Returns a signal with the tag name of the element.\n *\n * @param props.element - The element to get the tag name of.\n * @param props.fallback - The fallback tag name to use if the element is `null`.\n * @returns ```typescript\n * Accessor<string>\n * ```\n */\nexport function createTagName(props: {\n  element: MaybeAccessor<HTMLElement | null>;\n  fallback: string;\n}): Accessor<string> {\n  const tagName = createMemo(\n    () => access(props.element)?.tagName.toLowerCase() ?? props.fallback,\n  );\n\n  return tagName;\n}\n",
+      "type": "registry:lib",
+      "target": ""
+    }
+  ]
+}

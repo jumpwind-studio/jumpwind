@@ -13,9 +13,10 @@
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "format": "biome check",
+    "format:fix": "biome check . --fix",
     "test": "bun run --bun vitest",
     "typecheck": "tsc --noEmit",
-    "registry:build": "shadcn registry:build && bun format",
+    "registry:build": "shadcn registry:build && bun run format:fix",
     "registry:script": "bun run ./scripts/build-registry.ts"
   },
   "dependencies": {

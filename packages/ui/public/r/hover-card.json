@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hover-card",
+  "type": "registry:ui",
+  "dependencies": [
+    "@kobalte/core/hover-card",
+    "@kobalte/core",
+    "solid-js",
+    "tailwind-variants"
+  ],
+  "files": [
+    {
+      "path": "registry/jumpwind/ui/hover-card.tsx",
+      "content": "import * as HoverCardPrimitive from \"@kobalte/core/hover-card\";\nimport { type ComponentProps, mergeProps, splitProps } from \"solid-js\";\nimport { cn } from \"@/registry/jumpwind/lib/utils\";\n\nfunction HoverCard(props: ComponentProps<typeof HoverCardPrimitive.Root>) {\n  const defaultedProps = mergeProps(\n    {\n      placement: \"bottom\",\n      gutter: 4,\n    } satisfies HoverCardPrimitive.HoverCardRootProps,\n    props,\n  );\n  const [local, rest] = splitProps(defaultedProps, [\"placement\", \"gutter\"]);\n\n  return (\n    <HoverCardPrimitive.Root\n      data-slot=\"hover-card\"\n      gutter={local.gutter}\n      placement={local.placement}\n      {...rest}\n    />\n  );\n}\n\nfunction HoverCardTrigger(\n  props: ComponentProps<typeof HoverCardPrimitive.Trigger<\"a\">>,\n) {\n  return (\n    <HoverCardPrimitive.Trigger\n      as=\"a\"\n      data-slot=\"hover-card-trigger\"\n      {...props}\n    />\n  );\n}\n\nfunction HoverCardContent(\n  props: ComponentProps<typeof HoverCardPrimitive.Content<\"div\">>,\n) {\n  const [local, rest] = splitProps(props, [\"class\"]);\n\n  return (\n    <HoverCardPrimitive.Portal data-slot=\"hover-card-portal\">\n      <HoverCardPrimitive.Content\n        as=\"div\"\n        data-slot=\"hover-card-content\"\n        class={cn(\n          \"data-closed:fade-out-0 data-expanded:fade-in-0 data-closed:zoom-out-95 data-expanded:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-64 origin-(--kb-hovercard-content-transform-origin) rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-hidden data-closed:animate-out data-expanded:animate-in\",\n          local.class,\n        )}\n        {...rest}\n      />\n    </HoverCardPrimitive.Portal>\n  );\n}\n\nexport { HoverCard, HoverCardTrigger, HoverCardContent };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/jumpwind/lib/utils.ts",
+      "content": "import { type Accessor, createMemo, type Ref } from \"solid-js\";\nimport { type ClassValue, cnBase } from \"tailwind-variants\";\n\n/**\n * Combines multiple class strings into one single string.\n *\n * @param classes - The classes to combine.\n * @returns The combined classes.\n */\nexport function cn(...classes: ClassValue[]): string | undefined {\n  return cnBase(classes);\n}\n\nexport type MaybeAccessor<T> = T | (() => T);\n\nexport type MaybeAccessorValue<T extends MaybeAccessor<unknown>> =\n  T extends () => unknown ? ReturnType<T> : T;\n\nexport function access<T extends MaybeAccessor<unknown>>(\n  v: T,\n): MaybeAccessorValue<T> {\n  return typeof v === \"function\" ? v() : (v as MaybeAccessorValue<T>);\n}\n\nexport function chain<Args extends [] | unknown[]>(callbacks: {\n  [Symbol.iterator]: () => IterableIterator<\n    ((...args: Args) => unknown) | undefined\n  >;\n}): (...args: Args) => void {\n  return (...args: Args) => {\n    for (const callback of callbacks) callback?.(...args);\n  };\n}\n\nexport function mergeRefs<T>(...refs: Ref<T>[]): (el: T) => void {\n  return chain(refs as ((el: T) => void)[]);\n}\n\nexport function some(...signals: Accessor<unknown>[]) {\n  return signals.some((signal) => !!signal());\n}\n\n/**\n * Returns a signal with the tag name of the element.\n *\n * @param props.element - The element to get the tag name of.\n * @param props.fallback - The fallback tag name to use if the element is `null`.\n * @returns ```typescript\n * Accessor<string>\n * ```\n */\nexport function createTagName(props: {\n  element: MaybeAccessor<HTMLElement | null>;\n  fallback: string;\n}): Accessor<string> {\n  const tagName = createMemo(\n    () => access(props.element)?.tagName.toLowerCase() ?? props.fallback,\n  );\n\n  return tagName;\n}\n",
+      "type": "registry:lib",
+      "target": ""
+    }
+  ]
+}

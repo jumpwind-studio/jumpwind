@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider",
+  "type": "registry:ui",
+  "dependencies": [
+    "@kobalte/core/slider",
+    "@kobalte/core",
+    "solid-js",
+    "tailwind-variants"
+  ],
+  "files": [
+    {
+      "path": "registry/jumpwind/ui/slider.tsx",
+      "content": "import * as SliderPrimitive from \"@kobalte/core/slider\";\nimport { type ComponentProps, splitProps } from \"solid-js\";\nimport { cn } from \"@/registry/jumpwind/lib/utils\";\n\nconst SliderDescription = SliderPrimitive.Description;\nconst SliderLabel = SliderPrimitive.Label;\nconst SliderMessage = SliderPrimitive.ErrorMessage;\n\nfunction SliderRoot(props: ComponentProps<typeof SliderPrimitive.Root<\"div\">>) {\n  const [local, rest] = splitProps(props, [\"class\"]);\n\n  return (\n    <SliderPrimitive.Root\n      as=\"div\"\n      data-slot=\"slider\"\n      class={cn(\n        \"relative flex w-full touch-none select-none items-center data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col data-disabled:opacity-50\",\n        local.class,\n      )}\n      {...rest}\n    />\n  );\n}\n\nfunction SliderTrack(\n  props: ComponentProps<typeof SliderPrimitive.Track<\"div\">>,\n) {\n  const [local, rest] = splitProps(props, [\"class\"]);\n\n  return (\n    <SliderPrimitive.Track\n      as=\"div\"\n      data-slot=\"slider-track\"\n      class={cn(\n        \"relative grow overflow-hidden rounded-full bg-muted data-[orientation=horizontal]:h-1.5 data-[orientation=vertical]:h-full data-[orientation=horizontal]:w-full data-[orientation=vertical]:w-1.5\",\n        local.class,\n      )}\n      {...rest}\n    />\n  );\n}\n\nfunction SliderFill(props: ComponentProps<typeof SliderPrimitive.Fill<\"div\">>) {\n  const [local, rest] = splitProps(props, [\"class\"]);\n\n  return (\n    <SliderPrimitive.Fill\n      as=\"div\"\n      data-slot=\"slider-range\"\n      class={cn(\n        \"absolute bg-primary data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full\",\n        local.class,\n      )}\n      {...rest}\n    />\n  );\n}\n\nfunction SliderThumb(\n  props: ComponentProps<typeof SliderPrimitive.Thumb<\"span\">>,\n) {\n  const [local, rest] = splitProps(props, [\"class\"]);\n\n  return (\n    <SliderPrimitive.Thumb\n      as=\"span\"\n      data-slot=\"slider-thumb\"\n      class={cn(\n        \"block size-4 shrink-0 rounded-full border border-primary bg-background shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:outline-hidden focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50\",\n        local.class,\n      )}\n      {...rest}\n    />\n  );\n}\n\nexport {\n  SliderRoot,\n  SliderFill,\n  SliderTrack,\n  SliderThumb,\n  // Forms\n  SliderDescription,\n  SliderLabel,\n  SliderMessage,\n};\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/jumpwind/lib/utils.ts",
+      "content": "import { type Accessor, createMemo, type Ref } from \"solid-js\";\nimport { type ClassValue, cnBase } from \"tailwind-variants\";\n\n/**\n * Combines multiple class strings into one single string.\n *\n * @param classes - The classes to combine.\n * @returns The combined classes.\n */\nexport function cn(...classes: ClassValue[]): string | undefined {\n  return cnBase(classes);\n}\n\nexport type MaybeAccessor<T> = T | (() => T);\n\nexport type MaybeAccessorValue<T extends MaybeAccessor<unknown>> =\n  T extends () => unknown ? ReturnType<T> : T;\n\nexport function access<T extends MaybeAccessor<unknown>>(\n  v: T,\n): MaybeAccessorValue<T> {\n  return typeof v === \"function\" ? v() : (v as MaybeAccessorValue<T>);\n}\n\nexport function chain<Args extends [] | unknown[]>(callbacks: {\n  [Symbol.iterator]: () => IterableIterator<\n    ((...args: Args) => unknown) | undefined\n  >;\n}): (...args: Args) => void {\n  return (...args: Args) => {\n    for (const callback of callbacks) callback?.(...args);\n  };\n}\n\nexport function mergeRefs<T>(...refs: Ref<T>[]): (el: T) => void {\n  return chain(refs as ((el: T) => void)[]);\n}\n\nexport function some(...signals: Accessor<unknown>[]) {\n  return signals.some((signal) => !!signal());\n}\n\n/**\n * Returns a signal with the tag name of the element.\n *\n * @param props.element - The element to get the tag name of.\n * @param props.fallback - The fallback tag name to use if the element is `null`.\n * @returns ```typescript\n * Accessor<string>\n * ```\n */\nexport function createTagName(props: {\n  element: MaybeAccessor<HTMLElement | null>;\n  fallback: string;\n}): Accessor<string> {\n  const tagName = createMemo(\n    () => access(props.element)?.tagName.toLowerCase() ?? props.fallback,\n  );\n\n  return tagName;\n}\n",
+      "type": "registry:lib",
+      "target": ""
+    }
+  ]
+}

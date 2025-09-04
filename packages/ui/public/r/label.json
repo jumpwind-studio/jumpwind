@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "label",
+  "type": "registry:ui",
+  "dependencies": ["solid-js", "tailwind-variants"],
+  "files": [
+    {
+      "path": "registry/jumpwind/ui/label.tsx",
+      "content": "import { type ComponentProps, splitProps, type ValidComponent } from \"solid-js\";\nimport { tv, type VariantProps } from \"tailwind-variants\";\nimport { Dynamic, type DynamicProps } from \"@/registry/jumpwind/ui/dynamic\";\n\nexport const labelVariants = tv({\n  base: \"flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50\",\n  variants: {\n    variant: {\n      label: \"data-invalid:text-destructive\",\n      error: \"text-destructive\",\n      description: \"font-normal text-muted-foreground\",\n    },\n  },\n  defaultVariants: {\n    variant: \"label\",\n  },\n});\n\nexport type LabelVariantProps = VariantProps<typeof labelVariants>;\n\nexport const Label = <T extends ValidComponent = \"label\">(\n  props: DynamicProps<T, ComponentProps<T>> & LabelVariantProps,\n) => {\n  const [local, rest] = splitProps(props, [\"class\", \"variant\"]);\n\n  return (\n    <Dynamic\n      as=\"label\"\n      data-slot=\"label\"\n      class={labelVariants({ variant: local.variant, class: local.class })}\n      {...rest}\n    />\n  );\n};\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/jumpwind/ui/dynamic.tsx",
+      "content": "/**\n * Portions of this code where adapted from corvu\n *\n * MIT License\n * Copyright (c) 2023-2025 Jasmin Noetzli\n */\n\nimport {\n  type ComponentProps,\n  createMemo,\n  type JSX,\n  splitProps,\n  untrack,\n  type ValidComponent,\n} from \"solid-js\";\nimport { Dynamic as SolidDynamic } from \"solid-js/web\";\n\nexport type DynamicAttributes<T extends ValidComponent = \"div\"> = {\n  /**\n   * Component to render the dynamic component as.\n   * @defaultValue `div`\n   */\n  as?: T | keyof JSX.HTMLElementTags;\n};\n\ntype OverrideProps<T, P> = Omit<T, keyof P> & P;\n\nexport type DynamicProps<\n  T extends ValidComponent,\n  Props extends object,\n> = OverrideProps<ComponentProps<T>, Props & DynamicAttributes<T>>;\n\n// corvu's version of Solid's `Dynamic` component.\n// Renders as a div by default and can be overridden with the `as` property.\nexport function Dynamic<ElementProps>(\n  props: DynamicAttributes<ValidComponent> & ElementProps,\n) {\n  const [local, rest] = splitProps(props, [\"as\"]);\n\n  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type\n  const cached = createMemo<Function | string>(() => local.as ?? \"div\");\n  const memo = createMemo(() => {\n    const component = cached();\n    switch (typeof component) {\n      case \"function\":\n        return untrack(() => component(rest));\n      case \"string\":\n        return <SolidDynamic component={component} {...rest} />;\n    }\n  });\n\n  return memo as unknown as JSX.Element;\n}\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}
