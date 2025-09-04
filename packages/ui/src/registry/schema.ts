@@ -5,12 +5,16 @@ const RegistryItemTemplateLiteral = S.TemplateLiteralParser(
   S.NonEmptyString,
 );
 
-const RegistryType = S.transform(RegistryItemTemplateLiteral, S.String, {
-  // optional but you get better error messages from TypeScript
-  strict: true,
-  decode: ([_, type]) => type,
-  encode: (type) => ["registry:", type] as const,
-});
+export class RegistryItemType extends S.transform(
+  RegistryItemTemplateLiteral,
+  S.String,
+  {
+    // optional but you get better error messages from TypeScript
+    strict: true,
+    decode: ([_, type]) => type,
+    encode: (type) => ["registry:", type] as const,
+  },
+) {}
 
 export const RegistryItemKind = S.Literal(
   ...([
@@ -27,9 +31,7 @@ export const RegistryItemKind = S.Literal(
     // Internal use only
     "registry:example",
     "registry:internal",
-  ] as const satisfies ReadonlyArray<
-    S.Schema.Encoded<typeof RegistryItemTemplateLiteral>
-  >),
+  ] as const satisfies ReadonlyArray<S.Schema.Type<typeof RegistryItemType>>),
 );
 
 const RegistryItemFile = S.Union(
@@ -62,14 +64,6 @@ const RegistryItemFile = S.Union(
     ),
   }),
 );
-
-export const RegistryItemTailwind = S.Struct({
-  config: S.Struct({
-    content: S.Array(S.String).pipe(S.optional),
-    theme: S.Record({ key: S.String, value: S.Any }).pipe(S.optional),
-    plugins: S.Array(S.String).pipe(S.optional),
-  }).pipe(S.optional),
-});
 
 export const RegistryItemCssVars = S.Struct({
   theme: S.Record({ key: S.String, value: S.String }).pipe(S.optional),
@@ -110,7 +104,13 @@ export class RegistryItem extends S.Class<RegistryItem>("RegistryItem")({
   author: S.String.pipe(S.minLength(2), S.optional),
   description: S.String.pipe(S.optional),
   // Extra
-  tailwind: RegistryItemTailwind.pipe(S.optional),
+  tailwind: S.Struct({
+    config: S.Struct({
+      content: S.Array(S.String).pipe(S.optional),
+      theme: S.Record({ key: S.String, value: S.Any }).pipe(S.optional),
+      plugins: S.Array(S.String).pipe(S.optional),
+    }).pipe(S.optional),
+  }).pipe(S.optional),
   cssVars: RegistryItemCssVars.pipe(S.optional),
   css: RegistryItemCss.pipe(S.optional),
   envVars: RegistryItemEnvVars.pipe(S.optional),
@@ -239,15 +239,17 @@ export class Config extends BaseConfig.extend<Config>("Config")({
 // Okay for now since I don't want a breaking change.
 // export const WorkspaceConfig = S.Record({ key: Config, value: S.Any });
 
-export const SearchResultItem = S.Struct({
+export class SearchResultItem extends S.Class<SearchResultItem>(
+  "SearchResultItem",
+)({
   name: S.String,
   type: S.String.pipe(S.optional),
   description: S.String.pipe(S.optional),
   registry: S.String,
   addCommandArgument: S.String,
-});
+}) {}
 
-export const SearchResults = S.Struct({
+export class SearchResults extends S.Class<SearchResults>("SearchResults")({
   pagination: S.Struct({
     total: S.Positive,
     offset: S.Positive,
@@ -255,4 +257,4 @@ export const SearchResults = S.Struct({
     hasMore: S.Boolean,
   }),
   items: S.Array(SearchResultItem),
-});
+}) {}

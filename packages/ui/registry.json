@@ -4,6 +4,17 @@
   "homepage": "https://registry.jumpwindstudios.com/ui",
   "items": [
     {
+      "name": "cn",
+      "type": "registry:lib",
+      "dependencies": ["tailwind-variants"],
+      "files": [
+        {
+          "path": "registry/jumpwind/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
       "name": "accordion",
       "type": "registry:ui",
       "dependencies": ["corvu/accordion"],
@@ -91,18 +102,6 @@
       ]
     },
     {
-      "name": "chart",
-      "type": "registry:ui",
-      "dependencies": ["recharts@2.15.4", "lucide-react"],
-      "registryDependencies": ["card"],
-      "files": [
-        {
-          "path": "registry/jumpwind/ui/chart.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
       "name": "checkbox",
       "type": "registry:ui",
       "dependencies": ["@kobalte/core/checkbox"],
@@ -183,13 +182,7 @@
     {
       "name": "form",
       "type": "registry:ui",
-      "dependencies": [
-        "@radix-ui/react-label",
-        "@radix-ui/react-slot",
-        "@hookform/resolvers",
-        "zod",
-        "react-hook-form"
-      ],
+      "dependencies": ["@tanstack/solid-form"],
       "registryDependencies": ["button", "label"],
       "files": [
         {
@@ -363,11 +356,7 @@
     {
       "name": "sidebar",
       "type": "registry:ui",
-      "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority",
-        "lucide-react"
-      ],
+      "dependencies": ["class-variance-authority", "lucide-solid"],
       "registryDependencies": [
         "button",
         "separator",

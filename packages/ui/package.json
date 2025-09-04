@@ -13,16 +13,22 @@
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "format": "biome check",
-    "test": "vitest",
-    "typecheck": "tsc --noEmit"
+    "test": "bun run --bun vitest",
+    "typecheck": "tsc --noEmit",
+    "registry:build": "shadcn registry:build && bun format",
+    "registry:script": "bun run ./scripts/build-registry.ts"
   },
   "dependencies": {
     "@corvu/utils": "catalog:frontend",
+    "@effect/platform": "catalog:effect",
+    "@effect/platform-bun": "catalog:effect",
     "@kobalte/core": "catalog:frontend",
+    "@tanstack/solid-form": "catalog:frontend",
     "clsx": "catalog:frontend",
     "effect": "catalog:effect",
     "corvu": "catalog:frontend",
     "lucide-solid": "catalog:frontend",
+    "shadcn": "catalog:frontend",
     "solid-js": "catalog:frontend",
     "solid-sonner": "catalog:frontend",
     "tailwind-merge": "catalog:frontend",
