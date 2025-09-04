@@ -31,11 +31,14 @@ function Calendar<const Mode extends CalendarPrimitive.RootProps["mode"]>(
   );
 }
 
-function CalendarNav(props: ComponentProps<typeof CalendarPrimitive.Nav>) {
+function CalendarNav(
+  props: ComponentProps<typeof CalendarPrimitive.Nav<"button">>,
+) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <CalendarPrimitive.Nav
+      as="button"
       data-slot="calendar-nav"
       class={buttonVariants({
         variant: "outline",
@@ -55,10 +58,12 @@ const { format: formatMonth } = new Intl.DateTimeFormat("en", {
   month: "long",
 });
 
-function CalendarLabel(props: ComponentProps<typeof CalendarPrimitive.Label>) {
+function CalendarLabel(
+  props: ComponentProps<typeof CalendarPrimitive.Label<"h2">>,
+) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
-  const context = CalendarPrimitive.useContext<"single">();
+  const context = useCalendar<"single">();
 
   const value = () => {
     const month = context.month();
@@ -67,6 +72,7 @@ function CalendarLabel(props: ComponentProps<typeof CalendarPrimitive.Label>) {
 
   return (
     <CalendarPrimitive.Label
+      as="h2"
       data-slot="calendar-label"
       class={cn("font-medium text-sm", local.class)}
       {...rest}
@@ -92,8 +98,8 @@ function CalendarPrevMonth(
       {...rest}
     >
       <Show
-        fallback={<ChevronLeftIcon class="h-4 w-4" />}
         when={local.children}
+        fallback={<ChevronLeftIcon class="h-4 w-4" />}
       >
         {local.children}
       </Show>
@@ -115,8 +121,8 @@ function CalendarNextMonth(
       {...rest}
     >
       <Show
-        fallback={<ChevronRightIcon class="h-4 w-4" />}
         when={local.children}
+        fallback={<ChevronRightIcon class="h-4 w-4" />}
       >
         {local.children}
       </Show>
@@ -138,11 +144,14 @@ function CalendarHeader(props: ComponentProps<"div">) {
   );
 }
 
-function CalendarTable(props: ComponentProps<typeof CalendarPrimitive.Table>) {
+function CalendarTable(
+  props: ComponentProps<typeof CalendarPrimitive.Table<"table">>,
+) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <CalendarPrimitive.Table
+      as="table"
       data-slot="calendar-table"
       class={cn("w-full border-collapse space-y-1", local.class)}
       {...rest}
@@ -169,7 +178,7 @@ function CalendarHeadRow(
 ) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
-  const context = CalendarPrimitive.useContext<"single">();
+  const context = useCalendar<"single">();
 
   return (
     <tr
@@ -185,12 +194,13 @@ function CalendarHeadRow(
 }
 
 function CalendarHeadCell(
-  props: ComponentProps<typeof CalendarPrimitive.HeadCell>,
+  props: ComponentProps<typeof CalendarPrimitive.HeadCell<"th">>,
 ) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <CalendarPrimitive.HeadCell
+      as="th"
       data-slot="calendar-head-cell"
       class={cn(
         "w-9 rounded-md font-normal text-[0.8rem] text-muted-foreground",
@@ -209,7 +219,8 @@ function CalendarBody(
   },
 ) {
   const [local, rest] = splitProps(props, ["class", "children"]);
-  const context = CalendarPrimitive.useContext<"single">();
+
+  const context = useCalendar<"single">();
 
   return (
     <tbody
@@ -243,11 +254,14 @@ function CalendarRow(
   );
 }
 
-function CalendarCell(props: ComponentProps<typeof CalendarPrimitive.Cell>) {
+function CalendarCell(
+  props: ComponentProps<typeof CalendarPrimitive.Cell<"td">>,
+) {
   const [local, rest] = splitProps(props, ["day", "class", "children"]);
 
   return (
     <CalendarPrimitive.Cell
+      as="td"
       data-slot="calendar-cell"
       class={cn(
         "relative h-9 w-9 p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected].day-range-end)]:rounded-r-md",
@@ -262,64 +276,33 @@ function CalendarCell(props: ComponentProps<typeof CalendarPrimitive.Cell>) {
 
 /** aka Day */
 function CalendarCellTrigger(
-  props: ComponentProps<typeof CalendarPrimitive.CellTrigger>,
+  props: ComponentProps<typeof CalendarPrimitive.CellTrigger<"button">>,
 ) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <CalendarPrimitive.CellTrigger
+      as="button"
       data-slot="calendar-cell-trigger"
-      class={cn(
-        buttonVariants({ variant: "ghost" }),
-        "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
-        // selected
-        "data-selected:bg-primary data-selected:text-primary-foreground data-selected:focus:bg-primary data-selected:focus:text-primary-foreground data-selected:hover:bg-primary data-selected:hover:text-primary-foreground",
-        // today
-        "data-today:bg-accent data-today:text-accent-foreground",
-        // disabled
-        "data-disabled:text-muted-foreground data-disabled:opacity-50",
-        // in-range
-        "data-in-range:aria-selected:bg-accent data-in-range:aria-selected:text-accent-foreground",
-        local.class,
-      )}
+      class={buttonVariants({
+        variant: "ghost",
+        class: [
+          "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
+          // selected
+          "data-selected:bg-primary data-selected:text-primary-foreground data-selected:focus:bg-primary data-selected:focus:text-primary-foreground data-selected:hover:bg-primary data-selected:hover:text-primary-foreground",
+          // today
+          "data-today:bg-accent data-today:text-accent-foreground",
+          // disabled
+          "data-disabled:text-muted-foreground data-disabled:opacity-50",
+          // in-range
+          "data-in-range:aria-selected:bg-accent data-in-range:aria-selected:text-accent-foreground",
+          local.class,
+        ],
+      })}
       {...rest}
     >
       {local.children}
     </CalendarPrimitive.CellTrigger>
-  );
-}
-
-function _ExampleCalendar() {
-  return (
-    <Calendar class="w-72" mode="single">
-      <CalendarHeader>
-        <CalendarPrevMonth />
-        <CalendarLabel />
-        <CalendarNextMonth />
-      </CalendarHeader>
-      <CalendarTable>
-        <CalendarHead>
-          <CalendarHeadRow>
-            {(weekday) => (
-              <CalendarHeadCell>
-                {weekday().toLocaleString("en", { weekday: "short" })}
-              </CalendarHeadCell>
-            )}
-          </CalendarHeadRow>
-        </CalendarHead>
-        <CalendarBody>
-          {(week) => (
-            <CalendarRow week={week()}>
-              {(day) => (
-                <CalendarCell>
-                  <CalendarCellTrigger day={day()} />
-                </CalendarCell>
-              )}
-            </CalendarRow>
-          )}
-        </CalendarBody>
-      </CalendarTable>
-    </Calendar>
   );
 }
 
@@ -338,5 +321,6 @@ export {
   CalendarRow,
   CalendarCell,
   CalendarCellTrigger,
+  // Hooks
   useCalendar,
 };

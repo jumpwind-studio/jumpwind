@@ -35,7 +35,7 @@ function CommandDialog(
     {
       title: "Command Palette",
       description: "Search for a command to run...",
-    } satisfies Partial<ComponentProps<typeof Dialog>> & {
+    } satisfies Partial<typeof Dialog> & {
       title?: string;
       description?: string;
     },

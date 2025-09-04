@@ -17,7 +17,7 @@ const containerVariants = tv({
 
 export type ContainerVariantProps = VariantProps<typeof containerVariants>;
 
-export function Container<T extends ValidComponent = "span">(
+function Container<T extends ValidComponent = "div">(
   props: DynamicProps<T, ComponentProps<T>> & ContainerVariantProps,
 ) {
   const [local, rest] = splitProps(props, ["class", "intent"]);
@@ -26,8 +26,13 @@ export function Container<T extends ValidComponent = "span">(
     <Dynamic
       as="div"
       data-slot="container"
-      class={containerVariants({ intent: local.intent, class: local.class })}
+      class={containerVariants({
+        intent: local.intent,
+        class: local.class,
+      })}
       {...rest}
     />
   );
 }
+
+export { Container, containerVariants };
