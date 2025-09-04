@@ -5,7 +5,7 @@ function Table(props: ComponentProps<"table">) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
-    <div class="relative w-full overflow-x-auto" data-slot="table-container">
+    <div data-slot="table-container" class="relative w-full overflow-x-auto">
       <table
         class={cn("w-full caption-bottom text-sm", local.class)}
         data-slot="table"
@@ -74,11 +74,11 @@ function TableHead(props: ComponentProps<"th">) {
 
   return (
     <th
+      data-slot="table-head"
       class={cn(
         "h-10 whitespace-nowrap px-2 text-left align-middle font-medium text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         local.class,
       )}
-      data-slot="table-head"
       {...rest}
     />
   );

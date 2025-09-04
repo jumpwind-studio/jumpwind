@@ -65,12 +65,12 @@ function OtpSlot(
   return (
     <div
       data-slot="otp-slot"
+      bool:data-active={isActive()}
       class={cn(
         "relative flex h-9 w-9 items-center justify-center border-input border-y border-r text-sm shadow-xs outline-ring/50 ring-ring/10 transition-all first:rounded-l-md first:border-l last:rounded-r-md data-active:z-10 data-active:outline-1 data-active:ring-4 dark:outline-ring/40 dark:ring-ring/20",
         "disabled:cursor-not-allowed",
         local.class,
       )}
-      bool:data-active={isActive()}
       {...rest}
     >
       {char()}

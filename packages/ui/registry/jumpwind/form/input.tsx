@@ -89,13 +89,13 @@ export function FormInput<
 
   return (
     <TextField
-      class={cn("group relative grid gap-1.5", local.class)}
       data-slot="form-input"
       name={local.field.name}
       onBlur={local.field.handleBlur}
       onChange={(e) => local.field.handleChange(e)}
       validationState={errors().length > 0 ? "invalid" : "valid"}
       value={local.field.state.value}
+      class={cn("group relative grid gap-1.5", local.class)}
       {...rootProps}
       {...rest}
     >
@@ -109,6 +109,7 @@ export function FormInput<
         </TextFieldLabel>
       </Show>
       <Show
+        when={local.multiline}
         fallback={
           <TextFieldInput
             aria-describedby={descriptionRef?.id}
@@ -119,7 +120,6 @@ export function FormInput<
             {...local["~"]?.inputProps}
           />
         }
-        when={local.multiline}
       >
         <TextFieldTextarea
           aria-describedby={descriptionRef?.id}

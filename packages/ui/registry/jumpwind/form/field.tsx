@@ -9,8 +9,7 @@ function FieldLabel(props: ComponentProps<"label">) {
     <Label
       data-slot="field-label"
       class={cn(
-        "invalid:text-destructive group-invalid:text-destructive",
-        "data-invalid:text-destructive group-data-invalid:text-destructive",
+        "invalid:text-destructive group-invalid:text-destructive data-invalid:text-destructive group-data-invalid:text-destructive",
         local.class,
       )}
       {...rest}

@@ -23,8 +23,8 @@ function Progress(props: ComponentProps<typeof ProgressPrimitive.Root<"div">>) {
       <ProgressPrimitive.Track>
         <ProgressPrimitive.Fill
           data-slot="progress-indicator"
-          class="h-full w-full flex-1 bg-primary transition-all"
           style={{ transform: translateX() }}
+          class="h-full w-full flex-1 bg-primary transition-all"
         />
       </ProgressPrimitive.Track>
     </ProgressPrimitive.Root>

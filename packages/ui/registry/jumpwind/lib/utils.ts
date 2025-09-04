@@ -1,10 +1,4 @@
-import {
-  type Accessor,
-  createMemo,
-  type Ref,
-  type ComponentProps as SolidComponentProps,
-  type ValidComponent,
-} from "solid-js";
+import { type Accessor, createMemo, type Ref } from "solid-js";
 import { type ClassValue, cnBase } from "tailwind-variants";
 
 /**
@@ -17,22 +11,10 @@ export function cn(...classes: ClassValue[]): string | undefined {
   return cnBase(classes);
 }
 
-export type ComponentProps<T extends ValidComponent> =
-  SolidComponentProps<T> & { class?: string };
-
 export type MaybeAccessor<T> = T | (() => T);
 
 export type MaybeAccessorValue<T extends MaybeAccessor<unknown>> =
   T extends () => unknown ? ReturnType<T> : T;
-
-export type EventHandlerEvent<T, E extends Event> = E & {
-  currentTarget: T;
-  target: Element;
-};
-
-export type ElementOf<T> = T extends keyof HTMLElementTagNameMap
-  ? HTMLElementTagNameMap[T]
-  : any;
 
 export function access<T extends MaybeAccessor<unknown>>(
   v: T,
