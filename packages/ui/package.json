@@ -8,7 +8,8 @@
     ".": "./src/index.ts",
     "./src/*": "./src/*.ts",
     "./internal/*": null,
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./registry.json": "./registry.json"
   },
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",
@@ -25,7 +26,6 @@
     "@effect/platform-bun": "catalog:effect",
     "@kobalte/core": "catalog:frontend",
     "@tanstack/solid-form": "catalog:frontend",
-    "clsx": "catalog:frontend",
     "effect": "catalog:effect",
     "corvu": "catalog:frontend",
     "lucide-solid": "catalog:frontend",

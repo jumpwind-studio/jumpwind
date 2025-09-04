@@ -34,7 +34,7 @@ export const RegistryItemKind = S.Literal(
   ] as const satisfies ReadonlyArray<S.Schema.Type<typeof RegistryItemType>>),
 );
 
-const RegistryItemFile = S.Union(
+export const RegistryItemFile = S.Union(
   S.Struct({
     path: S.String,
     content: S.String.pipe(S.optional),
@@ -64,6 +64,7 @@ const RegistryItemFile = S.Union(
     ),
   }),
 );
+export type RegistryItemFile = S.Schema.Type<typeof RegistryItemFile>;
 
 export const RegistryItemCssVars = S.Struct({
   theme: S.Record({ key: S.String, value: S.String }).pipe(S.optional),
