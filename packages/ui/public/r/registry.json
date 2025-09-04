@@ -146,12 +146,33 @@
       ]
     },
     {
+      "name": "container",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "registry/jumpwind/ui/container.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "context-menu",
       "type": "registry:ui",
       "dependencies": ["@kobalte/core/context-menu"],
       "files": [
         {
           "path": "registry/jumpwind/ui/context-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "devDependencies": ["button", "calendar", "popover"],
+      "files": [
+        {
+          "path": "registry/jumpwind/ui/date-picker.tsx",
           "type": "registry:ui"
         }
       ]
@@ -190,6 +211,16 @@
       ]
     },
     {
+      "name": "flex",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "registry/jumpwind/ui/flex.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "form",
       "type": "registry:ui",
       "dependencies": ["@tanstack/solid-form"],
@@ -197,6 +228,16 @@
       "files": [
         {
           "path": "registry/jumpwind/ui/form.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "registry/jumpwind/ui/grid.tsx",
           "type": "registry:ui"
         }
       ]
@@ -494,6 +535,17 @@
       "files": [
         {
           "path": "registry/jumpwind/ui/textarea.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "text-field",
+      "type": "registry:ui",
+      "dependencies": ["@kobalte/core/text-field"],
+      "files": [
+        {
+          "path": "registry/jumpwind/ui/text-field.tsx",
           "type": "registry:ui"
         }
       ]
