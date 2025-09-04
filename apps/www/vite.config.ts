@@ -1,45 +1,28 @@
 import tailwindcss from "@tailwindcss/vite";
+import { tanstackStart } from "@tanstack/solid-start/plugin/vite";
 import { visualizer } from "rollup-plugin-visualizer";
-import { defineConfig } from "vite";
+import { defineConfig, type PluginOption } from "vite";
 import solid from "vite-plugin-solid";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-const external: string[] = [];
-
-export default defineConfig(() => {
-  return {
-    server: {
-      port: 3000,
-    },
-    build: {
+export default defineConfig({
+  server: {
+    port: 3000,
+  },
+  plugins: [
+    tsconfigPaths(),
+    tailwindcss(),
+    tanstackStart({
+      target: "bun",
+      customViteSolidPlugin: true,
+    }),
+    solid({ ssr: true }),
+    visualizer({
+      open: true,
+      gzipSize: true,
+      brotliSize: true,
       sourcemap: true,
-      rollupOptions: {
-        external,
-      },
-    },
-    ssr: {
-      external,
-      optimizeDeps: {
-        exclude: external,
-      },
-    },
-    optimizeDeps: {
-      exclude: external,
-    },
-    resolve: {
-      dedupe: ["solid-js"],
-    },
-    plugins: [
-      tsconfigPaths(),
-      tailwindcss(),
-      solid({ ssr: true }),
-      visualizer({
-        open: true,
-        gzipSize: true,
-        brotliSize: true,
-        sourcemap: true,
-        filename: "stats.html",
-      }),
-    ],
-  };
+      filename: "stats.html",
+    }) as PluginOption,
+  ],
 });
