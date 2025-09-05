@@ -8,6 +8,7 @@ import InfoIcon from "lucide-solid/icons/info";
 import MenuIcon from "lucide-solid/icons/menu";
 import TagIcon from "lucide-solid/icons/tag";
 import { For } from "solid-js";
+import { Dynamic } from "solid-js/web";
 import { Link } from "@/components/ui/link";
 
 export function SiteHeader() {
@@ -102,7 +103,7 @@ export function SiteHeader() {
                         class="flex items-center gap-3 px-4 py-3 hover:bg-gray-900 hover:text-purple-300 transition-colors"
                       >
                         <span class="inline-flex items-center justify-center w-5 h-5 text-gray-400">
-                          <link.icon class="h-4 w-4" />
+                          <Dynamic component={link.icon} class="h-4 w-4" />
                         </span>
                         <span class="text-sm">{link.label}</span>
                       </Link>

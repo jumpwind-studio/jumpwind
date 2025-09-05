@@ -1,36 +1,31 @@
 /// <reference types="vite/client" />
 
-import { Toaster } from "@jumpwind/ui";
-import {
-  createRootRoute,
-  HeadContent,
-  Link,
-  Scripts,
-} from "@tanstack/solid-router";
-import { TanStackRouterDevtools } from "@tanstack/solid-router-devtools";
+import { createRootRoute, HeadContent, Scripts } from "@tanstack/solid-router";
 import type { FlowProps } from "solid-js";
 import { DefaultCatchBoundary } from "@/components/default-catch-boundary";
 import { NotFound } from "@/components/not-found";
+import { Providers } from "@/components/providers";
+import { SiteHeader } from "@/components/site-header";
+import { THEME_HEADER_SCRIPT } from "@/components/theme";
+import { seo } from "@/lib/seo";
 import appCss from "@/styles/app.css?url";
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
-      {
-        charset: "utf-8",
-      },
-      {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1",
-      },
-      // ...seo({
-      //   title:
-      //     "TanStack Start | Type-Safe, Client-First, Full-Stack React Framework",
-      //   description:
-      //     "TanStack Start is a type-safe, client-first, full-stack React framework. ",
-      // }),
+      { title: "Jumpwind Studios" },
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      ...seo({
+        title: "Jumpwind Studios",
+        description: "Web development agency from workers to workers.",
+      }),
     ],
-    links: [{ rel: "stylesheet", href: appCss }],
+    links: [
+      { href: "/favicon.ico", rel: "icon" },
+      { rel: "stylesheet", href: appCss },
+    ],
+    scripts: [{ children: THEME_HEADER_SCRIPT }],
   }),
   errorComponent: DefaultCatchBoundary,
   notFoundComponent: () => <NotFound />,
@@ -41,21 +36,12 @@ function RootDocument(props: FlowProps) {
   return (
     <>
       <HeadContent />
-      <div class="p-2 flex gap-2 text-lg">
-        <Link
-          to="/"
-          activeProps={{
-            class: "font-bold",
-          }}
-          activeOptions={{ exact: true }}
-        >
-          Home
-        </Link>{" "}
-      </div>
-      <hr />
-      {props.children}
-      <TanStackRouterDevtools position="bottom-right" />
-      <Toaster />
+      <Providers>
+        <SiteHeader />
+        <div class="font-regular tracking-wide antialiased">
+          {props.children}
+        </div>
+      </Providers>
       <Scripts />
     </>
   );

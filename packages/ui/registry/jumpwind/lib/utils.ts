@@ -54,7 +54,7 @@ export function createTagName(props: {
   fallback: string;
 }): Accessor<string> {
   const tagName = createMemo(
-    () => access(props.element)?.tagName.toLowerCase() ?? props.fallback,
+    () => access(props.element)?.tagName?.toLowerCase() ?? props.fallback,
   );
 
   return tagName;

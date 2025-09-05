@@ -11,7 +11,8 @@
     "./internal/*": null,
     "./package.json": "./package.json",
     "./registry.json": "./registry.json",
-    "./lib/*": "./registry/jumpwind/lib/*.ts"
+    "./lib/*": "./registry/jumpwind/lib/*.ts",
+    "./utils": "./registry/jumpwind/lib/utils.ts"
   },
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",
