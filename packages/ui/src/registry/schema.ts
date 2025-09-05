@@ -126,6 +126,9 @@ export class Registry extends S.Class<Registry>("Registry")({
   items: S.Array(RegistryItem),
 }) {}
 
+export const decodeRegistry = S.decode(Registry);
+export const encodeRegistry = S.encode(Registry);
+
 export const RegistryIndex = S.Array(RegistryItem);
 
 export const Styles = S.Array(

@@ -14,7 +14,7 @@
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "format": "biome check",
-    "test": "vitest",
+    "test": "bun run vitest",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

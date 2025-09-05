@@ -31,14 +31,14 @@
     },
     "catalogs": {
       "effect": {
-        "effect": "3.17.11",
-        "@effect/platform": "^0.90.6",
+        "effect": "3.17.13",
+        "@effect/platform": "^0.90.7",
         "@effect/platform-bun": "^0.79.0"
       },
       "frontend": {
         "@corvu/utils": "^0.4.2",
         "@effect/vitest": "^0.25.1",
-        "@kobalte/core": "^0.13.10",
+        "@kobalte/core": "^0.13.11",
         "@tailwindcss/vite": "^4.1.12",
         "@tanstack/solid-form": "^1.19.3",
         "cmdk-solid": "^1.1.2",
@@ -52,20 +52,20 @@
         "tailwind-merge": "^3.3.1",
         "tailwindcss": "^4.1.12",
         "tw-animate-css": "^1.3.8",
-        "vite": "^7.1.4",
+        "vite": "^6.3.5",
         "vitest": "^3.2.4",
-        "vite-plugin-solid": "^2.11.8",
+        "vite-plugin-solid": "^2.11.7",
         "vite-tsconfig-paths": "^5.1.4"
       }
     }
   },
   "devDependencies": {
-    "@biomejs/biome": "2.1.3",
+    "@biomejs/biome": "2.2.3",
     "@turbo/gen": "^2.5.6",
     "@types/bun": "latest",
     "madge": "^8.0.0",
     "turbo": "^2.5.6",
     "typescript": "^5.9.2"
   },
-  "packageManager": "bun@1.2.19"
+  "packageManager": "bun@1.2.21"
 }

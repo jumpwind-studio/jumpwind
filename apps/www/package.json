@@ -6,8 +6,8 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "dev": "bunx --bun vite dev",
-    "dev:debug": "bunx --bun vite dev --debug",
+    "dev": "vite dev",
+    "dev:debug": "vite dev --debug",
     "build": "vite build && tsc --noEmit",
     "start": "vite start"
   },
@@ -23,11 +23,11 @@
     "lucide-solid": "catalog:frontend",
     "shadcn": "catalog:frontend",
     "solid-js": "catalog:frontend",
+    "solid-sonner": "catalog:frontend",
     "tailwind-merge": "catalog:frontend",
     "tailwind-variants": "catalog:frontend",
     "@tanstack/solid-router": "^1.131.35",
-    "@tanstack/solid-router-devtools": "^1.131.35",
-    "@tanstack/solid-start": "^1.131.34"
+    "@tanstack/solid-start": "^1.131.35"
   },
   "devDependencies": {
     "@tailwindcss/vite": "catalog:frontend",

@@ -1,82 +1,129 @@
 import * as FileSystem from "@effect/platform/FileSystem";
 import * as Path from "@effect/platform/Path";
 import * as BunContext from "@effect/platform-bun/BunContext";
-import { TaggedError } from "effect/Data";
+import * as Cause from "effect/Cause";
+import * as Data from "effect/Data";
 import * as Effect from "effect/Effect";
 import * as Layer from "effect/Layer";
 import * as Option from "effect/Option";
-import * as Schema from "effect/Schema";
-import { registryItemSchema } from "shadcn/schema";
-import { RegistryItem, RegistryItemFile } from "./schema.js";
+import {
+  type RegistryItem,
+  registryItemSchema,
+  registrySchema,
+} from "shadcn/schema";
 
-// Define error types for better error handling
-class RegistryNotFoundError extends TaggedError("RegistryNotFoundError")<{
+export class RegistryNotFoundError extends Data.TaggedError(
+  "RegistryNotFoundError",
+)<{
+  readonly cause?: unknown;
+}> {}
+
+export class RegistryItemNotFoundError extends Data.TaggedError(
+  "RegistryItemNotFoundError",
+)<{
+  readonly cause?: unknown;
   readonly name: string;
 }> {}
 
-class InvalidRegistryItemError extends TaggedError("InvalidRegistryItemError")<{
-  readonly name: string;
-}> {}
+const findRoot = Effect.fnUntraced(function* (start = ".") {
+  const path = yield* Path.Path;
+  const fs = yield* FileSystem.FileSystem;
 
-// type RegistryItem = typeof registryItemSchema._output
-// type RegistryItemFile = NonNullable<RegistryItem['files']>[number]
+  let current: string | undefined;
+  yield* Effect.loop(path.resolve(start), {
+    while: (c) => path.dirname(c) !== c,
+    step: (c) => path.dirname(c),
+    body: Effect.fnUntraced(function* (c) {
+      if (yield* fs.exists(path.join(c, ".git"))) current = c;
+    }),
+    discard: true,
+  });
+  return yield* Effect.fromNullable(current);
+});
 
 const readRegistryItem = Effect.fn("read-registry-item")(function* (
-  file: RegistryItemFile,
+  file: NonNullable<RegistryItem["files"]>[number],
 ) {
   const path = yield* Path.Path;
   const fs = yield* FileSystem.FileSystem;
-  const filePath = path.join(process.cwd(), file.path);
+
+  const root = yield* findRoot();
+  const filePath = path.join(root, "/packages/ui", file.path);
   const content = yield* fs.readFileString(filePath, "utf8");
-  return yield* Schema.encode(RegistryItemFile)({ ...file, content });
+  return {
+    content,
+    ...file,
+  };
+});
+
+const parseRegistry = (data: unknown) =>
+  Effect.tryPromise({
+    try: () => registrySchema.parseAsync(data, { async: true }),
+    catch: (cause) => new RegistryNotFoundError({ cause }),
+  });
+
+const parseRegistryItem = (name: string, data: unknown) =>
+  Effect.tryPromise({
+    try: () => registryItemSchema.parseAsync(data, { async: true }),
+    catch: (cause) => new RegistryItemNotFoundError({ cause, name }),
+  });
+
+const loadRegistry = Effect.tryPromise({
+  try: () => import("@jumpwind/ui/registry.json").then((mod) => mod.default),
+  catch: (cause) => new RegistryNotFoundError({ cause }),
 });
 
 export class Registry extends Effect.Service<Registry>()("Registry", {
   accessors: true,
-  succeed: {
-    getItem: Effect.fn("get-item")(function* (name: string) {
-      const registry = yield* Effect.tryPromise({
-        try: () => import("@/registry.json").then((mod) => mod.default),
-        catch: () => new RegistryNotFoundError({ name }),
-      });
-      if (name === "registry") {
-        return yield* Option.some(registry);
-      }
+  effect: Effect.gen(function* () {
+    const registry = yield* loadRegistry;
+    const parsedRegistry = parseRegistry(registry);
+    const cachedRegistry = yield* Effect.cached(parsedRegistry);
 
-      const component = registry.items.find((c) => c.name === name);
-      if (!component) {
-        return yield* Option.none();
-      }
+    return {
+      all: Effect.fn("all")(function* () {
+        const registry = yield* cachedRegistry;
+        return registry;
+      }),
+      getItem: Effect.fn("get-item")(
+        function* (name: string) {
+          const registry = yield* cachedRegistry;
+          const component = registry.items.find((c) => c.name === name);
+          if (!component?.files?.length) return Option.none<RegistryItem>();
+          const files = yield* Effect.all(
+            component.files.map(readRegistryItem),
+            { concurrency: "unbounded" },
+          );
 
-      const parsed = yield* Effect.tryPromise({
-        try: () => registryItemSchema.parseAsync(component),
-        catch: () => new InvalidRegistryItemError({ name: component.name }),
-      });
-      if (!parsed?.files?.length) {
-        return yield* Option.none();
-      }
+          const parsed = yield* parseRegistryItem(name, {
+            ...component,
+            files,
+          });
 
-      const filesWithContent = yield* Effect.all(
-        parsed.files.map(readRegistryItem),
-        { concurrency: "unbounded" },
-      );
-      const registryItem = Schema.encode(RegistryItem)({
-        ...parsed,
-        files: filesWithContent,
-      });
-
-      return yield* Option.some(registryItem);
-    }, Effect.orDie),
-  },
+          return Option.some<RegistryItem>({
+            $schema: "https://ui.shadcn.com/schema/registry-item.json",
+            ...parsed,
+          });
+        },
+        (effect, name) =>
+          effect.pipe(
+            Effect.tapErrorCause((cause) =>
+              Effect.logError(Cause.squash(cause)),
+            ),
+            Effect.catchTags({
+              NoSuchElementException: (error) =>
+                new RegistryItemNotFoundError({
+                  cause: error.message,
+                  name: name,
+                }),
+            }),
+          ),
+      ),
+    };
+  }),
 }) {
   static readonly Live = this.Default.pipe(
-    Layer.provide(BunContext.layer),
+    Layer.provideMerge(BunContext.layer),
     Layer.orDie,
   );
 }
-
-export const getItemFromRegistry = (name: string) =>
-  Effect.gen(function* () {
-    const registry = yield* Registry;
-    return yield* registry.getItem(name);
-  }).pipe(Effect.provide(Registry.Live));

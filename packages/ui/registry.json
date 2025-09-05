@@ -82,6 +82,8 @@
     {
       "name": "button",
       "type": "registry:ui",
+      "title": "Button",
+      "description": "A button component.",
       "files": [
         {
           "path": "registry/jumpwind/ui/button.tsx",

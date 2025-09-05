@@ -25,8 +25,7 @@
     "rules": {
       "recommended": true,
       "nursery": {
-        "recommended": true,
-        "noUnknownAtRule": "off"
+        "recommended": true
       },
       "suspicious": {
         // effect

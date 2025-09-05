@@ -12,7 +12,7 @@ import { createServerRootRoute } from '@tanstack/solid-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ApiRegistryPublicIndexRouteImport } from './routes/api/registry/public/index'
+import { ServerRoute as ApiRegistryPublicIndexServerRouteImport } from './routes/api/registry/public/index'
 import { ServerRoute as ApiRegistryPublicNameServerRouteImport } from './routes/api/registry/public/$name'
 
 const rootServerRouteImport = createServerRootRoute()
@@ -22,11 +22,12 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiRegistryPublicIndexRoute = ApiRegistryPublicIndexRouteImport.update({
-  id: '/api/registry/public/',
-  path: '/api/registry/public/',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const ApiRegistryPublicIndexServerRoute =
+  ApiRegistryPublicIndexServerRouteImport.update({
+    id: '/api/registry/public/',
+    path: '/api/registry/public/',
+    getParentRoute: () => rootServerRouteImport,
+  } as any)
 const ApiRegistryPublicNameServerRoute =
   ApiRegistryPublicNameServerRouteImport.update({
     id: '/api/registry/public/$name',
@@ -36,49 +37,49 @@ const ApiRegistryPublicNameServerRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/api/registry/public': typeof ApiRegistryPublicIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/api/registry/public': typeof ApiRegistryPublicIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/api/registry/public/': typeof ApiRegistryPublicIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/registry/public'
+  fullPaths: '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/registry/public'
-  id: '__root__' | '/' | '/api/registry/public/'
+  to: '/'
+  id: '__root__' | '/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ApiRegistryPublicIndexRoute: typeof ApiRegistryPublicIndexRoute
 }
 export interface FileServerRoutesByFullPath {
   '/api/registry/public/$name': typeof ApiRegistryPublicNameServerRoute
+  '/api/registry/public': typeof ApiRegistryPublicIndexServerRoute
 }
 export interface FileServerRoutesByTo {
   '/api/registry/public/$name': typeof ApiRegistryPublicNameServerRoute
+  '/api/registry/public': typeof ApiRegistryPublicIndexServerRoute
 }
 export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport
   '/api/registry/public/$name': typeof ApiRegistryPublicNameServerRoute
+  '/api/registry/public/': typeof ApiRegistryPublicIndexServerRoute
 }
 export interface FileServerRouteTypes {
   fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/registry/public/$name'
+  fullPaths: '/api/registry/public/$name' | '/api/registry/public'
   fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/registry/public/$name'
-  id: '__root__' | '/api/registry/public/$name'
+  to: '/api/registry/public/$name' | '/api/registry/public'
+  id: '__root__' | '/api/registry/public/$name' | '/api/registry/public/'
   fileServerRoutesById: FileServerRoutesById
 }
 export interface RootServerRouteChildren {
   ApiRegistryPublicNameServerRoute: typeof ApiRegistryPublicNameServerRoute
+  ApiRegistryPublicIndexServerRoute: typeof ApiRegistryPublicIndexServerRoute
 }
 
 declare module '@tanstack/solid-router' {
@@ -90,17 +91,17 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/registry/public/': {
-      id: '/api/registry/public/'
-      path: '/api/registry/public'
-      fullPath: '/api/registry/public'
-      preLoaderRoute: typeof ApiRegistryPublicIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 declare module '@tanstack/solid-start/server' {
   interface ServerFileRoutesByPath {
+    '/api/registry/public/': {
+      id: '/api/registry/public/'
+      path: '/api/registry/public'
+      fullPath: '/api/registry/public'
+      preLoaderRoute: typeof ApiRegistryPublicIndexServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
     '/api/registry/public/$name': {
       id: '/api/registry/public/$name'
       path: '/api/registry/public/$name'
@@ -113,13 +114,13 @@ declare module '@tanstack/solid-start/server' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ApiRegistryPublicIndexRoute: ApiRegistryPublicIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 const rootServerRouteChildren: RootServerRouteChildren = {
   ApiRegistryPublicNameServerRoute: ApiRegistryPublicNameServerRoute,
+  ApiRegistryPublicIndexServerRoute: ApiRegistryPublicIndexServerRoute,
 }
 export const serverRouteTree = rootServerRouteImport
   ._addFileChildren(rootServerRouteChildren)

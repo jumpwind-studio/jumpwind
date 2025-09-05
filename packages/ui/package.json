@@ -5,11 +5,13 @@
   "license": "MIT",
   "private": true,
   "exports": {
+    "./*": "./registry/jumpwind/ui/*.tsx",
     ".": "./src/index.ts",
     "./src/*": "./src/*.ts",
     "./internal/*": null,
     "./package.json": "./package.json",
-    "./registry.json": "./registry.json"
+    "./registry.json": "./registry.json",
+    "./lib/*": "./registry/jumpwind/lib/*.ts"
   },
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",

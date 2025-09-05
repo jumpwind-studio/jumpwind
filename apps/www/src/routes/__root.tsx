@@ -1,7 +1,8 @@
 /// <reference types="vite/client" />
 
+import { Toaster } from "@jumpwind/ui";
 import {
-  createRootRouteWithContext,
+  createRootRoute,
   HeadContent,
   Link,
   Scripts,
@@ -12,7 +13,7 @@ import { DefaultCatchBoundary } from "@/components/default-catch-boundary";
 import { NotFound } from "@/components/not-found";
 import appCss from "@/styles/app.css?url";
 
-export const Route = createRootRouteWithContext<{}>()({
+export const Route = createRootRoute({
   head: () => ({
     meta: [
       {
@@ -54,6 +55,7 @@ function RootDocument(props: FlowProps) {
       <hr />
       {props.children}
       <TanStackRouterDevtools position="bottom-right" />
+      <Toaster />
       <Scripts />
     </>
   );
