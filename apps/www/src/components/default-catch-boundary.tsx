@@ -12,8 +12,8 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
   const router = useRouter();
 
   const isRoot = useMatch({
-    strict: false,
     select: (state) => state.id === rootRouteId,
+    strict: false,
   });
 
   return (
@@ -25,9 +25,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
           onClick={() => {
             router.invalidate();
           }}
-          class={
-            "px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded text-white uppercase font-extrabold"
-          }
+          class="px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded text-white uppercase font-extrabold"
         >
           Try Again
         </button>
@@ -36,9 +34,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
           fallback={
             <Link
               to="/"
-              class={
-                "px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded text-white uppercase font-extrabold"
-              }
+              class="px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded text-white uppercase font-extrabold"
             >
               Home
             </Link>
@@ -46,9 +42,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
         >
           <Link
             to="/"
-            class={
-              "px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded text-white uppercase font-extrabold"
-            }
+            class="px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded text-white uppercase font-extrabold"
             onClick={(e) => {
               e.preventDefault();
               window.history.back();
