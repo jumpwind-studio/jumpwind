@@ -11,9 +11,21 @@ const meta = {
   },
   argTypes: {
     variant: {
-      control: "radio",
+      description: "",
+      control: "select",
+      table: {
+        defaultValue: { summary: `"default"` },
+      },
+    },
+    size: {
+      description: "",
+      control: "select",
+      table: {
+        defaultValue: { summary: `"default"` },
+      },
     },
     children: {
+      description: "Text to display",
       control: "text",
     },
   },

@@ -1,5 +1,11 @@
+// import { dirname, join } from "node:path";
 import type { StorybookConfig } from "storybook-solidjs-vite";
 import { mergeConfig } from "vite";
+
+function getAbsolutePath(value: string): any {
+  return value;
+  // return dirname(require.resolve(join(value, "../../../package.json")));
+}
 
 const config = {
   framework: "storybook-solidjs-vite",
@@ -17,18 +23,15 @@ const config = {
     },
   ],
   stories: [
-    "../stories/**/*.mdx",
-    "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    "../stories/label.stories.tsx",
+    getAbsolutePath("../stories/**/*.mdx"),
+    getAbsolutePath("../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)"),
+    getAbsolutePath("../stories/label.stories.tsx"),
   ],
   core: {
     builder: "@storybook/builder-vite", // 👈 The builder enabled here.
   },
   async viteFinal(config) {
     return mergeConfig(config, {
-      // optimizeDeps: {
-      //   include: [""],
-      // },
       define: {
         "process.env": {},
       },

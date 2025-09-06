@@ -11,7 +11,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary = {
   args: {
-    primary: true,
     children: "Label",
   },
 } satisfies Story;
