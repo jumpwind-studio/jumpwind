@@ -7,12 +7,7 @@ const RadioGroupLabel = RadioGroupPrimitive.Label;
 const RadioGroupDescription = RadioGroupPrimitive.Description;
 const RadioGroupMessage = RadioGroupPrimitive.ErrorMessage;
 
-export interface RadioGroupItemValue<TValue = string> {
-  value: TValue;
-  label: string;
-}
-
-function RadioGroupRoot(
+function RadioGroup(
   props: ComponentProps<typeof RadioGroupPrimitive.Root<"div">>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
@@ -99,7 +94,7 @@ function RadioGroupItemLabel(
 }
 
 export {
-  RadioGroupRoot,
+  RadioGroup,
   RadioGroupItem,
   RadioGroupItemLabel,
   RadioGroupItemInput,

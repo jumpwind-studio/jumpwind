@@ -5,60 +5,43 @@ import ChevronDownIcon from "lucide-solid/icons/chevron-down";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
-const SelectLabel = SelectPrimitive.Label;
-const SelectDescription = SelectPrimitive.Description;
-const SelectMessage = SelectPrimitive.ErrorMessage;
-
 function Select<TOption, TGroup = never>(
-  props: ComponentProps<typeof SelectPrimitive.Root<TOption, TGroup, "div">>,
+  props: ComponentProps<typeof SelectPrimitive.Root<TOption, TGroup>>,
 ) {
   const [local, rest] = splitProps(props, ["children"]);
 
   return (
     <SelectPrimitive.Root<TOption, TGroup>
-      as="div"
       data-slot="select"
+      multiple={false}
       {...rest}
     >
-      <SelectPrimitive.HiddenSelect />
       {local.children}
     </SelectPrimitive.Root>
   );
 }
 
-function SelectValue<TOption>(
-  props: ComponentProps<typeof SelectPrimitive.Value<TOption, "span">>,
+function SelectHiddenSelect(
+  props: ComponentProps<typeof SelectPrimitive.HiddenSelect>,
 ) {
-  return (
-    <SelectPrimitive.Value<TOption>
-      as="span"
-      data-slot="select-value"
-      {...props}
-    />
-  );
+  return <SelectPrimitive.HiddenSelect data-slot="hidden-select" {...props} />;
+}
+
+function SelectValue<TOption>(
+  props: ComponentProps<typeof SelectPrimitive.Value<TOption>>,
+) {
+  return <SelectPrimitive.Value<TOption> data-slot="select-value" {...props} />;
 }
 
 function SelectTrigger(
-  props: ComponentProps<typeof SelectPrimitive.Trigger<"button">> & {
+  props: ComponentProps<typeof SelectPrimitive.Trigger> & {
     size?: "sm" | "default";
   },
 ) {
-  const defaultedProps = mergeProps(
-    {
-      size: "default",
-    } satisfies Partial<typeof props>,
-    props,
-  );
-
-  const [local, rest] = splitProps(defaultedProps, [
-    "class",
-    "size",
-    "children",
-  ]);
+  const [local, rest] = splitProps(props, ["class", "size", "children"]);
 
   return (
     <SelectPrimitive.Trigger
-      as="button"
       data-slot="select-trigger"
       data-size={local.size}
       class={cn(
@@ -76,7 +59,7 @@ function SelectTrigger(
 }
 
 function SelectContent(
-  props: ComponentProps<typeof SelectPrimitive.Content<"div">> & {
+  props: ComponentProps<typeof SelectPrimitive.Content> & {
     position?: "item-aligned" | "popper";
   },
 ) {
@@ -96,7 +79,6 @@ function SelectContent(
   return (
     <SelectPrimitive.Portal>
       <SelectPrimitive.Content
-        as="div"
         data-slot="select-content"
         data-position={local.position}
         class={cn(
@@ -126,7 +108,6 @@ function SelectSection(
 
   return (
     <SelectPrimitive.Section
-      as="li"
       data-slot="select-section"
       class={cn("px-2 py-1.5 text-muted-foreground text-xs", local.class)}
       {...rest}
@@ -134,12 +115,11 @@ function SelectSection(
   );
 }
 
-function SelectItem(props: ComponentProps<typeof SelectPrimitive.Item<"li">>) {
+function SelectItem(props: ComponentProps<typeof SelectPrimitive.Item>) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <SelectPrimitive.Item
-      as="li"
       data-slot="select-item"
       class={cn(
         "focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
@@ -171,8 +151,27 @@ function SelectSeparator(
   );
 }
 
+function SelectLabel(props: ComponentProps<typeof SelectPrimitive.Label>) {
+  return <SelectPrimitive.Label data-slot="select-label" {...props} />;
+}
+
+function SelectDescription(
+  props: ComponentProps<typeof SelectPrimitive.Description>,
+) {
+  return (
+    <SelectPrimitive.Description data-slot="select-description" {...props} />
+  );
+}
+
+function SelectMessage(
+  props: ComponentProps<typeof SelectPrimitive.ErrorMessage>,
+) {
+  return <SelectPrimitive.ErrorMessage data-slot="select-message" {...props} />;
+}
+
 export {
   Select,
+  SelectHiddenSelect,
   SelectContent,
   SelectItem,
   SelectSection,

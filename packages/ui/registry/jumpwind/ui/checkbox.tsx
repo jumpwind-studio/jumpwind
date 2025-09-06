@@ -3,10 +3,6 @@ import CheckIcon from "lucide-solid/icons/check";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
-const CheckboxLabel = CheckboxPrimitive.Label;
-const CheckboxDescription = CheckboxPrimitive.Description;
-const CheckboxMessage = CheckboxPrimitive.ErrorMessage;
-
 function CheckboxRoot(props: ComponentProps<typeof CheckboxPrimitive.Root>) {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -55,6 +51,29 @@ function CheckboxControl(
         <CheckIcon class="size-4" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Control>
+  );
+}
+
+function CheckboxLabel(props: ComponentProps<typeof CheckboxPrimitive.Label>) {
+  return <CheckboxPrimitive.Label data-slot="checkbox-label" {...props} />;
+}
+
+function CheckboxDescription(
+  props: ComponentProps<typeof CheckboxPrimitive.Description>,
+) {
+  return (
+    <CheckboxPrimitive.Description
+      data-slot="checkbox-description"
+      {...props}
+    />
+  );
+}
+
+function CheckboxMessage(
+  props: ComponentProps<typeof CheckboxPrimitive.ErrorMessage>,
+) {
+  return (
+    <CheckboxPrimitive.ErrorMessage data-slot="checkbox-message" {...props} />
   );
 }
 

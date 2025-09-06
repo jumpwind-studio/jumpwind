@@ -1,12 +1,6 @@
-import type { AnyFieldApi } from "@tanstack/solid-form";
-import {
-  type ComponentProps,
-  createMemo,
-  type JSX,
-  on,
-  Show,
-  splitProps,
-} from "solid-js";
+import type * as TextFieldPrimitive from "@kobalte/core/text-field";
+import { type AnyFieldApi, useStore } from "@tanstack/solid-form";
+import { type JSX, Show, splitProps } from "solid-js";
 import {
   FieldDescription,
   FieldLabel,
@@ -23,112 +17,66 @@ import {
 } from "@/registry/jumpwind/ui/text-field";
 
 export interface FormInputProps<
-  T extends AnyFieldApi = AnyFieldApi,
+  TField extends AnyFieldApi = AnyFieldApi,
   TMultiline extends boolean = false,
-> {
-  field: T;
+> extends TextFieldPrimitive.TextFieldRootOptions {
+  field: TField;
   class?: string;
   children?: JSX.Element;
-  description?: string | undefined;
-  disabled?: boolean | undefined;
-  label?: string | undefined;
-  multiline?: TMultiline | undefined;
-  placeholder?: string | undefined;
-  required?: boolean | undefined;
-  type?: "text" | "email" | "tel" | "password" | "url" | "date" | undefined;
-  autocomplete?: string | undefined;
-  onError?: (errors: {
-    errors: NonNullable<T["state"]["meta"]["errors"]>;
-    errorMap: NonNullable<T["state"]["meta"]["errorMap"]>;
-  }) => string;
-  "~"?: TMultiline extends false
-    ? { inputProps: ComponentProps<typeof TextFieldInput> }
-    : { inputProps: ComponentProps<typeof TextFieldTextarea> };
+  label?: string;
+  description?: string;
+  multiline?: TMultiline;
 }
 
 export function FormInput<
-  T extends AnyFieldApi = AnyFieldApi,
+  TField extends AnyFieldApi = AnyFieldApi,
   TMultiline extends boolean = false,
->(props: FormInputProps<T, TMultiline>) {
-  const [local, rootProps, inputProps, rest] = splitProps(
-    props,
-    [
-      "field",
-      "class",
-      "children",
-      "label",
-      "description",
-      "multiline",
-      "onError",
-      "~",
-    ],
-    ["disabled", "required"],
-    ["placeholder", "type", "autocomplete"],
-  );
+>(props: FormInputProps<TField, TMultiline>) {
+  const [local, rest] = splitProps(props, [
+    "field",
+    "class",
+    "children",
+    "label",
+    "description",
+    "multiline",
+  ]);
 
-  const errors = () => local.field.state.meta.errors ?? [];
-
-  const fmtdErrors = createMemo(
-    on(errors, (errors) => {
-      if (!errors?.length) return undefined;
-
-      if (local?.onError) {
-        return local.onError({
-          errors,
-          errorMap: local.field.state.meta.errorMap,
-        });
-      }
-      return (
-        local.field.state.meta.errors.map((err) => err.message).at(0) ?? ""
-      );
-    }),
-  );
-
-  let descriptionRef: HTMLDivElement | undefined;
-  let labelRef: HTMLLabelElement | undefined;
+  const errors = useStore(local.field.store, (state) => state.meta.errors);
+  const hasError = () => errors()?.length > 0;
+  const firstError = () => errors().at(0);
+  const validationState = () => (hasError() ? "invalid" : "valid");
 
   return (
     <TextField
       data-slot="form-input"
       name={local.field.name}
-      onBlur={local.field.handleBlur}
-      onChange={(e) => local.field.handleChange(e)}
-      validationState={errors().length > 0 ? "invalid" : "valid"}
       value={local.field.state.value}
+      onChange={local.field.handleChange}
+      onBlur={local.field.handleBlur}
+      validationState={validationState()}
       class={cn("group relative grid gap-1.5", local.class)}
-      {...rootProps}
       {...rest}
     >
       <Show when={local.label}>
-        <TextFieldLabel
-          as={FieldLabel}
-          data-slot="form-input-label"
-          ref={labelRef}
-        >
+        <TextFieldLabel as={FieldLabel} data-slot="form-input-label">
           {local.label}
         </TextFieldLabel>
       </Show>
       <Show
-        when={local.multiline}
         fallback={
           <TextFieldInput
-            aria-describedby={descriptionRef?.id}
-            aria-label={local.field.name}
-            aria-labelledby={labelRef?.id}
+            data-slot="form-input-input"
             name={local.field.name}
-            {...inputProps}
-            {...local["~"]?.inputProps}
+            aria-label={local.field.name}
           />
         }
+        when={local.multiline}
       >
         <TextFieldTextarea
-          aria-describedby={descriptionRef?.id}
-          aria-label={local.field.name}
-          aria-labelledby={labelRef?.id}
-          autoResize
+          data-slot="form-input-textarea"
           name={local.field.name}
-          {...inputProps}
-          {...local["~"]?.inputProps}
+          aria-label={local.field.name}
+          autoResize
         />
       </Show>
       {local.children}
@@ -136,13 +84,12 @@ export function FormInput<
         <TextFieldDescription
           as={FieldDescription}
           data-slot="form-input-description"
-          ref={descriptionRef}
         >
           {local.description}
         </TextFieldDescription>
       </Show>
       <TextFieldMessage as={FieldMessage} data-slot="form-input-message">
-        {fmtdErrors()}
+        {firstError()}
       </TextFieldMessage>
     </TextField>
   );
