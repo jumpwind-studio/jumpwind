@@ -21,7 +21,7 @@ export function SiteHeader() {
   ];
 
   return (
-    <header class="sticky top-0 z-50 p-4">
+    <header class="bg-background sticky top-0 z-50 w-full">
       <div class="container mx-auto max-w-4xl">
         <div class="flex h-14 items-center justify-between px-6 liquid-glass-header rounded-full">
           {/* Brand Logo */}

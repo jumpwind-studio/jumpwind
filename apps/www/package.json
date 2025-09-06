@@ -13,21 +13,22 @@
   },
   "dependencies": {
     "@corvu/utils": "catalog:frontend",
-    "@kobalte/core": "catalog:frontend",
+    "@effect/platform": "catalog:effect",
+    "@effect/platform-bun": "catalog:effect",
     "@jumpwind/ui": "workspace:*",
+    "@kobalte/core": "catalog:frontend",
+    "@tanstack/solid-router": "^1.131.35",
+    "@tanstack/solid-start": "^1.131.35",
+    "@unpic/solid": "catalog:frontend",
     "cmdk-solid": "catalog:frontend",
     "corvu": "catalog:frontend",
     "effect": "catalog:effect",
-    "@effect/platform": "catalog:effect",
-    "@effect/platform-bun": "catalog:effect",
     "lucide-solid": "catalog:frontend",
     "shadcn": "catalog:frontend",
     "solid-js": "catalog:frontend",
     "solid-sonner": "catalog:frontend",
     "tailwind-merge": "catalog:frontend",
-    "tailwind-variants": "catalog:frontend",
-    "@tanstack/solid-router": "^1.131.35",
-    "@tanstack/solid-start": "^1.131.35"
+    "tailwind-variants": "catalog:frontend"
   },
   "devDependencies": {
     "@tailwindcss/vite": "catalog:frontend",

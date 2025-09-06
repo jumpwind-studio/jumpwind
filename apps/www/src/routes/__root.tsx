@@ -12,6 +12,7 @@ import appCss from "@/styles/app.css?url";
 
 export const Route = createRootRoute({
   head: () => ({
+    // biome-ignore-start format: static data
     meta: [
       { title: "Jumpwind Studios" },
       { charSet: "utf-8" },
@@ -19,13 +20,37 @@ export const Route = createRootRoute({
       ...seo({
         title: "Jumpwind Studios",
         description: "Web development agency from workers to workers.",
+        keywords: [
+          "web development", "website design", "custom websites", "cooperative web agency", "digital solutions",
+          "web applications", "responsive design", "business websites", "web development services", "worker cooperative",
+          "custom web development", "digital strategy", "web design agency", "website development",
+        ],
       }),
     ],
     links: [
-      { href: "/favicon.ico", rel: "icon" },
       { rel: "stylesheet", href: appCss },
+      {
+        rel: "apple-touch-icon",
+        sizes: "180x180",
+        href: "/apple-touch-icon.png",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32",
+        href: "/favicon-32x32.png",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "16x16",
+        href: "/favicon-16x16.png",
+      },
+      { rel: "manifest", href: "/site.webmanifest", color: "#fffff" },
+      { rel: "icon", href: "/favicon.ico" },
     ],
     scripts: [{ children: THEME_HEADER_SCRIPT }],
+    // biome-ignore-end format: end
   }),
   errorComponent: DefaultCatchBoundary,
   notFoundComponent: () => <NotFound />,
@@ -38,7 +63,7 @@ function RootDocument(props: FlowProps) {
       <HeadContent />
       <Providers>
         <SiteHeader />
-        <div class="font-regular tracking-wide antialiased">
+        <div class="font-regular tracking-wide antialiased ">
           {props.children}
         </div>
       </Providers>

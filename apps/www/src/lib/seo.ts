@@ -1,13 +1,18 @@
-export const seo = (params: {
+export function seo(params: {
   title: string;
   description?: string;
   image?: string;
-  keywords?: string;
-}) => {
+  keywords?: string | string[];
+}) {
   const tags = [
     { title: params.title },
     { name: "description", content: params.description },
-    { name: "keywords", content: params.keywords },
+    {
+      name: "keywords",
+      content: Array.isArray(params.keywords)
+        ? params.keywords.join(", ")
+        : params.keywords,
+    },
     { name: "twitter:title", content: params.title },
     { name: "twitter:description", content: params.description },
     { name: "twitter:creator", content: "@jumpwind" },
@@ -25,4 +30,4 @@ export const seo = (params: {
   ];
 
   return tags;
-};
+}
