@@ -29,6 +29,7 @@
     "@effect/platform-bun": "catalog:effect",
     "@kobalte/core": "catalog:frontend",
     "@tanstack/solid-form": "catalog:frontend",
+    "@unpic/solid": "catalog:frontend",
     "effect": "catalog:effect",
     "corvu": "catalog:frontend",
     "lucide-solid": "catalog:frontend",

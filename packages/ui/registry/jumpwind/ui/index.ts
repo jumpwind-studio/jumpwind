@@ -19,6 +19,7 @@ export * from "./dynamic.jsx";
 export * from "./flex.jsx";
 export * from "./grid.jsx";
 export * from "./hover-card.jsx";
+export * from "./image.jsx";
 export * from "./input.jsx";
 export * from "./input-otp.jsx";
 export * from "./label.jsx";

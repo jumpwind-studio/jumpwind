@@ -41,6 +41,7 @@
         "@kobalte/core": "^0.13.11",
         "@tailwindcss/vite": "^4.1.12",
         "@tanstack/solid-form": "^1.19.3",
+        "@unpic/solid": "^1.0.0",
         "cmdk-solid": "^1.1.2",
         "corvu": "^0.7.2",
         "lucide-solid": "^0.534.0",
