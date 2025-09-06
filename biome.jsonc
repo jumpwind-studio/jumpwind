@@ -30,7 +30,8 @@
       "suspicious": {
         // effect
         "noShadowRestrictedNames": "off",
-        "noExplicitAny": { "level": "warn" }
+        "noExplicitAny": { "level": "warn" },
+        "noUnknownAtRules": { "level": "off" }
       },
       "correctness": {
         "noUnusedVariables": "off",

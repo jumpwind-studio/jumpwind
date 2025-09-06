@@ -40,7 +40,9 @@ export type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 export type ButtonProps<T extends ValidComponent = "button"> =
   DynamicButtonProps<T> & ButtonVariantProps;
 
-/** An accessible button that sets `type` and `role` properly based on if it's a native button. */
+/**
+ * An accessible button that sets `type` and `role` properly based on if it's a native button.
+ */
 function Button<T extends ValidComponent = "button">(
   props: DynamicProps<T, ButtonProps<T>>,
 ) {

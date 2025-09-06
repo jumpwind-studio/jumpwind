@@ -12,11 +12,13 @@
     "./package.json": "./package.json",
     "./registry.json": "./registry.json",
     "./lib/*": "./registry/jumpwind/lib/*.ts",
-    "./utils": "./registry/jumpwind/lib/utils.ts"
+    "./utils": "./registry/jumpwind/lib/utils.ts",
+    "./styles.css": "./registry/jumpwind/ui/styles.css"
   },
   "files": [
     ".storybook/**",
     "stories/**",
+    "*.css",
     "package.json",
     "tsconfig.json",
     "vitest.config.ts",
@@ -24,32 +26,32 @@
     ".gitignore"
   ],
   "scripts": {
+    "build": "vite build",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "format": "biome check",
     "format:fix": "biome check . --fix",
-    "test": "bun run --bun vitest",
+    "test": "bun --bun vitest",
     "typecheck": "tsc --noEmit",
     "registry:build": "shadcn registry:build && bun run format:fix",
     "registry:script": "bun run ./scripts/build-registry.ts",
     "storybook:build": "storybook build",
     "storybook:dev": "storybook dev -p 6006",
-    "storybook": "bun run storybook:dev",
+    "storybook": "bun run --bun storybook:dev",
     "storybook:preview": "serve storybook-static"
   },
-  "dependencies": {
+  "devDependencies": {
     "@corvu/utils": "catalog:frontend",
     "@effect/platform": "catalog:effect",
     "@effect/platform-bun": "catalog:effect",
     "@kobalte/core": "catalog:frontend",
+    "@tailwindcss/vite": "catalog:frontend",
     "@tanstack/solid-form": "catalog:frontend",
     "@unpic/solid": "catalog:frontend",
     "effect": "catalog:effect",
     "corvu": "catalog:frontend",
     "lucide-solid": "catalog:frontend",
     "solid-js": "catalog:frontend",
-    "solid-sonner": "catalog:frontend"
-  },
-  "devDependencies": {
+    "solid-sonner": "catalog:frontend",
     "@chromatic-com/storybook": "^4.1.1",
     "@storybook/addon-a11y": "^9.1.5",
     "@storybook/addon-docs": "^9.1.5",
@@ -61,12 +63,15 @@
     "playwright": "^1.55.0",
     "shadcn": "catalog:frontend",
     "storybook": "^9.1.5",
+    "@storybook/addon-themes": "^9.1.5",
+    "@storybook/builder-vite": "^9.1.5",
     "storybook-solidjs-vite": "^9.0.3",
     "tailwind-merge": "catalog:frontend",
     "tailwind-variants": "catalog:frontend",
     "tailwindcss": "catalog:frontend",
     "tw-animate-css": "catalog:frontend",
     "typescript": "catalog:",
+    "vite": "catalog:frontend",
     "vitest": "catalog:frontend",
     "vite-plugin-solid": "catalog:frontend",
     "vite-tsconfig-paths": "catalog:frontend"

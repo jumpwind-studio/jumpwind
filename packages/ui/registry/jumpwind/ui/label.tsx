@@ -1,6 +1,6 @@
+import { Dynamic, type DynamicProps } from "@corvu/utils/dynamic";
 import { type ComponentProps, splitProps, type ValidComponent } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Dynamic, type DynamicProps } from "@/registry/jumpwind/ui/dynamic";
 
 export const labelVariants = tv({
   base: "flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",

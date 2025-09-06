@@ -1,66 +1,66 @@
+import { createSignal } from "solid-js";
 import { fn } from "storybook/test";
-
+import type { Meta, StoryFn, StoryObj } from "storybook-solidjs-vite";
 import { Button } from "@/registry/jumpwind/ui/button";
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
-export default {
-  title: "Example/Button",
+const meta = {
+  title: "@jumpwind/ui/Button",
   component: Button,
   parameters: {
-    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: "centered",
   },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
-  // tags: ['autodocs'],
-  tags: ["autodocs"],
-  // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
-    backgroundColor: { control: "color" },
+    variant: {
+      control: "radio",
+    },
+    children: {
+      control: "text",
+    },
   },
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
   args: { onClick: fn() },
-};
+} satisfies Meta<typeof Button>;
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
+type Story = StoryObj<typeof meta>;
+
 export const Primary = {
   args: {
     primary: true,
-    label: "Button",
+    children: "Button",
   },
-};
+} satisfies Story;
 
 export const Secondary = {
   args: {
-    label: "Button",
+    children: "Button",
   },
-};
+} satisfies Story;
 
 export const Large = {
   args: {
-    size: "large",
-    label: "Button",
+    size: "lg",
+    children: "Button",
   },
-};
+} satisfies Story;
 
 export const Small = {
   args: {
-    size: "small",
-    label: "Button",
+    size: "sm",
+    children: "Button",
   },
-};
+} satisfies Story;
 
-export const InCSFFormat = () => {
-  return <Button size="sm" />;
-};
+export const InCSFFormat = (() => {
+  return <Button size="sm">Button</Button>;
+}) satisfies StoryFn<typeof meta>;
 
 export const WithDecorator = {
   args: {
-    size: "small",
-    label: "Button",
-    primary: true,
+    size: "sm",
+    children: "Button",
   },
   decorators: [
-    (Story: any, context: any) => {
+    (Story, context) => {
       return (
         <div style={{ border: "1px dashed red", padding: "10px" }}>
           <Story {...context.args} />
@@ -68,4 +68,33 @@ export const WithDecorator = {
       );
     },
   ],
-};
+} satisfies Story;
+
+export const WithHooks = {
+  tags: ["autodocs"],
+  render: () => {
+    // Sets the hooks for both the label and primary props
+    const [value, setValue] = createSignal("Secondary");
+    const [isPrimary, setIsPrimary] = createSignal(true);
+
+    // Sets a click handler to change the label's value
+    const handleOnChange = () => {
+      if (!isPrimary()) {
+        setIsPrimary(true);
+        setValue("Primary");
+      }
+    };
+    return (
+      <Button
+        variant={isPrimary() ? "default" : "secondary"}
+        onClick={handleOnChange}
+      >
+        {value()}
+      </Button>
+    );
+  },
+} satisfies Story;
+
+export default meta;
+
+// // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args

@@ -1,6 +1,5 @@
 import type { StorybookConfig } from "storybook-solidjs-vite";
-
-// import { mergeConfig } from "vite";
+import { mergeConfig } from "vite";
 
 const config = {
   framework: "storybook-solidjs-vite",
@@ -9,6 +8,7 @@ const config = {
     "@storybook/addon-docs",
     "@storybook/addon-a11y",
     "@storybook/addon-links",
+    "@storybook/addon-themes",
     {
       name: "@storybook/addon-vitest",
       options: {
@@ -19,14 +19,20 @@ const config = {
   stories: [
     "../stories/**/*.mdx",
     "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    "../stories/label.stories.tsx",
   ],
+  core: {
+    builder: "@storybook/builder-vite", // 👈 The builder enabled here.
+  },
   async viteFinal(config) {
-    return {
-      ...config,
+    return mergeConfig(config, {
+      // optimizeDeps: {
+      //   include: [""],
+      // },
       define: {
         "process.env": {},
       },
-    };
+    });
   },
   docs: {
     autodocs: true,

@@ -1,6 +1,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@custom-variant dark (&:where([data-mode=dark], [data-mode=dark] *));
+
+:root {
+  --header-height: 4rem;
+}
+
 :root {
   --header-height: 4rem;
   --footer-height: 4rem;
@@ -128,4 +134,20 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    @apply flex min-h-screen flex-col;
+  }
+}
+
+@layer utilities {
+  body {
+    font-family: Inter, Arial, Helvetica, sans-serif;
+  }
 }
