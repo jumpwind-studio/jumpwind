@@ -1,5 +1,6 @@
 import { expect, fn, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
+import { Button } from "@/registry/jumpwind/ui/button";
 import {
   Drawer,
   DrawerClose,
@@ -19,11 +20,10 @@ const meta = {
   component: Drawer,
   args: {
     onOpenChange: fn(),
-    onAnimationEnd: fn(),
   },
   render: (args) => (
     <Drawer {...args}>
-      <DrawerTrigger>Open</DrawerTrigger>
+      <DrawerTrigger as={Button}>Open</DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Are you sure absolutely sure?</DrawerTitle>

@@ -8,7 +8,7 @@ import { Calendar } from "@/registry/jumpwind/ui/calendar";
  * A date field component that allows users to enter and edit date.
  */
 const meta = {
-  title: "ui/Calendar",
+  title: "@jumpwind/ui/Calendar",
   component: Calendar,
   tags: ["autodocs"],
   argTypes: {},

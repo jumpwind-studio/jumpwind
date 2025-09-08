@@ -26,7 +26,7 @@ const meta = {
   argTypes: {},
   render: (args) => (
     <AlertDialog {...args}>
-      <AlertDialogTrigger>Open</AlertDialogTrigger>
+      <AlertDialogTrigger as={Button}>Open</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure absolutely sure?</AlertDialogTitle>
@@ -171,7 +171,7 @@ export const CustomActions = {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Discard</AlertDialogCancel>
+          <AlertDialogCancel variant="destructive">Discard</AlertDialogCancel>
           <AlertDialogAction variant="outline" onClick={fn()}>
             Save Draft
           </AlertDialogAction>

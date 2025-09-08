@@ -1,5 +1,6 @@
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
+import { Button } from "@/registry/jumpwind/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -21,7 +22,9 @@ const meta = {
   argTypes: {},
   render: (args) => (
     <Dialog {...args}>
-      <DialogTrigger>Open</DialogTrigger>
+      <DialogTrigger as={Button} variant="outline">
+        Open
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Are you absolutely sure?</DialogTitle>
@@ -31,10 +34,10 @@ const meta = {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter class="gap-4">
-          <DialogClose class="hover:underline">Cancel</DialogClose>
-          <DialogClose class="bg-primary text-primary-foreground rounded px-4 py-2">
-            Continue
+          <DialogClose as={Button} variant="outline">
+            Cancel
           </DialogClose>
+          <DialogClose as={Button}>Continue</DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

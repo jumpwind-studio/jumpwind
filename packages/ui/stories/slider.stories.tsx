@@ -2,9 +2,7 @@ import type { ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
   Slider,
-  SliderFill,
   SliderLabel,
-  SliderThumb,
   SliderTrack,
   SliderValueLabel,
 } from "@/registry/jumpwind/ui/slider";
@@ -31,7 +29,6 @@ const meta = {
     maxValue: 2000,
     defaultValue: [20, 500],
     getValueLabel: (params) => `$${params.values[0]} - $${params.values[1]}`,
-    class: "w-[300px] space-y-3",
   },
   render: (args) => (
     <Slider {...args}>
@@ -39,11 +36,7 @@ const meta = {
         <SliderLabel>Money</SliderLabel>
         <SliderValueLabel />
       </div>
-      <SliderTrack>
-        <SliderFill />
-        <SliderThumb />
-        <SliderThumb />
-      </SliderTrack>
+      <SliderTrack />
     </Slider>
   ),
 } satisfies Meta<StoryProps>;

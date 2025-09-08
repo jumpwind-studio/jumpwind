@@ -4,6 +4,7 @@ import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { Button } from "@/registry/jumpwind/ui/button";
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -33,30 +34,33 @@ const meta = {
   title: "@jumpwind/ui/Card",
   component: Card,
   argTypes: {},
-  args: {
-    class: "w-96",
-  },
+  args: {},
   render: (args) => (
-    <Card {...args}>
+    <Card class="w-full max-w-sm" {...args}>
       <CardHeader>
         <CardTitle>Notifications</CardTitle>
         <CardDescription>You have 3 unread messages.</CardDescription>
+        <CardAction>
+          <Button variant="link">Dismiss</Button>
+        </CardAction>
       </CardHeader>
       <CardContent class="grid gap-4">
         <For each={notifications}>
           {(notification) => (
             <div class="flex items-center gap-4">
-              <BellRingIcon class="size-6" />
+              <BellRingIcon class="size-5" />
               <div>
-                <p>{notification.title}</p>
-                <p class="text-foreground/60">{notification.description}</p>
+                <p class="font-base text-sm">{notification.title}</p>
+                <p class="text-muted-foreground text-sm">
+                  {notification.description}
+                </p>
               </div>
             </div>
           )}
         </For>
       </CardContent>
       <CardFooter>
-        <Button variant="link">Close</Button>
+        <Button variant="ghost">Close</Button>
       </CardFooter>
     </Card>
   ),
