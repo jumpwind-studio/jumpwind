@@ -61,4 +61,4 @@ function AlertDescription(props: ComponentProps<"div">) {
   );
 }
 
-export { Alert, AlertTitle, AlertDescription };
+export { Alert, AlertTitle, AlertDescription, alertVariants };

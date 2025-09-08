@@ -9,12 +9,12 @@ import {
 } from "@/registry/jumpwind/form/field";
 import { squash } from "@/registry/jumpwind/form/utils";
 import {
+  Checkbox,
   CheckboxControl,
   CheckboxDescription,
   CheckboxInput,
   CheckboxLabel,
   CheckboxMessage,
-  CheckboxRoot,
 } from "@/registry/jumpwind/ui/checkbox";
 
 export interface FormCheckboxProps
@@ -38,7 +38,7 @@ export function FormCheckbox(props: FormCheckboxProps) {
   const errors = useStore(field().store, (state) => state.meta.errors);
 
   return (
-    <CheckboxRoot
+    <Checkbox
       data-slot="form-checkbox"
       name={field().name}
       checked={value()}
@@ -68,6 +68,6 @@ export function FormCheckbox(props: FormCheckboxProps) {
           {squash(errors())}
         </CheckboxMessage>
       </div>
-    </CheckboxRoot>
+    </Checkbox>
   );
 }

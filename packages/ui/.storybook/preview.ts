@@ -17,15 +17,6 @@ const preview = {
   ],
   tags: ["autodocs"],
   args: { theme: "dark" },
-  argTypes: {
-    variant: {
-      table: {
-        defaultValue: {
-          summary: "default",
-        },
-      },
-    },
-  },
   parameters: {
     actions: {
       // create action args for all props that start with "on"

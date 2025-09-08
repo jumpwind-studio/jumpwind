@@ -6,7 +6,7 @@ const SwitchLabel = SwitchPrimitive.Label;
 const SwitchDescription = SwitchPrimitive.Description;
 const SwitchMessage = SwitchPrimitive.ErrorMessage;
 
-function SwitchRoot(props: ComponentProps<typeof SwitchPrimitive.Root<"div">>) {
+function Switch(props: ComponentProps<typeof SwitchPrimitive.Root<"div">>) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
@@ -60,7 +60,7 @@ function SwitchControl(
 }
 
 export {
-  SwitchRoot,
+  Switch,
   SwitchInput,
   SwitchControl,
   // Forms

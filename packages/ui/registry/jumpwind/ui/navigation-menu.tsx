@@ -144,7 +144,7 @@ function NavigationMenuViewport(
   );
 }
 
-function NavigationMenuLinkComponent(
+function NavigationMenuLink(
   props: ComponentProps<typeof NavigationMenuPrimitive.Item<"a">>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
@@ -218,8 +218,9 @@ function NavigationMenuDescription(
 export {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuList,
   NavigationMenuLabel,
+  NavigationMenuLink,
+  NavigationMenuList,
   NavigationMenuContent,
   NavigationMenuTrigger,
   NavigationMenuViewport,
