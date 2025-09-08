@@ -22,7 +22,7 @@ const meta = {
   render: (args) => (
     <Collapsible {...args}>
       <div class="flex items-center justify-between gap-4 px-4">
-        <h4 class="text-sm font-semibold">@jumpwind starred 3 repositories</h4>
+        <h4 class="font-semibold text-sm">@jumpwind starred 3 repositories</h4>
         <CollapsibleTrigger
           as={Button}
           variant="ghost"

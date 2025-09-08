@@ -42,7 +42,7 @@ const meta: Meta<typeof SheetContent> = {
         </SheetHeader>
         <SheetFooter>
           <SheetClose class="hover:underline">Cancel</SheetClose>
-          <SheetClose class="bg-primary text-primary-foreground rounded px-4 py-2">
+          <SheetClose class="rounded bg-primary px-4 py-2 text-primary-foreground">
             Submit
           </SheetClose>
         </SheetFooter>

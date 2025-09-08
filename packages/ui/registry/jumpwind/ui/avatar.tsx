@@ -12,7 +12,7 @@ function Avatar(props: ComponentProps<typeof AvatarPrimitive.Root<"span">>) {
       as="span"
       data-slot="avatar"
       class={cn(
-        "relative flex size-8 shrink-0 overflow-hidden rounded-full items-center justify-center",
+        "relative flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-full",
         local.class,
       )}
       {...rest}
@@ -45,7 +45,7 @@ function AvatarFallback(
       as="span"
       data-slot="avatar-fallback"
       class={cn(
-        "bg-muted flex size-full items-center justify-center rounded-full",
+        "flex size-full items-center justify-center rounded-full bg-muted",
         local.class,
       )}
       {...rest}

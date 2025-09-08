@@ -21,9 +21,9 @@ export function SiteHeader() {
   ];
 
   return (
-    <header class="bg-background sticky top-0 z-50 w-full">
+    <header class="sticky top-0 z-50 w-full bg-background">
       <div class="container mx-auto max-w-4xl">
-        <div class="flex h-14 items-center justify-between px-6 liquid-glass-header rounded-full">
+        <div class="liquid-glass-header flex h-14 items-center justify-between rounded-full px-6">
           {/* Brand Logo */}
           <Link to="/" class="flex items-center gap-1.5">
             <image
@@ -33,16 +33,16 @@ export function SiteHeader() {
               height={20}
               class="h-5 w-5"
             />
-            <span class="font-semibold tracking-wide text-white">Skitbit</span>
+            <span class="font-semibold text-white tracking-wide">Skitbit</span>
           </Link>
 
           {/* Desktop Nav */}
-          <nav class="hidden items-center gap-6 text-sm text-gray-300 md:flex">
+          <nav class="hidden items-center gap-6 text-gray-300 text-sm md:flex">
             <For each={links}>
               {(link) => (
                 <Link
                   to={link.href}
-                  class="hover:text-purple-300 transition-colors"
+                  class="transition-colors hover:text-purple-300"
                 >
                   {link.label}
                 </Link>
@@ -55,8 +55,8 @@ export function SiteHeader() {
             <Link
               to="/contact"
               class={cn(
-                "bg-lime-400 text-black font-medium rounded-lg px-6 py-2.5",
-                "hover:bg-lime-300 hover:shadow-md hover:scale-[1.02]",
+                "rounded-lg bg-lime-400 px-6 py-2.5 font-medium text-black",
+                "hover:scale-[1.02] hover:bg-lime-300 hover:shadow-md",
                 "transition-all",
               )}
             >
@@ -78,10 +78,10 @@ export function SiteHeader() {
               </SheetTrigger>
               <SheetContent
                 side="right"
-                class="liquid-glass border-gray-800 p-0 w-64 flex flex-col"
+                class="liquid-glass flex w-64 flex-col border-gray-800 p-0"
               >
                 {/* Brand Header */}
-                <div class="flex items-center gap-1.5 px-4 py-4 border-b border-gray-800">
+                <div class="flex items-center gap-1.5 border-gray-800 border-b px-4 py-4">
                   <image
                     href="/icons/skitbit-white.svg"
                     alt="Skitbit logo"
@@ -89,20 +89,20 @@ export function SiteHeader() {
                     height={24}
                     class="h-6 w-6"
                   />
-                  <span class="font-semibold tracking-wide text-white text-lg">
+                  <span class="font-semibold text-lg text-white tracking-wide">
                     Skitbit
                   </span>
                 </div>
 
                 {/* Nav Links */}
-                <nav class="flex flex-col gap-1 mt-2 text-gray-200">
+                <nav class="mt-2 flex flex-col gap-1 text-gray-200">
                   <For each={links}>
                     {(link) => (
                       <Link
                         to={link.href}
-                        class="flex items-center gap-3 px-4 py-3 hover:bg-gray-900 hover:text-purple-300 transition-colors"
+                        class="flex items-center gap-3 px-4 py-3 transition-colors hover:bg-gray-900 hover:text-purple-300"
                       >
-                        <span class="inline-flex items-center justify-center w-5 h-5 text-gray-400">
+                        <span class="inline-flex h-5 w-5 items-center justify-center text-gray-400">
                           <Dynamic component={link.icon} class="h-4 w-4" />
                         </span>
                         <span class="text-sm">{link.label}</span>
@@ -112,12 +112,12 @@ export function SiteHeader() {
                 </nav>
 
                 {/* CTA Button at Bottom */}
-                <div class="mt-auto border-t border-gray-800 p-4">
+                <div class="mt-auto border-gray-800 border-t p-4">
                   <Link
                     href="https://wa.link/65mf3i"
                     class={cn(
-                      "w-full bg-lime-400 text-black font-medium rounded-lg px-6 py-2.5",
-                      "hover:bg-lime-300 hover:shadow-md hover:scale-[1.02]",
+                      "w-full rounded-lg bg-lime-400 px-6 py-2.5 font-medium text-black",
+                      "hover:scale-[1.02] hover:bg-lime-300 hover:shadow-md",
                       "transition-all",
                     )}
                   >

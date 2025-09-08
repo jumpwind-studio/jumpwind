@@ -12,17 +12,17 @@ export function NotFound(props: ParentProps) {
           {props.children}
         </Show>
       </div>
-      <p class="flex items-center gap-2 flex-wrap">
+      <p class="flex flex-wrap items-center gap-2">
         <button
           type="button"
           onClick={() => window.history.back()}
-          class="bg-emerald-500 text-white px-2 py-1 rounded uppercase font-black text-sm"
+          class="rounded bg-emerald-500 px-2 py-1 font-black text-sm text-white uppercase"
         >
           Go back
         </button>
         <Link
           to="/"
-          class="bg-cyan-600 text-white px-2 py-1 rounded uppercase font-black text-sm"
+          class="rounded bg-cyan-600 px-2 py-1 font-black text-sm text-white uppercase"
         >
           Start Over
         </Link>

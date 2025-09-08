@@ -30,7 +30,7 @@ const meta = {
           <DrawerDescription>This action cannot be undone.</DrawerDescription>
         </DrawerHeader>
         <DrawerFooter>
-          <DrawerClose class="bg-primary text-primary-foreground rounded px-4 py-2">
+          <DrawerClose class="rounded bg-primary px-4 py-2 text-primary-foreground">
             Submit
           </DrawerClose>
           <DrawerClose class="hover:underline">Cancel</DrawerClose>

@@ -54,7 +54,7 @@ function Slider(props: ComponentProps<typeof SliderPrimitive.Root>) {
       maxValue={local.maxValue}
       getValueLabel={getValueLabel}
       class={cn(
-        "relative gap-y-3 flex touch-none select-none items-center data-disabled:opacity-50 w-full flex-col",
+        "relative flex w-full touch-none select-none flex-col items-center gap-y-3 data-disabled:opacity-50",
         "data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col",
         local.class,
       )}
@@ -92,7 +92,7 @@ function SliderTrack(props: ComponentProps<typeof SliderPrimitive.Track>) {
             data-slot={`slider-thumb-${index}`}
             class={cn(
               // "block size-4 shrink-0 rounded-full border border-primary bg-background shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:outline-hidden focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50",
-              "border-primary bg-background ring-ring/50 block size-4 shrink-0 rounded-full border shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50",
+              "block size-4 shrink-0 rounded-full border border-primary bg-background shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:outline-hidden focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50",
               "data-[orientation=horizontal]:top-[-6px] data-[orientation=vertical]:right-[-6px]",
             )}
           >
@@ -173,7 +173,7 @@ function SliderExample(props: ComponentProps<typeof SliderPrimitive.Root>) {
       maxValue={local.maxValue}
       data-orientation={rest.orientation}
       class={cn(
-        "relative flex w-full touch-none items-center select-none data-[disabled]:opacity-50 data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col",
+        "relative flex w-full touch-none select-none items-center data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col data-[disabled]:opacity-50",
         local.class,
       )}
       {...rest}
@@ -186,13 +186,13 @@ function SliderExample(props: ComponentProps<typeof SliderPrimitive.Root>) {
         data-slot="slider-track"
         data-orientation={rest.orientation}
         class={
-          "bg-muted relative grow overflow-hidden rounded-full data-[orientation=horizontal]:h-1.5 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5"
+          "relative grow overflow-hidden rounded-full bg-muted data-[orientation=horizontal]:h-1.5 data-[orientation=vertical]:h-full data-[orientation=horizontal]:w-full data-[orientation=vertical]:w-1.5"
         }
       >
         <SliderPrimitive.Fill
           data-slot="slider-fill"
           data-orientation={rest.orientation}
-          class="bg-primary absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full"
+          class="absolute bg-primary data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full"
         />
       </SliderPrimitive.Track>
       <Index each={values()}>
@@ -200,7 +200,7 @@ function SliderExample(props: ComponentProps<typeof SliderPrimitive.Root>) {
           <SliderPrimitive.Thumb
             data-slot={`slider-thumb-${index}`}
             data-orientation={rest.orientation}
-            class="border-primary bg-background ring-ring/50 block size-4 shrink-0 rounded-full border shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
+            class="block size-4 shrink-0 rounded-full border border-primary bg-background shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:outline-hidden focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50"
           >
             <SliderPrimitive.Input data-slot="slider-input" />
           </SliderPrimitive.Thumb>

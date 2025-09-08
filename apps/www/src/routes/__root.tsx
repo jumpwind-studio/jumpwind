@@ -64,7 +64,7 @@ function RootDocument(props: FlowProps) {
       <HeadContent />
       <Providers>
         <SiteHeader />
-        <div class="font-regular tracking-wide antialiased ">
+        <div class="font-regular tracking-wide antialiased">
           {props.children}
         </div>
       </Providers>

@@ -6,7 +6,7 @@ import * as Console from "effect/Console";
 import * as Effect from "effect/Effect";
 import * as Schema from "effect/Schema";
 import { Registry, type RegistryItem } from "@/src/registry/schema";
-import registry from "../registry.json";
+import registry from "../registry.json" with { type: "json" };
 
 const buildRegistryItem = Effect.fn("scripts/build-registry-item")(function* (
   item: RegistryItem,
