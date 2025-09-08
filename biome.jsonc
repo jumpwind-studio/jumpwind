@@ -25,7 +25,8 @@
     "rules": {
       "recommended": true,
       "nursery": {
-        "recommended": true
+        "recommended": true,
+        "useSortedClasses": "on"
       },
       "suspicious": {
         // effect
