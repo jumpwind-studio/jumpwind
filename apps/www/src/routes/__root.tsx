@@ -8,6 +8,7 @@ import { Providers } from "@/components/providers";
 import { SiteHeader } from "@/components/site-header";
 import { THEME_HEADER_SCRIPT } from "@/components/theme";
 import { seo } from "@/lib/seo";
+
 import appCss from "@/styles/app.css?url";
 
 export const Route = createRootRoute({
@@ -15,11 +16,11 @@ export const Route = createRootRoute({
     // biome-ignore-start format: static data
     meta: [
       { title: "Jumpwind Studios" },
-      { charSet: "utf-8" },
+      { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       ...seo({
         title: "Jumpwind Studios",
-        description: "Web development agency from workers to workers.",
+        description: "Web development agency from workers for workers.",
         keywords: [
           "web development", "website design", "custom websites", "cooperative web agency", "digital solutions",
           "web applications", "responsive design", "business websites", "web development services", "worker cooperative",
