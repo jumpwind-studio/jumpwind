@@ -3,6 +3,8 @@ import CheckIcon from "lucide-solid/icons/check";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
+const useCheckbox = CheckboxPrimitive.useCheckboxContext;
+
 function Checkbox(props: ComponentProps<typeof CheckboxPrimitive.Root>) {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -81,8 +83,10 @@ export {
   Checkbox,
   CheckboxInput,
   CheckboxControl,
-  // Form
+  // Forms
   CheckboxLabel,
   CheckboxDescription,
   CheckboxMessage,
+  // Hooks
+  useCheckbox,
 };

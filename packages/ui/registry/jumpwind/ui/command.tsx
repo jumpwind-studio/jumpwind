@@ -1,6 +1,8 @@
+import { isFunction } from "@corvu/utils";
+import createOnce from "@corvu/utils/create/once";
 import { Command as CommandPrimitive } from "cmdk-solid";
 import SearchIcon from "lucide-solid/icons/search";
-import { type ComponentProps, mergeProps, splitProps } from "solid-js";
+import { type ComponentProps, mergeProps, splitProps, untrack } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 import {
   Dialog,
@@ -48,23 +50,32 @@ function CommandDialog(
     "description",
   ]);
 
+  // NOTE: Using `corvu` pattern for memoizing child components
+  // Okay to remove if overkill
+  const memoizedChildren = createOnce(() => defaultedProps.children);
+
   return (
     <Dialog {...rest}>
-      {(state) => (
-        <>
-          <DialogHeader class="sr-only">
-            <DialogTitle>{local.title}</DialogTitle>
-            <DialogDescription>{local.description}</DialogDescription>
-          </DialogHeader>
-          <DialogContent class="overflow-hidden p-0">
-            <Command class="**:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
-              {typeof local.children === "function"
-                ? local.children(state)
-                : local.children}
-            </Command>
-          </DialogContent>
-        </>
-      )}
+      {(state) => {
+        const resolveChildren = () => {
+          const children = memoizedChildren()();
+          if (isFunction(children)) return children(state);
+          return children;
+        };
+        return (
+          <>
+            <DialogHeader class="sr-only">
+              <DialogTitle>{local.title}</DialogTitle>
+              <DialogDescription>{local.description}</DialogDescription>
+            </DialogHeader>
+            <DialogContent class="overflow-hidden p-0">
+              <Command class="**:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+                {untrack(() => resolveChildren())}
+              </Command>
+            </DialogContent>
+          </>
+        );
+      }}
     </Dialog>
   );
 }

@@ -2,6 +2,8 @@ import * as SwitchPrimitive from "@kobalte/core/switch";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
+const useSwitch = SwitchPrimitive.useSwitchContext;
+
 const SwitchLabel = SwitchPrimitive.Label;
 const SwitchDescription = SwitchPrimitive.Description;
 const SwitchMessage = SwitchPrimitive.ErrorMessage;
@@ -67,4 +69,6 @@ export {
   SwitchLabel,
   SwitchDescription,
   SwitchMessage,
+  // Hooks
+  useSwitch,
 };

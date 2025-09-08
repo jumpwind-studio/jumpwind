@@ -5,6 +5,8 @@ import CircleIcon from "lucide-solid/icons/circle";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
+const useMenubar = MenubarPrimitive.useMenubarContext;
+
 function Menubar(props: ComponentProps<typeof MenubarPrimitive.Root<"div">>) {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -300,4 +302,6 @@ export {
   MenubarSub,
   MenubarSubTrigger,
   MenubarSubContent,
+  // Hooks
+  useMenubar,
 };

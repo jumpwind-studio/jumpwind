@@ -4,6 +4,8 @@ import { type ComponentProps, mergeProps, Show, splitProps } from "solid-js";
 import { tv } from "tailwind-variants";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
+const useNavigationMenu = NavigationMenuPrimitive.useNavigationMenuContext;
+
 function NavigationMenu(
   props: ComponentProps<typeof NavigationMenuPrimitive.Root<"ul">> & {
     viewport?: boolean;
@@ -227,4 +229,6 @@ export {
   NavigationMenuIndicator,
   NavigationMenuDescription,
   navigationMenuTriggerVariants,
+  // Hooks
+  useNavigationMenu,
 };

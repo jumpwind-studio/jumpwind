@@ -5,6 +5,8 @@ import ChevronDownIcon from "lucide-solid/icons/chevron-down";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
+const useSelect = SelectPrimitive.useSelectContext;
+
 function Select<TOption, TGroup = never>(
   props: ComponentProps<typeof SelectPrimitive.Root<TOption, TGroup>>,
 ) {
@@ -182,4 +184,6 @@ export {
   SelectLabel,
   SelectDescription,
   SelectMessage,
+  // Hooks
+  useSelect,
 };

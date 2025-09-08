@@ -3,6 +3,8 @@ import DotIcon from "lucide-solid/icons/dot";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
+const useRadioGroup = RadioGroupPrimitive.useRadioGroupContext;
+
 const RadioGroupLabel = RadioGroupPrimitive.Label;
 const RadioGroupDescription = RadioGroupPrimitive.Description;
 const RadioGroupMessage = RadioGroupPrimitive.ErrorMessage;
@@ -103,4 +105,6 @@ export {
   RadioGroupLabel,
   RadioGroupDescription,
   RadioGroupMessage,
+  // Hooks
+  useRadioGroup,
 };

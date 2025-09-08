@@ -7,8 +7,27 @@ const useAccordion = AccordionPrimitive.useContext;
 const useAccordionItem = AccordionPrimitive.useItemContext;
 const useAccordionDisclosure = AccordionPrimitive.useDisclosureContext;
 
-function Accordion(props: ComponentProps<typeof AccordionPrimitive.Root>) {
-  return <AccordionPrimitive.Root data-slot="accordion" {...props} />;
+function Accordion(
+  props: Omit<ComponentProps<typeof AccordionPrimitive.Root>, "multiple"> & {
+    type?: "single" | "multiple";
+  },
+) {
+  const [local, rest] = splitProps(props, ["type"]);
+
+  const multiple = (): boolean => {
+    if ("multiple" in props && typeof props.multiple === "boolean")
+      return props.multiple;
+    if (local.type === "multiple") return true;
+    return false;
+  };
+
+  return (
+    <AccordionPrimitive.Root
+      data-slot="accordion"
+      multiple={multiple()}
+      {...rest}
+    />
+  );
 }
 
 function AccordionItem(props: ComponentProps<typeof AccordionPrimitive.Item>) {
@@ -24,7 +43,7 @@ function AccordionItem(props: ComponentProps<typeof AccordionPrimitive.Item>) {
 }
 
 function AccordionTrigger(
-  props: ComponentProps<typeof AccordionPrimitive.Trigger<"button">>,
+  props: ComponentProps<typeof AccordionPrimitive.Trigger>,
 ) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
@@ -32,7 +51,7 @@ function AccordionTrigger(
     <AccordionPrimitive.Trigger
       data-slot="accordion-trigger"
       class={cn(
-        "flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left font-medium text-sm outline-none transition-all hover:underline focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&[data-open]>svg]:rotate-180",
+        "flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left font-medium text-sm outline-none transition-all hover:underline focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&[data-expanded]>svg]:rotate-180",
         local.class,
       )}
       {...rest}
@@ -44,14 +63,16 @@ function AccordionTrigger(
 }
 
 function AccordionContent(
-  props: ComponentProps<typeof AccordionPrimitive.Content<"div">>,
+  props: ComponentProps<typeof AccordionPrimitive.Content>,
 ) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <AccordionPrimitive.Content
       data-slot="accordion-content"
-      class="overflow-hidden text-sm data-closed:animate-accordion-up data-open:animate-accordion-down"
+      class={
+        "overflow-hidden text-sm data-collapsed:animate-collapse data-expanded:animate-expand"
+      }
       {...rest}
     >
       <div class={cn("pt-0 pb-4", local.class)}>{local.children}</div>

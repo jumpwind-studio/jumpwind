@@ -4,6 +4,8 @@ import ChevronUpIcon from "lucide-solid/icons/chevron-up";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
+const useNumberField = NumberFieldPrimitive.useNumberFieldContext;
+
 const NumberFieldLabel = NumberFieldPrimitive.Label;
 const NumberFieldDescription = NumberFieldPrimitive.Description;
 const NumberFieldMessage = NumberFieldPrimitive.ErrorMessage;
@@ -125,4 +127,6 @@ export {
   NumberFieldLabel,
   NumberFieldDescription,
   NumberFieldMessage,
+  // Hooks
+  useNumberField,
 };

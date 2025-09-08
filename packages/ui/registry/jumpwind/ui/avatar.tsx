@@ -2,6 +2,8 @@ import * as AvatarPrimitive from "@kobalte/core/image";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
+const useAvatar = AvatarPrimitive.useImageContext;
+
 function Avatar(props: ComponentProps<typeof AvatarPrimitive.Root<"span">>) {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -51,4 +53,10 @@ function AvatarFallback(
   );
 }
 
-export { Avatar, AvatarImage, AvatarFallback };
+export {
+  Avatar,
+  AvatarImage,
+  AvatarFallback,
+  // Hooks
+  useAvatar,
+};

@@ -2,6 +2,8 @@ import * as ProgressPrimitive from "@kobalte/core/progress";
 import { type ComponentProps, createMemo, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
+const useProgress = ProgressPrimitive.useProgressContext;
+
 function Progress(props: ComponentProps<typeof ProgressPrimitive.Root<"div">>) {
   const [local, rest] = splitProps(props, ["class", "value"]);
 
@@ -31,4 +33,8 @@ function Progress(props: ComponentProps<typeof ProgressPrimitive.Root<"div">>) {
   );
 }
 
-export { Progress };
+export {
+  Progress,
+  // Hooks
+  useProgress,
+};

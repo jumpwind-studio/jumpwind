@@ -8,7 +8,7 @@ function Card(props: ComponentProps<"div">) {
     <div
       data-slot="card"
       class={cn(
-        "flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground shadow-sm",
+        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
         local.class,
       )}
       {...rest}
@@ -54,6 +54,7 @@ function CardDescription(props: ComponentProps<"div">) {
     />
   );
 }
+
 function CardAction(props: ComponentProps<"div">) {
   const [local, rest] = splitProps(props, ["class"]);
 

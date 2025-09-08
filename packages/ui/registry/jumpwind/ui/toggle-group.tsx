@@ -11,22 +11,23 @@ import {
   toggleVariants,
 } from "@/registry/jumpwind/ui/toggle";
 
-const ToggleGroupContext = createContext<ToggleVariantProps>({
+const useToggleGroup = ToggleGroupPrimitive.useToggleGroupContext;
+
+const ToggleGroupItemContext = createContext<ToggleVariantProps>({
   size: "default",
   variant: "default",
 });
 
-function useToggleGroup() {
-  const context = useContext(ToggleGroupContext);
+function useToggleGroupItem() {
+  const context = useContext(ToggleGroupItemContext);
   if (!context) {
-    throw new Error("useToggleGroup must be used within a ToggleGroup");
+    throw new Error("useToggleGroupItem must be used within a ToggleGroup");
   }
   return context;
 }
 
 function ToggleGroup(
-  props: ComponentProps<typeof ToggleGroupPrimitive.Root<"div">> &
-    ToggleVariantProps,
+  props: ComponentProps<typeof ToggleGroupPrimitive.Root> & ToggleVariantProps,
 ) {
   const [local, rest] = splitProps(props, [
     "class",
@@ -47,21 +48,20 @@ function ToggleGroup(
       )}
       {...rest}
     >
-      <ToggleGroupContext.Provider
+      <ToggleGroupItemContext.Provider
         value={{
           variant: local.variant,
           size: local.size,
         }}
       >
         {local.children}
-      </ToggleGroupContext.Provider>
+      </ToggleGroupItemContext.Provider>
     </ToggleGroupPrimitive.Root>
   );
 }
 
 function ToggleGroupItem(
-  props: ComponentProps<typeof ToggleGroupPrimitive.Item<"button">> &
-    ToggleVariantProps,
+  props: ComponentProps<typeof ToggleGroupPrimitive.Item> & ToggleVariantProps,
 ) {
   const [local, rest] = splitProps(props, [
     "class",
@@ -70,7 +70,7 @@ function ToggleGroupItem(
     "children",
   ]);
 
-  const context = useContext(ToggleGroupContext);
+  const context = useContext(ToggleGroupItemContext);
   const size = () => context?.size ?? local.size;
   const variant = () => context?.variant ?? local.variant;
 
@@ -100,4 +100,5 @@ export {
   ToggleGroupItem,
   // Hooks
   useToggleGroup,
+  useToggleGroupItem,
 };

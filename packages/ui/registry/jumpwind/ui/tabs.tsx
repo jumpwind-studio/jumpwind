@@ -2,6 +2,8 @@ import * as TabsPrimitive from "@kobalte/core/tabs";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
+const useTabs = TabsPrimitive.useTabsContext;
+
 function Tabs(props: ComponentProps<typeof TabsPrimitive.Root<"div">>) {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -67,4 +69,11 @@ function TabsContent(
   );
 }
 
-export { Tabs, TabsList, TabsTrigger, TabsContent };
+export {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+  // Hooks
+  useTabs,
+};

@@ -1,3 +1,4 @@
+import { Dynamic, type DynamicProps } from "@corvu/utils/dynamic";
 import ChevronRightIcon from "lucide-solid/icons/chevron-right";
 import MoreHorizontalIcon from "lucide-solid/icons/more-horizontal";
 import {
@@ -7,7 +8,6 @@ import {
   type ValidComponent,
 } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
-import { Dynamic, type DynamicProps } from "@/registry/jumpwind/ui/dynamic";
 
 function Breadcrumb(props: ComponentProps<"nav">) {
   return <nav data-slot="breadcrumb" aria-label="breadcrumb" {...props} />;

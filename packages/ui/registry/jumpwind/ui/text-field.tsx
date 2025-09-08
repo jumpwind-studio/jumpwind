@@ -3,6 +3,8 @@ import type { ComponentProps } from "solid-js";
 import { splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
+const useTextField = TextFieldPrimitive.useTextFieldContext;
+
 function TextField(
   props: ComponentProps<typeof TextFieldPrimitive.Root<"div">>,
 ) {
@@ -90,4 +92,6 @@ export {
   TextFieldDescription,
   TextFieldLabel,
   TextFieldMessage,
+  // Hooks
+  useTextField,
 };

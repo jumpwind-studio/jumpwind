@@ -5,6 +5,8 @@ import CircleIcon from "lucide-solid/icons/circle";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
+const useContextMenu = ContextMenuPrimitive.useContextMenuContext;
+
 function ContextMenu(props: ComponentProps<typeof ContextMenuPrimitive.Root>) {
   return <ContextMenuPrimitive.Root data-slot="context-menu" {...props} />;
 }
@@ -268,4 +270,6 @@ export {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
   ContextMenuRadioGroup,
+  // Hooks
+  useContextMenu,
 };

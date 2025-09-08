@@ -1,6 +1,6 @@
+import { Dynamic, type DynamicProps } from "@corvu/utils/dynamic";
 import { type ComponentProps, splitProps, type ValidComponent } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Dynamic, type DynamicProps } from "@/registry/jumpwind/ui/dynamic";
 
 const containerVariants = tv({
   base: "@container mx-auto w-full max-w-7xl lg:max-w-(--breakpoint-xl) 2xl:max-w-(--breakpoint-2xl)",

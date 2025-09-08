@@ -13,7 +13,7 @@ function AlertDialog(props: ComponentProps<typeof AlertDialogPrimitive.Root>) {
 }
 
 function AlertDialogTrigger(
-  props: ComponentProps<typeof AlertDialogPrimitive.Trigger<"button">>,
+  props: ComponentProps<typeof AlertDialogPrimitive.Trigger>,
 ) {
   return (
     <AlertDialogPrimitive.Trigger
@@ -33,7 +33,7 @@ function AlertDialogPortal(
 }
 
 function AlertDialogOverlay(
-  props: ComponentProps<typeof AlertDialogPrimitive.Overlay<"div">>,
+  props: ComponentProps<typeof AlertDialogPrimitive.Overlay>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -51,7 +51,7 @@ function AlertDialogOverlay(
 }
 
 function AlertDialogContent(
-  props: ComponentProps<typeof AlertDialogPrimitive.Content<"div">>,
+  props: ComponentProps<typeof AlertDialogPrimitive.Content>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -146,15 +146,20 @@ function AlertDialogAction(
 }
 
 function AlertDialogCancel(
-  props: ComponentProps<typeof AlertDialogPrimitive.Close<"button">>,
+  props: ComponentProps<typeof AlertDialogPrimitive.Close<"button">> &
+    ButtonVariantProps,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
+  const [local, rest] = splitProps(props, ["class", "size", "variant"]);
 
   return (
     <AlertDialogPrimitive.Close
       as="button"
       data-slot="alert-dialog-cancel"
-      class={buttonVariants({ variant: "outline", class: local.class })}
+      class={buttonVariants({
+        size: local.size,
+        variant: local.variant ?? "outline",
+        class: local.class,
+      })}
       {...rest}
     />
   );

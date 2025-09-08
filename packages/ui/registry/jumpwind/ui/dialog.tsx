@@ -1,6 +1,7 @@
 import * as DialogPrimitive from "corvu/dialog";
 import XIcon from "lucide-solid/icons/x";
-import { type ComponentProps, splitProps } from "solid-js";
+import { type ComponentProps, Show, splitProps, untrack } from "solid-js";
+import createPersistent from "solid-persistent";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
 const useDialog = DialogPrimitive.useContext;
@@ -60,9 +61,20 @@ function DialogOverlay(props: ComponentProps<typeof DialogPrimitive.Overlay>) {
 function DialogContent(
   props: ComponentProps<typeof DialogPrimitive.Content> & {
     onClose?: (e: MouseEvent) => void;
+    showCloseButton?: boolean;
   },
 ) {
-  const [local, rest] = splitProps(props, ["class", "children", "onClose"]);
+  const [local, rest] = splitProps(props, [
+    "class",
+    "children",
+    "onClose",
+    "showCloseButton",
+  ]);
+
+  // TODO: clear when `close`
+  const children = createPersistent(() => {
+    return local.children;
+  });
 
   return (
     <DialogPortal data-slot="dialog-portal">
@@ -75,14 +87,16 @@ function DialogContent(
         )}
         {...rest}
       >
-        {local.children}
-        <DialogClose
-          class="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-open:bg-accent data-open:text-muted-foreground [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0"
-          onClick={local.onClose}
-        >
-          <XIcon />
-          <span class="sr-only">Close</span>
-        </DialogClose>
+        {untrack(children)}
+        <Show when={local.showCloseButton}>
+          <DialogClose
+            class="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-open:bg-accent data-open:text-muted-foreground [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0"
+            onClick={local.onClose}
+          >
+            <XIcon />
+            <span class="sr-only">Close</span>
+          </DialogClose>
+        </Show>
       </DialogPrimitive.Content>
     </DialogPortal>
   );
@@ -95,6 +109,18 @@ function DialogHeader(props: ComponentProps<"div">) {
     <div
       data-slot="dialog-header"
       class={cn("flex flex-col gap-2 text-center sm:text-left", local.class)}
+      {...rest}
+    />
+  );
+}
+
+function DialogBody(props: ComponentProps<"div">) {
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <div
+      data-slot="dialog-body"
+      class={cn("grid gap-4", local.class)}
       {...rest}
     />
   );
@@ -143,6 +169,7 @@ function DialogDescription(
 
 export {
   Dialog,
+  DialogBody,
   DialogClose,
   DialogContent,
   DialogDescription,
