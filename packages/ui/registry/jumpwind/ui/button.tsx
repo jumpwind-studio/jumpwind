@@ -1,9 +1,5 @@
-import {
-  DynamicButton,
-  type DynamicButtonProps,
-  type DynamicProps,
-} from "@corvu/utils/dynamic";
-import { splitProps, type ValidComponent } from "solid-js";
+import { DynamicButton, type DynamicProps } from "@corvu/utils/dynamic";
+import { type ComponentProps, splitProps, type ValidComponent } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const buttonVariants = tv({
@@ -38,7 +34,7 @@ const buttonVariants = tv({
 export type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 
 export type ButtonProps<T extends ValidComponent = "button"> =
-  DynamicButtonProps<T> & ButtonVariantProps;
+  ComponentProps<T> & ButtonVariantProps;
 
 /**
  * An accessible button that sets `type` and `role` properly based on if it's a native button.

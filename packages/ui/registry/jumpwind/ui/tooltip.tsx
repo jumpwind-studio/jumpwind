@@ -1,7 +1,5 @@
-import { isFunction } from "@corvu/utils";
-import createOnce from "@corvu/utils/create/once";
 import * as TooltipPrimitive from "corvu/tooltip";
-import { type ComponentProps, mergeProps, splitProps, untrack } from "solid-js";
+import { type ComponentProps, mergeProps, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
 const useTooltip = TooltipPrimitive.useContext;
@@ -11,41 +9,26 @@ function Tooltip(props: ComponentProps<typeof TooltipPrimitive.Root>) {
     {
       openDelay: 0,
       skipDelayDuration: 300, // Match Radix default
+      placement: "top",
     } satisfies Partial<typeof props>,
     props,
   );
 
-  const [local, rest] = splitProps(defaultedProps, ["children", "openDelay"]);
+  return <TooltipPrimitive.Root data-slot="tooltip" {...defaultedProps} />;
+}
 
-  // NOTE: Using `corvu` pattern for memoizing child components
-  // Okay to remove if overkill
-  const memoizedChildren = createOnce(() => local.children);
-
-  return (
-    <TooltipPrimitive.Root
-      data-slot="tooltip"
-      openDelay={local.openDelay}
-      {...rest}
-    >
-      {(rootProps) => {
-        const resolveChildren = () => {
-          const children = memoizedChildren()();
-          return isFunction(children) ? children(rootProps) : children;
-        };
-        return (
-          <TooltipPrimitive.Anchor data-slot="tooltip-anchor">
-            {untrack(() => resolveChildren())}
-          </TooltipPrimitive.Anchor>
-        );
-      }}
-    </TooltipPrimitive.Root>
-  );
+function TooltipAnchor(props: ComponentProps<typeof TooltipPrimitive.Anchor>) {
+  return <TooltipPrimitive.Anchor data-slot="tooltip-anchor" {...props} />;
 }
 
 function TooltipTrigger(
   props: ComponentProps<typeof TooltipPrimitive.Trigger>,
 ) {
-  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
+  return (
+    <TooltipAnchor>
+      <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />
+    </TooltipAnchor>
+  );
 }
 
 function TooltipContent(
@@ -58,13 +41,25 @@ function TooltipContent(
       <TooltipPrimitive.Content
         data-slot="tooltip-content"
         class={cn(
-          "fade-in-0 zoom-in-95 data-closed:fade-out-0 data-closed:zoom-out-95 data-[placement*=bottom]:slide-in-from-top-2 data-[placement*=left]:slide-in-from-right-2 data-[placement*=right]:slide-in-from-left-2 data-[placement*=top]:slide-in-from-bottom-2 z-50 w-fit animate-in text-balance rounded-md bg-primary px-3 py-1.5 text-primary-foreground text-xs data-closed:animate-out",
+          "z-50 w-fit text-balance rounded-md bg-primary px-3 py-1.5 text-primary-foreground text-xs",
+          "fade-in-0 zoom-in-95 animate-in",
+          "data-closed:fade-out-0 data-closed:zoom-out-95 data-closed:animate-out",
+          "data-[placement*=bottom]:slide-in-from-top-2",
+          "data-[placement*=left]:slide-in-from-right-2",
+          "data-[placement*=right]:slide-in-from-left-2",
+          "data-[placement*=top]:slide-in-from-bottom-2",
+          // "origin-(--radix-tooltip-content-transform-origin)",
           local.class,
         )}
         {...rest}
       >
         {local.children}
-        <TooltipPrimitive.Arrow class="z-50 size-2.5 translate-y-[calc(-50%-2px)] rotate-45 rounded-[2px] bg-primary fill-primary" />
+        <TooltipPrimitive.Arrow
+          class={cn(
+            "z-50 size-2.5 text-primary",
+            // "translate-y-[calc(-50%-2px)] rotate-45 rounded-[2px]",
+          )}
+        />
       </TooltipPrimitive.Content>
     </TooltipPrimitive.Portal>
   );

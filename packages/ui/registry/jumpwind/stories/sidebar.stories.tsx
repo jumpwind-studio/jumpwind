@@ -6,6 +6,7 @@ import SearchIcon from "lucide-solid/icons/search";
 import SettingsIcon from "lucide-solid/icons/settings";
 import User2Icon from "lucide-solid/icons/user-2";
 import { For } from "solid-js";
+import { Dynamic } from "solid-js/web";
 import { userEvent } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
@@ -118,8 +119,8 @@ export const Simple: Story = {
               <For each={items}>
                 {(item) => (
                   <SidebarMenuItem>
-                    <SidebarMenuButton>
-                      <item.icon />
+                    <SidebarMenuButton tooltip={item.title}>
+                      <Dynamic component={item.icon} />
                       <span>{item.title}</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -145,15 +146,12 @@ export const Footer: Story = {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <DropdownMenu>
+            <DropdownMenu sameWidth>
               <DropdownMenuTrigger as={SidebarMenuButton}>
                 <User2Icon /> Username
                 <ChevronUpIcon class="ml-auto" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                side="top"
-                class="w-(--radix-popper-anchor-width)"
-              >
+              <DropdownMenuContent side="top">
                 <DropdownMenuItem>
                   <span>Account</span>
                 </DropdownMenuItem>
