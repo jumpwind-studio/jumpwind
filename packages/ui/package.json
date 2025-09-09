@@ -7,6 +7,7 @@
   "sideEffects": false,
   "exports": {
     ".": "./src/index.ts",
+    "./*": "./registry/jumpwind/ui/*.tsx",
     "./src/*": "./src/*.ts",
     "./utils": "./registry/jumpwind/lib/utils.ts",
     "./styles.css": "./registry/jumpwind/styles/styles.css",
@@ -26,7 +27,7 @@
     "storybook": "bun run --bun storybook:dev",
     "storybook:preview": "serve storybook-static"
   },
-  "devDependencies": {
+  "dependencies": {
     "@chromatic-com/storybook": "^4.1.1",
     "@corvu/utils": "catalog:frontend",
     "@effect/platform": "catalog:effect",
