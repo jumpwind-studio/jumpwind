@@ -23,9 +23,7 @@ function Popover(props: ComponentProps<typeof PopoverPrimitive.Root>) {
   );
 }
 
-function PopoverAnchor(
-  props: ComponentProps<typeof PopoverPrimitive.Anchor<"div">>,
-) {
+function PopoverAnchor(props: ComponentProps<typeof PopoverPrimitive.Anchor>) {
   return <PopoverPrimitive.Anchor data-slot="popover-anchor" {...props} />;
 }
 

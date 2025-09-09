@@ -1,5 +1,6 @@
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
+import { Button } from "@/registry/jumpwind/ui/button";
 import {
   Popover,
   PopoverContent,
@@ -15,7 +16,9 @@ const meta = {
   argTypes: {},
   render: (args) => (
     <Popover {...args}>
-      <PopoverTrigger>Open</PopoverTrigger>
+      <PopoverTrigger as={Button} variant="outline">
+        Open
+      </PopoverTrigger>
       <PopoverContent>Place content for the popover here.</PopoverContent>
     </Popover>
   ),

@@ -27,11 +27,10 @@ function DropdownMenuPortal(
 }
 
 function DropdownMenuTrigger(
-  props: ComponentProps<typeof DropdownMenuPrimitive.Trigger<"button">>,
+  props: ComponentProps<typeof DropdownMenuPrimitive.Trigger>,
 ) {
   return (
     <DropdownMenuPrimitive.Trigger
-      as="button"
       data-slot="dropdown-menu-trigger"
       {...props}
     />
@@ -39,14 +38,13 @@ function DropdownMenuTrigger(
 }
 
 function DropdownMenuContent(
-  props: ComponentProps<typeof DropdownMenuPrimitive.Content<"div">>,
+  props: ComponentProps<typeof DropdownMenuPrimitive.Content>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <DropdownMenuPortal>
       <DropdownMenuPrimitive.Content
-        as="div"
         data-slot="dropdown-menu-content"
         class={cn(
           "data-closed:fade-out-0 data-expanded:fade-in-0 data-closed:zoom-out-95 data-expanded:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 max-h-(--kb-popper-content-available-height) min-w-32 origin-(--kb-popper-content-overflow-padding) overflow-y-auto overflow-x-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-closed:animate-out data-expanded:animate-in",
@@ -60,19 +58,15 @@ function DropdownMenuContent(
 }
 
 function DropdownMenuGroup(
-  props: ComponentProps<typeof DropdownMenuPrimitive.Group<"div">>,
+  props: ComponentProps<typeof DropdownMenuPrimitive.Group>,
 ) {
   return (
-    <DropdownMenuPrimitive.Group
-      as="div"
-      data-slot="dropdown-menu-group"
-      {...props}
-    />
+    <DropdownMenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />
   );
 }
 
 function DropdownMenuItem(
-  props: ComponentProps<typeof DropdownMenuPrimitive.Item<"div">> & {
+  props: ComponentProps<typeof DropdownMenuPrimitive.Item> & {
     inset?: boolean;
   },
 ) {
@@ -80,7 +74,6 @@ function DropdownMenuItem(
 
   return (
     <DropdownMenuPrimitive.Item
-      as="div"
       data-slot="dropdown-menu-item"
       class={cn(
         "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-inset:pl-8 data-disabled:opacity-50",
@@ -93,13 +86,12 @@ function DropdownMenuItem(
 }
 
 function DropdownMenuCheckboxItem(
-  props: ComponentProps<typeof DropdownMenuPrimitive.CheckboxItem<"div">>,
+  props: ComponentProps<typeof DropdownMenuPrimitive.CheckboxItem>,
 ) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <DropdownMenuPrimitive.CheckboxItem
-      as="div"
       data-slot="dropdown-menu-checkbox-item"
       class={cn(
         "relative flex cursor-default select-none items-center gap-2 rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
@@ -116,11 +108,10 @@ function DropdownMenuCheckboxItem(
 }
 
 function DropdownMenuRadioGroup<TValue = string>(
-  props: ComponentProps<typeof DropdownMenuPrimitive.RadioGroup<TValue, "div">>,
+  props: ComponentProps<typeof DropdownMenuPrimitive.RadioGroup<TValue>>,
 ) {
   return (
     <DropdownMenuPrimitive.RadioGroup
-      as="div"
       data-slot="dropdown-menu-radio-group"
       {...props}
     />
@@ -128,13 +119,12 @@ function DropdownMenuRadioGroup<TValue = string>(
 }
 
 function DropdownMenuRadioItem<TValue = string>(
-  props: ComponentProps<typeof DropdownMenuPrimitive.RadioItem<TValue, "div">>,
+  props: ComponentProps<typeof DropdownMenuPrimitive.RadioItem<TValue>>,
 ) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <DropdownMenuPrimitive.RadioItem
-      as="div"
       data-slot="dropdown-menu-radio-item"
       class={cn(
         "relative flex cursor-default select-none items-center gap-2 rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
@@ -166,7 +156,7 @@ function DropdownMenuLabel(props: ComponentProps<"div"> & { inset?: boolean }) {
 }
 
 function DropdownMenuGroupLabel(
-  props: ComponentProps<typeof DropdownMenuPrimitive.GroupLabel<"span">> & {
+  props: ComponentProps<typeof DropdownMenuPrimitive.GroupLabel> & {
     inset?: boolean;
   },
 ) {
@@ -174,7 +164,6 @@ function DropdownMenuGroupLabel(
 
   return (
     <DropdownMenuPrimitive.GroupLabel
-      as="span"
       data-slot="dropdown-menu-group-label"
       class={cn(
         "px-2 py-1.5 font-medium text-muted-foreground text-xs data-inset:pl-8",
@@ -187,13 +176,12 @@ function DropdownMenuGroupLabel(
 }
 
 function DropdownMenuSeparator(
-  props: ComponentProps<typeof DropdownMenuPrimitive.Separator<"hr">>,
+  props: ComponentProps<typeof DropdownMenuPrimitive.Separator>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <DropdownMenuPrimitive.Separator
-      as="hr"
       data-slot="dropdown-menu-separator"
       class={cn("-mx-1 my-1 h-px bg-muted", local.class)}
       {...rest}
@@ -221,7 +209,7 @@ function DropdownMenuSub(props: DropdownMenuPrimitive.DropdownMenuSubProps) {
 }
 
 function DropdownMenuSubTrigger(
-  props: ComponentProps<typeof DropdownMenuPrimitive.SubTrigger<"div">> & {
+  props: ComponentProps<typeof DropdownMenuPrimitive.SubTrigger> & {
     inset?: boolean;
   },
 ) {
@@ -229,7 +217,6 @@ function DropdownMenuSubTrigger(
 
   return (
     <DropdownMenuPrimitive.SubTrigger
-      as="div"
       data-slot="dropdown-menu-sub-trigger"
       class={cn(
         "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-hidden focus:bg-accent focus:text-accent-foreground data-expanded:bg-accent data-inset:pl-8 data-expanded:text-accent-foreground",
@@ -245,13 +232,12 @@ function DropdownMenuSubTrigger(
 }
 
 function DropdownMenuSubContent(
-  props: ComponentProps<typeof DropdownMenuPrimitive.SubContent<"div">>,
+  props: ComponentProps<typeof DropdownMenuPrimitive.SubContent>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <DropdownMenuPrimitive.SubContent
-      as="div"
       data-slot="dropdown-menu-sub-content"
       class={cn(
         "data-closed:fade-out-0 data-expanded:fade-in-0 data-closed:zoom-out-95 data-expanded:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-32 origin-(--kb-popper-content-overflow-padding) overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg data-closed:animate-out data-expanded:animate-in",

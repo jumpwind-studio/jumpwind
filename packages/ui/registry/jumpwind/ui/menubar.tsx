@@ -7,12 +7,11 @@ import { cn } from "@/registry/jumpwind/lib/utils";
 
 const useMenubar = MenubarPrimitive.useMenubarContext;
 
-function Menubar(props: ComponentProps<typeof MenubarPrimitive.Root<"div">>) {
+function Menubar(props: ComponentProps<typeof MenubarPrimitive.Root>) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <MenubarPrimitive.Root
-      as="div"
       data-slot="menubar"
       class={cn(
         "flex h-9 items-center gap-1 rounded-md border bg-background p-1 shadow-xs",
@@ -44,12 +43,8 @@ function MenubarMenu(props: ComponentProps<typeof MenubarPrimitive.Menu>) {
   );
 }
 
-function MenubarGroup(
-  props: ComponentProps<typeof MenubarPrimitive.Group<"div">>,
-) {
-  return (
-    <MenubarPrimitive.Group as="div" data-slot="menubar-group" {...props} />
-  );
+function MenubarGroup(props: ComponentProps<typeof MenubarPrimitive.Group>) {
+  return <MenubarPrimitive.Group data-slot="menubar-group" {...props} />;
 }
 
 function MenubarPortal(props: ComponentProps<typeof MenubarPrimitive.Portal>) {
@@ -57,25 +52,20 @@ function MenubarPortal(props: ComponentProps<typeof MenubarPrimitive.Portal>) {
 }
 
 function MenubarRadioGroup<TValue = string>(
-  props: ComponentProps<typeof MenubarPrimitive.RadioGroup<TValue, "div">>,
+  props: ComponentProps<typeof MenubarPrimitive.RadioGroup<TValue>>,
 ) {
   return (
-    <MenubarPrimitive.RadioGroup
-      as="div"
-      data-slot="menubar-radio-group"
-      {...props}
-    />
+    <MenubarPrimitive.RadioGroup data-slot="menubar-radio-group" {...props} />
   );
 }
 
 function MenubarTrigger(
-  props: ComponentProps<typeof MenubarPrimitive.Trigger<"button">>,
+  props: ComponentProps<typeof MenubarPrimitive.Trigger>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <MenubarPrimitive.Trigger
-      as="button"
       data-slot="menubar-trigger"
       class={cn(
         "flex select-none items-center rounded-sm px-2 py-1 font-medium text-sm outline-hidden focus:bg-accent focus:text-accent-foreground data-expanded:bg-accent data-expanded:text-accent-foreground",

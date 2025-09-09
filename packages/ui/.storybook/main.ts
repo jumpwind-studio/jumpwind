@@ -25,7 +25,6 @@ const config = {
   stories: [
     getAbsolutePath("../stories/**/*.mdx"),
     getAbsolutePath("../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)"),
-    getAbsolutePath("../stories/label.stories.tsx"),
   ],
   core: {
     builder: "@storybook/builder-vite", // 👈 The builder enabled here.

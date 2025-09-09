@@ -4,27 +4,14 @@
   "type": "module",
   "license": "MIT",
   "private": true,
+  "sideEffects": false,
   "exports": {
-    "./*": "./registry/jumpwind/ui/*.tsx",
     ".": "./src/index.ts",
     "./src/*": "./src/*.ts",
-    "./internal/*": null,
-    "./package.json": "./package.json",
-    "./registry.json": "./registry.json",
-    "./lib/*": "./registry/jumpwind/lib/*.ts",
     "./utils": "./registry/jumpwind/lib/utils.ts",
-    "./styles.css": "./registry/jumpwind/ui/styles.css"
+    "./styles.css": "./registry/jumpwind/styles/styles.css",
+    "./registry.json": "./registry.json"
   },
-  "files": [
-    ".storybook/**",
-    "stories/**",
-    "*.css",
-    "package.json",
-    "tsconfig.json",
-    "vitest.config.ts",
-    "README.md",
-    ".gitignore"
-  ],
   "scripts": {
     "build": "vite build",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
