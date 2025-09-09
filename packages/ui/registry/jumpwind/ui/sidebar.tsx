@@ -1,6 +1,7 @@
 import createControllableSignal from "@corvu/utils/create/controllableSignal";
 import { DynamicButton } from "@corvu/utils/dynamic";
 import type { TooltipContentProps } from "@kobalte/core/tooltip";
+import { createShortcut } from "@solid-primitives/keyboard";
 import PanelLeftCloseIcon from "lucide-solid/icons/panel-left-close";
 import PanelLeftOpenIcon from "lucide-solid/icons/panel-left-open";
 import type { Accessor, ComponentProps, JSX } from "solid-js";
@@ -16,7 +17,6 @@ import {
 } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 import { useIsMobile } from "@/registry/jumpwind/hook/use-is-mobile";
-import { createShortcut } from "@/registry/jumpwind/hook/use-keys";
 import { cn } from "@/registry/jumpwind/lib/utils";
 import { Button } from "@/registry/jumpwind/ui/button";
 import { Drawer, DrawerContent } from "@/registry/jumpwind/ui/drawer";
@@ -133,13 +133,50 @@ export function SidebarProvider(
   );
 }
 
-export function Sidebar(
-  props: ComponentProps<"div"> & {
-    side?: "left" | "right";
-    variant?: "sidebar" | "floating" | "inset";
-    collapsible?: "offcanvas" | "icon" | "none";
+const sidebarVariants = tv({
+  slots: {
+    gap: "relative h-svh w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear group-data-[collapsible=offcanvas]:w-0 group-data-[side=right]:rotate-180",
+    body: "",
   },
-) {
+  variants: {
+    collapsible: {
+      offcanvas: "",
+      icon: "",
+      none: "",
+    },
+    side: {
+      left: {
+        body: "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]",
+      },
+      right: {
+        body: "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
+      },
+    },
+    variant: {
+      sidebar: {
+        gap: "group-data-[collapsible=icon]:w-(--sidebar-width-icon)",
+        body: "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l",
+      },
+      floating: {
+        gap: "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]",
+        body: "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]",
+      },
+      inset: {
+        gap: "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]",
+        body: "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]",
+      },
+    },
+  },
+  defaultVariants: {
+    side: "left",
+    variant: "sidebar",
+    collapsible: "offcanvas",
+  },
+});
+
+type SidebarVariantProps = VariantProps<typeof sidebarVariants>;
+
+export function Sidebar(props: ComponentProps<"div"> & SidebarVariantProps) {
   const defaulted = mergeProps(
     {
       side: "left",
@@ -171,24 +208,24 @@ export function Sidebar(
           {/* This is what handles the sidebar gap on desktop */}
           <div
             class={cn(
-              "relative h-svh w-[--sidebar-width] bg-transparent transition-[width] duration-200 ease-linear",
+              "relative h-svh w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear",
               "group-data-[collapsible=offcanvas]:w-0",
               "group-data-[side=right]:rotate-180",
               local.variant === "floating" || local.variant === "inset"
                 ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
-                : "group-data-[collapsible=icon]:w-[--sidebar-width-icon]",
+                : "group-data-[collapsible=icon]:w-(--sidebar-width-icon)",
             )}
           />
           <div
             class={cn(
-              "fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] duration-200 ease-linear md:flex",
+              "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
               local.side === "left"
                 ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
                 : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
               // Adjust the padding for floating and inset variants.
               local.variant === "floating" || local.variant === "inset"
                 ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]"
-                : "group-data-[collapsible=icon]:w-[--sidebar-width-icon] group-data-[side=left]:border-r group-data-[side=right]:border-l",
+                : "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l",
               local.class,
             )}
             {...rest}
@@ -206,7 +243,7 @@ export function Sidebar(
       <Match when={local.collapsible === "none"}>
         <div
           class={cn(
-            "flex h-full w-[--sidebar-width] flex-col bg-sidebar text-sidebar-foreground",
+            "flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-foreground",
             local.class,
           )}
           {...rest}
@@ -224,7 +261,7 @@ export function Sidebar(
           <DrawerContent
             data-sidebar="sidebar"
             data-mobile="true"
-            class="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+            class="w-(--sidebar-width) bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
             style={{
               "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
             }}
@@ -634,7 +671,7 @@ export function SidebarMenuSkeleton(
         style={{
           "--skeleton-width": width(),
         }}
-        class="h-4 max-w-[--skeleton-width] flex-1"
+        class="h-4 max-w-(--skeleton-width) flex-1"
       />
     </div>
   );

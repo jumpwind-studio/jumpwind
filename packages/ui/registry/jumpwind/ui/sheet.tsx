@@ -1,6 +1,7 @@
 import * as SheetPrimitive from "corvu/dialog";
 import XIcon from "lucide-solid/icons/x";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
+import { tv, type VariantProps } from "tailwind-variants";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
 const useSheet = SheetPrimitive.useContext;
@@ -9,34 +10,23 @@ function Sheet(props: ComponentProps<typeof SheetPrimitive.Root>) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />;
 }
 
-function SheetTrigger(
-  props: ComponentProps<typeof SheetPrimitive.Trigger<"button">>,
-) {
-  return (
-    <SheetPrimitive.Trigger as="button" data-slot="sheet-trigger" {...props} />
-  );
+function SheetTrigger(props: ComponentProps<typeof SheetPrimitive.Trigger>) {
+  return <SheetPrimitive.Trigger data-slot="sheet-trigger" {...props} />;
 }
 
-function SheetClose(
-  props: ComponentProps<typeof SheetPrimitive.Close<"button">>,
-) {
-  return (
-    <SheetPrimitive.Close as="button" data-slot="sheet-close" {...props} />
-  );
+function SheetClose(props: ComponentProps<typeof SheetPrimitive.Close>) {
+  return <SheetPrimitive.Close data-slot="sheet-close" {...props} />;
 }
 
 function SheetPortal(props: ComponentProps<typeof SheetPrimitive.Portal>) {
   return <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />;
 }
 
-function SheetOverlay(
-  props: ComponentProps<typeof SheetPrimitive.Overlay<"div">>,
-) {
+function SheetOverlay(props: ComponentProps<typeof SheetPrimitive.Overlay>) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <SheetPrimitive.Overlay
-      as="div"
       data-slot="sheet-overlay"
       class={cn(
         "data-closed:fade-out-0 data-open:fade-in-0 fixed inset-0 z-50 bg-black/80 data-closed:animate-out data-open:animate-in",
@@ -47,10 +37,27 @@ function SheetOverlay(
   );
 }
 
-function SheetContent(
-  props: ComponentProps<typeof SheetPrimitive.Content> & {
-    side?: "top" | "right" | "bottom" | "left";
+const sheetVariants = tv({
+  base: "fixed z-50 flex flex-col gap-4 bg-background shadow-lg transition ease-in-out data-closed:animate-out data-open:animate-in data-closed:duration-300 data-open:duration-500",
+  variants: {
+    side: {
+      right:
+        "data-closed:slide-out-to-right data-open:slide-in-from-right inset-y-0 right-0 h-full w-3/4 border-l sm:max-w-sm",
+      left: "data-closed:slide-out-to-left data-open:slide-in-from-left inset-y-0 left-0 h-full w-3/4 border-r sm:max-w-sm",
+      top: "data-closed:slide-out-to-top data-open:slide-in-from-top inset-x-0 top-0 h-auto border-b",
+      bottom:
+        "data-closed:slide-out-to-bottom data-open:slide-in-from-bottom inset-x-0 bottom-0 h-auto border-t",
+    },
   },
+  defaultVariants: {
+    side: "right",
+  },
+});
+
+export type SheetVariantProps = VariantProps<typeof sheetVariants>;
+
+function SheetContent(
+  props: ComponentProps<typeof SheetPrimitive.Content> & SheetVariantProps,
 ) {
   const defaultedProps = mergeProps(
     { side: "right" } satisfies typeof props,
@@ -67,18 +74,7 @@ function SheetContent(
       <SheetOverlay />
       <SheetPrimitive.Content
         data-slot="sheet-content"
-        class={cn(
-          "fixed z-50 flex flex-col gap-4 bg-background shadow-lg transition ease-in-out data-closed:animate-out data-open:animate-in data-closed:duration-300 data-open:duration-500",
-          local.side === "right" &&
-            "data-closed:slide-out-to-right data-open:slide-in-from-right inset-y-0 right-0 h-full w-3/4 border-l sm:max-w-sm",
-          local.side === "left" &&
-            "data-closed:slide-out-to-left data-open:slide-in-from-left inset-y-0 left-0 h-full w-3/4 border-r sm:max-w-sm",
-          local.side === "top" &&
-            "data-closed:slide-out-to-top data-open:slide-in-from-top inset-x-0 top-0 h-auto border-b",
-          local.side === "bottom" &&
-            "data-closed:slide-out-to-bottom data-open:slide-in-from-bottom inset-x-0 bottom-0 h-auto border-t",
-          local.class,
-        )}
+        class={sheetVariants({ side: local.side, class: local.class })}
         {...rest}
       >
         {local.children}
@@ -115,12 +111,11 @@ function SheetFooter(props: ComponentProps<"div">) {
   );
 }
 
-function SheetTitle(props: ComponentProps<typeof SheetPrimitive.Label<"h2">>) {
+function SheetTitle(props: ComponentProps<typeof SheetPrimitive.Label>) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <SheetPrimitive.Label
-      as="h2"
       data-slot="sheet-title"
       class={cn("font-semibold text-foreground tracking-tight", local.class)}
       {...rest}
@@ -129,13 +124,12 @@ function SheetTitle(props: ComponentProps<typeof SheetPrimitive.Label<"h2">>) {
 }
 
 function SheetDescription(
-  props: ComponentProps<typeof SheetPrimitive.Description<"p">>,
+  props: ComponentProps<typeof SheetPrimitive.Description>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <SheetPrimitive.Description
-      as="p"
       data-slot="sheet-description"
       class={cn("text-muted-foreground text-sm", local.class)}
       {...rest}
@@ -153,5 +147,8 @@ export {
   SheetTitle,
   SheetDescription,
   SheetOverlay,
+  // Hooks
   useSheet,
+  // Variants
+  sheetVariants,
 };

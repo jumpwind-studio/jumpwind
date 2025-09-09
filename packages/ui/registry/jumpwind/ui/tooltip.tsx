@@ -1,5 +1,7 @@
+import { isFunction } from "@corvu/utils";
+import createOnce from "@corvu/utils/create/once";
 import * as TooltipPrimitive from "corvu/tooltip";
-import { type ComponentProps, mergeProps, splitProps } from "solid-js";
+import { type ComponentProps, mergeProps, splitProps, untrack } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
 const useTooltip = TooltipPrimitive.useContext;
@@ -15,19 +17,27 @@ function Tooltip(props: ComponentProps<typeof TooltipPrimitive.Root>) {
 
   const [local, rest] = splitProps(defaultedProps, ["children", "openDelay"]);
 
+  // NOTE: Using `corvu` pattern for memoizing child components
+  // Okay to remove if overkill
+  const memoizedChildren = createOnce(() => local.children);
+
   return (
     <TooltipPrimitive.Root
       data-slot="tooltip"
       openDelay={local.openDelay}
       {...rest}
     >
-      {(rootProps) => (
-        <TooltipPrimitive.Anchor data-slot="tooltip-anchor">
-          {typeof local.children === "function"
-            ? local.children(rootProps)
-            : local.children}
-        </TooltipPrimitive.Anchor>
-      )}
+      {(rootProps) => {
+        const resolveChildren = () => {
+          const children = memoizedChildren()();
+          return isFunction(children) ? children(rootProps) : children;
+        };
+        return (
+          <TooltipPrimitive.Anchor data-slot="tooltip-anchor">
+            {untrack(() => resolveChildren())}
+          </TooltipPrimitive.Anchor>
+        );
+      }}
     </TooltipPrimitive.Root>
   );
 }
