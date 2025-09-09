@@ -45,7 +45,6 @@ function Slider(props: ComponentProps<typeof SliderPrimitive.Root>) {
 
   return (
     <SliderPrimitive.Root
-      as="div"
       data-slot="slider"
       data-orientation={rest.orientation}
       value={local.value}

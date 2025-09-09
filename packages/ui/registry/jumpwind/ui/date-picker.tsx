@@ -24,27 +24,27 @@ import {
 } from "@/registry/jumpwind/ui/popover";
 
 export function DatePicker() {
-  const [date, setDate] = createSignal<Date>();
+  const [date, setDate] = createSignal<Date | null>(null);
 
   return (
     <Popover>
       <PopoverTrigger
         as={Button}
+        variant="outline"
         class={cn(
           "w-[280px] justify-start text-left font-normal",
           !date() && "text-muted-foreground",
         )}
-        variant="outline"
       >
         <CalendarIcon class="mr-2 h-4 w-4" />
         <Show when={date()} fallback={<span>Pick a date</span>}>
-          {(date) => date()}
+          {(date) => date().toLocaleString("en-US", { day: "2-digit" })}
         </Show>
       </PopoverTrigger>
       <PopoverContent class="w-auto p-0">
         <Calendar
           mode="single"
-          setValue={(date) => setDate(date)}
+          onValueChange={(date) => setDate(date)}
           value={date()}
         >
           <CalendarHeader>

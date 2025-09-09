@@ -1,39 +1,50 @@
 import * as ProgressPrimitive from "@kobalte/core/progress";
-import { type ComponentProps, createMemo, splitProps } from "solid-js";
+import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
+import { Label } from "@/registry/jumpwind/ui/label";
 
 const useProgress = ProgressPrimitive.useProgressContext;
 
 function Progress(props: ComponentProps<typeof ProgressPrimitive.Root>) {
-  const [local, rest] = splitProps(props, ["class", "value"]);
-
-  const translateX = createMemo(() => {
-    return `translateX(-${100 - (local.value || 0)}%)` as const;
-  });
+  const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <ProgressPrimitive.Root
       data-slot="progress"
-      value={local.value}
-      class={cn(
-        "relative h-2 w-full overflow-hidden rounded-full bg-primary/20",
-        local.class,
-      )}
+      class={cn("flex flex-col gap-y-2", local.class)}
       {...rest}
     >
-      <ProgressPrimitive.Track>
+      {local.children}
+      <ProgressPrimitive.Track class="relative h-2 w-full overflow-hidden rounded-full bg-primary/20">
         <ProgressPrimitive.Fill
           data-slot="progress-indicator"
-          style={{ transform: translateX() }}
-          class="h-full w-full flex-1 bg-primary transition-all"
+          class="h-full w-(--kb-progress-fill-width) flex-1 bg-primary transition-all"
         />
       </ProgressPrimitive.Track>
     </ProgressPrimitive.Root>
   );
 }
 
+function ProgressValueLabel(
+  props: ComponentProps<typeof ProgressPrimitive.ValueLabel>,
+) {
+  return (
+    <ProgressPrimitive.ValueLabel
+      data-slot="progress-value-label"
+      as={Label}
+      {...props}
+    />
+  );
+}
+
+function ProgressLabel(props: ComponentProps<typeof ProgressPrimitive.Label>) {
+  return <ProgressPrimitive.Label data-slot="progress-label" {...props} />;
+}
+
 export {
   Progress,
+  ProgressValueLabel,
+  ProgressLabel,
   // Hooks
   useProgress,
 };

@@ -1,3 +1,5 @@
+import { isFunction } from "@corvu/utils";
+import createOnce from "@corvu/utils/create/once";
 import * as CalendarPrimitive from "corvu/calendar";
 import ChevronLeftIcon from "lucide-solid/icons/chevron-left";
 import ChevronRightIcon from "lucide-solid/icons/chevron-right";
@@ -6,44 +8,89 @@ import {
   type ComponentProps,
   Index,
   type JSX,
+  mergeProps,
   Show,
   splitProps,
+  untrack,
 } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 import { buttonVariants } from "@/registry/jumpwind/ui/button";
 
+const { format: formatYearLong } = new Intl.DateTimeFormat("en", {
+  month: "long",
+  year: "numeric",
+});
+
 const useCalendar = CalendarPrimitive.useContext;
 
-type CalendarProps<T extends CalendarPrimitive.RootProps["mode"]> = Extract<
+export type CalendarMode = "single" | "multiple" | "range";
+
+type ExtractCalendarProps<Mode extends CalendarMode> = Extract<
   CalendarPrimitive.RootProps,
-  { mode: T }
+  { mode: Mode }
 >;
 
-function Calendar<const Mode extends CalendarPrimitive.RootProps["mode"]>(
-  props: CalendarProps<Mode> & { class?: string },
+export type CalendarProps<Mode extends CalendarMode = "single"> =
+  ExtractCalendarProps<Mode> & { class?: string };
+
+function Calendar<const Mode extends CalendarMode = "single">(
+  props: CalendarProps<Mode>,
 ) {
-  const [local] = splitProps(props, ["class"]);
+  const defaultedProps = mergeProps(
+    { mode: "single" } satisfies Partial<CalendarProps<"single">>,
+    props,
+  );
+  const [local, rest] = splitProps(defaultedProps, ["class"]);
 
   return (
-    <div class={cn("w-fit p-3", local.class)}>
-      <CalendarPrimitive.Root data-slot="calendar" {...props} />
+    <div class={cn("w-fit space-y-1 p-3", local.class)}>
+      <CalendarPrimitive.Root data-slot="calendar" {...rest} />
     </div>
   );
 }
 
-function CalendarNav(
-  props: ComponentProps<typeof CalendarPrimitive.Nav<"button">>,
-) {
+function CalendarHeader(props: ComponentProps<"div">) {
+  const [local, rest] = splitProps(props, ["class", "children"]);
+
+  return (
+    <div
+      data-slot="calendar-header"
+      class={cn("flex items-center justify-between", local.class)}
+      {...rest}
+    >
+      {local.children}
+    </div>
+  );
+}
+
+function CalendarLabel(props: ComponentProps<typeof CalendarPrimitive.Label>) {
+  const [local, rest] = splitProps(props, ["class", "children"]);
+
+  const context = useCalendar<"single">();
+
+  return (
+    <CalendarPrimitive.Label
+      data-slot="calendar-label"
+      class={cn("font-medium text-sm", local.class)}
+      {...rest}
+    >
+      <Show when={local.children} fallback={formatYearLong(context.month())}>
+        {local.children}
+      </Show>
+    </CalendarPrimitive.Label>
+  );
+}
+
+function CalendarNav(props: ComponentProps<typeof CalendarPrimitive.Nav>) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <CalendarPrimitive.Nav
-      as="button"
       data-slot="calendar-nav"
       class={buttonVariants({
         variant: "outline",
         class: [
-          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
+          "size-7 rounded-sm bg-transparent p-0 opacity-50 hover:opacity-100",
           local.class,
         ],
       })}
@@ -51,36 +98,6 @@ function CalendarNav(
     >
       {local.children}
     </CalendarPrimitive.Nav>
-  );
-}
-
-const { format: formatMonth } = new Intl.DateTimeFormat("en", {
-  month: "long",
-});
-
-function CalendarLabel(
-  props: ComponentProps<typeof CalendarPrimitive.Label<"h2">>,
-) {
-  const [local, rest] = splitProps(props, ["class", "children"]);
-
-  const context = useCalendar<"single">();
-
-  const value = () => {
-    const month = context.month();
-    return `${formatMonth(month)} ${month.getFullYear()}`;
-  };
-
-  return (
-    <CalendarPrimitive.Label
-      as="h2"
-      data-slot="calendar-label"
-      class={cn("font-medium text-sm", local.class)}
-      {...rest}
-    >
-      <Show fallback={value()} when={local.children}>
-        {local.children}
-      </Show>
-    </CalendarPrimitive.Label>
   );
 }
 
@@ -94,13 +111,10 @@ function CalendarPrevMonth(
       data-slot="calendar-prev-month"
       action="prev-month"
       aria-label="Go to previous month"
-      class={cn("absolute start-1", local.class)}
+      class={cn("", local.class)}
       {...rest}
     >
-      <Show
-        when={local.children}
-        fallback={<ChevronLeftIcon class="h-4 w-4" />}
-      >
+      <Show when={local.children} fallback={<ChevronLeftIcon class="size-4" />}>
         {local.children}
       </Show>
     </CalendarNav>
@@ -117,12 +131,12 @@ function CalendarNextMonth(
       data-slot="calendar-next-month"
       action="next-month"
       aria-label="Go to next month"
-      class={cn("absolute end-1", local.class)}
+      class={cn("", local.class)}
       {...rest}
     >
       <Show
         when={local.children}
-        fallback={<ChevronRightIcon class="h-4 w-4" />}
+        fallback={<ChevronRightIcon class="size-4" />}
       >
         {local.children}
       </Show>
@@ -130,28 +144,11 @@ function CalendarNextMonth(
   );
 }
 
-function CalendarHeader(props: ComponentProps<"div">) {
-  const [local, rest] = splitProps(props, ["class", "children"]);
-
-  return (
-    <div
-      data-slot="calendar-header"
-      class={cn("flex items-center space-x-1", local.class)}
-      {...rest}
-    >
-      {local.children}
-    </div>
-  );
-}
-
-function CalendarTable(
-  props: ComponentProps<typeof CalendarPrimitive.Table<"table">>,
-) {
+function CalendarTable(props: ComponentProps<typeof CalendarPrimitive.Table>) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <CalendarPrimitive.Table
-      as="table"
       data-slot="calendar-table"
       class={cn("w-full border-collapse space-y-1", local.class)}
       {...rest}
@@ -173,12 +170,16 @@ function CalendarHead(props: ComponentProps<"thead">) {
 
 function CalendarHeadRow(
   props: Omit<ComponentProps<"tr">, "children"> & {
-    children: (weekday: Accessor<Date>) => JSX.Element;
+    children: JSX.Element | ((weekday: Accessor<Date>) => JSX.Element);
   },
 ) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   const context = useCalendar<"single">();
+
+  // NOTE: Using `corvu` pattern for memoizing child components
+  // Okay to remove if overkill
+  const memoizedChildren = createOnce(() => local.children);
 
   return (
     <tr
@@ -187,20 +188,25 @@ function CalendarHeadRow(
       {...rest}
     >
       <Index each={context.weekdays()}>
-        {(weekday) => local.children(() => weekday())}
+        {(weekday) => {
+          const resolveChildren = () => {
+            const children = memoizedChildren()();
+            return isFunction(children) ? children(weekday) : children;
+          };
+          return untrack(() => resolveChildren());
+        }}
       </Index>
     </tr>
   );
 }
 
 function CalendarHeadCell(
-  props: ComponentProps<typeof CalendarPrimitive.HeadCell<"th">>,
+  props: ComponentProps<typeof CalendarPrimitive.HeadCell>,
 ) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <CalendarPrimitive.HeadCell
-      as="th"
       data-slot="calendar-head-cell"
       class={cn(
         "w-9 rounded-md font-normal text-[0.8rem] text-muted-foreground",
@@ -222,6 +228,10 @@ function CalendarBody(
 
   const context = useCalendar<"single">();
 
+  // NOTE: Using `corvu` pattern for memoizing child components
+  // Okay to remove if overkill
+  const memoizedChildren = createOnce(() => local.children);
+
   return (
     <tbody
       data-slot="calendar-body"
@@ -229,7 +239,13 @@ function CalendarBody(
       {...rest}
     >
       <Index each={context.weeks()}>
-        {(week) => local.children(() => week())}
+        {(week) => {
+          const resolveChildren = () => {
+            const children = memoizedChildren()();
+            return isFunction(children) ? children(week) : children;
+          };
+          return untrack(() => resolveChildren());
+        }}
       </Index>
     </tbody>
   );
@@ -238,10 +254,14 @@ function CalendarBody(
 function CalendarRow(
   props: Omit<ComponentProps<"tr">, "children"> & {
     week: Date[];
-    children: (day: Accessor<Date>) => JSX.Element;
+    children: JSX.Element | ((day: Accessor<Date>) => JSX.Element);
   },
 ) {
   const [local, rest] = splitProps(props, ["week", "class", "children"]);
+
+  // NOTE: Using `corvu` pattern for memoizing child components
+  // Okay to remove if overkill
+  const memoizedChildren = createOnce(() => local.children);
 
   return (
     <tr
@@ -249,22 +269,30 @@ function CalendarRow(
       class={cn("mt-2 flex w-full", local.class)}
       {...rest}
     >
-      <Index each={local.week}>{(day) => local.children(() => day())}</Index>
+      <Index each={local.week}>
+        {(day) => {
+          const resolveChildren = () => {
+            const children = memoizedChildren()();
+            return isFunction(children) ? children(day) : children;
+          };
+          return untrack(() => resolveChildren());
+        }}
+      </Index>
     </tr>
   );
 }
 
-function CalendarCell(
-  props: ComponentProps<typeof CalendarPrimitive.Cell<"td">>,
-) {
+function CalendarCell(props: ComponentProps<typeof CalendarPrimitive.Cell>) {
   const [local, rest] = splitProps(props, ["day", "class", "children"]);
 
   return (
     <CalendarPrimitive.Cell
-      as="td"
       data-slot="calendar-cell"
       class={cn(
-        "relative h-9 w-9 p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected].day-range-end)]:rounded-r-md",
+        "relative size-9 p-0 text-center text-sm",
+        "focus-within:relative focus-within:z-20",
+        "[&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md",
+        "[&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected].day-range-end)]:rounded-r-md",
         local.class,
       )}
       {...rest}
@@ -276,18 +304,17 @@ function CalendarCell(
 
 /** aka Day */
 function CalendarCellTrigger(
-  props: ComponentProps<typeof CalendarPrimitive.CellTrigger<"button">>,
+  props: ComponentProps<typeof CalendarPrimitive.CellTrigger>,
 ) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <CalendarPrimitive.CellTrigger
-      as="button"
       data-slot="calendar-cell-trigger"
       class={buttonVariants({
         variant: "ghost",
         class: [
-          "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
+          "size-9 p-0 font-normal aria-selected:opacity-100",
           // selected
           "data-selected:bg-primary data-selected:text-primary-foreground data-selected:focus:bg-primary data-selected:focus:text-primary-foreground data-selected:hover:bg-primary data-selected:hover:text-primary-foreground",
           // today

@@ -7,7 +7,7 @@ import { cn } from "@/registry/jumpwind/lib/utils";
 const useNavigationMenu = NavigationMenuPrimitive.useNavigationMenuContext;
 
 function NavigationMenu(
-  props: ComponentProps<typeof NavigationMenuPrimitive.Root<"ul">> & {
+  props: ComponentProps<typeof NavigationMenuPrimitive.Root> & {
     viewport?: boolean;
   },
 ) {
@@ -27,7 +27,6 @@ function NavigationMenu(
   return (
     <span class="group [&>nav]:relative [&>nav]:flex [&>nav]:max-w-max [&>nav]:flex-1 [&>nav]:items-center [&>nav]:justify-center">
       <NavigationMenuPrimitive.Root
-        as="ul"
         data-slot="navigation-menu"
         data-viewport={local.viewport}
         class={cn(
@@ -45,7 +44,7 @@ function NavigationMenu(
   );
 }
 
-function NavigationMenuList(props: ComponentProps<"div">) {
+function NavigationMenuList(props: ComponentProps) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
@@ -81,17 +80,14 @@ const navigationMenuTriggerVariants = tv({
 });
 
 function NavigationMenuTrigger(
-  props: ComponentProps<typeof NavigationMenuPrimitive.Trigger<"button">>,
+  props: ComponentProps<typeof NavigationMenuPrimitive.Trigger>,
 ) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <NavigationMenuPrimitive.Trigger
-      as="button"
       data-slot="navigation-menu-trigger"
-      class={cn(
-        navigationMenuTriggerVariants({ class: ["group", local.class] }),
-      )}
+      class={cn(navigationMenuTriggerVariants({ class: local.class }))}
       {...rest}
     >
       {local.children}
@@ -125,7 +121,7 @@ function NavigationMenuContent(
 }
 
 function NavigationMenuViewport(
-  props: ComponentProps<typeof NavigationMenuPrimitive.Viewport<"li">>,
+  props: ComponentProps<typeof NavigationMenuPrimitive.Viewport>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -134,7 +130,6 @@ function NavigationMenuViewport(
     // class={cn("absolute top-full left-0 isolate z-50 flex justify-center")}
     >
       <NavigationMenuPrimitive.Viewport
-        as="li"
         data-slot="navigation-menu-viewport"
         class={cn(
           "data-closed:zoom-out-95 data-expanded:zoom-in-90 relative mt-1.5 h-(--kb-navigation-menu-viewport-height) w-full origin-(--kb-menu-content-transform-origin) overflow-hidden rounded-md border bg-popover text-popover-foreground shadow data-closed:animate-out data-expanded:animate-in md:w-(--kb-navigation-menu-viewport-width)",
@@ -147,13 +142,12 @@ function NavigationMenuViewport(
 }
 
 function NavigationMenuLink(
-  props: ComponentProps<typeof NavigationMenuPrimitive.Item<"a">>,
+  props: ComponentProps<typeof NavigationMenuPrimitive.Item>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <NavigationMenuPrimitive.Item
-      as="a"
       data-slot="navigation-menu-link"
       class={cn(
         "flex flex-col gap-1 rounded-sm p-2 text-sm outline-none transition-all hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:outline-1 focus-visible:ring-[3px] focus-visible:ring-ring/50 data-[highlighted=true]:bg-accent/50 data-[highlighted=true]:text-accent-foreground data-[highlighted=true]:focus:bg-accent data-[highlighted=true]:hover:bg-accent [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-foreground",
@@ -165,13 +159,12 @@ function NavigationMenuLink(
 }
 
 function NavigationMenuIndicator(
-  props: ComponentProps<typeof NavigationMenuPrimitive.Icon<"span">>,
+  props: ComponentProps<typeof NavigationMenuPrimitive.Icon>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <NavigationMenuPrimitive.Icon
-      as="span"
       data-slot="navigation-menu-icon"
       class={cn(
         "data-closed:fade-out data-expanded:fade-in top-full z-1 flex h-1.5 items-end justify-center overflow-hidden data-closed:animate-out data-expanded:animate-in",
@@ -185,13 +178,12 @@ function NavigationMenuIndicator(
 }
 
 function NavigationMenuLabel(
-  props: ComponentProps<typeof NavigationMenuPrimitive.ItemLabel<"div">>,
+  props: ComponentProps<typeof NavigationMenuPrimitive.ItemLabel>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <NavigationMenuPrimitive.ItemLabel
-      as="div"
       data-slot="navigation-menu-label"
       class={cn("font-medium text-sm leading-none", local.class)}
       {...rest}
@@ -200,13 +192,12 @@ function NavigationMenuLabel(
 }
 
 function NavigationMenuDescription(
-  props: ComponentProps<typeof NavigationMenuPrimitive.ItemDescription<"div">>,
+  props: ComponentProps<typeof NavigationMenuPrimitive.ItemDescription>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <NavigationMenuPrimitive.ItemDescription
-      as="div"
       data-slot="navigation-menu-description"
       class={cn(
         "line-clamp-2 text-muted-foreground text-sm leading-snug",

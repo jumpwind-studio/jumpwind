@@ -156,7 +156,7 @@ function CommandDialog(
 
   // NOTE: Using `corvu` pattern for memoizing child components
   // Okay to remove if overkill
-  const memoizedChildren = createOnce(() => defaultedProps.children);
+  const memoizedChildren = createOnce(() => local.children);
 
   return (
     <Dialog {...rest}>
