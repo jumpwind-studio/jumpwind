@@ -1,14 +1,20 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { Separator } from "@/registry/jumpwind/ui/separator";
+
+type SeparatorStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Separator>, "children">
+>;
 
 /**
  * Visually or semantically separates content.
  */
 const meta = {
   title: "@jumpwind/ui/Separator",
-  component: Separator,
+  component: Separator as SeparatorStoryComponent,
   argTypes: {},
-} satisfies Meta<typeof Separator>;
+} satisfies Meta<SeparatorStoryComponent>;
 
 export default meta;
 

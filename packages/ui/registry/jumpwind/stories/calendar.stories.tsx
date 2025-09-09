@@ -1,4 +1,6 @@
+import type { PickPartial } from "@jumpwind/utils";
 import * as Duration from "effect/Duration";
+import type { Component, ComponentProps } from "solid-js";
 import { action } from "storybook/actions";
 import { expect, userEvent } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
@@ -19,19 +21,25 @@ import {
   CalendarTable,
 } from "@/registry/jumpwind/ui/calendar";
 
+type CalendarStoryComponent = Component<
+  PickPartial<
+    ComponentProps<typeof Calendar<"single" | "multiple" | "range">>,
+    "children"
+  >
+>;
+
 /**
  * A date field component that allows users to enter and edit date.
  */
 const meta = {
   title: "@jumpwind/ui/Calendar",
-  component: Calendar,
+  component: Calendar as CalendarStoryComponent,
   argTypes: {
     contextId: { control: false },
     focusedDay: { control: { type: "date" } },
     fixedWeeks: { control: { type: "boolean" } },
   },
   args: {
-    mode: "single",
     initialValue: new Date(),
     onValueChange: action("onValueChange"),
   },
@@ -71,7 +79,7 @@ const meta = {
       </CalendarTable>
     </Calendar>
   ),
-} satisfies Meta<typeof Calendar>;
+} satisfies Meta<CalendarStoryComponent>;
 
 export default meta;
 

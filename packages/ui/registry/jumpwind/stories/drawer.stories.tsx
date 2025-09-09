@@ -1,3 +1,5 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import { expect, fn, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { Button } from "@/registry/jumpwind/ui/button";
@@ -12,12 +14,16 @@ import {
   DrawerTrigger,
 } from "@/registry/jumpwind/ui/drawer";
 
+type DrawerStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Drawer>, "children">
+>;
+
 /**
  * A drawer component for React.
  */
 const meta = {
   title: "@jumpwind/ui/Drawer",
-  component: Drawer,
+  component: Drawer as DrawerStoryComponent,
   args: {
     onOpenChange: fn(),
   },
@@ -43,7 +49,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof Drawer>;
+} satisfies Meta<DrawerStoryComponent>;
 
 export default meta;
 

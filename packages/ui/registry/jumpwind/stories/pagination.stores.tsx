@@ -1,3 +1,5 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
   Pagination,
@@ -8,6 +10,10 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/registry/jumpwind/ui/pagination";
+
+type PaginationStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Pagination>, "children">
+>;
 
 /**
  * Pagination with page navigation, next and previous links.
@@ -43,7 +49,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof Pagination>;
+} satisfies Meta<PaginationStoryComponent>;
 
 export default meta;
 

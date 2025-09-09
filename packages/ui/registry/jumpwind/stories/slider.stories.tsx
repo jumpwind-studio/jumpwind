@@ -1,4 +1,5 @@
-import type { ComponentProps } from "solid-js";
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
   Slider,
@@ -7,7 +8,9 @@ import {
   SliderValueLabel,
 } from "@/registry/jumpwind/ui/slider";
 
-type StoryProps = ComponentProps<typeof Slider>;
+type SliderStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Slider>, "children">
+>;
 
 /**
  * An input where the user selects a value from within a given range.
@@ -39,7 +42,7 @@ const meta = {
       <SliderTrack />
     </Slider>
   ),
-} satisfies Meta<StoryProps>;
+} satisfies Meta<SliderStoryComponent>;
 
 export default meta;
 

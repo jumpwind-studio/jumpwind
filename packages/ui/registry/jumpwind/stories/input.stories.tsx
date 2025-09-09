@@ -1,8 +1,14 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { Button } from "@/registry/jumpwind/ui/button";
 import { Input } from "@/registry/jumpwind/ui/input";
 import { Label } from "@/registry/jumpwind/ui/label";
+
+type InputStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Input>, "children">
+>;
 
 /**
  * Displays a form input field or a component that looks like an input field.
@@ -20,7 +26,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof Input>;
+} satisfies Meta<InputStoryComponent>;
 
 export default meta;
 

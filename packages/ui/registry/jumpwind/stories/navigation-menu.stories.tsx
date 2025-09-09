@@ -1,3 +1,5 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
   NavigationMenu,
@@ -8,6 +10,10 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerVariants,
 } from "@/registry/jumpwind/ui/navigation-menu";
+
+type NavigationMenuStoryComponent = Component<
+  PickPartial<ComponentProps<typeof NavigationMenu>, "children">
+>;
 
 /**
  * A collection of links for navigating websites.
@@ -65,7 +71,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof NavigationMenu>;
+} satisfies Meta<NavigationMenuStoryComponent>;
 
 export default meta;
 

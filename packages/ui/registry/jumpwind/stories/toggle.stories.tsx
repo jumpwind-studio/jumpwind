@@ -1,15 +1,20 @@
+import type { PickPartial } from "@jumpwind/utils";
 import BoldIcon from "lucide-solid/icons/bold";
 import ItalicIcon from "lucide-solid/icons/italic";
+import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-
 import { Toggle } from "@/registry/jumpwind/ui/toggle";
+
+type ToggleStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Toggle>, "children">
+>;
 
 /**
  * A two-state button that can be either on or off.
  */
-const meta: Meta<typeof Toggle> = {
+const meta = {
   title: "@jumpwind/ui/Toggle",
-  component: Toggle,
+  component: Toggle as ToggleStoryComponent,
   argTypes: {
     children: {
       control: { disable: true },
@@ -22,7 +27,8 @@ const meta: Meta<typeof Toggle> = {
   parameters: {
     layout: "centered",
   },
-};
+} satisfies Meta<ToggleStoryComponent>;
+
 export default meta;
 
 type Story = StoryObj<typeof Toggle>;

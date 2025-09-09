@@ -1,3 +1,5 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import { fn, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
@@ -13,13 +15,17 @@ import {
 } from "@/registry/jumpwind/ui/alert-dialog";
 import { Button } from "@/registry/jumpwind/ui/button";
 
+type AlertDialogStoryComponent = Component<
+  PickPartial<ComponentProps<typeof AlertDialog>, "children">
+>;
+
 /**
  * A modal dialog that interrupts the user with important content and expects
  * a response.
  */
 const meta = {
   title: "@jumpwind/ui/AlertDialog",
-  component: AlertDialog,
+  component: AlertDialog as AlertDialogStoryComponent,
   parameters: {
     layout: "centered",
   },
@@ -42,7 +48,7 @@ const meta = {
       </AlertDialogContent>
     </AlertDialog>
   ),
-} satisfies Meta<typeof AlertDialog>;
+} satisfies Meta<AlertDialogStoryComponent>;
 
 export default meta;
 

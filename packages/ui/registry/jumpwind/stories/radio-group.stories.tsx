@@ -1,4 +1,5 @@
-import { For } from "solid-js";
+import type { PickPartial } from "@jumpwind/utils";
+import { type Component, type ComponentProps, For } from "solid-js";
 import { expect, userEvent, waitFor } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
@@ -7,13 +8,17 @@ import {
   RadioGroupItemLabel,
 } from "@/registry/jumpwind/ui/radio-group";
 
+type RadioGroupStoryComponent = Component<
+  PickPartial<ComponentProps<typeof RadioGroup>, "children">
+>;
+
 /**
  * A set of checkable buttons—known as radio buttons—where no more than one of
  * the buttons can be checked at a time.
  */
 const meta = {
   title: "@jumpwind/ui/RadioGroup",
-  component: RadioGroup,
+  component: RadioGroup as RadioGroupStoryComponent,
   argTypes: {},
   args: {
     defaultValue: "comfortable",
@@ -29,7 +34,7 @@ const meta = {
       </For>
     </RadioGroup>
   ),
-} satisfies Meta<typeof RadioGroup>;
+} satisfies Meta<RadioGroupStoryComponent>;
 
 export default meta;
 
@@ -48,13 +53,15 @@ export const ShouldToggleRadio: Story = {
     expect(radios).toHaveLength(3);
 
     await step("click the default radio button", async () => {
-      await userEvent.click(radios[0]);
+      const radio = radios[0];
+      await userEvent.click(radio);
       await waitFor(() => expect(radios[0]).toBeChecked());
       await waitFor(() => expect(radios[1]).not.toBeChecked());
     });
 
     await step("click the comfortable radio button", async () => {
-      await userEvent.click(radios[1]);
+      const radio = radios[1];
+      await userEvent.click(radio);
       await waitFor(() => expect(radios[1]).toBeChecked());
       await waitFor(() => expect(radios[0]).not.toBeChecked());
     });

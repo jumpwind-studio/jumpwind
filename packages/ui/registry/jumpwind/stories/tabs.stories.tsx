@@ -52,7 +52,8 @@ export const ShouldChangeTabs: Story = {
     const tabs = await canvas.findAllByRole("tab");
 
     for (let i = 0; i < tabs.length; i++) {
-      const tab = tabs[i]!;
+      const tab = tabs[i];
+      if (!tab) continue;
       await step(`click the '${tab.innerText}' tab`, async () => {
         await userEvent.click(tab);
         await waitFor(() =>
@@ -65,7 +66,8 @@ export const ShouldChangeTabs: Story = {
 
       await step("check other tabs are not selected", async () => {
         for (let j = 0; j < tabs.length; j++) {
-          const otherTab = tabs[j]!;
+          const otherTab = tabs[j];
+          if (!otherTab) continue;
           if (j !== i) {
             expect(otherTab).toHaveAttribute("aria-selected", "false");
             expect(

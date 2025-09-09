@@ -1,5 +1,6 @@
+import type { PickPartial } from "@jumpwind/utils";
 import { createShortcut } from "@solid-primitives/keyboard";
-import { createSignal } from "solid-js";
+import { type Component, type ComponentProps, createSignal } from "solid-js";
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
@@ -13,6 +14,10 @@ import {
   CommandSeparator,
 } from "@/registry/jumpwind/ui/command";
 import { Kbd, KbdKey, KbdModifier } from "@/registry/jumpwind/ui/kbd";
+
+type CommandStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Command>, "children">
+>;
 
 /**
  * Fast, composable, unstyled command menu for React.
@@ -46,7 +51,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof Command>;
+} satisfies Meta<CommandStoryComponent>;
 
 export default meta;
 

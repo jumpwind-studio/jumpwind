@@ -1,3 +1,5 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
@@ -6,12 +8,16 @@ import {
   HoverCardTrigger,
 } from "@/registry/jumpwind/ui/hover-card";
 
+type HoverCardStoryComponent = Component<
+  PickPartial<ComponentProps<typeof HoverCard>, "children">
+>;
+
 /**
  * For sighted users to preview content available behind a link.
  */
 const meta = {
   title: "@jumpwind/ui/HoverCard",
-  component: HoverCard,
+  component: HoverCard as HoverCardStoryComponent,
   argTypes: {},
   args: {},
   render: (args) => (
@@ -23,7 +29,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof HoverCard>;
+} satisfies Meta<HoverCardStoryComponent>;
 
 export default meta;
 

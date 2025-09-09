@@ -1,11 +1,16 @@
-import { createSignal } from "solid-js";
+import type { PickPartial } from "@jumpwind/utils";
+import { type Component, type ComponentProps, createSignal } from "solid-js";
 import { fn } from "storybook/test";
 import type { Meta, StoryFn, StoryObj } from "storybook-solidjs-vite";
 import { Button } from "@/registry/jumpwind/ui/button";
 
+type ButtonStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Button>, "children">
+>;
+
 const meta = {
   title: "@jumpwind/ui/Button",
-  component: Button,
+  component: Button as ButtonStoryComponent,
   parameters: {
     layout: "centered",
   },
@@ -30,7 +35,7 @@ const meta = {
     },
   },
   args: { onClick: fn() },
-} satisfies Meta<typeof Button>;
+} satisfies Meta<ButtonStoryComponent>;
 
 type Story = StoryObj<typeof meta>;
 

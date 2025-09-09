@@ -1,3 +1,4 @@
+import type { Component, ComponentProps } from "solid-js";
 import { toast } from "solid-sonner";
 import { action } from "storybook/actions";
 import { expect, userEvent, waitFor, within } from "storybook/test";
@@ -5,12 +6,14 @@ import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { Button } from "@/registry/jumpwind/ui/button";
 import { Toaster } from "@/registry/jumpwind/ui/sonner";
 
+type SonnerStoryComponent = Component<ComponentProps<typeof Toaster>>;
+
 /**
  * An opinionated toast component for React.
  */
-const meta: Meta<typeof Toaster> = {
+const meta = {
   title: "@jumpwind/ui/Sonner",
-  component: Toaster,
+  component: Toaster as SonnerStoryComponent,
   argTypes: {},
   args: {
     position: "bottom-right",
@@ -37,7 +40,7 @@ const meta: Meta<typeof Toaster> = {
       <Toaster {...args} />
     </div>
   ),
-} satisfies Meta<typeof Toaster>;
+} satisfies Meta<SonnerStoryComponent>;
 
 export default meta;
 

@@ -1,3 +1,5 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
@@ -16,13 +18,17 @@ import {
   ContextMenuTrigger,
 } from "@/registry/jumpwind/ui/context-menu";
 
+type ContextMenuStoryComponent = Component<
+  PickPartial<ComponentProps<typeof ContextMenu>, "children">
+>;
+
 /**
  * Displays a menu to the user — such as a set of actions or functions —
  * triggered by a button.
  */
 const meta = {
   title: "@jumpwind/ui/ContextMenu",
-  component: ContextMenu,
+  component: ContextMenu as ContextMenuStoryComponent,
   argTypes: {},
   args: {},
   render: (args) => (
@@ -41,7 +47,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof ContextMenu>;
+} satisfies Meta<ContextMenuStoryComponent>;
 
 export default meta;
 

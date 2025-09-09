@@ -1,4 +1,6 @@
+import type { PickPartial } from "@jumpwind/utils";
 import PlusIcon from "lucide-solid/icons/plus";
+import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
@@ -7,13 +9,17 @@ import {
   TooltipTrigger,
 } from "@/registry/jumpwind/ui/tooltip";
 
+type TooltipStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Tooltip>, "children">
+>;
+
 /**
  * A popup that displays information related to an element when the element
  * receives keyboard focus or the mouse hovers over it.
  */
-const meta: Meta<typeof TooltipContent> = {
+const meta = {
   title: "@jumpwind/ui/Tooltip",
-  component: Tooltip,
+  component: Tooltip as TooltipStoryComponent,
   argTypes: {
     placement: {
       options: ["top", "bottom", "left", "right"],
@@ -41,7 +47,7 @@ const meta: Meta<typeof TooltipContent> = {
       <TooltipContent {...args} />
     </Tooltip>
   ),
-} satisfies Meta<typeof TooltipContent>;
+} satisfies Meta<TooltipStoryComponent>;
 
 export default meta;
 

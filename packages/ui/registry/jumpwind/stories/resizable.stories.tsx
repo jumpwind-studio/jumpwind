@@ -1,3 +1,5 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
   ResizableHandle,
@@ -5,12 +7,16 @@ import {
   ResizablePanelGroup,
 } from "@/registry/jumpwind/ui/resizable";
 
+type ResizableStoryComponent = Component<
+  PickPartial<ComponentProps<typeof ResizablePanelGroup>, "children">
+>;
+
 /**
  * Accessible resizable panel groups and layouts with keyboard support.
  */
-const meta: Meta<typeof ResizablePanelGroup> = {
+const meta = {
   title: "@jumpwind/ui/ResizablePanelGroup",
-  component: ResizablePanelGroup,
+  component: ResizablePanelGroup as ResizableStoryComponent,
   argTypes: {
     onLayout: {
       control: false,
@@ -46,7 +52,7 @@ const meta: Meta<typeof ResizablePanelGroup> = {
       </ResizablePanel>
     </ResizablePanelGroup>
   ),
-} satisfies Meta<typeof ResizablePanelGroup>;
+} satisfies Meta<ResizableStoryComponent>;
 
 export default meta;
 

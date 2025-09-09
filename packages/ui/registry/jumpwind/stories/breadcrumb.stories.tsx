@@ -1,4 +1,6 @@
+import type { PickPartial } from "@jumpwind/utils";
 import ArrowRightSquareIcon from "lucide-solid/icons/arrow-right-square";
+import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
   Breadcrumb,
@@ -9,12 +11,16 @@ import {
   BreadcrumbSeparator,
 } from "@/registry/jumpwind/ui/breadcrumb";
 
+type BreadcrumbStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Breadcrumb>, "children">
+>;
+
 /**
  * Displays the path to the current resource using a hierarchy of links.
  */
 const meta = {
   title: "@jumpwind/ui/Breadcrumb",
-  component: Breadcrumb,
+  component: Breadcrumb as BreadcrumbStoryComponent,
   argTypes: {},
   args: {},
   render: (args) => (
@@ -37,7 +43,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof Breadcrumb>;
+} satisfies Meta<BreadcrumbStoryComponent>;
 
 export default meta;
 

@@ -1,3 +1,5 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
@@ -7,12 +9,16 @@ import {
   CheckboxLabel,
 } from "@/registry/jumpwind/ui/checkbox";
 
+type CheckboxStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Checkbox>, "children">
+>;
+
 /**
  * A control that allows the user to toggle between checked and not checked.
  */
 const meta = {
   title: "@jumpwind/ui/Checkbox",
-  component: Checkbox,
+  component: Checkbox as CheckboxStoryComponent,
   argTypes: {},
   args: {
     id: "terms",
@@ -30,7 +36,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof Checkbox>;
+} satisfies Meta<CheckboxStoryComponent>;
 
 export default meta;
 

@@ -1,4 +1,6 @@
+import type { PickPartial } from "@jumpwind/utils";
 import ChevronsUpDown from "lucide-solid/icons/chevrons-up-down";
+import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { Button } from "@/registry/jumpwind/ui/button";
@@ -8,12 +10,16 @@ import {
   CollapsibleTrigger,
 } from "@/registry/jumpwind/ui/collapsible";
 
+type CollapsibleStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Collapsible>, "children">
+>;
+
 /**
  * An interactive component which expands/collapses a panel.
  */
 const meta = {
   title: "@jumpwind/ui/Collapsible",
-  component: Collapsible,
+  component: Collapsible as CollapsibleStoryComponent,
   argTypes: {},
   args: {
     class: "flex w-[350px] flex-col gap-2",
@@ -46,7 +52,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof Collapsible>;
+} satisfies Meta<CollapsibleStoryComponent>;
 
 export default meta;
 

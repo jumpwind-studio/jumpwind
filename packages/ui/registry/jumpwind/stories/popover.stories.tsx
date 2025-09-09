@@ -1,3 +1,5 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { Button } from "@/registry/jumpwind/ui/button";
@@ -7,12 +9,16 @@ import {
   PopoverTrigger,
 } from "@/registry/jumpwind/ui/popover";
 
+type PopoverStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Popover>, "children">
+>;
+
 /**
  * Displays rich content in a portal, triggered by a button.
  */
 const meta = {
   title: "@jumpwind/ui/Popover",
-  component: Popover,
+  component: Popover as PopoverStoryComponent,
   argTypes: {},
   render: (args) => (
     <Popover {...args}>
@@ -25,7 +31,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof Popover>;
+} satisfies Meta<PopoverStoryComponent>;
 
 export default meta;
 

@@ -1,3 +1,5 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
@@ -7,13 +9,17 @@ import {
   AccordionTrigger,
 } from "@/registry/jumpwind/ui/accordion";
 
+type AccordionStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Accordion>, "children">
+>;
+
 /**
  * A vertically stacked set of interactive headings that each reveal a section
  * of content.
  */
 const meta = {
   title: "@jumpwind/ui/Accordion",
-  component: Accordion,
+  component: Accordion as AccordionStoryComponent,
   argTypes: {
     type: {
       options: ["single", "multiple"],
@@ -47,7 +53,7 @@ const meta = {
       </AccordionItem>
     </Accordion>
   ),
-} satisfies Meta<typeof Accordion>;
+} satisfies Meta<AccordionStoryComponent>;
 
 export default meta;
 
@@ -69,8 +75,8 @@ export const ShouldOnlyOpenOne: Story = {
     const accordions = canvas.getAllByRole("button");
 
     // Open the tabs one at a time
-    for (const trigger of accordions) {
-      await userEvent.click(trigger);
+    for (const accordion of accordions) {
+      await userEvent.click(accordion);
       await waitFor(async () => {
         const content = await canvas.findAllByRole("region");
         return expect(content.length).toBe(1);
@@ -94,11 +100,13 @@ export const ShouldOpenAll: Story = {
   tags: ["!dev", "!autodocs"],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const accordions = await canvas.getAllByRole("button");
+    const accordions = await canvas.findAllByRole("button");
 
     // Open all tabs one at a time
     for (let i = 0; i < accordions.length; i++) {
-      await userEvent.click(accordions[i]);
+      const accordion = accordions[i];
+      if (!accordion) continue;
+      await userEvent.click(accordion);
       await waitFor(async () => {
         const content = await canvas.findAllByRole("region");
         return expect(content.length).toBe(i + 1);
@@ -107,7 +115,9 @@ export const ShouldOpenAll: Story = {
 
     // Close all tabs one at a time
     for (let i = accordions.length - 1; i > 0; i--) {
-      await userEvent.click(accordions[i]);
+      const accordion = accordions[i];
+      if (!accordion) continue;
+      await userEvent.click(accordion);
       await waitFor(async () => {
         const content = await canvas.findAllByRole("region");
         return expect(content.length).toBe(i);
@@ -115,9 +125,10 @@ export const ShouldOpenAll: Story = {
     }
 
     // Close the last opened tab
-    await userEvent.click(accordions[0]);
+    const accordion = accordions[0]!;
+    await userEvent.click(accordion);
     await waitFor(async () => {
-      const content = await canvas.queryByRole("region");
+      const content = await canvas.findByRole("region");
       return expect(content).toBeFalsy();
     });
   },

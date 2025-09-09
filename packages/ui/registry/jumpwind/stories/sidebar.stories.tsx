@@ -1,3 +1,4 @@
+import type { PickPartial } from "@jumpwind/utils";
 import CalendarIcon from "lucide-solid/icons/calendar";
 import ChevronUpIcon from "lucide-solid/icons/chevron-up";
 import HomeIcon from "lucide-solid/icons/home";
@@ -5,7 +6,7 @@ import InboxIcon from "lucide-solid/icons/inbox";
 import SearchIcon from "lucide-solid/icons/search";
 import SettingsIcon from "lucide-solid/icons/settings";
 import User2Icon from "lucide-solid/icons/user-2";
-import { For } from "solid-js";
+import { type Component, type ComponentProps, For } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import { userEvent } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
@@ -29,6 +30,10 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/registry/jumpwind/ui/sidebar";
+
+type SidebarStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Sidebar>, "children">
+>;
 
 /**
  * A composable, themeable and customizable sidebar component.
@@ -69,7 +74,7 @@ const meta = {
       </SidebarProvider>
     ),
   ],
-} satisfies Meta<typeof Sidebar>;
+} satisfies Meta<SidebarStoryComponent>;
 
 export default meta;
 

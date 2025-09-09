@@ -1,3 +1,5 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { Button } from "@/registry/jumpwind/ui/button";
@@ -12,13 +14,17 @@ import {
   DialogTrigger,
 } from "@/registry/jumpwind/ui/dialog";
 
+type DialogStoryComponent = Component<
+  PickPartial<ComponentProps<typeof DialogStory>, "children">
+>;
+
 /**
  * A window overlaid on either the primary window or another dialog window,
  * rendering the content underneath inert.
  */
 const meta = {
   title: "@jumpwind/ui/Dialog",
-  component: Dialog,
+  component: Dialog as DialogStoryComponent,
   argTypes: {},
   render: (args) => (
     <Dialog {...args}>
@@ -45,7 +51,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof Dialog>;
+} satisfies Meta<DialogStoryComponent>;
 
 export default meta;
 

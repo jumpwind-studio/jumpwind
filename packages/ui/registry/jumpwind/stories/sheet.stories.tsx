@@ -1,3 +1,5 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { Button } from "@/registry/jumpwind/ui/button";
@@ -12,15 +14,19 @@ import {
   SheetTrigger,
 } from "@/registry/jumpwind/ui/sheet";
 
+type SheetStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Sheet>, "children">
+>;
+
 /**
  * Extends the Dialog component to display content that complements the main
  * content of the screen.
  */
-const meta: Meta<typeof SheetContent> = {
+const meta = {
   title: "@jumpwind/ui/Sheet",
-  component: Sheet,
+  component: Sheet as SheetStoryComponent,
   argTypes: {
-    side: {
+    placement: {
       options: ["top", "bottom", "left", "right"],
       control: {
         type: "radio",
@@ -44,10 +50,10 @@ const meta: Meta<typeof SheetContent> = {
           </SheetDescription>
         </SheetHeader>
         <SheetFooter>
-          <SheetClose class="hover:underline">Cancel</SheetClose>
-          <SheetClose class="rounded bg-primary px-4 py-2 text-primary-foreground">
-            Submit
+          <SheetClose as={Button} variant="outline">
+            Cancel
           </SheetClose>
+          <SheetClose as={Button}>Submit</SheetClose>
         </SheetFooter>
       </SheetContent>
     </Sheet>
@@ -55,7 +61,7 @@ const meta: Meta<typeof SheetContent> = {
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof SheetContent>;
+} satisfies Meta<SheetStoryComponent>;
 
 export default meta;
 

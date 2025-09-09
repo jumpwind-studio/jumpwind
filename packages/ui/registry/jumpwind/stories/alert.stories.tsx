@@ -1,4 +1,6 @@
+import type { PickPartial } from "@jumpwind/utils";
 import AlertCircleIcon from "lucide-solid/icons/alert-circle";
+import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
   Alert,
@@ -6,12 +8,16 @@ import {
   AlertTitle,
 } from "@/registry/jumpwind/ui/alert";
 
+type AlertStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Alert>, "children">
+>;
+
 /**
  * Displays a callout for user attention.
  */
 const meta = {
   title: "@jumpwind/ui/Alert",
-  component: Alert,
+  component: Alert as AlertStoryComponent,
   argTypes: {
     variant: {
       options: ["default", "destructive"],
@@ -29,7 +35,7 @@ const meta = {
       </AlertDescription>
     </Alert>
   ),
-} satisfies Meta<typeof Alert>;
+} satisfies Meta<AlertStoryComponent>;
 
 export default meta;
 

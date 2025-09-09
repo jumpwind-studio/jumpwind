@@ -1,17 +1,23 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { Skeleton } from "@/registry/jumpwind/ui/skeleton";
+
+type SkeletonStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Skeleton>, "children">
+>;
 
 /**
  * Use to show a placeholder while content is loading.
  */
 const meta = {
   title: "@jumpwind/ui/Skeleton",
-  component: Skeleton,
+  component: Skeleton as SkeletonStoryComponent,
   argTypes: {},
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof Skeleton>;
+} satisfies Meta<SkeletonStoryComponent>;
 
 export default meta;
 
