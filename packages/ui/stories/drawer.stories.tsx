@@ -23,7 +23,9 @@ const meta = {
   },
   render: (args) => (
     <Drawer {...args}>
-      <DrawerTrigger as={Button}>Open</DrawerTrigger>
+      <DrawerTrigger as={Button} variant="outline">
+        Open
+      </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Are you sure absolutely sure?</DrawerTitle>

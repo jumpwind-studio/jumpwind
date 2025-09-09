@@ -1,6 +1,12 @@
 import * as DialogPrimitive from "corvu/dialog";
 import XIcon from "lucide-solid/icons/x";
-import { type ComponentProps, Show, splitProps, untrack } from "solid-js";
+import {
+  type ComponentProps,
+  type JSX,
+  Show,
+  splitProps,
+  untrack,
+} from "solid-js";
 import createPersistent from "solid-persistent";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
@@ -30,16 +36,8 @@ function Dialog(
   );
 }
 
-function DialogTrigger(props: ComponentProps<typeof DialogPrimitive.Trigger>) {
-  return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />;
-}
-
 function DialogPortal(props: ComponentProps<typeof DialogPrimitive.Portal>) {
   return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />;
-}
-
-function DialogClose(props: ComponentProps<typeof DialogPrimitive.Close>) {
-  return <DialogPrimitive.Close data-slot="dialog-close" {...props} />;
 }
 
 function DialogOverlay(props: ComponentProps<typeof DialogPrimitive.Overlay>) {
@@ -49,7 +47,6 @@ function DialogOverlay(props: ComponentProps<typeof DialogPrimitive.Overlay>) {
     <DialogPrimitive.Overlay
       data-slot="dialog-overlay"
       class={cn(
-        // "data-closed:fade-out-0 data-open:fade-in-0 fixed inset-0 z-50 bg-black/80 data-closed:animate-out data-open:animate-in",
         "data-closed:fade-out-0 data-open:fade-in-0 fixed inset-0 z-50 bg-black/50 data-closed:animate-out data-open:animate-in",
         local.class,
       )}
@@ -58,15 +55,25 @@ function DialogOverlay(props: ComponentProps<typeof DialogPrimitive.Overlay>) {
   );
 }
 
+function DialogTrigger(props: ComponentProps<typeof DialogPrimitive.Trigger>) {
+  return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />;
+}
+
+function DialogClose(props: ComponentProps<typeof DialogPrimitive.Close>) {
+  return <DialogPrimitive.Close data-slot="dialog-close" {...props} />;
+}
+
 function DialogContent(
   props: ComponentProps<typeof DialogPrimitive.Content> & {
     onClose?: (e: MouseEvent) => void;
     showCloseButton?: boolean;
+    container?: JSX.Element;
   },
 ) {
   const [local, rest] = splitProps(props, [
     "class",
     "children",
+    "container",
     "onClose",
     "showCloseButton",
   ]);
@@ -77,8 +84,10 @@ function DialogContent(
   });
 
   return (
-    <DialogPortal data-slot="dialog-portal">
-      <DialogOverlay />
+    <DialogPortal
+      mount={local.container ? (local.container as Node) : undefined}
+    >
+      <DialogOverlay cmdk-overlay />
       <DialogPrimitive.Content
         data-slot="dialog-content"
         class={cn(

@@ -27,59 +27,6 @@ function Command(props: ComponentProps<typeof CommandPrimitive>) {
   );
 }
 
-function CommandDialog(
-  props: ComponentProps<typeof Dialog> & {
-    title?: string;
-    description?: string;
-  },
-) {
-  const defaultedProps = mergeProps(
-    {
-      title: "Command Palette",
-      description: "Search for a command to run...",
-    } satisfies Partial<typeof Dialog> & {
-      title?: string;
-      description?: string;
-    },
-    props,
-  );
-
-  const [local, rest] = splitProps(defaultedProps, [
-    "children",
-    "title",
-    "description",
-  ]);
-
-  // NOTE: Using `corvu` pattern for memoizing child components
-  // Okay to remove if overkill
-  const memoizedChildren = createOnce(() => defaultedProps.children);
-
-  return (
-    <Dialog {...rest}>
-      {(state) => {
-        const resolveChildren = () => {
-          const children = memoizedChildren()();
-          if (isFunction(children)) return children(state);
-          return children;
-        };
-        return (
-          <>
-            <DialogHeader class="sr-only">
-              <DialogTitle>{local.title}</DialogTitle>
-              <DialogDescription>{local.description}</DialogDescription>
-            </DialogHeader>
-            <DialogContent class="overflow-hidden p-0">
-              <Command class="**:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
-                {untrack(() => resolveChildren())}
-              </Command>
-            </DialogContent>
-          </>
-        );
-      }}
-    </Dialog>
-  );
-}
-
 function CommandInput(props: ComponentProps<typeof CommandPrimitive.Input>) {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -184,6 +131,56 @@ function CommandShortcut(props: ComponentProps<"span">) {
       )}
       {...rest}
     />
+  );
+}
+
+function CommandDialog(
+  props: ComponentProps<typeof Dialog> & {
+    title?: string;
+    description?: string;
+  },
+) {
+  const defaultedProps = mergeProps(
+    {
+      title: "Command Palette",
+      description: "Search...",
+    } satisfies Partial<typeof props>,
+    props,
+  );
+
+  const [local, rest] = splitProps(defaultedProps, [
+    "children",
+    "title",
+    "description",
+  ]);
+
+  // NOTE: Using `corvu` pattern for memoizing child components
+  // Okay to remove if overkill
+  const memoizedChildren = createOnce(() => defaultedProps.children);
+
+  return (
+    <Dialog {...rest}>
+      {(state) => {
+        const resolveChildren = () => {
+          const children = memoizedChildren()();
+          if (isFunction(children)) return children(state);
+          return children;
+        };
+        return (
+          <>
+            <DialogHeader class="sr-only">
+              <DialogTitle>{local.title}</DialogTitle>
+              <DialogDescription>{local.description}</DialogDescription>
+            </DialogHeader>
+            <DialogContent class="overflow-hidden p-0">
+              <Command class="flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground">
+                {untrack(() => resolveChildren())}
+              </Command>
+            </DialogContent>
+          </>
+        );
+      }}
+    </Dialog>
   );
 }
 

@@ -22,6 +22,7 @@ export * from "./hover-card.jsx";
 export * from "./image.jsx";
 export * from "./input.jsx";
 export * from "./input-otp.jsx";
+export * from "./kbd.jsx";
 export * from "./label.jsx";
 export * from "./link.jsx";
 export * from "./menubar.jsx";

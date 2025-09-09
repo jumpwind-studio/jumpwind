@@ -1,7 +1,10 @@
+import { createSignal } from "solid-js";
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
+import { createShortcut } from "@/registry/jumpwind/hook/use-keys";
 import {
   Command,
+  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
@@ -9,6 +12,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/registry/jumpwind/ui/command";
+import { Kbd, KbdKey, KbdModifier } from "@/registry/jumpwind/ui/kbd";
 
 /**
  * Fast, composable, unstyled command menu for React.
@@ -23,7 +27,7 @@ const meta = {
   },
   render: (args) => (
     <Command {...args}>
-      <CommandInput placeholder="Type a command or search..." />
+      <CommandInput placeholder="Search..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Suggestions">
@@ -53,6 +57,45 @@ type Story = StoryObj<typeof meta>;
  * The default form of the command.
  */
 export const Default: Story = {};
+
+export const WithDialog = {
+  tags: ["autodocs"],
+  render: () => {
+    const [isOpen, setIsOpen] = createSignal(false);
+
+    createShortcut(["Control", "J"], setIsOpen);
+
+    return (
+      <>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            setIsOpen(true);
+          }}
+          class="p-2 text-muted-foreground text-sm"
+        >
+          Press{" "}
+          <Kbd>
+            <KbdModifier>⌘</KbdModifier>
+            <KbdKey>J</KbdKey>
+          </Kbd>
+        </button>
+        <CommandDialog open={isOpen()} onOpenChange={setIsOpen}>
+          <CommandInput placeholder="Type a command or search..." />
+          <CommandList>
+            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandGroup heading="Suggestions">
+              <CommandItem>Calendar</CommandItem>
+              <CommandItem>Search Emoji</CommandItem>
+              <CommandItem>Calculator</CommandItem>
+            </CommandGroup>
+          </CommandList>
+        </CommandDialog>
+      </>
+    );
+  },
+} satisfies Story;
 
 export const TypingInCombobox: Story = {
   name: "when typing into the combobox, should filter results",

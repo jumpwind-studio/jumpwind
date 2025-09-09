@@ -39,6 +39,7 @@
         "@corvu/utils": "^0.4.2",
         "@effect/vitest": "^0.25.1",
         "@kobalte/core": "^0.13.11",
+        "@solid-primitives/rootless": "^1.5.2",
         "@tailwindcss/vite": "^4.1.13",
         "@tanstack/solid-form": "^1.19.3",
         "@unpic/solid": "^1.0.0",

@@ -45,6 +45,7 @@
     "@effect/platform": "catalog:effect",
     "@effect/platform-bun": "catalog:effect",
     "@kobalte/core": "catalog:frontend",
+    "@solid-primitives/rootless": "catalog:frontend",
     "@storybook/addon-a11y": "^9.1.5",
     "@storybook/addon-docs": "^9.1.5",
     "@storybook/addon-links": "^9.1.5",
