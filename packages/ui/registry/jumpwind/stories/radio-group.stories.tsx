@@ -1,7 +1,11 @@
+import { For } from "solid-js";
 import { expect, userEvent, waitFor } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Label } from "@/registry/jumpwind/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/registry/jumpwind/ui/radio-group";
+import {
+  RadioGroup,
+  RadioGroupItem,
+  RadioGroupItemLabel,
+} from "@/registry/jumpwind/ui/radio-group";
 
 /**
  * A set of checkable buttons—known as radio buttons—where no more than one of
@@ -10,20 +14,20 @@ import { RadioGroup, RadioGroupItem } from "@/registry/jumpwind/ui/radio-group";
 const meta = {
   title: "@jumpwind/ui/RadioGroup",
   component: RadioGroup,
-  tags: ["autodocs"],
   argTypes: {},
   args: {
     defaultValue: "comfortable",
-    class: "grid gap-2 grid-cols-[1rem_1fr] items-center",
+    // class: "grid gap-2 grid-cols-[1rem_1fr] items-center",
   },
   render: (args) => (
     <RadioGroup {...args}>
-      <RadioGroupItem value="default" id="r1" />
-      <Label for="r1">Default</Label>
-      <RadioGroupItem value="comfortable" id="r2" />
-      <Label for="r2">Comfortable</Label>
-      <RadioGroupItem value="compact" id="r3" />
-      <Label for="r3">Compact</Label>
+      <For each={["Default", "Comfortable", "Compact"]}>
+        {(item) => (
+          <RadioGroupItem value={item}>
+            <RadioGroupItemLabel>{item}</RadioGroupItemLabel>
+          </RadioGroupItem>
+        )}
+      </For>
     </RadioGroup>
   ),
 } satisfies Meta<typeof RadioGroup>;
