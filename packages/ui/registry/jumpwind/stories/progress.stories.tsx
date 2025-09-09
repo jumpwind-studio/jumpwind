@@ -1,5 +1,9 @@
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Progress } from "@/registry/jumpwind/ui/progress";
+import {
+  Progress,
+  ProgressLabel,
+  ProgressValueLabel,
+} from "@/registry/jumpwind/ui/progress";
 
 /**
  * Displays an indicator showing the completion progress of a task, typically
@@ -13,7 +17,16 @@ const meta = {
     "aria-label": "Progress",
     value: 30,
     maxValue: 100,
+    class: "w-[300px]",
   },
+  render: (args) => (
+    <Progress {...args}>
+      <div class="flex w-full justify-between">
+        <ProgressLabel>Processing...</ProgressLabel>
+        <ProgressValueLabel />
+      </div>
+    </Progress>
+  ),
 } satisfies Meta<typeof Progress>;
 
 export default meta;

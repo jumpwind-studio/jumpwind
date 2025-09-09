@@ -1,8 +1,23 @@
-import { addDays } from "date-fns";
+import * as Duration from "effect/Duration";
 import { action } from "storybook/actions";
 import { expect, userEvent } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Calendar } from "@/registry/jumpwind/ui/calendar";
+import { cn } from "@/registry/jumpwind/lib/utils";
+import {
+  Calendar,
+  CalendarBody,
+  CalendarCell,
+  CalendarCellTrigger,
+  CalendarHead,
+  CalendarHeadCell,
+  CalendarHeader,
+  CalendarHeadRow,
+  CalendarLabel,
+  CalendarNextMonth,
+  CalendarPrevMonth,
+  CalendarRow,
+  CalendarTable,
+} from "@/registry/jumpwind/ui/calendar";
 
 /**
  * A date field component that allows users to enter and edit date.
@@ -10,17 +25,52 @@ import { Calendar } from "@/registry/jumpwind/ui/calendar";
 const meta = {
   title: "@jumpwind/ui/Calendar",
   component: Calendar,
-  tags: ["autodocs"],
-  argTypes: {},
+  argTypes: {
+    contextId: { control: false },
+    focusedDay: { control: { type: "date" } },
+    fixedWeeks: { control: { type: "boolean" } },
+  },
   args: {
     mode: "single",
-    selected: new Date(),
-    onSelect: action("onDayClick"),
-    className: "rounded-md border w-fit",
+    initialValue: new Date(),
+    onValueChange: action("onValueChange"),
   },
   parameters: {
     layout: "centered",
   },
+  render: ({ children, ...args }) => (
+    <Calendar {...args} class={cn("rounded-md border", args.class)}>
+      <CalendarHeader>
+        <CalendarPrevMonth />
+        <CalendarLabel />
+        <CalendarNextMonth />
+      </CalendarHeader>
+      <CalendarTable>
+        <CalendarHead>
+          <CalendarHeadRow>
+            {(weekday) => (
+              <CalendarHeadCell>
+                {weekday().toLocaleString("en", { weekday: "short" })}
+              </CalendarHeadCell>
+            )}
+          </CalendarHeadRow>
+        </CalendarHead>
+        <CalendarBody>
+          {(week) => (
+            <CalendarRow week={week()}>
+              {(day) => (
+                <CalendarCell>
+                  <CalendarCellTrigger day={day()}>
+                    {day().toLocaleString("en-US", { day: "2-digit" })}
+                  </CalendarCellTrigger>
+                </CalendarCell>
+              )}
+            </CalendarRow>
+          )}
+        </CalendarBody>
+      </CalendarTable>
+    </Calendar>
+  ),
 } satisfies Meta<typeof Calendar>;
 
 export default meta;
@@ -30,16 +80,25 @@ type Story = StoryObj<typeof meta>;
 /**
  * The default form of the calendar.
  */
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    mode: "single",
+    initialValue: new Date(),
+  },
+};
 
 /**
  * Use the `multiple` mode to select multiple dates.
  */
 export const Multiple: Story = {
   args: {
-    min: 1,
-    selected: [new Date(), addDays(new Date(), 2), addDays(new Date(), 8)],
     mode: "multiple",
+    min: 1,
+    initialValue: [
+      new Date(Date.now()),
+      new Date(Date.now() + Duration.toMillis("2 days")),
+      new Date(Date.now() + Duration.toMillis("8 days")),
+    ],
   },
 };
 
@@ -48,11 +107,11 @@ export const Multiple: Story = {
  */
 export const Range: Story = {
   args: {
-    selected: {
-      from: new Date(),
-      to: addDays(new Date(), 7),
-    },
     mode: "range",
+    initialValue: {
+      from: new Date(),
+      to: new Date(Date.now() + Duration.toMillis("1 week")),
+    },
   },
 };
 
@@ -61,12 +120,13 @@ export const Range: Story = {
  */
 export const Disabled: Story = {
   args: {
-    disabled: [
-      addDays(new Date(), 1),
-      addDays(new Date(), 2),
-      addDays(new Date(), 3),
-      addDays(new Date(), 5),
-    ],
+    disabled: (date) =>
+      [
+        date.getTime() + Duration.toMillis("1 day"),
+        date.getTime() + Duration.toMillis("2 days"),
+        date.getTime() + Duration.toMillis("3 days"),
+        date.getTime() + Duration.toMillis("5 days"),
+      ]?.some((dt) => date.getTime() === dt),
   },
 };
 
@@ -75,8 +135,10 @@ export const Disabled: Story = {
  */
 export const MultipleMonths: Story = {
   args: {
+    mode: "multiple",
     numberOfMonths: 2,
-    showOutsideDays: false,
+    max: 3,
+    disableOutsideDays: false,
   },
 };
 
@@ -84,7 +146,7 @@ export const ShouldChangeMonths: Story = {
   name: "when using the calendar navigation, should change months",
   tags: ["!dev", "!autodocs"],
   args: {
-    defaultMonth: new Date(2000, 8),
+    initialMonth: new Date(2000, 8),
   },
   play: async ({ canvas }) => {
     const title = await canvas.findByText(/2000/i);

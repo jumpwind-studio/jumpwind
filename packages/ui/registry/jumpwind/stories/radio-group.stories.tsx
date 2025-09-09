@@ -17,7 +17,6 @@ const meta = {
   argTypes: {},
   args: {
     defaultValue: "comfortable",
-    // class: "grid gap-2 grid-cols-[1rem_1fr] items-center",
   },
   render: (args) => (
     <RadioGroup {...args}>
