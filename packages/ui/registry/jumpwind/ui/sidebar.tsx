@@ -1,15 +1,14 @@
 import createControllableSignal from "@corvu/utils/create/controllableSignal";
+import { DynamicButton } from "@corvu/utils/dynamic";
 import type { TooltipContentProps } from "@kobalte/core/tooltip";
 import PanelLeftCloseIcon from "lucide-solid/icons/panel-left-close";
 import PanelLeftOpenIcon from "lucide-solid/icons/panel-left-open";
 import type { Accessor, ComponentProps, JSX } from "solid-js";
 import {
   createContext,
-  createEffect,
   createMemo,
   Match,
   mergeProps,
-  onCleanup,
   Show,
   Switch,
   splitProps,
@@ -17,6 +16,7 @@ import {
 } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 import { useIsMobile } from "@/registry/jumpwind/hook/use-is-mobile";
+import { createShortcut } from "@/registry/jumpwind/hook/use-keys";
 import { cn } from "@/registry/jumpwind/lib/utils";
 import { Button } from "@/registry/jumpwind/ui/button";
 import { Drawer, DrawerContent } from "@/registry/jumpwind/ui/drawer";
@@ -96,23 +96,7 @@ export function SidebarProvider(
   const toggle = () => setOpen((open) => !open);
 
   // Adds a keyboard shortcut to toggle the sidebar.
-  createEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (
-        (event.metaKey || event.ctrlKey) &&
-        event.key === SIDEBAR_KEYBOARD_SHORTCUT
-      ) {
-        event.preventDefault();
-        toggle();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    onCleanup(() => {
-      window.removeEventListener("keydown", handleKeyDown);
-    });
-  });
+  createShortcut(["Meta", SIDEBAR_KEYBOARD_SHORTCUT], toggle);
 
   const isMobile = useIsMobile();
 
@@ -518,9 +502,8 @@ export type SidebarMenuButtonVariantProps = VariantProps<
 >;
 
 export function SidebarMenuButton(
-  props: ComponentProps<"button"> &
+  props: ComponentProps<typeof DynamicButton> &
     SidebarMenuButtonVariantProps & {
-      class?: string;
       isActive?: boolean;
       tooltip?: string | TooltipContentProps<"div">;
     },
@@ -567,7 +550,7 @@ export function SidebarMenuButton(
         </Tooltip>
       }
     >
-      <button
+      <DynamicButton
         data-sidebar="menu-button"
         data-active={local.isActive}
         data-size={local.size}

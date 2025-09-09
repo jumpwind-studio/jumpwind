@@ -4,7 +4,7 @@ import { cn } from "@/registry/jumpwind/lib/utils";
 
 const useProgress = ProgressPrimitive.useProgressContext;
 
-function Progress(props: ComponentProps<typeof ProgressPrimitive.Root<"div">>) {
+function Progress(props: ComponentProps<typeof ProgressPrimitive.Root>) {
   const [local, rest] = splitProps(props, ["class", "value"]);
 
   const translateX = createMemo(() => {
@@ -13,7 +13,6 @@ function Progress(props: ComponentProps<typeof ProgressPrimitive.Root<"div">>) {
 
   return (
     <ProgressPrimitive.Root
-      as="div"
       data-slot="progress"
       value={local.value}
       class={cn(

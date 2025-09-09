@@ -21,6 +21,7 @@ const meta: Meta<typeof Toaster> = {
   render: (args) => (
     <div class="flex min-h-96 items-center justify-center space-x-2">
       <Button
+        variant="outline"
         onClick={() =>
           toast("Event has been created", {
             description: new Date().toLocaleString(),

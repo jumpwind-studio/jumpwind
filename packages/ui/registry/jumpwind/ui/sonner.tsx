@@ -10,8 +10,8 @@ function Toaster(props: ComponentProps<typeof Sonner>) {
   return (
     <Sonner
       data-class="toaster"
-      class={cn("toaster group", local.class)}
       position="top-right"
+      theme={local.theme}
       style={
         {
           "--normal-bg": "var(--popover)",
@@ -20,7 +20,7 @@ function Toaster(props: ComponentProps<typeof Sonner>) {
           ...local.style,
         } as JSX.CSSProperties
       }
-      theme={local.theme}
+      class={cn("toaster group", local.class)}
       {...rest}
     />
   );

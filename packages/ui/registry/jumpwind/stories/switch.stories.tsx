@@ -1,5 +1,6 @@
 import { expect, userEvent } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
+import { Label } from "@/registry/jumpwind/ui/label";
 import { Switch, SwitchLabel } from "@/registry/jumpwind/ui/switch";
 
 /**
@@ -15,7 +16,9 @@ const meta = {
   render: (args) => (
     <div class="flex items-center space-x-2">
       <Switch {...args}>
-        <SwitchLabel for={args.id}>Airplane Mode</SwitchLabel>
+        <SwitchLabel as={Label} for={args.id}>
+          Airplane Mode
+        </SwitchLabel>
       </Switch>
     </div>
   ),
