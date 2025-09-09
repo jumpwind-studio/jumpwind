@@ -1,5 +1,6 @@
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
+import { Button } from "@/registry/jumpwind/ui/button";
 import {
   Sheet,
   SheetClose,
@@ -31,7 +32,9 @@ const meta: Meta<typeof SheetContent> = {
   },
   render: (args) => (
     <Sheet>
-      <SheetTrigger>Open</SheetTrigger>
+      <SheetTrigger as={Button} variant="outline">
+        Open
+      </SheetTrigger>
       <SheetContent {...args}>
         <SheetHeader>
           <SheetTitle>Are you absolutely sure?</SheetTitle>

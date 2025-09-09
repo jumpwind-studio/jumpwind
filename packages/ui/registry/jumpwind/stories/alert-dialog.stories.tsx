@@ -79,8 +79,8 @@ export const ShouldOpenClose = {
 export const Default = {
   render: (args) => (
     <AlertDialog {...args}>
-      <AlertDialogTrigger>
-        <Button variant="outline">Show Dialog</Button>
+      <AlertDialogTrigger as={Button} variant="outline">
+        Show Dialog
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

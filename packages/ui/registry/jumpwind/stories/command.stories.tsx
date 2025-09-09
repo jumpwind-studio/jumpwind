@@ -1,7 +1,7 @@
+import { createShortcut } from "@solid-primitives/keyboard";
 import { createSignal } from "solid-js";
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { createShortcut } from "@/registry/jumpwind/hook/use-keys";
 import {
   Command,
   CommandDialog,
@@ -20,7 +20,6 @@ import { Kbd, KbdKey, KbdModifier } from "@/registry/jumpwind/ui/kbd";
 const meta = {
   title: "@jumpwind/ui/Command",
   component: Command,
-  tags: ["autodocs"],
   argTypes: {},
   args: {
     class: "rounded-lg w-96 border shadow-md",

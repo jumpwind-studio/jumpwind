@@ -118,7 +118,7 @@ export const Simple: Story = {
               <For each={items}>
                 {(item) => (
                   <SidebarMenuItem>
-                    <SidebarMenuButton as="button" href={item.url}>
+                    <SidebarMenuButton>
                       <item.icon />
                       <span>{item.title}</span>
                     </SidebarMenuButton>
