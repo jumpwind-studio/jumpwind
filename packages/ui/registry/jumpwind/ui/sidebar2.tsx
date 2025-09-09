@@ -1,15 +1,21 @@
+import { isFunction } from "@corvu/utils";
 import createControllableSignal from "@corvu/utils/create/controllableSignal";
+import createOnce from "@corvu/utils/create/once";
 import { Dynamic, type DynamicProps } from "@corvu/utils/dynamic";
 import { createShortcut } from "@solid-primitives/keyboard";
+import { serialize } from "cookie-es";
+import type * as TooltipPrimitive from "corvu/tooltip";
 import PanelLeftIcon from "lucide-solid/icons/panel-left";
 import {
+  type Accessor,
   type ComponentProps,
   createContext,
-  createSignal,
+  createMemo,
   type JSX,
   mergeProps,
   Show,
   splitProps,
+  untrack,
   useContext,
   type ValidComponent,
 } from "solid-js";
@@ -34,23 +40,35 @@ import {
 } from "@/registry/jumpwind/ui/tooltip";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
-const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
+const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 1 week
 const SIDEBAR_WIDTH = "16rem";
 const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
-type SidebarContextProps = {
-  state: "expanded" | "collapsed";
-  open: boolean;
-  setOpen: (open: boolean) => void;
-  openMobile: boolean;
-  setOpenMobile: (open: boolean) => void;
-  isMobile: boolean;
-  toggleSidebar: () => void;
-};
+export interface SidebarDataSet {
+  "data-expanded": string | undefined;
+  "data-collapsed": string | undefined;
+}
 
-const SidebarContext = createContext<SidebarContextProps | null>(null);
+interface SidebarContextProps {
+  dataset: Accessor<SidebarDataSet>;
+  isOpen: Accessor<boolean>;
+  setIsOpen: (open: boolean) => void;
+  isMobile: Accessor<boolean>;
+  toggle: () => void;
+}
+
+const SidebarContext = createContext<SidebarContextProps>({
+  dataset: () => ({
+    "data-expanded": undefined,
+    "data-collapsed": undefined,
+  }),
+  isOpen: () => false,
+  setIsOpen: () => {},
+  isMobile: () => false,
+  toggle: () => {},
+});
 
 function useSidebar() {
   const context = useContext(SidebarContext);
@@ -62,10 +80,11 @@ function useSidebar() {
 }
 
 function SidebarProvider(
-  props: ComponentProps<"div"> & {
+  props: Omit<ComponentProps<"div">, "style"> & {
     defaultOpen?: boolean;
     open?: boolean;
     onOpenChange?: (open: boolean) => void;
+    style?: JSX.CSSProperties;
   },
 ) {
   const [local, rest] = splitProps(props, [
@@ -74,55 +93,51 @@ function SidebarProvider(
     "defaultOpen",
     "open",
     "onOpenChange",
+    "style",
   ]);
 
   const isMobile = useIsMobile();
-  const [openMobile, setOpenMobile] = createSignal(false);
-
-  const [open, setOpen] = createControllableSignal<boolean>({
+  const [isOpen, setIsOpen] = createControllableSignal<boolean>({
     initialValue: local.defaultOpen ?? true,
     value: () => local.open,
     onChange: (value) => {
       local.onOpenChange?.(value);
-      document.cookie = `${SIDEBAR_COOKIE_NAME}=${value}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+      // biome-ignore lint/suspicious/noDocumentCookie: Valid
+      document.cookie = serialize(SIDEBAR_COOKIE_NAME, value.toString(), {
+        path: "/",
+        maxAge: SIDEBAR_COOKIE_MAX_AGE,
+      });
     },
   });
 
-  // Helper to toggle the sidebar.
-  const toggleSidebar = () => {
-    return isMobile()
-      ? setOpenMobile((open) => !open)
-      : setOpen((open) => !open);
-  };
+  const toggle = () => setIsOpen((open) => !open);
 
-  createShortcut(["Meta", SIDEBAR_KEYBOARD_SHORTCUT], toggleSidebar);
+  createShortcut(["Meta", SIDEBAR_KEYBOARD_SHORTCUT], toggle);
+  createShortcut(["Ctrl", SIDEBAR_KEYBOARD_SHORTCUT], toggle);
 
-  // We add a state so that we can do data-state="expanded" or "collapsed".
-  // This makes it easier to style the sidebar with Tailwind classes.
-  const state = open() ? "expanded" : "collapsed";
+  const dataset: Accessor<SidebarDataSet> = createMemo(() => ({
+    "data-expanded": isOpen() ? "" : undefined,
+    "data-collapsed": !isOpen() ? "" : undefined,
+  }));
 
   const contextValue: SidebarContextProps = {
-    state,
-    open,
-    setOpen,
+    dataset,
+    isOpen,
+    setIsOpen,
     isMobile,
-    openMobile,
-    setOpenMobile,
-    toggleSidebar,
+    toggle,
   };
 
   return (
     <SidebarContext.Provider value={contextValue}>
-      <TooltipProvider delayDuration={0}>
+      <Tooltip openDelay={0} closeDelay={0}>
         <div
           data-slot="sidebar-wrapper"
-          style={
-            {
-              "--sidebar-width": SIDEBAR_WIDTH,
-              "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
-              ...style,
-            } as JSX.CSSProperties
-          }
+          style={{
+            "--sidebar-width": SIDEBAR_WIDTH,
+            "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
+            ...local.style,
+          }}
           class={cn(
             "group/sidebar-wrapper flex min-h-svh w-full has-data-[variant=inset]:bg-sidebar",
             local.class,
@@ -131,7 +146,7 @@ function SidebarProvider(
         >
           {local.children}
         </div>
-      </TooltipProvider>
+      </Tooltip>
     </SidebarContext.Provider>
   );
 }
@@ -148,7 +163,7 @@ function Sidebar(
       side: "left",
       variant: "sidebar",
       collapsible: "offcanvas",
-    },
+    } as const satisfies typeof props,
     props,
   );
 
@@ -156,11 +171,11 @@ function Sidebar(
     "class",
     "children",
     "collapsible",
-    "size",
+    "side",
     "variant",
   ]);
 
-  const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
+  const { dataset, ...sidebar } = useSidebar();
 
   if (local.collapsible === "none") {
     return (
@@ -177,19 +192,17 @@ function Sidebar(
     );
   }
 
-  if (isMobile) {
+  if (sidebar.isMobile()) {
     return (
-      <Sheet open={openMobile} onOpenChange={setOpenMobile} {...rest}>
+      <Sheet open={sidebar.isOpen()} onOpenChange={sidebar.setIsOpen} {...rest}>
         <SheetContent
           data-slot="sidebar"
           data-sidebar="sidebar"
           data-mobile
           side={local.side}
-          style={
-            {
-              "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
-            } as JSX.CSSProperties
-          }
+          style={{
+            "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
+          }}
           class="w-(--sidebar-width) bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
         >
           <SheetHeader class="sr-only">
@@ -204,12 +217,15 @@ function Sidebar(
 
   return (
     <div
-      class="group peer hidden text-sidebar-foreground md:block"
-      data-state={state}
-      data-collapsible={state === "collapsed" ? local.collapsible : ""}
+      data-slot="sidebar"
+      data-state={dataset()["data-collapsed"] ? "collapsed" : "expanded"}
+      data-collapsible={
+        dataset()["data-collapsed"] !== undefined ? local.collapsible : ""
+      }
       data-variant={local.variant}
       data-side={local.side}
-      data-slot="sidebar"
+      {...dataset()}
+      class="group peer hidden text-sidebar-foreground md:block"
     >
       {/* This is what handles the sidebar gap on desktop */}
       <div
@@ -253,7 +269,7 @@ function Sidebar(
 function SidebarTrigger(props: ComponentProps<typeof Button>) {
   const [local, rest] = splitProps(props, ["class", "onClick"]);
 
-  const { toggleSidebar } = useSidebar();
+  const sidebar = useSidebar();
 
   return (
     <Button
@@ -264,7 +280,7 @@ function SidebarTrigger(props: ComponentProps<typeof Button>) {
       class={cn("size-7", local.class)}
       onClick={(event) => {
         local.onClick?.(event);
-        toggleSidebar();
+        sidebar.toggle();
       }}
       {...rest}
     >
@@ -277,7 +293,7 @@ function SidebarTrigger(props: ComponentProps<typeof Button>) {
 function SidebarRail(props: ComponentProps<"button">) {
   const [local, rest] = splitProps(props, ["class"]);
 
-  const { toggleSidebar } = useSidebar();
+  const sidebar = useSidebar();
 
   return (
     <button
@@ -285,7 +301,7 @@ function SidebarRail(props: ComponentProps<"button">) {
       data-slot="sidebar-rail"
       aria-label="Toggle Sidebar"
       tabIndex={-1}
-      onClick={toggleSidebar}
+      onClick={sidebar.toggle}
       title="Toggle Sidebar"
       class={cn(
         "-translate-x-1/2 group-data-[side=left]:-right-4 absolute inset-y-0 z-20 hidden w-4 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] hover:after:bg-sidebar-border group-data-[side=right]:left-0 sm:flex",
@@ -373,6 +389,7 @@ function SidebarSeparator(props: ComponentProps<typeof Separator>) {
 
 function SidebarContent(props: ComponentProps<"div">) {
   const [local, rest] = splitProps(props, ["class"]);
+
   return (
     <div
       data-slot="sidebar-content"
@@ -514,7 +531,9 @@ type SidebarMenuButtonVariantProps = VariantProps<
 function SidebarMenuButton(
   props: ComponentProps<"button"> & {
     isActive?: boolean;
-    tooltip?: string | ComponentProps<typeof TooltipContent>;
+    tooltip?:
+      | ((props: TooltipPrimitive.RootChildrenProps) => JSX.Element)
+      | JSX.Element;
   } & SidebarMenuButtonVariantProps,
 ) {
   const [local, rest] = splitProps(props, [
@@ -525,43 +544,63 @@ function SidebarMenuButton(
     "tooltip",
   ]);
 
-  const { isMobile, state } = useSidebar();
+  const { isMobile, dataset } = useSidebar();
 
-  const button = (
-    <Dynamic
-      as="button"
-      data-slot="sidebar-menu-button"
-      data-sidebar="menu-button"
-      data-size={local.size}
-      bool:data-active={local.isActive}
-      class={cn(
-        sidebarMenuButtonVariants({ variant: local.variant, size: local.size }),
-        local.class,
-      )}
-      {...rest}
-    />
-  );
-
-  if (!local.tooltip) {
-    return button;
-  }
-
-  if (typeof local.tooltip === "string") {
-    tooltip = {
-      children: tooltip,
-    };
-  }
+  // NOTE: Using `corvu` pattern for memoizing child components
+  // Okay to remove if overkill
+  const memoizedTooltip = createOnce(() => local.tooltip);
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>{button}</TooltipTrigger>
-      <TooltipContent
-        side="right"
-        align="center"
-        hidden={state !== "collapsed" || isMobile}
-        {...tooltip}
-      />
-    </Tooltip>
+    <Show
+      when={local.tooltip}
+      fallback={
+        <button
+          data-slot="sidebar-menu-button"
+          data-sidebar="menu-button"
+          data-size={local.size}
+          bool:data-active={local.isActive}
+          class={sidebarMenuButtonVariants({
+            variant: local.variant,
+            size: local.size,
+            class: local.class,
+          })}
+          {...rest}
+        />
+      }
+    >
+      <Tooltip>
+        {(rootProps) => {
+          const resolveTooltip = () => {
+            const tooltip = memoizedTooltip()();
+            return isFunction(tooltip) ? tooltip(rootProps) : tooltip;
+          };
+          return (
+            <>
+              <TooltipTrigger
+                as="button"
+                data-slot="sidebar-menu-button"
+                data-sidebar="menu-button"
+                data-size={local.size}
+                bool:data-active={local.isActive}
+                class={sidebarMenuButtonVariants({
+                  variant: local.variant,
+                  size: local.size,
+                  class: local.class,
+                })}
+                {...rest}
+              />
+              <TooltipContent
+                side="right"
+                align="center"
+                hidden={dataset()["data-collapsed"] !== undefined || isMobile()}
+              >
+                {untrack(() => resolveTooltip())}
+              </TooltipContent>
+            </>
+          );
+        }}
+      </Tooltip>
+    </Show>
   );
 }
 
@@ -641,11 +680,9 @@ function SidebarMenuSkeleton(
       <Skeleton
         class="h-4 max-w-(--skeleton-width) flex-1"
         data-sidebar="menu-skeleton-text"
-        style={
-          {
-            "--skeleton-width": width(),
-          } as JSX.CSSProperties
-        }
+        style={{
+          "--skeleton-width": width(),
+        }}
       />
     </div>
   );
