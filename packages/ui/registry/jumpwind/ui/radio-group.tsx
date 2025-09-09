@@ -1,22 +1,16 @@
 import * as RadioGroupPrimitive from "@kobalte/core/radio-group";
-import DotIcon from "lucide-solid/icons/dot";
+// import DotIcon from "lucide-solid/icons/dot";
+import CircleIcon from "lucide-solid/icons/circle";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
 const useRadioGroup = RadioGroupPrimitive.useRadioGroupContext;
 
-const RadioGroupLabel = RadioGroupPrimitive.Label;
-const RadioGroupDescription = RadioGroupPrimitive.Description;
-const RadioGroupMessage = RadioGroupPrimitive.ErrorMessage;
-
-function RadioGroup(
-  props: ComponentProps<typeof RadioGroupPrimitive.Root<"div">>,
-) {
+function RadioGroup(props: ComponentProps<typeof RadioGroupPrimitive.Root>) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <RadioGroupPrimitive.Root
-      as="div"
       data-slot="radio-group"
       class={cn("grid gap-3", local.class)}
       {...rest}
@@ -25,66 +19,46 @@ function RadioGroup(
 }
 
 function RadioGroupItem(
-  props: ComponentProps<typeof RadioGroupPrimitive.Item<"div">>,
+  props: ComponentProps<typeof RadioGroupPrimitive.Item>,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
+  const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <RadioGroupPrimitive.Item
-      as="div"
       data-slot="radio-group-item"
-      class={cn("flex items-center gap-x-2", local.class)} // TODO: verify these styles (in solid-ui, shadcn)
-      {...rest}
-    />
-  );
-}
-
-function RadioGroupItemInput(
-  props: ComponentProps<typeof RadioGroupPrimitive.ItemInput<"input">>,
-) {
-  return (
-    <RadioGroupPrimitive.ItemInput
-      as="input"
-      data-slot="radio-group-input"
-      {...props}
-    />
-  );
-}
-
-function RadioGroupItemControl(
-  props: ComponentProps<typeof RadioGroupPrimitive.ItemControl<"div">>,
-) {
-  const [local, rest] = splitProps(props, ["class"]);
-
-  return (
-    <RadioGroupPrimitive.ItemControl
-      as="div"
-      data-slot="radio-group-control"
-      class={cn(
-        // "border-input text-primary focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",
-        "flex aspect-square h-4 w-4 items-center justify-center rounded-full border border-primary text-primary shadow transition-shadow focus:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[checked]:bg-foreground",
-        local.class,
-      )}
+      class={cn("flex items-center gap-x-2", local.class)}
       {...rest}
     >
-      <RadioGroupPrimitive.ItemIndicator
-        data-slot="radio-group-indicator"
-        class="size-2 rounded-full data-checked:bg-red-300 data-checked:text-red-300"
+      <RadioGroupPrimitive.ItemInput
+        data-slot="radio-group-input"
+        class="peer"
+      />
+      <RadioGroupPrimitive.ItemControl
+        data-slot="radio-group-control"
+        class={cn(
+          "relative aspect-square size-4 shrink-0 rounded-full border border-input text-primary shadow-xs outline-none transition-[color,box-shadow]",
+          "focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
+          "disabled:cursor-not-allowed disabled:opacity-50",
+          "aria-invalid:border-destructive aria-invalid:ring-destructive/20",
+          "dark:bg-input/30 dark:aria-invalid:ring-destructive/40",
+        )}
       >
-        <DotIcon class="size-2" />
-      </RadioGroupPrimitive.ItemIndicator>
-    </RadioGroupPrimitive.ItemControl>
+        <RadioGroupPrimitive.ItemIndicator data-slot="radio-group-indicator">
+          <CircleIcon class="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 size-2 fill-primary" />
+        </RadioGroupPrimitive.ItemIndicator>
+      </RadioGroupPrimitive.ItemControl>
+      {local.children}
+    </RadioGroupPrimitive.Item>
   );
 }
 
 function RadioGroupItemLabel(
-  props: ComponentProps<typeof RadioGroupPrimitive.ItemLabel<"label">>,
+  props: ComponentProps<typeof RadioGroupPrimitive.ItemLabel>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <RadioGroupPrimitive.ItemLabel
-      as="label"
       data-slot="radio-group-item-label"
       class={cn(
         "font-medium text-primary text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
@@ -95,12 +69,38 @@ function RadioGroupItemLabel(
   );
 }
 
+function RadioGroupLabel(
+  props: ComponentProps<typeof RadioGroupPrimitive.Label>,
+) {
+  return <RadioGroupPrimitive.Label data-slot="radio-group-label" {...props} />;
+}
+
+function RadioGroupDescription(
+  props: ComponentProps<typeof RadioGroupPrimitive.Description>,
+) {
+  return (
+    <RadioGroupPrimitive.Description
+      data-slot="radio-group-description"
+      {...props}
+    />
+  );
+}
+
+function RadioGroupMessage(
+  props: ComponentProps<typeof RadioGroupPrimitive.ErrorMessage>,
+) {
+  return (
+    <RadioGroupPrimitive.ErrorMessage
+      data-slot="radio-group-message"
+      {...props}
+    />
+  );
+}
+
 export {
   RadioGroup,
   RadioGroupItem,
   RadioGroupItemLabel,
-  RadioGroupItemInput,
-  RadioGroupItemControl,
   // Forms
   RadioGroupLabel,
   RadioGroupDescription,

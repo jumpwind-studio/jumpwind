@@ -130,7 +130,7 @@ function SliderDescription(
   );
 }
 
-function SliderErrorMessage(
+function SliderMessage(
   props: ComponentProps<typeof SliderPrimitive.ErrorMessage>,
 ) {
   return (
@@ -217,7 +217,7 @@ export {
   // Forms
   SliderLabel,
   SliderDescription,
-  SliderErrorMessage,
+  SliderMessage,
   // Example
   SliderExample,
   // Hooks
