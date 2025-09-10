@@ -15,7 +15,7 @@ import {
 } from "@/registry/jumpwind/ui/dialog";
 
 type DialogStoryComponent = Component<
-  PickPartial<ComponentProps<typeof DialogStory>, "children">
+  PickPartial<ComponentProps<typeof Dialog>, "children">
 >;
 
 /**

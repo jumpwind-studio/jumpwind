@@ -1,20 +1,26 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { Button } from "@/registry/jumpwind/ui/button";
 import { Label } from "@/registry/jumpwind/ui/label";
 import { Textarea } from "@/registry/jumpwind/ui/textarea";
+
+type TextareaStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Textarea>, "children">
+>;
 
 /**
  * Displays a form textarea or a component that looks like a textarea.
  */
 const meta = {
   title: "@jumpwind/ui/Textarea",
-  component: Textarea,
+  component: Textarea as TextareaStoryComponent,
   argTypes: {},
   args: {
     placeholder: "Type your message here.",
     disabled: false,
   },
-} satisfies Meta<typeof Textarea>;
+} satisfies Meta<TextareaStoryComponent>;
 
 export default meta;
 

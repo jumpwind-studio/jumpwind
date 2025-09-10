@@ -1,5 +1,4 @@
 import type { PickPartial } from "@jumpwind/utils";
-import { REGEXP_ONLY_DIGITS } from "input-otp";
 import type { Component, ComponentProps } from "solid-js";
 import { expect, fn, userEvent } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
@@ -25,12 +24,11 @@ const meta = {
     maxLength: 6,
     onChange: fn(),
     onComplete: fn(),
-    children: null,
     "aria-label": "One-time password",
   },
 
   render: (args) => (
-    <Otp {...args} render={undefined}>
+    <Otp {...args}>
       <OtpGroup>
         <OtpSlot index={0} />
         <OtpSlot index={1} />
@@ -59,9 +57,7 @@ export const Default: Story = {};
  * The number form of the Otp field.
  */
 export const OnlyNumbers: Story = {
-  args: {
-    pattern: REGEXP_ONLY_DIGITS,
-  },
+  args: {},
 };
 
 /**
@@ -69,7 +65,7 @@ export const OnlyNumbers: Story = {
  */
 export const SeparatedGroup: Story = {
   render: (args) => (
-    <Otp {...args} render={undefined}>
+    <Otp {...args}>
       <OtpGroup>
         <OtpSlot index={0} />
         <OtpSlot index={1} />
