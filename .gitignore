@@ -1,13 +1,15 @@
 # dependencies (bun install)
 node_modules
 
-# turbo
+.nitro
 .turbo
+.tanstack*
 
 # output
 out
 dist
 *.tgz
+.output
 
 # code coverage
 coverage
