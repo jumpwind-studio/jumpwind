@@ -1,6 +1,6 @@
 import { Button } from "@jumpwind/ui/button";
-import { cn } from "@jumpwind/ui/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "@jumpwind/ui/sheet";
+import { cn } from "@jumpwind/ui/utils";
 import BriefcaseIcon from "lucide-solid/icons/briefcase";
 import FileTextIcon from "lucide-solid/icons/file-text";
 import HelpCircleIcon from "lucide-solid/icons/help-circle";
