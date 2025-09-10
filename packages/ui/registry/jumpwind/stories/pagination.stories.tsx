@@ -20,7 +20,7 @@ type PaginationStoryComponent = Component<
  */
 const meta = {
   title: "@jumpwind/ui/Pagination",
-  component: Pagination,
+  component: Pagination as PaginationStoryComponent,
   argTypes: {},
   render: (args) => (
     <Pagination {...args}>
