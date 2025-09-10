@@ -61,8 +61,8 @@ const PaginationLink = (
       aria-current={local.isActive ? "page" : undefined}
       bool:data-active={local.isActive}
       class={buttonVariants({
-        variant: local.variant ?? (local.isActive ? "outline" : "ghost"),
         size: local.size,
+        variant: local.variant ?? (local.isActive ? "outline" : "ghost"),
         class: local.class,
       })}
       {...rest}
@@ -81,7 +81,7 @@ const PaginationPrevious = (props: ComponentProps<typeof PaginationLink>) => {
       class={cn("gap-1 px-2.5 sm:pl-2.5", local.class)}
       {...rest}
     >
-      <ChevronLeftIcon class="h-4 w-4" />
+      <ChevronLeftIcon class="size-4" />
       <span>Previous</span>
     </PaginationLink>
   );
@@ -99,7 +99,7 @@ const PaginationNext = (props: ComponentProps<typeof PaginationLink>) => {
       {...rest}
     >
       <span>Next</span>
-      <ChevronRightIcon class="h-4 w-4" />
+      <ChevronRightIcon class="size-4" />
     </PaginationLink>
   );
 };

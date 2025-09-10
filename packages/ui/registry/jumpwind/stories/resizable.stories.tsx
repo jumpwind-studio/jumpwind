@@ -1,42 +1,44 @@
 import type { PickPartial } from "@jumpwind/utils";
 import type { Component, ComponentProps } from "solid-js";
+import { fn } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
+  Resizable,
   ResizableHandle,
   ResizablePanel,
-  ResizablePanelGroup,
 } from "@/registry/jumpwind/ui/resizable";
 
 type ResizableStoryComponent = Component<
-  PickPartial<ComponentProps<typeof ResizablePanelGroup>, "children">
+  PickPartial<ComponentProps<typeof Resizable>, "children">
 >;
 
 /**
  * Accessible resizable panel groups and layouts with keyboard support.
  */
 const meta = {
-  title: "@jumpwind/ui/ResizablePanelGroup",
-  component: ResizablePanelGroup as ResizableStoryComponent,
+  title: "@jumpwind/ui/Resizable",
+  component: Resizable as ResizableStoryComponent,
   argTypes: {
     onLayout: {
       control: false,
     },
   },
   args: {
-    // onLayout: fn(),
-    class: "max-w-96 rounded-lg border",
-    direction: "horizontal",
+    onLayout: fn(),
+    class: "max-w-md rounded-lg border md:min-w-[450px]",
+    orientation: "horizontal",
+    onSizesChange: fn(),
   },
   render: (args) => (
-    <ResizablePanelGroup {...args}>
+    <Resizable {...args}>
       <ResizablePanel initialSize={0.5}>
         <div class="flex h-[200px] items-center justify-center p-6">
           <span class="font-semibold">One</span>
         </div>
       </ResizablePanel>
       <ResizableHandle />
-      <ResizablePanel initialSize={0.5}>
-        <ResizablePanelGroup orientation="vertical">
+      <ResizablePanel>
+        <Resizable orientation="vertical">
           <ResizablePanel initialSize={0.25}>
             <div class="flex h-full items-center justify-center p-6">
               <span class="font-semibold">Two</span>
@@ -48,9 +50,9 @@ const meta = {
               <span class="font-semibold">Three</span>
             </div>
           </ResizablePanel>
-        </ResizablePanelGroup>
+        </Resizable>
       </ResizablePanel>
-    </ResizablePanelGroup>
+    </Resizable>
   ),
 } satisfies Meta<ResizableStoryComponent>;
 

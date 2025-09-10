@@ -12,9 +12,7 @@ function NavigationMenu(
   },
 ) {
   const defaultedProps = mergeProps(
-    {
-      viewport: true,
-    } satisfies ComponentProps<typeof NavigationMenuPrimitive.Root>,
+    { viewport: true } satisfies typeof props,
     props,
   );
 
@@ -28,9 +26,9 @@ function NavigationMenu(
     <span class="group [&>nav]:relative [&>nav]:flex [&>nav]:max-w-max [&>nav]:flex-1 [&>nav]:items-center [&>nav]:justify-center">
       <NavigationMenuPrimitive.Root
         data-slot="navigation-menu"
-        data-viewport={local.viewport}
+        bool:data-viewport={local.viewport}
         class={cn(
-          "group/navigation-menu flex flex-1 list-none items-center justify-center gap-1",
+          "group/navigation-menu relative flex max-w-max flex-1 items-center justify-center",
           local.class,
         )}
         {...rest}
@@ -44,11 +42,11 @@ function NavigationMenu(
   );
 }
 
-function NavigationMenuList(props: ComponentProps) {
+function NavigationMenuList(props: ComponentProps<"ul">) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
-    <div
+    <ul
       data-slot="navigation-menu-list"
       class={cn(
         "group flex flex-1 list-none items-center justify-center gap-1",
@@ -76,7 +74,7 @@ function NavigationMenuItem(
 }
 
 const navigationMenuTriggerVariants = tv({
-  base: "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 font-medium text-sm outline-none transition-[color,box-shadow] hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:outline-1 focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-expanded:bg-accent/50 data-expanded:text-accent-foreground data-expanded:focus:bg-accent data-expanded:hover:bg-accent",
+  base: "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-expanded:hover:bg-accent data-expanded:text-accent-foreground data-expanded:focus:bg-accent data-expanded:bg-accent/50 focus-visible:ring-ring/50 outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1",
 });
 
 function NavigationMenuTrigger(
@@ -93,25 +91,46 @@ function NavigationMenuTrigger(
       {local.children}
       <ChevronDownIcon
         aria-hidden="true"
-        class="relative top-px ml-1 size-3 transition duration-300 group-data-expanded:rotate-180"
+        class="relative top-[1px] ml-1 size-3 transition duration-300 group-data-expanded:rotate-180"
       />
     </NavigationMenuPrimitive.Trigger>
   );
 }
 
 function NavigationMenuContent(
-  props: ComponentProps<typeof NavigationMenuPrimitive.Content<"ul">>,
+  props: ComponentProps<typeof NavigationMenuPrimitive.Content>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <NavigationMenuPrimitive.Portal>
       <NavigationMenuPrimitive.Content
-        as="ul"
         data-slot="navigation-menu-content"
         class={cn(
-          "data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 top-0 left-0 w-full p-2 pr-2.5 data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out md:absolute md:w-auto",
-          "group-data-[viewport=false]/navigation-menu:data-closed:zoom-out-95 group-data-[viewport=false]/navigation-menu:data-expanded:zoom-in-95 group-data-[viewport=false]/navigation-menu:data-expanded:fade-in-0 group-data-[viewport=false]/navigation-menu:data-closed:fade-out-0 **:data-[slot=navigation-menu-link]:focus:outline-none **:data-[slot=navigation-menu-link]:focus:ring-0 group-data-[viewport=false]/navigation-menu:top-full group-data-[viewport=false]/navigation-menu:mt-1.5 group-data-[viewport=false]/navigation-menu:overflow-hidden group-data-[viewport=false]/navigation-menu:rounded-md group-data-[viewport=false]/navigation-menu:border group-data-[viewport=false]/navigation-menu:bg-popover group-data-[viewport=false]/navigation-menu:text-popover-foreground group-data-[viewport=false]/navigation-menu:shadow group-data-[viewport=false]/navigation-menu:duration-200 group-data-[viewport=false]/navigation-menu:data-closed:animate-out group-data-[viewport=false]/navigation-menu:data-expanded:animate-in",
+          "top-0 left-0 w-full p-2 pr-2.5 md:absolute md:w-auto",
+          "data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out",
+          "data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52",
+          "data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52",
+          "data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out",
+          "**:data-[slot=navigation-menu-link]:focus:outline-none",
+          "**:data-[slot=navigation-menu-link]:focus:ring-0",
+          "group-not-data-viewport/navigation-menu:zoom-out-95",
+          "group-not-data-viewport/navigation-menu:data-expanded:zoom-in-95",
+          "group-not-data-viewport/navigation-menu:data-expanded:fade-in-0",
+          "group-not-data-viewport/navigation-menu:fade-out-0",
+          "group-not-data-viewport/navigation-menu:top-full",
+          "group-not-data-viewport/navigation-menu:mt-1.5",
+          "group-not-data-viewport/navigation-menu:animate-out",
+          "group-not-data-viewport/navigation-menu:overflow-hidden",
+          "group-not-data-viewport/navigation-menu:rounded-md",
+          "group-not-data-viewport/navigation-menu:border",
+          "group-not-data-viewport/navigation-menu:bg-popover",
+          "group-not-data-viewport/navigation-menu:text-popover-foreground",
+          "group-not-data-viewport/navigation-menu:shadow",
+          "group-not-data-viewport/navigation-menu:duration-200",
+          "group-not-data-viewport/navigation-menu:data-expanded:animate-in",
+          // "bg-popover",
+          // viewport=false: top-full mt-1.5 overflow-hidden rounded-md border bg-popover text-popover-foreground shadow duration-200 data-closed:animate-out data-expanded:animate-in data-closed:zoom-out-95 data-expanded:zoom-in-95 data-expanded:fade-in-0 data-closed:fade-out-0
           local.class,
         )}
         {...rest}
@@ -127,12 +146,18 @@ function NavigationMenuViewport(
 
   return (
     <div
-    // class={cn("absolute top-full left-0 isolate z-50 flex justify-center")}
+      class={cn("absolute top-full left-0 isolate z-50 flex justify-center")}
     >
       <NavigationMenuPrimitive.Viewport
         data-slot="navigation-menu-viewport"
         class={cn(
-          "data-closed:zoom-out-95 data-expanded:zoom-in-90 relative mt-1.5 h-(--kb-navigation-menu-viewport-height) w-full origin-(--kb-menu-content-transform-origin) overflow-hidden rounded-md border bg-popover text-popover-foreground shadow data-closed:animate-out data-expanded:animate-in md:w-(--kb-navigation-menu-viewport-width)",
+          // "relative mt-1.5 w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow",
+          // "data-expanded:zoom-in-90 data-expanded:animate-in",
+          // "not-data-expanded:zoom-out-95 not-data-expanded:animate-out",
+          // "h-(--kb-navigation-menu-viewport-height) md:w-(--kb-navigation-menu-viewport-width)",
+          // "origin-(--kb-menu-content-transform-origin)",
+          "not-data-expanded:zoom-out-95 data-expanded:zoom-in-90 relative mt-1.5 h-(--kb-navigation-menu-viewport-height) w-full origin-top-center not-data-expanded:animate-out overflow-hidden rounded-md border bg-popover text-popover-foreground shadow data-expanded:animate-in md:w-(--kb-navigation-menu-viewport-width)",
+          "origin-(--kb-menu-content-transform-origin)",
           local.class,
         )}
         {...rest}
@@ -167,7 +192,7 @@ function NavigationMenuIndicator(
     <NavigationMenuPrimitive.Icon
       data-slot="navigation-menu-icon"
       class={cn(
-        "data-closed:fade-out data-expanded:fade-in top-full z-1 flex h-1.5 items-end justify-center overflow-hidden data-closed:animate-out data-expanded:animate-in",
+        "not-data-expanded:fade-out data-expanded:fade-in top-full z-1 flex h-1.5 not-data-expanded:animate-out items-end justify-center overflow-hidden data-expanded:animate-in",
         local.class,
       )}
       {...rest}

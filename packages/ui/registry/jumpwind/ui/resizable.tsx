@@ -6,16 +6,14 @@ import { cn } from "@/registry/jumpwind/lib/utils";
 const useResizable = ResizablePrimitive.useContext;
 const useResizablePanel = ResizablePrimitive.usePanelContext;
 
-function ResizablePanelGroup(
-  props: ComponentProps<typeof ResizablePrimitive.Root>,
-) {
+function Resizable(props: ComponentProps<typeof ResizablePrimitive.Root>) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <ResizablePrimitive.Root
-      data-slot="resizable-panel-group"
+      data-slot="resizable"
       class={cn(
-        "flex h-full w-full data-[panel-group-direction=vertical]:flex-col",
+        "flex size-full data-[orientation=vertical]:flex-col",
         local.class,
       )}
       {...rest}
@@ -40,7 +38,17 @@ function ResizableHandle(
     <ResizablePrimitive.Handle
       data-slot="resizable-handle"
       class={cn(
-        "after:-translate-x-1/2 data-[panel-group-direction=vertical]:after:-translate-y-1/2 relative flex w-px items-center justify-center bg-border after:absolute after:inset-y-0 after:left-1/2 after:w-1 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1 data-[panel-group-direction=vertical]:h-px data-[panel-group-direction=vertical]:w-full data-[panel-group-direction=vertical]:after:left-0 data-[panel-group-direction=vertical]:after:h-1 data-[panel-group-direction=vertical]:after:w-full data-[panel-group-direction=vertical]:after:translate-x-0 [&[data-panel-group-direction=vertical]>div]:rotate-90",
+        "relative flex w-px items-center justify-center bg-border",
+        "focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1",
+        "after:-translate-x-1/2 after:absolute after:inset-y-0 after:left-1/2 after:w-1",
+        "data-[orientation=vertical]:h-px",
+        "data-[orientation=vertical]:w-full",
+        "data-[orientation=vertical]:after:left-0",
+        "data-[orientation=vertical]:after:h-1",
+        "data-[orientation=vertical]:after:w-full",
+        "data-[orientation=vertical]:after:translate-x-0",
+        "data-[orientation=vertical]:after:-translate-y-1/2",
+        "[&[data-orientation=vertical]>div]:rotate-90",
         local.class,
       )}
       {...rest}
@@ -55,7 +63,7 @@ function ResizableHandle(
 }
 
 export {
-  ResizablePanelGroup,
+  Resizable,
   ResizablePanel,
   ResizableHandle,
   // Hooks

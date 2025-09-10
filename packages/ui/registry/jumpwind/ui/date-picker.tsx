@@ -1,5 +1,6 @@
+import createControllableSignal from "@corvu/utils/create/controllableSignal";
 import CalendarIcon from "lucide-solid/icons/calendar";
-import { createSignal, Show } from "solid-js";
+import { type ComponentProps, Show, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 import { Button } from "@/registry/jumpwind/ui/button";
 import {
@@ -23,12 +24,42 @@ import {
   PopoverTrigger,
 } from "@/registry/jumpwind/ui/popover";
 
-export function DatePicker() {
-  const [date, setDate] = createSignal<Date | null>(null);
+type DatePickerProps = Partial<
+  Pick<
+    ComponentProps<typeof Popover>,
+    "initialOpen" | "open" | "onOpenChange"
+  > &
+    Pick<ComponentProps<typeof PopoverTrigger>, "size" | "variant"> &
+    Pick<
+      ComponentProps<typeof Calendar<"single">>,
+      "mode" | "initialValue" | "value" | "onValueChange"
+    >
+>;
+
+export function DatePicker(props: DatePickerProps) {
+  const [calendarProps, popoverProps, triggerProps] = splitProps(
+    props,
+    ["mode", "initialValue", "value", "onValueChange"],
+    ["initialOpen", "open", "onOpenChange"],
+    ["size", "variant"],
+  );
+
+  const [open, setOpen] = createControllableSignal({
+    initialValue: popoverProps.initialOpen ?? false,
+    value: () => popoverProps.open,
+    onChange: popoverProps.onOpenChange,
+  });
+
+  const [date, setDate] = createControllableSignal({
+    initialValue: calendarProps?.initialValue ?? null,
+    value: () => calendarProps?.value ?? null,
+    onChange: calendarProps?.onValueChange,
+  });
 
   return (
-    <Popover>
+    <Popover data-class="date-picker" open={open()} onOpenChange={setOpen}>
       <PopoverTrigger
+        {...triggerProps}
         as={Button}
         variant="outline"
         class={cn(
@@ -36,17 +67,13 @@ export function DatePicker() {
           !date() && "text-muted-foreground",
         )}
       >
-        <CalendarIcon class="mr-2 h-4 w-4" />
-        <Show when={date()} fallback={<span>Pick a date</span>}>
+        <CalendarIcon class="mr-2 size-4" />
+        <Show when={date()} fallback="Pick a date">
           {(date) => date().toLocaleString("en-US", { day: "2-digit" })}
         </Show>
       </PopoverTrigger>
       <PopoverContent class="w-auto p-0">
-        <Calendar
-          mode="single"
-          onValueChange={(date) => setDate(date)}
-          value={date()}
-        >
+        <Calendar mode="single" value={date()} onValueChange={setDate}>
           <CalendarHeader>
             <CalendarPrevMonth />
             <CalendarLabel />

@@ -1,3 +1,4 @@
+import createControllableSignal from "@corvu/utils/create/controllableSignal";
 import type * as SelectPrimitive from "@kobalte/core/select";
 import { useStore } from "@tanstack/solid-form";
 import { Show, splitProps } from "solid-js";
@@ -35,7 +36,7 @@ type InferOptionValue<T extends AnyOption> = T extends Option<infer U>
 
 export type FormSelectProps<TValue extends string = string> =
   SelectPrimitive.SelectRootOptions<Option<TValue>> & {
-    field: FieldApi<TValue>;
+    field?: FieldApi<TValue>;
     class?: string;
     description?: string;
     label?: string;
@@ -54,31 +55,33 @@ export function FormSelect<TValue extends string = string>(
   ]);
 
   const field = useField<TValue>(() => local.field);
-  const value = useStore(local.field.store, (state) =>
-    local.options.find((option) => option.value === state.value),
-  );
   const errors = useStore(field().store, (state) => state.meta.errors);
+  const [value, setValue] = createControllableSignal<Option<TValue>>({
+    value: useStore(field().store, (state) =>
+      local.options.find((option) => option.value === state.value),
+    ),
+    onChange: (value) => {
+      const newValue = local.options.find(
+        (option) => option.value === value.value,
+      );
+      return field().handleChange((prev) => {
+        return newValue ? newValue.value : prev;
+      });
+    },
+  });
 
   return (
-    <Select<Option<TValue>>
+    <Select
       data-slot="form-select"
       name={field().name}
+      multiple={false}
       options={local.options}
       value={value()}
-      onChange={(value) => {
-        field().handleChange((prev) => {
-          if (!value) return prev;
-          const newValue = local.options.find(
-            (option) => option.value === value.value,
-          );
-          return newValue?.value ?? prev;
-        });
-      }}
+      onChange={setValue}
       onBlur={field().handleBlur}
-      multiple={false}
-      optionValue="value"
-      optionTextValue="label"
-      optionDisabled="disabled"
+      optionValue={(option) => option.value}
+      optionTextValue={(option) => option.label}
+      optionDisabled={(option) => option.disabled ?? false}
       validationState={errors().length > 0 ? "invalid" : "valid"}
       itemComponent={(props) => (
         <SelectItem item={props.item}>{props.item.textValue}</SelectItem>

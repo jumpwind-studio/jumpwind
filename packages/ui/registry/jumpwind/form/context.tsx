@@ -13,9 +13,10 @@ export type FieldApi<TData> = SolidFieldApi<
   any, any, any, any, any, any, any, any, any, any, any, any
 >;
 
-export function useField<TData>(field?: Accessor<FieldApi<TData>>) {
+export function useField<TData>(field?: Accessor<FieldApi<TData> | undefined>) {
   return createMemo<FieldApi<TData>>(() => {
-    if (field) return field();
+    const f = field?.();
+    if (f) return f;
     const ctx = useFieldContext<TData>();
     if (ctx) return ctx();
     throw new Error("useField must be used inside a `Field` component.");

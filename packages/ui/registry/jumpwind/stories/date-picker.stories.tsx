@@ -1,9 +1,8 @@
-import * as CalendarIcon from "lucide-solid/icons/calendar";
-import * as ChevronDownIcon from "lucide-solid/icons/chevron-down";
+import CalendarIcon from "lucide-solid/icons/calendar";
+import ChevronDownIcon from "lucide-solid/icons/chevron-down";
 import { createSignal, Show } from "solid-js";
 import { action } from "storybook/actions";
 import { expect, userEvent, waitFor, within } from "storybook/test";
-// Replace nextjs-vite with the name of your framework
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { Button } from "@/registry/jumpwind/ui/button";
 import { Calendar } from "@/registry/jumpwind/ui/calendar";
@@ -23,7 +22,6 @@ import {
 const meta = {
   title: "@jumpwind/ui/DatePicker",
   component: DatePicker,
-  tags: ["autodocs"],
   argTypes: {},
   parameters: {
     layout: "centered",
@@ -39,43 +37,16 @@ type Story = StoryObj<typeof meta>;
  */
 export const WithPopover: Story = {
   args: {
-    captionLayout: "dropdown",
+    onValueChange: action("date selected"),
   },
 
   render: (args) => {
-    const [open, setOpen] = createSignal(false);
-    const [date, setDate] = createSignal<Date | null>(null);
-
     return (
       <div class="flex flex-col gap-3">
         <Label for="date" class="px-1">
           Date of birth
         </Label>
-        <Popover open={open()} onOpenChange={setOpen}>
-          <PopoverTrigger
-            as={Button}
-            variant="outline"
-            id="date"
-            class="w-48 justify-between font-normal"
-          >
-            <Show when={date()} fallback="Select date">
-              {(d) => d().toLocaleDateString()}
-            </Show>
-            <ChevronDownIcon />
-          </PopoverTrigger>
-          <PopoverContent class="w-auto overflow-hidden p-0" align="start">
-            <Calendar
-              {...args}
-              mode="single"
-              value={date()}
-              onValueChange={(date) => {
-                setDate(date);
-                setOpen(false);
-                action("date selected")(date);
-              }}
-            />
-          </PopoverContent>
-        </Popover>
+        <DatePicker {...args} />
       </div>
     );
   },
@@ -101,7 +72,8 @@ export const ShouldOpenPopover: Story = {
       const dateButtons = await canvas.findAllByRole("button", {
         name: /1st/i,
       });
-      await userEvent.click(dateButtons[0]);
+      const dateButton = dateButtons[0]!;
+      await userEvent.click(dateButton);
     });
   },
 };
@@ -129,7 +101,9 @@ export const WithInput: Story = {
   render: (args) => {
     const [open, setOpen] = createSignal(false);
     const [date, setDate] = createSignal<Date | null>(new Date("2025-06-01"));
-    const [month, setMonth] = createSignal<Date | null>(date());
+    const [month, setMonth] = createSignal<Date | undefined>(
+      date() ?? undefined,
+    );
     const [value, setValue] = createSignal(formatDate(date()));
 
     return (
@@ -290,6 +264,7 @@ export const WithDateTime: Story = {
               const [hours, minutes, seconds] = e.target.value
                 .split(":")
                 .map(Number);
+              if (!hours || !minutes || !seconds) return;
               d.setHours(hours, minutes, seconds);
               setDate(d);
               action("time selected")(d);
@@ -320,7 +295,8 @@ export const ShouldOpenCalendar: Story = {
     });
 
     const dateButtons = await canvas.findAllByRole("button", { name: /1st/i });
-    await userEvent.click(dateButtons[0]);
+    const dateButton = dateButtons[0]!;
+    await userEvent.click(dateButton);
 
     await step("type a time", async () => {
       const timeInput = await canvas.findByLabelText("Time");

@@ -14,7 +14,19 @@ type SonnerStoryComponent = Component<ComponentProps<typeof Toaster>>;
 const meta = {
   title: "@jumpwind/ui/Sonner",
   component: Toaster as SonnerStoryComponent,
-  argTypes: {},
+  argTypes: {
+    position: {
+      control: { type: "select" },
+      options: [
+        "top-left",
+        "top-right",
+        "bottom-left",
+        "bottom-right",
+        "top-center",
+        "bottom-center",
+      ],
+    },
+  },
   args: {
     position: "bottom-right",
   },
