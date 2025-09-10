@@ -6,6 +6,15 @@ import "../registry/jumpwind/styles/styles.css";
 
 const preview = {
   tags: ["autodocs"],
+  args: {
+    theme: "dark",
+  },
+  argTypes: {
+    theme: {
+      control: { type: "select" },
+      options: ["light", "dark"],
+    },
+  },
   parameters: {
     actions: {
       // create action args for all props that start with "on"
@@ -37,7 +46,6 @@ const preview = {
       },
     }),
   ],
-  args: { theme: "dark" },
 } satisfies Preview;
 
 export default preview;
