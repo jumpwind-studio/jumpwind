@@ -1,25 +1,21 @@
-import { resolve } from "node:path";
+import * as path from "node:path";
+import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 import solid from "vite-plugin-solid";
 import tsconfigPaths from "vite-tsconfig-paths";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, "./src/index.ts"),
+      entry: path.resolve(__dirname, "./src/index.ts"),
       name: "@jumpwind/ui",
       fileName: "jumpwind",
     },
     rollupOptions: {
-      external: [
-        "solid-js",
-        "@effect/platform",
-        "@effect/platform-bun",
-        "@effect/platform-node-shared",
-        "effect",
-        /effect/,
-      ],
+      external: [/effect/],
       output: {
         globals: {
           "@effect/platform-bun/BunContext": "BunContext",
@@ -34,6 +30,9 @@ export default defineConfig({
         },
       },
     },
+  },
+  resolve: {
+    conditions: ["development", "solid", "browser"],
   },
   plugins: [tsconfigPaths(), tailwindcss(), solid()],
 });

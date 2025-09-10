@@ -36,7 +36,10 @@ export default defineConfig({
         },
       },
     ],
-    include: ["stories/**/*.stories.tsx", "stories/**/*.test.tsx"],
+    include: [
+      "./registry/jumpwind/stories/**/*.stories.tsx",
+      "./registry/jumpwind/stories/**/*.test.tsx",
+    ],
     exclude: ["stories/**/*.mdx"],
   },
   plugins: [tsconfigPaths(), tailwindcss(), solid()],
