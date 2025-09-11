@@ -8,8 +8,6 @@ import {
   Show,
   splitProps,
 } from "solid-js";
-import { cn } from "../lib/utils.js";
-import { Button } from "@/registry/jumpwind/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -23,6 +21,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/registry/jumpwind/ui/popover";
+import { cn } from "../lib/utils.js";
+import { Button } from "../ui/button.jsx";
 
 type Option = {
   value: string;

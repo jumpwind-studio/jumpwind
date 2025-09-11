@@ -15,7 +15,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/registry/jumpwind/ui/table";
+} from "../../ui/table.jsx"
 
 type Typography = {
   name: string;

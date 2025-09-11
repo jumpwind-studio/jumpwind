@@ -8,7 +8,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/registry/jumpwind/ui/table";
+} from "../../ui/table.jsx"
 
 type Spacing = {
   name: string;
