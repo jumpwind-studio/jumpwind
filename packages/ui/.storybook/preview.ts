@@ -2,7 +2,7 @@ import { withThemeByDataAttribute } from "@storybook/addon-themes";
 import { themes } from "storybook/theming";
 import type { Preview } from "storybook-solidjs-vite";
 
-import "../registry/jumpwind/styles/styles.css";
+import "../src/styles/styles.css";
 
 const preview = {
   tags: ["autodocs"],

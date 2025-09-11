@@ -19,7 +19,7 @@ import {
   type ValidComponent,
 } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
-import { useIsMobile } from "../hook/use-is-mobile.js";
+import { useIsMobile } from "../hooks/use-is-mobile.js";
 import { cn } from "../lib/utils.js";
 import { Button } from "./button.jsx";
 import { Input } from "./input.jsx";

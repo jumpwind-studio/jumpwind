@@ -17,11 +17,11 @@ const config = {
     },
   ],
   stories: [
-    "../registry/jumpwind/stories/**/*.mdx",
-    "../registry/jumpwind/stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    "../src/stories/**/*.mdx",
+    "../src/stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
   core: {
-    builder: "@storybook/builder-vite", // 👈 The builder enabled here.
+    builder: "@storybook/builder-vite",
   },
   async viteFinal(config) {
     return mergeConfig(config, {
