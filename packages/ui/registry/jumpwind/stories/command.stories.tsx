@@ -7,7 +7,6 @@ import {
   createSignal,
   For,
   Show,
-  Suspense,
 } from "solid-js";
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
@@ -22,6 +21,25 @@ import {
   CommandSeparator,
 } from "@/registry/jumpwind/ui/command";
 import { Kbd, KbdKey, KbdModifier } from "@/registry/jumpwind/ui/kbd";
+
+const items = [
+  {
+    category: "Suggestions",
+    items: [
+      { label: "Calendar", value: "calendar", disabled: false },
+      { label: "Search Emoji", value: "emoji", disabled: false },
+      { label: "Calculator", value: "calculator", disabled: true },
+    ],
+  },
+  {
+    category: "Settings",
+    items: [
+      { label: "Profile", value: "profile", disabled: false },
+      { label: "Billing", value: "billing", disabled: false },
+      { label: "Settings", value: "settings", disabled: false },
+    ],
+  },
+];
 
 type CommandStoryComponent = Component<
   PickPartial<ComponentProps<typeof Command>, "children">
@@ -41,18 +59,27 @@ const meta = {
     <Command {...args}>
       <CommandInput placeholder="Search..." />
       <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup heading="Suggestions">
-          <CommandItem>Calendar</CommandItem>
-          <CommandItem>Search Emoji</CommandItem>
-          <CommandItem disabled>Calculator</CommandItem>
-        </CommandGroup>
-        <CommandSeparator />
-        <CommandGroup heading="Settings">
-          <CommandItem>Profile</CommandItem>
-          <CommandItem>Billing</CommandItem>
-          <CommandItem>Settings</CommandItem>
-        </CommandGroup>
+        <For each={items}>
+          {(item, index) => (
+            <>
+              <CommandGroup heading={item.category}>
+                <For each={item.items}>
+                  {(subitem) => (
+                    <CommandItem
+                      value={subitem.value}
+                      disabled={subitem.disabled}
+                    >
+                      {subitem.label}
+                    </CommandItem>
+                  )}
+                </For>
+              </CommandGroup>
+              <Show when={index() !== items.length - 1}>
+                <CommandSeparator />
+              </Show>
+            </>
+          )}
+        </For>
       </CommandList>
     </Command>
   ),
@@ -72,72 +99,64 @@ export const Default: Story = {};
 
 export const Loading: Story = {
   render: (args) => {
-    const items = [
-      {
-        category: "Suggestions",
-        items: [
-          { label: "Calendar", value: "calendar", disabled: false },
-          { label: "Search Emoji", value: "emoji", disabled: false },
-          { label: "Calculator", value: "calculator", disabled: true },
-        ],
-      },
-      {
-        category: "Settings",
-        items: [
-          { label: "Profile", value: "profile", disabled: false },
-          { label: "Billing", value: "billing", disabled: false },
-          { label: "Settings", value: "settings", disabled: false },
-        ],
-      },
-    ];
-
     const [search, setSearch] = createSignal<string>("");
 
-    const [results] = createResource(search, async (term) => {
-      if (term === "") return items;
-      await new Promise((resolve) => setTimeout(resolve, 100000));
-      const lowerTerm = term.toLowerCase();
-      return items.filter((item) =>
-        item.items.flatMap((subitem) =>
-          subitem.value.toLowerCase().includes(lowerTerm),
-        ),
-      );
-    });
+    const [results] = createResource(
+      search,
+      async (term) => {
+        if (term === "") return items;
+        return new Promise((resolve) => setTimeout(resolve, 5000)).then((_) => {
+          const lowerTerm = term.toLowerCase();
+          return items.filter((item) =>
+            item.items.some((subitem) =>
+              subitem.value.toLowerCase().includes(lowerTerm),
+            ),
+          );
+        });
+      },
+      {
+        initialValue: items,
+        // deferStream: true,
+      },
+    );
 
     return (
-      <Suspense>
-        <Command {...args}>
-          <CommandInput
-            placeholder="Search..."
-            value={search()}
-            onValueChange={setSearch}
-          />
-          <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
-            <For each={results()}>
-              {(item, index) => (
-                <>
-                  <CommandGroup heading={item.category}>
-                    <For each={item.items}>
-                      {(subitem) => (
-                        <CommandItem
-                          value={subitem.value}
-                          disabled={subitem.disabled}
-                        >
-                          {subitem.label}
-                        </CommandItem>
-                      )}
-                    </For>
-                  </CommandGroup>
-                  <Show when={index() !== items.length - 1}>
-                    <CommandSeparator />
-                  </Show>
-                </>
-              )}
-            </For>
-          </CommandList>
-        </Command>
-      </Suspense>
+      <Command
+        bool:data-loading={results.loading}
+        vimBindings={!results.loading}
+        {...args}
+      >
+        <CommandInput
+          placeholder="Search..."
+          value={search()}
+          onValueChange={setSearch}
+        />
+        <CommandList>
+          <CommandEmpty>No results found.</CommandEmpty>
+          <For each={results()}>
+            {(item, index) => (
+              <>
+                <CommandGroup heading={item.category}>
+                  <For each={item.items}>
+                    {(subitem) => (
+                      <CommandItem
+                        class="group-data-loading/command:opacity-50 group-data-loading/command:transition-opacity"
+                        value={subitem.value}
+                        disabled={subitem.disabled}
+                      >
+                        {subitem.label}
+                      </CommandItem>
+                    )}
+                  </For>
+                </CommandGroup>
+                <Show when={index() !== items.length - 1}>
+                  <CommandSeparator />
+                </Show>
+              </>
+            )}
+          </For>
+        </CommandList>
+      </Command>
     );
   },
 };
@@ -166,7 +185,7 @@ export const WithDialog = {
           </Kbd>
         </button>
         <CommandDialog open={isOpen()} onOpenChange={setIsOpen}>
-          <CommandInput placeholder="Type a command or search..." />
+          <CommandInput placeholder="Search..." />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup heading="Suggestions">

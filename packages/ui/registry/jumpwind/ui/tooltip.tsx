@@ -48,7 +48,6 @@ function TooltipContent(
           "data-[placement*=left]:slide-in-from-right-2",
           "data-[placement*=right]:slide-in-from-left-2",
           "data-[placement*=top]:slide-in-from-bottom-2",
-          // "origin-(--radix-tooltip-content-transform-origin)",
           local.class,
         )}
         {...rest}

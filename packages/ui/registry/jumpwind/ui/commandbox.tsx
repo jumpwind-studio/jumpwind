@@ -1,4 +1,5 @@
 import createControllableSignal from "@corvu/utils/create/controllableSignal";
+import CheckIcon from "lucide-solid/icons/check";
 import ChevronsUpDownIcon from "lucide-solid/icons/chevrons-up-down";
 import {
   type ComponentProps,
@@ -69,10 +70,13 @@ function Commandbox(props: CommandboxProps) {
     onChange: (open) => popoverProps.onOpenChange?.(open),
   });
 
-  const [value, setValue] = createControllableSignal({
-    initialValue: commandProps.defaultValue ?? "",
+  const [value, setValue] = createControllableSignal<string | undefined>({
+    initialValue: commandProps.defaultValue,
     value: () => commandProps.value,
-    onChange: (value) => commandProps.onValueChange?.(value),
+    onChange: (value) => {
+      if (!value) return;
+      commandProps.onValueChange?.(value);
+    },
   });
 
   return (
@@ -104,6 +108,13 @@ function Commandbox(props: CommandboxProps) {
                       setOpen(false);
                     }}
                   >
+                    <CheckIcon
+                      class={cn(
+                        "mr-2 size-4 opacity-0",
+                        "is-data-selected:opacity-100",
+                        // value() === item.value ? "opacity-100" : "opacity-0",
+                      )}
+                    />
                     {item.label}
                   </CommandItem>
                 )}

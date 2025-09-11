@@ -2,6 +2,7 @@ import * as CheckboxPrimitive from "@kobalte/core/checkbox";
 import CheckIcon from "lucide-solid/icons/check";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
+import { labelVariants } from "@/registry/jumpwind/ui/label";
 
 const useCheckbox = CheckboxPrimitive.useCheckboxContext;
 
@@ -11,7 +12,11 @@ function Checkbox(props: ComponentProps<typeof CheckboxPrimitive.Root>) {
   return (
     <CheckboxPrimitive.Root
       data-slot="checkbox"
-      class={cn("group relative flex items-start space-x-2", local.class)}
+      class={cn(
+        // "group relative flex items-start space-x-2",
+        "group/checkbox flex flex-row items-center gap-2",
+        local.class,
+      )}
       {...rest}
     />
   );
@@ -38,35 +43,51 @@ function CheckboxControl(
     <CheckboxPrimitive.Control
       data-slot="checkbox-control"
       class={cn(
-        "size-4 shrink-0 rounded-[4px] border border-primary ring-offset-background",
-        "peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2",
-        "data-checked:bg-primary data-checked:text-primary-foreground",
-        "data-disabled:cursor-not-allowed data-disabled:opacity-50",
+        "peer size-4 shrink-0 rounded-[4px] border border-input shadow-xs outline-none transition-shadow dark:bg-input/30",
+        // focus-visible
+        "focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
+        // invalid
+        "aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40",
+        // checked
+        "data-checked:border-primary data-checked:bg-primary data-checked:text-primary-foreground dark:data-checked:bg-primary",
+        // disabled
+        "disabled:cursor-not-allowed disabled:opacity-50",
         local.class,
       )}
       {...rest}
     >
       <CheckboxPrimitive.Indicator
         data-slot="checkbox-indicator"
-        class="flex items-center justify-center text-current"
+        class="flex items-center justify-center text-current transition-none"
       >
-        <CheckIcon class="size-4" />
+        <CheckIcon class="size-3.5" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Control>
   );
 }
 
 function CheckboxLabel(props: ComponentProps<typeof CheckboxPrimitive.Label>) {
-  return <CheckboxPrimitive.Label data-slot="checkbox-label" {...props} />;
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <CheckboxPrimitive.Label
+      data-slot="checkbox-label"
+      class={labelVariants({ variant: "label", class: local.class })}
+      {...rest}
+    />
+  );
 }
 
 function CheckboxDescription(
   props: ComponentProps<typeof CheckboxPrimitive.Description>,
 ) {
+  const [local, rest] = splitProps(props, ["class"]);
+
   return (
     <CheckboxPrimitive.Description
       data-slot="checkbox-description"
-      {...props}
+      class={labelVariants({ variant: "description", class: local.class })}
+      {...rest}
     />
   );
 }
@@ -74,8 +95,14 @@ function CheckboxDescription(
 function CheckboxMessage(
   props: ComponentProps<typeof CheckboxPrimitive.ErrorMessage>,
 ) {
+  const [local, rest] = splitProps(props, ["class"]);
+
   return (
-    <CheckboxPrimitive.ErrorMessage data-slot="checkbox-message" {...props} />
+    <CheckboxPrimitive.ErrorMessage
+      data-slot="checkbox-message"
+      class={labelVariants({ variant: "error", class: local.class })}
+      {...rest}
+    />
   );
 }
 

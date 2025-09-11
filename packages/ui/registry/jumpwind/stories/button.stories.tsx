@@ -1,116 +1,163 @@
 import type { PickPartial } from "@jumpwind/utils";
-import { type Component, type ComponentProps, createSignal } from "solid-js";
-import { fn } from "storybook/test";
-import type { Meta, StoryFn, StoryObj } from "storybook-solidjs-vite";
+import Loader2Icon from "lucide-solid/icons/loader-2";
+import MailIcon from "lucide-solid/icons/mail";
+import type { Component, ComponentProps } from "solid-js";
+import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { Button } from "@/registry/jumpwind/ui/button";
 
 type ButtonStoryComponent = Component<
   PickPartial<ComponentProps<typeof Button>, "children">
 >;
 
+/**
+ * Displays a button or a component that looks like a button.
+ */
 const meta = {
   title: "@jumpwind/ui/Button",
   component: Button as ButtonStoryComponent,
-  parameters: {
-    layout: "centered",
-  },
   argTypes: {
-    variant: {
-      description: "",
-      control: "select",
-      table: {
-        defaultValue: { summary: `"default"` },
-      },
-    },
-    size: {
-      description: "",
-      control: "select",
-      table: {
-        defaultValue: { summary: `"default"` },
-      },
-    },
     children: {
-      description: "Text to display",
       control: "text",
     },
   },
-  args: { onClick: fn() },
+  parameters: {
+    layout: "centered",
+  },
+  args: {
+    variant: "default",
+    size: "default",
+    children: "Button",
+  },
 } satisfies Meta<ButtonStoryComponent>;
-
-type Story = StoryObj<typeof meta>;
-
-export const Primary = {
-  args: {
-    primary: true,
-    children: "Button",
-  },
-} satisfies Story;
-
-export const Secondary = {
-  args: {
-    children: "Button",
-  },
-} satisfies Story;
-
-export const Large = {
-  args: {
-    size: "lg",
-    children: "Button",
-  },
-} satisfies Story;
-
-export const Small = {
-  args: {
-    size: "sm",
-    children: "Button",
-  },
-} satisfies Story;
-
-export const InCSFFormat = (() => {
-  return <Button size="sm">Button</Button>;
-}) satisfies StoryFn<typeof meta>;
-
-export const WithDecorator = {
-  args: {
-    size: "sm",
-    children: "Button",
-  },
-  decorators: [
-    (Story, context) => {
-      return (
-        <div style={{ border: "1px dashed red", padding: "10px" }}>
-          <Story {...context.args} />
-        </div>
-      );
-    },
-  ],
-} satisfies Story;
-
-export const WithHooks = {
-  tags: ["autodocs"],
-  render: () => {
-    // Sets the hooks for both the label and primary props
-    const [value, setValue] = createSignal("Secondary");
-    const [isPrimary, setIsPrimary] = createSignal(true);
-
-    // Sets a click handler to change the label's value
-    const handleOnChange = () => {
-      if (!isPrimary()) {
-        setIsPrimary(true);
-        setValue("Primary");
-      }
-    };
-    return (
-      <Button
-        variant={isPrimary() ? "default" : "secondary"}
-        onClick={handleOnChange}
-      >
-        {value()}
-      </Button>
-    );
-  },
-} satisfies Story;
 
 export default meta;
 
-// // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
+type Story = StoryObj<typeof meta>;
+
+/**
+ * The default form of the button, used for primary actions and commands.
+ */
+export const Default: Story = {};
+
+/**
+ * Use the `outline` button to reduce emphasis on secondary actions, such as
+ * canceling or dismissing a dialog.
+ */
+export const Outline: Story = {
+  args: {
+    variant: "outline",
+  },
+};
+
+/**
+ * Use the `ghost` button is minimalistic and subtle, for less intrusive
+ * actions.
+ */
+export const Ghost: Story = {
+  args: {
+    variant: "ghost",
+  },
+};
+
+/**
+ * Use the `secondary` button to call for less emphasized actions, styled to
+ * complement the primary button while being less conspicuous.
+ */
+export const Secondary: Story = {
+  args: {
+    variant: "secondary",
+  },
+};
+
+/**
+ * Use the `destructive` button to indicate errors, alerts, or the need for
+ * immediate attention.
+ */
+export const Destructive: Story = {
+  args: {
+    variant: "destructive",
+  },
+};
+
+/**
+ * Use the `link` button to reduce emphasis on tertiary actions, such as
+ * hyperlink or navigation, providing a text-only interactive element.
+ */
+export const Link: Story = {
+  args: {
+    variant: "link",
+  },
+};
+
+/**
+ * Add the `disabled` prop to a button to prevent interactions and add a
+ * loading indicator, such as a spinner, to signify an in-progress action.
+ */
+export const Loading: Story = {
+  render: (args) => (
+    <Button {...args}>
+      <Loader2Icon class="mr-2 h-4 w-4 animate-spin" />
+      Button
+    </Button>
+  ),
+  args: {
+    ...Outline.args,
+    disabled: true,
+  },
+};
+
+/**
+ * Add an icon element to a button to enhance visual communication and
+ * providing additional context for the action.
+ */
+export const WithIcon: Story = {
+  render: (args) => (
+    <Button {...args}>
+      <MailIcon class="mr-2 h-4 w-4" /> Login with Email Button
+    </Button>
+  ),
+  args: {
+    ...Secondary.args,
+  },
+};
+
+/**
+ * Use the `sm` size for a smaller button, suitable for interfaces needing
+ * compact elements without sacrificing usability.
+ */
+export const Small: Story = {
+  args: {
+    size: "sm",
+  },
+};
+
+/**
+ * Use the `lg` size for a larger button, offering better visibility and
+ * easier interaction for users.
+ */
+export const Large: Story = {
+  args: {
+    size: "lg",
+  },
+};
+
+/**
+ * Use the "icon" size for a button with only an icon.
+ */
+export const Icon: Story = {
+  args: {
+    ...Secondary.args,
+    size: "icon",
+    title: "Mail",
+    children: <MailIcon />,
+  },
+};
+
+/**
+ * Add the `disabled` prop to prevent interactions with the button.
+ */
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+  },
+};

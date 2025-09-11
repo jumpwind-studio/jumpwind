@@ -25,13 +25,11 @@ const meta = {
     disabled: false,
   },
   render: (args) => (
-    <div class="flex space-x-2">
-      <Checkbox {...args}>
-        <CheckboxInput />
-        <CheckboxControl />
-        <CheckboxLabel>Accept terms and conditions</CheckboxLabel>
-      </Checkbox>
-    </div>
+    <Checkbox {...args}>
+      <CheckboxInput />
+      <CheckboxControl />
+      <CheckboxLabel>Accept terms and conditions</CheckboxLabel>
+    </Checkbox>
   ),
   parameters: {
     layout: "centered",
