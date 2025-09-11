@@ -1,11 +1,17 @@
-import { Dynamic } from "@corvu/utils/dynamic";
+import * as BreadcrumbPrimitive from "@kobalte/core/breadcrumbs";
 import ChevronRightIcon from "lucide-solid/icons/chevron-right";
 import MoreHorizontalIcon from "lucide-solid/icons/more-horizontal";
 import { type ComponentProps, Show, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
 
-function Breadcrumb(props: ComponentProps<"nav">) {
-  return <nav data-slot="breadcrumb" aria-label="breadcrumb" {...props} />;
+function Breadcrumb(props: ComponentProps<typeof BreadcrumbPrimitive.Root>) {
+  return (
+    <BreadcrumbPrimitive.Root
+      aria-label="breadcrumb"
+      data-slot="breadcrumb"
+      {...props}
+    />
+  );
 }
 
 function BreadcrumbList(props: ComponentProps<"ol">) {
@@ -35,11 +41,13 @@ function BreadcrumbItem(props: ComponentProps<"li">) {
   );
 }
 
-function BreadcrumbLink(props: ComponentProps<"a">) {
+function BreadcrumbLink(
+  props: ComponentProps<typeof BreadcrumbPrimitive.Link>,
+) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
-    <Dynamic
+    <BreadcrumbPrimitive.Link
       data-slot="breadcrumb-link"
       class={cn("transition-colors hover:text-foreground", local.class)}
       {...rest}
@@ -47,36 +55,38 @@ function BreadcrumbLink(props: ComponentProps<"a">) {
   );
 }
 
-function BreadcrumbPage(props: ComponentProps<"span">) {
+function BreadcrumbPage(
+  props: ComponentProps<typeof BreadcrumbPrimitive.Link>,
+) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
-    <span
+    <BreadcrumbPrimitive.Link
       data-slot="breadcrumb-page"
-      role="link"
-      aria-disabled="true"
+      current
       aria-current="page"
+      aria-disabled
       class={cn("font-normal text-foreground", local.class)}
       {...rest}
     />
   );
 }
 
-function BreadcrumbSeparator(props: ComponentProps<"li">) {
+function BreadcrumbSeparator(
+  props: ComponentProps<typeof BreadcrumbPrimitive.Separator>,
+) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <li
+    <BreadcrumbPrimitive.Separator
       data-slot="breadcrumb-separator"
-      role="presentation"
-      aria-hidden="true"
       class={cn("[&>svg]:size-3.5", local.class)}
       {...rest}
     >
       <Show when={local.children} fallback={<ChevronRightIcon />}>
         {local.children}
       </Show>
-    </li>
+    </BreadcrumbPrimitive.Separator>
   );
 }
 
@@ -87,12 +97,12 @@ function BreadcrumbEllipsis(props: ComponentProps<"span">) {
     <span
       data-slot="breadcrumb-ellipsis"
       role="presentation"
-      aria-hidden="true"
+      aria-hidden
       class={cn("flex size-9 items-center justify-center", local.class)}
       {...rest}
     >
-      <MoreHorizontalIcon class="size-4" />
       <span class="sr-only">More</span>
+      <MoreHorizontalIcon class="size-4" />
     </span>
   );
 }
