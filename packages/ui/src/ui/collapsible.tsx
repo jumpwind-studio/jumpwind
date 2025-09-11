@@ -1,6 +1,6 @@
 import * as CollapsiblePrimitive from "corvu/disclosure";
 import { type ComponentProps, splitProps } from "solid-js";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 
 const useCollapsible = CollapsiblePrimitive.useContext;
 

@@ -3,7 +3,7 @@ import * as SeparatorPrimitive from "@kobalte/core/separator";
 import CheckIcon from "lucide-solid/icons/check";
 import ChevronDownIcon from "lucide-solid/icons/chevron-down";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 
 const useSelect = SelectPrimitive.useSelectContext;
 

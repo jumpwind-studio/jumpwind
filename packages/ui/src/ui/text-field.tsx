@@ -1,7 +1,7 @@
 import * as TextFieldPrimitive from "@kobalte/core/text-field";
 import type { ComponentProps } from "solid-js";
 import { splitProps } from "solid-js";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 import { labelVariants } from "@/registry/jumpwind/ui/label";
 
 const useTextField = TextFieldPrimitive.useTextFieldContext;

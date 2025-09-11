@@ -1,5 +1,5 @@
 import { type ComponentProps, splitProps } from "solid-js";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 
 type Key = KeyboardEvent[keyof Pick<KeyboardEvent, "key">];
 type Modifier = keyof Pick<KeyboardEvent, "ctrlKey" | "metaKey" | "altKey">;

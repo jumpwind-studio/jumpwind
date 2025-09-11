@@ -8,7 +8,7 @@ import {
   untrack,
 } from "solid-js";
 import createPersistent from "solid-persistent";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 
 const useDialog = DialogPrimitive.useContext;
 

@@ -8,7 +8,7 @@ import {
   Show,
   splitProps,
 } from "solid-js";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 import { Button } from "@/registry/jumpwind/ui/button";
 import {
   Command,

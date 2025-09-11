@@ -2,7 +2,7 @@ import * as RadioGroupPrimitive from "@kobalte/core/radio-group";
 // import DotIcon from "lucide-solid/icons/dot";
 import CircleIcon from "lucide-solid/icons/circle";
 import { type ComponentProps, splitProps } from "solid-js";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 import { labelVariants } from "@/registry/jumpwind/ui/label";
 
 const useRadioGroup = RadioGroupPrimitive.useRadioGroupContext;

@@ -1,6 +1,6 @@
 import * as HoverCardPrimitive from "@kobalte/core/hover-card";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 
 const useHoverCard = HoverCardPrimitive.useHoverCardContext;
 

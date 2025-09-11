@@ -1,7 +1,7 @@
 import * as ResizablePrimitive from "corvu/resizable";
 import GripVerticalIcon from "lucide-solid/icons/grip-vertical";
 import { type ComponentProps, Show, splitProps } from "solid-js";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 
 const useResizable = ResizablePrimitive.useContext;
 const useResizablePanel = ResizablePrimitive.usePanelContext;

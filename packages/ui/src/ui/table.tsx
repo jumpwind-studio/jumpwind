@@ -1,5 +1,5 @@
 import { type ComponentProps, splitProps } from "solid-js";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 
 function Table(props: ComponentProps<"table">) {
   const [local, rest] = splitProps(props, ["class"]);

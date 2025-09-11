@@ -1,5 +1,5 @@
 import { type ComponentProps, Show, splitProps } from "solid-js";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 import { Label } from "@/registry/jumpwind/ui/label";
 
 function FieldLabel(props: ComponentProps<"label">) {

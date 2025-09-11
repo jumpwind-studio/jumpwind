@@ -2,7 +2,7 @@ import * as SheetPrimitive from "corvu/drawer";
 import XIcon from "lucide-solid/icons/x";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
 import { tv } from "tailwind-variants";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 
 const useSheet = SheetPrimitive.useContext;
 

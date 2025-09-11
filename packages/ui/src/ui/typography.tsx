@@ -5,7 +5,7 @@ import {
   type ValidComponent,
 } from "solid-js";
 import type { DynamicProps } from "solid-js/web";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 
 export type TypographyProps<T extends ValidComponent> = FlowProps<
   Omit<DynamicProps<T, ComponentProps<T>>, "component">

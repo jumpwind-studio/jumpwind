@@ -1,7 +1,7 @@
 import { Dynamic } from "@corvu/utils/dynamic";
 import type { ComponentProps } from "solid-js";
 import { mergeProps, splitProps } from "solid-js";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 
 function Separator(
   props: ComponentProps<"hr"> & {

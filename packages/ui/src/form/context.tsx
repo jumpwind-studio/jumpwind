@@ -48,7 +48,7 @@ export function useFieldExtra<TData>(field?: Accessor<FieldApi<TData>>) {
 //   splitProps,
 //   useContext,
 // } from "solid-js";
-// import { cn } from "@/registry/jumpwind/lib/utils";
+// import { cn } from "../lib/utils.js";
 
 // function Form(props: ComponentProps<"form">) {
 //   const form = useFormContext();

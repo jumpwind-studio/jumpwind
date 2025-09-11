@@ -1,7 +1,7 @@
 import createControllableSignal from "@corvu/utils/create/controllableSignal";
 import CalendarIcon from "lucide-solid/icons/calendar";
 import { type ComponentProps, Show, splitProps } from "solid-js";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 import { Button } from "@/registry/jumpwind/ui/button";
 import {
   Calendar,

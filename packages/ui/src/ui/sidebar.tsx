@@ -20,7 +20,7 @@ import {
 } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 import { useIsMobile } from "@/registry/jumpwind/hook/use-is-mobile";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 import { Button } from "@/registry/jumpwind/ui/button";
 import { Input } from "@/registry/jumpwind/ui/input";
 import { Separator } from "@/registry/jumpwind/ui/separator";

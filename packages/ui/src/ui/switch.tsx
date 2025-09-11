@@ -1,6 +1,6 @@
 import * as SwitchPrimitive from "@kobalte/core/switch";
 import { type ComponentProps, splitProps } from "solid-js";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 
 const useSwitch = SwitchPrimitive.useSwitchContext;
 

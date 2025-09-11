@@ -8,7 +8,7 @@ import {
   FieldLabel,
   FieldMessage,
 } from "@/registry/jumpwind/form/field";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 import {
   Otp,
   OtpGroup,

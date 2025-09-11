@@ -2,7 +2,7 @@ import * as NavigationMenuPrimitive from "@kobalte/core/navigation-menu";
 import ChevronDownIcon from "lucide-solid/icons/chevron-down";
 import { type ComponentProps, mergeProps, Show, splitProps } from "solid-js";
 import { tv } from "tailwind-variants";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 
 const useNavigationMenu = NavigationMenuPrimitive.useNavigationMenuContext;
 

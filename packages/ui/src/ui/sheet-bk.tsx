@@ -12,7 +12,7 @@ import {
   splitProps,
   useContext,
 } from "solid-js";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 
 export type SheetContextValue = SheetPrimitive.ContextValue & {
   side?: Side;

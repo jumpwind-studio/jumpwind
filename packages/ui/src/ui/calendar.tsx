@@ -13,7 +13,7 @@ import {
   splitProps,
   untrack,
 } from "solid-js";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 import { buttonVariants } from "@/registry/jumpwind/ui/button";
 
 const { format: formatYearLong } = new Intl.DateTimeFormat("en", {

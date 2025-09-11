@@ -9,7 +9,7 @@ import {
   FieldMessage,
 } from "@/registry/jumpwind/form/field";
 import { squash } from "@/registry/jumpwind/form/utils";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../lib/utils.js";
 import {
   Select,
   SelectContent,
