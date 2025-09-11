@@ -1,5 +1,5 @@
 import { type Accessor, createMemo, type Ref } from "solid-js";
-import { type ClassValue, cnBase } from "tailwind-variants";
+import { type ClassValue, cn as tvCn } from "tailwind-variants";
 
 /**
  * Combines multiple class strings into one single string.
@@ -8,7 +8,7 @@ import { type ClassValue, cnBase } from "tailwind-variants";
  * @returns The combined classes.
  */
 export function cn(...classes: ClassValue[]): string | undefined {
-  return cnBase(classes);
+  return tvCn(classes)({ twMerge: true });
 }
 
 export type MaybeAccessor<T> = T | (() => T);
