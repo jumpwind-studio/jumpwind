@@ -14,13 +14,7 @@ function Popover(props: ComponentProps<typeof PopoverPrimitive.Root>) {
     props,
   );
 
-  const [local, rest] = splitProps(defaultedProps, ["children"]);
-
-  return (
-    <PopoverPrimitive.Root data-slot="popover" {...rest}>
-      {local.children}
-    </PopoverPrimitive.Root>
-  );
+  return <PopoverPrimitive.Root data-slot="popover" {...defaultedProps} />;
 }
 
 function PopoverAnchor(props: ComponentProps<typeof PopoverPrimitive.Anchor>) {

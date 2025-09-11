@@ -1,8 +1,16 @@
 import { isFunction } from "@corvu/utils";
 import createOnce from "@corvu/utils/create/once";
-import { Command as CommandPrimitive } from "cmdk-solid";
+import { Command as CommandPrimitive, useCommandState } from "cmdk-solid";
+import LoaderCircleIcon from "lucide-solid/icons/loader-circle";
 import SearchIcon from "lucide-solid/icons/search";
-import { type ComponentProps, mergeProps, splitProps, untrack } from "solid-js";
+import {
+  type ComponentProps,
+  Index,
+  mergeProps,
+  Suspense,
+  splitProps,
+  untrack,
+} from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 import {
   Dialog,
@@ -11,6 +19,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/jumpwind/ui/dialog";
+import { Skeleton } from "@/registry/jumpwind/ui/skeleton";
+
+const useCommand = useCommandState;
 
 function Command(props: ComponentProps<typeof CommandPrimitive>) {
   const [local, rest] = splitProps(props, ["class"]);
@@ -35,7 +46,13 @@ function CommandInput(props: ComponentProps<typeof CommandPrimitive.Input>) {
       data-slot="command-input-wrapper"
       class="flex h-9 items-center gap-2 border-b px-3"
     >
-      <SearchIcon class="size-4 shrink-0 opacity-50" />
+      <Suspense
+        fallback={
+          <LoaderCircleIcon class="size-4 shrink-0 animate-spin opacity-50" />
+        }
+      >
+        <SearchIcon class="size-4 shrink-0 opacity-50" />
+      </Suspense>
       <CommandPrimitive.Input
         data-slot="command-input"
         class={cn(
@@ -49,7 +66,7 @@ function CommandInput(props: ComponentProps<typeof CommandPrimitive.Input>) {
 }
 
 function CommandList(props: ComponentProps<typeof CommandPrimitive.List>) {
-  const [local, rest] = splitProps(props, ["class"]);
+  const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <CommandPrimitive.List
@@ -59,7 +76,39 @@ function CommandList(props: ComponentProps<typeof CommandPrimitive.List>) {
         local.class,
       )}
       {...rest}
-    />
+    >
+      <Suspense fallback={<CommandLoading />}>{local.children}</Suspense>
+    </CommandPrimitive.List>
+  );
+}
+
+function CommandLoading(
+  props: ComponentProps<typeof CommandPrimitive.Loading>,
+) {
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <CommandPrimitive.Loading
+      data-slot="command-loading"
+      role="status"
+      class={cn(
+        "flex flex-col gap-y-2 overflow-hidden p-1 text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:text-xs",
+        local.class,
+      )}
+      {...rest}
+    >
+      <span class="sr-only">Loading...</span>
+      <Index each={[1, 2, 3, 4]}>
+        {(_) => (
+          <Skeleton
+            class="my-1 h-6 w-full rounded-sm px-2 py-1.5"
+            // style={{
+            //   width: `${Math.floor(Math.random() * (90 - 80 + 1) + 80)}%`,
+            // }}
+          />
+        )}
+      </Index>
+    </CommandPrimitive.Loading>
   );
 }
 
@@ -189,9 +238,12 @@ export {
   CommandDialog,
   CommandInput,
   CommandList,
+  CommandLoading,
   CommandEmpty,
   CommandGroup,
   CommandItem,
   CommandShortcut,
   CommandSeparator,
+  // Hooks
+  useCommand,
 };

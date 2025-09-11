@@ -186,7 +186,8 @@ export const ShouldOpenClose: Story = {
     expect(items).toHaveLength(4);
 
     await step("Click the first menu item", async () => {
-      await userEvent.click(items[0], { delay: 100 });
+      const item = items[0]!;
+      await userEvent.click(item, { delay: 100 });
     });
   },
 };

@@ -1,6 +1,14 @@
 import type { PickPartial } from "@jumpwind/utils";
 import { createShortcut } from "@solid-primitives/keyboard";
-import { type Component, type ComponentProps, createSignal } from "solid-js";
+import {
+  type Component,
+  type ComponentProps,
+  createResource,
+  createSignal,
+  For,
+  Show,
+  Suspense,
+} from "solid-js";
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
@@ -61,6 +69,78 @@ type Story = StoryObj<typeof meta>;
  * The default form of the command.
  */
 export const Default: Story = {};
+
+export const Loading: Story = {
+  render: (args) => {
+    const items = [
+      {
+        category: "Suggestions",
+        items: [
+          { label: "Calendar", value: "calendar", disabled: false },
+          { label: "Search Emoji", value: "emoji", disabled: false },
+          { label: "Calculator", value: "calculator", disabled: true },
+        ],
+      },
+      {
+        category: "Settings",
+        items: [
+          { label: "Profile", value: "profile", disabled: false },
+          { label: "Billing", value: "billing", disabled: false },
+          { label: "Settings", value: "settings", disabled: false },
+        ],
+      },
+    ];
+
+    const [search, setSearch] = createSignal<string>("");
+
+    const [results] = createResource(search, async (term) => {
+      if (term === "") return items;
+      await new Promise((resolve) => setTimeout(resolve, 100000));
+      const lowerTerm = term.toLowerCase();
+      return items.filter((item) =>
+        item.items.flatMap((subitem) =>
+          subitem.value.toLowerCase().includes(lowerTerm),
+        ),
+      );
+    });
+
+    return (
+      <Suspense>
+        <Command {...args}>
+          <CommandInput
+            placeholder="Search..."
+            value={search()}
+            onValueChange={setSearch}
+          />
+          <CommandList>
+            <CommandEmpty>No results found.</CommandEmpty>
+            <For each={results()}>
+              {(item, index) => (
+                <>
+                  <CommandGroup heading={item.category}>
+                    <For each={item.items}>
+                      {(subitem) => (
+                        <CommandItem
+                          value={subitem.value}
+                          disabled={subitem.disabled}
+                        >
+                          {subitem.label}
+                        </CommandItem>
+                      )}
+                    </For>
+                  </CommandGroup>
+                  <Show when={index() !== items.length - 1}>
+                    <CommandSeparator />
+                  </Show>
+                </>
+              )}
+            </For>
+          </CommandList>
+        </Command>
+      </Suspense>
+    );
+  },
+};
 
 export const WithDialog = {
   tags: ["autodocs"],

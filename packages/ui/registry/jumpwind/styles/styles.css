@@ -1,26 +1,13 @@
+/** biome-ignore-all lint/correctness/noUnknownProperty: Tailwind */
+
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@jumpwind/assets/styles/fonts";
+@plugin "@tailwindcss/forms" {
+  strategy: "class";
+}
 
 @custom-variant dark (&:where([data-mode=dark], [data-mode=dark] *));
-
-@font-face {
-  font-family: "Inter";
-  /* src: url("@jumpwind/assets/fonts/variable/Inter.ttf") */
-  src: url("../../../../assets/src/fonts/variable/Inter.ttf")
-    format("truetype-variations");
-  font-weight: 100 900;
-  font-display: swap;
-  font-optical-sizing: auto;
-}
-
-@font-face {
-  font-family: "Geist";
-  src: url("../../../../assets/src/fonts/variable/Geist.ttf")
-    format("truetype-variations");
-  font-weight: 100 900;
-  font-display: swap;
-  font-optical-sizing: auto;
-}
 
 :root {
   --radius: 0.625rem;
@@ -103,9 +90,9 @@
 }
 
 @theme inline {
-  --font-sans: "Geist", "sans-serif", system-ui, -apple-system;
-  --font-display: "Geist", system-ui, -apple-system;
-  --font-family-mono: "GeistMono-Regular", Consolas, monaco, monospace;
+  --font-sans: Geist;
+  --font-display: Geist;
+  --font-mono: GeistMono;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -251,12 +238,6 @@
   }
 }
 
-@layer utilities {
-  body {
-    font-family: Inter, Arial, Helvetica, sans-serif;
-  }
-}
-
 @utility fade-in-* {
   --tw-enter-opacity: --value(percentage, ratio);
 }
@@ -292,5 +273,3 @@
   --tw-exit-translate-y: calc(--value(ratio) * 100%);
   --tw-exit-translate-y: calc(--value(integer) * var(--spacing));
 }
-
-@plugin '@tailwindcss/forms';
