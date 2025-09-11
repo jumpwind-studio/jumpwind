@@ -30,6 +30,9 @@ const meta = {
     type: "single",
     collapsible: true,
   },
+  parameters: {
+    layout: "padded",
+  },
   render: (args) => (
     <Accordion {...args}>
       <AccordionItem value="item-1">
