@@ -78,7 +78,7 @@ const TokenTable = (props: TypographyRowProps) => {
               </TableCell>
               <TableCell>
                 <div
-                  class="line-clamp-1"
+                  class={cn("line-clamp-1", property.value)}
                   style={{
                     [local.style]: property.style,
                   }}
