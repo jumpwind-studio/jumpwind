@@ -3,6 +3,7 @@ import * as RadioGroupPrimitive from "@kobalte/core/radio-group";
 import CircleIcon from "lucide-solid/icons/circle";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
+import { labelVariants } from "@/registry/jumpwind/ui/label";
 
 const useRadioGroup = RadioGroupPrimitive.useRadioGroupContext;
 
@@ -36,11 +37,13 @@ function RadioGroupItem(
       <RadioGroupPrimitive.ItemControl
         data-slot="radio-group-control"
         class={cn(
-          "relative aspect-square size-4 shrink-0 rounded-full border border-input text-primary shadow-xs outline-none transition-[color,box-shadow]",
+          "relative aspect-square size-4 shrink-0 rounded-full border border-input text-primary shadow-xs outline-none transition-[color,box-shadow] dark:bg-input/30",
+          // Focus-visible
           "focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
+          // Disabled
           "disabled:cursor-not-allowed disabled:opacity-50",
-          "aria-invalid:border-destructive aria-invalid:ring-destructive/20",
-          "dark:bg-input/30 dark:aria-invalid:ring-destructive/40",
+          // Invalid
+          "aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40",
         )}
       >
         <RadioGroupPrimitive.ItemIndicator data-slot="radio-group-indicator">
@@ -72,27 +75,41 @@ function RadioGroupItemLabel(
 function RadioGroupLabel(
   props: ComponentProps<typeof RadioGroupPrimitive.Label>,
 ) {
-  return <RadioGroupPrimitive.Label data-slot="radio-group-label" {...props} />;
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <RadioGroupPrimitive.Label
+      data-slot="radio-group-label"
+      class={labelVariants({ variant: "label", class: local.class })}
+      {...rest}
+    />
+  );
 }
 
 function RadioGroupDescription(
   props: ComponentProps<typeof RadioGroupPrimitive.Description>,
 ) {
+  const [local, rest] = splitProps(props, ["class"]);
+
   return (
     <RadioGroupPrimitive.Description
       data-slot="radio-group-description"
-      {...props}
+      class={labelVariants({ variant: "description", class: local.class })}
+      {...rest}
     />
   );
 }
 
-function RadioGroupMessage(
+function RadioGroupErrorMessage(
   props: ComponentProps<typeof RadioGroupPrimitive.ErrorMessage>,
 ) {
+  const [local, rest] = splitProps(props, ["class"]);
+
   return (
     <RadioGroupPrimitive.ErrorMessage
-      data-slot="radio-group-message"
-      {...props}
+      data-slot="radio-group-error-message"
+      class={labelVariants({ variant: "error", class: local.class })}
+      {...rest}
     />
   );
 }
@@ -104,7 +121,7 @@ export {
   // Forms
   RadioGroupLabel,
   RadioGroupDescription,
-  RadioGroupMessage,
+  RadioGroupErrorMessage,
   // Hooks
   useRadioGroup,
 };

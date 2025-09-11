@@ -1,3 +1,5 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent, waitFor } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
@@ -7,13 +9,17 @@ import {
   TabsTrigger,
 } from "@/registry/jumpwind/ui/tabs";
 
+type TabsStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Tabs>, "children">
+>;
+
 /**
  * A set of layered sections of content—known as tab panels—that are displayed
  * one at a time.
  */
 const meta = {
   title: "@jumpwind/ui/Tabs",
-  component: Tabs,
+  component: Tabs as TabsStoryComponent,
   argTypes: {},
   args: {
     defaultValue: "account",
@@ -34,7 +40,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof Tabs>;
+} satisfies Meta<TabsStoryComponent>;
 
 export default meta;
 

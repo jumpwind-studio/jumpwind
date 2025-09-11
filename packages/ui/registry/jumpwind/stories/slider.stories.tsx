@@ -17,7 +17,7 @@ type SliderStoryComponent = Component<
  */
 const meta = {
   title: "@jumpwind/ui/Slider",
-  component: Slider,
+  component: Slider as SliderStoryComponent,
   parameters: { layout: "padded" },
   argTypes: {
     minValue: {

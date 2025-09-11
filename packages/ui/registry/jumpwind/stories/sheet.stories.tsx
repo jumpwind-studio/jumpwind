@@ -26,7 +26,7 @@ const meta = {
   title: "@jumpwind/ui/Sheet",
   component: Sheet as SheetStoryComponent,
   argTypes: {
-    placement: {
+    side: {
       options: ["top", "bottom", "left", "right"],
       control: {
         type: "radio",
@@ -37,11 +37,11 @@ const meta = {
     side: "right",
   },
   render: (args) => (
-    <Sheet>
+    <Sheet {...args}>
       <SheetTrigger as={Button} variant="outline">
         Open
       </SheetTrigger>
-      <SheetContent {...args}>
+      <SheetContent>
         <SheetHeader>
           <SheetTitle>Are you absolutely sure?</SheetTitle>
           <SheetDescription>

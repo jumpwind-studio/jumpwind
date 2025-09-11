@@ -7,7 +7,7 @@ import {
   splitProps,
 } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
-import { Label } from "@/registry/jumpwind/ui/label";
+import { labelVariants } from "@/registry/jumpwind/ui/label";
 
 const useSlider = SliderPrimitive.useSliderContext;
 
@@ -21,6 +21,7 @@ function Slider(props: ComponentProps<typeof SliderPrimitive.Root>) {
     } satisfies typeof props,
     props,
   );
+
   const [local, rest] = splitProps(defaultedProps, [
     "class",
     "defaultValue",
@@ -37,11 +38,11 @@ function Slider(props: ComponentProps<typeof SliderPrimitive.Root>) {
     return params.values.join(" - ");
   };
 
-  // const values = createMemo<number[]>(() => {
-  //   if (Array.isArray(local.value)) return local.value;
-  //   if (Array.isArray(local.defaultValue)) return local.defaultValue;
-  //   return [local.minValue, local.maxValue];
-  // });
+  const values = createMemo<number[]>(() => {
+    if (Array.isArray(local.value)) return local.value;
+    if (Array.isArray(local.defaultValue)) return local.defaultValue;
+    return [local.minValue, local.maxValue];
+  });
 
   return (
     <SliderPrimitive.Root
@@ -62,6 +63,42 @@ function Slider(props: ComponentProps<typeof SliderPrimitive.Root>) {
   );
 }
 
+function SliderFill(props: ComponentProps<typeof SliderPrimitive.Fill>) {
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <SliderPrimitive.Fill
+      data-slot="slider-fill"
+      class={cn(
+        "absolute rounded-full bg-primary",
+        "data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full",
+        local.class,
+      )}
+      {...rest}
+    />
+  );
+}
+
+function SliderThumb(props: ComponentProps<typeof SliderPrimitive.Thumb>) {
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <SliderPrimitive.Thumb
+      data-slot="slider-thumb"
+      data-orientation={rest.orientation}
+      class={cn(
+        // "block size-4 shrink-0 rounded-full border border-primary bg-background shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:outline-hidden focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50",
+        "block size-4 shrink-0 rounded-full border border-primary bg-background shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:outline-hidden focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50",
+        "data-[orientation=horizontal]:top-[-6px] data-[orientation=vertical]:right-[-6px]",
+        local.class,
+      )}
+      {...rest}
+    >
+      <SliderPrimitive.Input data-slot="slider-input" />
+    </SliderPrimitive.Thumb>
+  );
+}
+
 function SliderTrack(props: ComponentProps<typeof SliderPrimitive.Track>) {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -78,25 +115,13 @@ function SliderTrack(props: ComponentProps<typeof SliderPrimitive.Track>) {
       )}
       {...rest}
     >
-      <SliderPrimitive.Fill
-        data-slot="slider-range"
-        class={cn(
-          "absolute rounded-full bg-primary",
-          "data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full",
-        )}
-      />
+      <SliderFill />
       <Index each={slider.state.values()}>
         {(_, index) => (
-          <SliderPrimitive.Thumb
+          <SliderThumb
             data-slot={`slider-thumb-${index}`}
-            class={cn(
-              // "block size-4 shrink-0 rounded-full border border-primary bg-background shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:outline-hidden focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50",
-              "block size-4 shrink-0 rounded-full border border-primary bg-background shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:outline-hidden focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50",
-              "data-[orientation=horizontal]:top-[-6px] data-[orientation=vertical]:right-[-6px]",
-            )}
-          >
-            <SliderPrimitive.Input data-slot="slider-input" />
-          </SliderPrimitive.Thumb>
+            data-orientation={rest.orientation}
+          />
         )}
       </Index>
     </SliderPrimitive.Track>
@@ -106,106 +131,54 @@ function SliderTrack(props: ComponentProps<typeof SliderPrimitive.Track>) {
 function SliderValueLabel(
   props: ComponentProps<typeof SliderPrimitive.ValueLabel>,
 ) {
+  const [local, rest] = splitProps(props, ["class"]);
+
   return (
     <SliderPrimitive.ValueLabel
       data-slot="slider-value-label"
-      as={Label}
-      {...props}
+      class={labelVariants({ variant: "label", class: local.class })}
+      {...rest}
     />
   );
 }
 
 function SliderLabel(props: ComponentProps<typeof SliderPrimitive.Label>) {
+  const [local, rest] = splitProps(props, ["class"]);
+
   return (
-    <SliderPrimitive.Label data-slot="slider-label" as={Label} {...props} />
+    <SliderPrimitive.Label
+      data-slot="slider-label"
+      class={labelVariants({ variant: "label", class: local.class })}
+      {...rest}
+    />
   );
 }
 
 function SliderDescription(
   props: ComponentProps<typeof SliderPrimitive.Description>,
 ) {
+  const [local, rest] = splitProps(props, ["class"]);
+
   return (
-    <SliderPrimitive.Description data-slot="slider-description" {...props} />
+    <SliderPrimitive.Description
+      data-slot="slider-description"
+      class={labelVariants({ variant: "description", class: local.class })}
+      {...rest}
+    />
   );
 }
 
-function SliderMessage(
+function SliderErrorMessage(
   props: ComponentProps<typeof SliderPrimitive.ErrorMessage>,
 ) {
-  return (
-    <SliderPrimitive.ErrorMessage data-slot="slider-error-message" {...props} />
-  );
-}
-
-function SliderExample(props: ComponentProps<typeof SliderPrimitive.Root>) {
-  const defaultedProps = mergeProps(
-    {
-      minValue: 0,
-      maxValue: 100,
-      step: 1,
-      orientation: "horizontal",
-    } satisfies typeof props,
-    props,
-  );
-  const [local, rest] = splitProps(defaultedProps, [
-    "class",
-    "defaultValue",
-    "value",
-    "minValue",
-    "maxValue",
-  ]);
-  const values = createMemo(() =>
-    Array.isArray(local.value)
-      ? local.value
-      : Array.isArray(local.defaultValue)
-        ? local.defaultValue
-        : [local.minValue, local.maxValue],
-  );
+  const [local, rest] = splitProps(props, ["class"]);
 
   return (
-    <SliderPrimitive.Root
-      data-slot="slider"
-      defaultValue={local.defaultValue}
-      value={values()}
-      // value={local.value}
-      minValue={local.minValue}
-      maxValue={local.maxValue}
-      data-orientation={rest.orientation}
-      class={cn(
-        "relative flex w-full touch-none select-none items-center data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col data-[disabled]:opacity-50",
-        local.class,
-      )}
+    <SliderPrimitive.ErrorMessage
+      data-slot="slider-error-message"
+      class={labelVariants({ variant: "error", class: local.class })}
       {...rest}
-    >
-      <div class="flex w-full justify-between">
-        <SliderPrimitive.Label>Foo</SliderPrimitive.Label>
-        <SliderPrimitive.ValueLabel />
-      </div>
-      <SliderPrimitive.Track
-        data-slot="slider-track"
-        data-orientation={rest.orientation}
-        class={
-          "relative grow overflow-hidden rounded-full bg-muted data-[orientation=horizontal]:h-1.5 data-[orientation=vertical]:h-full data-[orientation=horizontal]:w-full data-[orientation=vertical]:w-1.5"
-        }
-      >
-        <SliderPrimitive.Fill
-          data-slot="slider-fill"
-          data-orientation={rest.orientation}
-          class="absolute bg-primary data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full"
-        />
-      </SliderPrimitive.Track>
-      <Index each={values()}>
-        {(_, index) => (
-          <SliderPrimitive.Thumb
-            data-slot={`slider-thumb-${index}`}
-            data-orientation={rest.orientation}
-            class="block size-4 shrink-0 rounded-full border border-primary bg-background shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:outline-hidden focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50"
-          >
-            <SliderPrimitive.Input data-slot="slider-input" />
-          </SliderPrimitive.Thumb>
-        )}
-      </Index>
-    </SliderPrimitive.Root>
+    />
   );
 }
 
@@ -216,9 +189,7 @@ export {
   // Forms
   SliderLabel,
   SliderDescription,
-  SliderMessage,
-  // Example
-  SliderExample,
+  SliderErrorMessage,
   // Hooks
   useSlider,
 };

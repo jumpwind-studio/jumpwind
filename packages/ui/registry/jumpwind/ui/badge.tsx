@@ -21,7 +21,7 @@ const badgeVariants = tv({
   },
 });
 
-type BadgeVariantProps = VariantProps<typeof badgeVariants>;
+export type BadgeVariantProps = VariantProps<typeof badgeVariants>;
 
 function Badge(props: ComponentProps<"span"> & BadgeVariantProps) {
   const [local, rest] = splitProps(props, ["class", "variant"]);
@@ -35,4 +35,4 @@ function Badge(props: ComponentProps<"span"> & BadgeVariantProps) {
   );
 }
 
-export { Badge, badgeVariants, type BadgeVariantProps };
+export { Badge, badgeVariants };

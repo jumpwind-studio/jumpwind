@@ -1,13 +1,37 @@
-import * as SheetPrimitive from "corvu/dialog";
+import * as SheetPrimitive from "corvu/drawer";
 import XIcon from "lucide-solid/icons/x";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
 const useSheet = SheetPrimitive.useContext;
 
+const sheetVariants = tv({
+  base: "fixed z-50 flex flex-col gap-4 bg-background shadow-lg transition ease-in-out data-closed:animate-out data-open:animate-in data-closed:duration-300 data-open:duration-500",
+  variants: {
+    side: {
+      right:
+        "data-closed:slide-out-to-right data-open:slide-in-from-right inset-y-0 right-0 h-full w-3/4 border-l sm:max-w-sm",
+      left: "data-closed:slide-out-to-left data-open:slide-in-from-left inset-y-0 left-0 h-full w-3/4 border-r sm:max-w-sm",
+      top: "data-closed:slide-out-to-top data-open:slide-in-from-top inset-x-0 top-0 h-auto border-b",
+      bottom:
+        "data-closed:slide-out-to-bottom data-open:slide-in-from-bottom inset-x-0 bottom-0 h-auto border-t",
+    },
+  },
+  defaultVariants: {
+    side: "right",
+  },
+});
+
 function Sheet(props: ComponentProps<typeof SheetPrimitive.Root>) {
-  return <SheetPrimitive.Root data-slot="sheet" {...props} />;
+  const defaultedProps = mergeProps(
+    { side: "right" } satisfies Partial<typeof props>,
+    props,
+  );
+
+  const [local, rest] = splitProps(defaultedProps, ["side"]);
+
+  return <SheetPrimitive.Root data-slot="sheet" side={local.side} {...rest} />;
 }
 
 function SheetTrigger(props: ComponentProps<typeof SheetPrimitive.Trigger>) {
@@ -37,50 +61,31 @@ function SheetOverlay(props: ComponentProps<typeof SheetPrimitive.Overlay>) {
   );
 }
 
-const sheetVariants = tv({
-  base: "fixed z-50 flex flex-col gap-4 bg-background shadow-lg transition ease-in-out data-closed:animate-out data-open:animate-in data-closed:duration-300 data-open:duration-500",
-  variants: {
-    side: {
-      right:
-        "data-closed:slide-out-to-right data-open:slide-in-from-right inset-y-0 right-0 h-full w-3/4 border-l sm:max-w-sm",
-      left: "data-closed:slide-out-to-left data-open:slide-in-from-left inset-y-0 left-0 h-full w-3/4 border-r sm:max-w-sm",
-      top: "data-closed:slide-out-to-top data-open:slide-in-from-top inset-x-0 top-0 h-auto border-b",
-      bottom:
-        "data-closed:slide-out-to-bottom data-open:slide-in-from-bottom inset-x-0 bottom-0 h-auto border-t",
-    },
-  },
-  defaultVariants: {
-    side: "right",
-  },
-});
+function SheetContent(props: ComponentProps<typeof SheetPrimitive.Content>) {
+  const [local, rest] = splitProps(props, ["class", "children"]);
 
-export type SheetVariantProps = VariantProps<typeof sheetVariants>;
-
-function SheetContent(
-  props: ComponentProps<typeof SheetPrimitive.Content> & SheetVariantProps,
-) {
-  const defaultedProps = mergeProps(
-    { side: "right" } satisfies typeof props,
-    props,
-  );
-  const [local, rest] = splitProps(defaultedProps, [
-    "class",
-    "children",
-    "side",
-  ]);
+  const sheet = useSheet();
 
   return (
     <SheetPortal>
       <SheetOverlay />
       <SheetPrimitive.Content
         data-slot="sheet-content"
-        class={sheetVariants({ side: local.side, class: local.class })}
+        class={cn(
+          sheetVariants({
+            side: sheet.side(),
+            class: [
+              "data-transitioning:transition-transform data-transitioning:duration-500",
+              local.class,
+            ],
+          }),
+        )}
         {...rest}
       >
         {local.children}
         <SheetPrimitive.Close class="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-open:bg-secondary">
-          <XIcon class="size-4" />
           <span class="sr-only">Close</span>
+          <XIcon class="size-4" />
         </SheetPrimitive.Close>
       </SheetPrimitive.Content>
     </SheetPortal>

@@ -9,12 +9,12 @@ import {
 import {
   RadioGroup,
   RadioGroupDescription,
+  RadioGroupErrorMessage,
   RadioGroupItem,
   RadioGroupItemControl,
   RadioGroupItemInput,
   RadioGroupItemLabel,
   RadioGroupLabel,
-  RadioGroupMessage,
 } from "@/registry/jumpwind/ui/radio-group";
 
 export type Option = {
@@ -85,12 +85,12 @@ export function FormRadioGroup<TField extends AnyFieldApi = AnyFieldApi>(
             {local.description}
           </RadioGroupDescription>
         </Show>
-        <RadioGroupMessage
+        <RadioGroupErrorMessage
           as={FieldMessage}
-          data-slot="form-radio-group-message"
+          data-slot="form-radio-group-error-message"
         >
           {firstError()}
-        </RadioGroupMessage>
+        </RadioGroupErrorMessage>
       </div>
     </RadioGroup>
   );

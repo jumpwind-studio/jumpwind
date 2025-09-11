@@ -3,12 +3,9 @@ import ChevronDownIcon from "lucide-solid/icons/chevron-down";
 import ChevronUpIcon from "lucide-solid/icons/chevron-up";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
+import { labelVariants } from "@/registry/jumpwind/ui/label";
 
 const useNumberField = NumberFieldPrimitive.useNumberFieldContext;
-
-const NumberFieldLabel = NumberFieldPrimitive.Label;
-const NumberFieldDescription = NumberFieldPrimitive.Description;
-const NumberFieldMessage = NumberFieldPrimitive.ErrorMessage;
 
 function NumberFieldRoot(
   props: ComponentProps<typeof NumberFieldPrimitive.Root<"div">>,
@@ -116,6 +113,48 @@ function NumberFieldDecrementTrigger(
   );
 }
 
+function NumberFieldLabel(
+  props: ComponentProps<typeof NumberFieldPrimitive.Label>,
+) {
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <NumberFieldPrimitive.Label
+      data-slot="number-field-label"
+      class={labelVariants({ variant: "label", class: local.class })}
+      {...rest}
+    />
+  );
+}
+
+function NumberFieldDescription(
+  props: ComponentProps<typeof NumberFieldPrimitive.Description>,
+) {
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <NumberFieldPrimitive.Description
+      data-slot="number-field-description"
+      class={labelVariants({ variant: "description", class: local.class })}
+      {...rest}
+    />
+  );
+}
+
+function NumberFieldErrorMessage(
+  props: ComponentProps<typeof NumberFieldPrimitive.ErrorMessage>,
+) {
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <NumberFieldPrimitive.ErrorMessage
+      data-slot="number-field-error-message"
+      class={labelVariants({ variant: "error", class: local.class })}
+      {...rest}
+    />
+  );
+}
+
 export {
   NumberFieldRoot,
   NumberFieldHiddenInput,
@@ -126,7 +165,7 @@ export {
   // Forms
   NumberFieldLabel,
   NumberFieldDescription,
-  NumberFieldMessage,
+  NumberFieldErrorMessage,
   // Hooks
   useNumberField,
 };

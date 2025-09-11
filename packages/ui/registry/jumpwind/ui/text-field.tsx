@@ -2,6 +2,7 @@ import * as TextFieldPrimitive from "@kobalte/core/text-field";
 import type { ComponentProps } from "solid-js";
 import { splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
+import { labelVariants } from "@/registry/jumpwind/ui/label";
 
 const useTextField = TextFieldPrimitive.useTextFieldContext;
 
@@ -59,16 +60,13 @@ function TextFieldTextarea(
 function TextFieldLabel(
   props: ComponentProps<typeof TextFieldPrimitive.Label>,
 ) {
-  return <TextFieldPrimitive.Label data-slot="text-field-label" {...props} />;
-}
+  const [local, rest] = splitProps(props, ["class"]);
 
-function TextFieldMessage(
-  props: ComponentProps<typeof TextFieldPrimitive.ErrorMessage>,
-) {
   return (
-    <TextFieldPrimitive.ErrorMessage
-      data-slot="text-field-message"
-      {...props}
+    <TextFieldPrimitive.Label
+      data-slot="text-field-label"
+      class={labelVariants({ variant: "description", class: local.class })}
+      {...rest}
     />
   );
 }
@@ -76,10 +74,27 @@ function TextFieldMessage(
 function TextFieldDescription(
   props: ComponentProps<typeof TextFieldPrimitive.Description>,
 ) {
+  const [local, rest] = splitProps(props, ["class"]);
+
   return (
     <TextFieldPrimitive.Description
       data-slot="text-field-description"
-      {...props}
+      class={labelVariants({ variant: "description", class: local.class })}
+      {...rest}
+    />
+  );
+}
+
+function TextFieldErrorMessage(
+  props: ComponentProps<typeof TextFieldPrimitive.ErrorMessage>,
+) {
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <TextFieldPrimitive.ErrorMessage
+      data-slot="text-field-error-message"
+      class={labelVariants({ variant: "error", class: local.class })}
+      {...rest}
     />
   );
 }
@@ -91,7 +106,7 @@ export {
   // Form
   TextFieldDescription,
   TextFieldLabel,
-  TextFieldMessage,
+  TextFieldErrorMessage,
   // Hooks
   useTextField,
 };

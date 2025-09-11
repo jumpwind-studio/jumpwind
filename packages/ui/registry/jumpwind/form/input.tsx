@@ -10,9 +10,9 @@ import { cn } from "@/registry/jumpwind/lib/utils";
 import {
   TextField,
   TextFieldDescription,
+  TextFieldErrorMessage,
   TextFieldInput,
   TextFieldLabel,
-  TextFieldMessage,
   TextFieldTextarea,
 } from "@/registry/jumpwind/ui/text-field";
 
@@ -88,9 +88,9 @@ export function FormInput<
           {local.description}
         </TextFieldDescription>
       </Show>
-      <TextFieldMessage as={FieldMessage} data-slot="form-input-message">
+      <TextFieldErrorMessage as={FieldMessage} data-slot="form-input-message">
         {firstError()}
-      </TextFieldMessage>
+      </TextFieldErrorMessage>
     </TextField>
   );
 }

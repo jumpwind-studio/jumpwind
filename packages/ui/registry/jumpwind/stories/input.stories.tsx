@@ -15,7 +15,7 @@ type InputStoryComponent = Component<
  */
 const meta = {
   title: "@jumpwind/ui/Input",
-  component: Input,
+  component: Input as InputStoryComponent,
   argTypes: {},
   args: {
     class: "w-96",

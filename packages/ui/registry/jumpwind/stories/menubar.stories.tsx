@@ -1,3 +1,5 @@
+import type { PickPartial } from "@jumpwind/utils";
+import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
@@ -18,13 +20,17 @@ import {
   MenubarTrigger,
 } from "@/registry/jumpwind/ui/menubar";
 
+type MenubarStoryComponent = Component<
+  PickPartial<ComponentProps<typeof Menubar>, "children">
+>;
+
 /**
  * A visually persistent menu common in desktop applications that provides
  * quick access to a consistent set of commands.
  */
 const meta = {
   title: "@jumpwind/ui/Menubar",
-  component: Menubar,
+  component: Menubar as MenubarStoryComponent,
   argTypes: {},
 
   render: (args) => (
@@ -47,7 +53,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof Menubar>;
+} satisfies Meta<MenubarStoryComponent>;
 
 export default meta;
 
@@ -141,7 +147,7 @@ export const ShouldOpenClose: Story = {
     expect(items).toHaveLength(5);
 
     await step("click the first item to close the menubar", async () => {
-      const item = items[0];
+      const item = items[0]!;
       await userEvent.click(item, { delay: 100 });
     });
   },
