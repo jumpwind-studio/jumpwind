@@ -10,8 +10,7 @@ import {
   CheckboxLabel,
 } from "../ui/checkbox.jsx";
 import { type FieldApi, useField } from "./context.jsx";
-import { FieldDescription, FieldLabel, FieldMessage } from "./field.jsx";
-import { squash } from "./utils.jsx";
+import { squash } from "./utils.js";
 
 export interface FormCheckboxProps
   extends CheckboxPrimitive.CheckboxRootOptions {

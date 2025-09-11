@@ -1,4 +1,4 @@
-import { type Accessor, createMemo, type Ref } from "solid-js";
+import type { Accessor, Ref } from "solid-js";
 import { type ClassValue, cn as tvCn } from "tailwind-variants";
 
 /**
@@ -38,24 +38,4 @@ export function mergeRefs<T>(...refs: Ref<T>[]): (el: T) => void {
 
 export function some(...signals: Accessor<unknown>[]) {
   return signals.some((signal) => !!signal());
-}
-
-/**
- * Returns a signal with the tag name of the element.
- *
- * @param props.element - The element to get the tag name of.
- * @param props.fallback - The fallback tag name to use if the element is `null`.
- * @returns ```typescript
- * Accessor<string>
- * ```
- */
-export function createTagName(props: {
-  element: MaybeAccessor<HTMLElement | null>;
-  fallback: string;
-}): Accessor<string> {
-  const tagName = createMemo(
-    () => access(props.element)?.tagName?.toLowerCase() ?? props.fallback,
-  );
-
-  return tagName;
 }

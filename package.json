@@ -32,9 +32,11 @@
     },
     "catalogs": {
       "effect": {
-        "effect": "3.17.13",
-        "@effect/platform": "^0.90.7",
-        "@effect/platform-bun": "^0.79.0"
+        "@effect/experimental": "^0.54.6",
+        "@effect/platform": "^0.90.9",
+        "@effect/platform-bun": "^0.79.0",
+        "@effect/workflow": "^0.9.5",
+        "effect": "3.17.13"
       },
       "frontend": {
         "@corvu/utils": "^0.4.2",
@@ -62,7 +64,7 @@
         "tailwind-variants": "^3.1.0",
         "tailwindcss": "^4.1.13",
         "tw-animate-css": "^1.3.8",
-        "vite": "^7.1.4",
+        "vite": "^7.1.5",
         "vite-plugin-solid": "^2.11.8",
         "vite-tsconfig-paths": "^5.1.4",
         "vitest": "^3.2.4"

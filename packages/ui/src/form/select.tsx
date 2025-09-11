@@ -14,9 +14,9 @@ import {
   SelectValue,
 } from "../ui/select.jsx";
 import { type FieldApi, useField } from "./context.jsx";
-import { squash } from "./utils.jsx";
+import { squash } from "./utils.js";
 
-export type Option = {
+type Option = {
   value: string;
   label: string;
   disabled?: boolean;
