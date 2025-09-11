@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: Any required for utility type(s) */
+
 import {
   createFormHookContexts,
   type FieldApi as SolidFieldApi,
