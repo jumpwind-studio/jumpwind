@@ -4,7 +4,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "target": "ES2022",
-    "lib": ["ES2022"],
+    "lib": ["ESNext"],
     "allowJs": true,
     "resolveJsonModule": true,
     "moduleDetection": "force",
@@ -13,6 +13,8 @@
     "incremental": true,
     "disableSourceOfProjectReferenceRedirect": false,
     "tsBuildInfoFile": "${configDir}/.cache/tsbuildinfo.json",
+    "outDir": "${configDir}/dist",
+    "baseUrl": ".",
 
     "strict": true,
     "strictNullChecks": true,
