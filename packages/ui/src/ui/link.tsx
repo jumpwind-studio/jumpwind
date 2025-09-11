@@ -1,7 +1,7 @@
 import * as LinkPrimitive from "@kobalte/core/link";
 import { type ComponentProps, splitProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
-import { buttonVariants } from "@/registry/jumpwind/ui/button";
+import { buttonVariants } from "./button.jsx";
 
 const linkVariants = tv({
   extend: buttonVariants,

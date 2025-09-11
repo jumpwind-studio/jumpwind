@@ -14,7 +14,7 @@ import {
   untrack,
 } from "solid-js";
 import { cn } from "../lib/utils.js";
-import { buttonVariants } from "@/registry/jumpwind/ui/button";
+import { buttonVariants } from "./button.jsx";
 
 const { format: formatYearLong } = new Intl.DateTimeFormat("en", {
   month: "long",
