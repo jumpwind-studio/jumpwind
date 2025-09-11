@@ -6,7 +6,7 @@ import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "../../ui/hover-card.jsx"
+} from "../../ui/hover-card.jsx";
 
 type HoverCardStoryComponent = Component<
   PickPartial<ComponentProps<typeof HoverCard>, "children">

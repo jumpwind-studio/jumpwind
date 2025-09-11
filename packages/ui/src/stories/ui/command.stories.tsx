@@ -19,8 +19,8 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "../../ui/command.jsx"
-import { Kbd, KbdKey, KbdModifier } from "../../ui/kbd.jsx"
+} from "../../ui/command.jsx";
+import { Kbd, KbdKey, KbdModifier } from "../../ui/kbd.jsx";
 
 const items = [
   {

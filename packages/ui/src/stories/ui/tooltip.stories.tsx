@@ -3,11 +3,7 @@ import PlusIcon from "lucide-solid/icons/plus";
 import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "../../ui/tooltip.jsx"
+import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip.jsx";
 
 type TooltipStoryComponent = Component<
   PickPartial<ComponentProps<typeof Tooltip>, "children">

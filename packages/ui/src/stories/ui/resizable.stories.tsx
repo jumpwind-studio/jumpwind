@@ -6,7 +6,7 @@ import {
   Resizable,
   ResizableHandle,
   ResizablePanel,
-} from "../../ui/resizable.jsx"
+} from "../../ui/resizable.jsx";
 
 type ResizableStoryComponent = Component<
   PickPartial<ComponentProps<typeof Resizable>, "children">

@@ -7,7 +7,7 @@ import {
   CheckboxControl,
   CheckboxInput,
   CheckboxLabel,
-} from "../../ui/checkbox.jsx"
+} from "../../ui/checkbox.jsx";
 
 type CheckboxStoryComponent = Component<
   PickPartial<ComponentProps<typeof Checkbox>, "children">

@@ -1,7 +1,7 @@
 import type { PickPartial } from "@jumpwind/utils";
 import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Separator } from "../../ui/separator.jsx"
+import { Separator } from "../../ui/separator.jsx";
 
 type SeparatorStoryComponent = Component<
   PickPartial<ComponentProps<typeof Separator>, "children">

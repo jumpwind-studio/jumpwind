@@ -1,9 +1,9 @@
 import type { PickPartial } from "@jumpwind/utils";
 import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Button } from "../../ui/button.jsx"
-import { Label } from "../../ui/label.jsx"
-import { Textarea } from "../../ui/textarea.jsx"
+import { Button } from "../../ui/button.jsx";
+import { Label } from "../../ui/label.jsx";
+import { Textarea } from "../../ui/textarea.jsx";
 
 type TextareaStoryComponent = Component<
   PickPartial<ComponentProps<typeof Textarea>, "children">

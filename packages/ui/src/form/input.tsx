@@ -1,7 +1,6 @@
 import type * as TextFieldPrimitive from "@kobalte/core/text-field";
-import { type AnyFieldApi, useStore } from "@tanstack/solid-form";
+import { useStore } from "@tanstack/solid-form";
 import { type JSX, Show, splitProps } from "solid-js";
-import { FieldDescription, FieldLabel, FieldMessage } from "../form/field.jsx";
 import { cn } from "../lib/utils.js";
 import {
   TextField,
@@ -11,12 +10,12 @@ import {
   TextFieldLabel,
   TextFieldTextarea,
 } from "../ui/text-field.jsx";
+import { FieldApi, useField } from "./context.jsx";
+import { squash } from "./utils.js";
 
-export interface FormInputProps<
-  TField extends AnyFieldApi = AnyFieldApi,
-  TMultiline extends boolean = false,
-> extends TextFieldPrimitive.TextFieldRootOptions {
-  field: TField;
+export interface FormInputProps<TMultiline extends boolean = false>
+  extends TextFieldPrimitive.TextFieldRootOptions {
+  field: FieldApi<string>;
   class?: string;
   children?: JSX.Element;
   label?: string;
@@ -24,10 +23,9 @@ export interface FormInputProps<
   multiline?: TMultiline;
 }
 
-export function FormInput<
-  TField extends AnyFieldApi = AnyFieldApi,
-  TMultiline extends boolean = false,
->(props: FormInputProps<TField, TMultiline>) {
+export function FormInput<TMultiline extends boolean = false>(
+  props: FormInputProps<TMultiline>,
+) {
   const [local, rest] = splitProps(props, [
     "field",
     "class",
@@ -37,24 +35,23 @@ export function FormInput<
     "multiline",
   ]);
 
-  const errors = useStore(local.field.store, (state) => state.meta.errors);
-  const hasError = () => errors()?.length > 0;
-  const firstError = () => errors().at(0);
-  const validationState = () => (hasError() ? "invalid" : "valid");
+  const field = useField<string>(() => local.field);
+  const value = useStore(field().store, (state) => state.value);
+  const errors = useStore(field().store, (state) => state.meta.errors);
 
   return (
     <TextField
       data-slot="form-input"
-      name={local.field.name}
-      value={local.field.state.value}
-      onChange={local.field.handleChange}
-      onBlur={local.field.handleBlur}
-      validationState={validationState()}
+      name={field().name}
+      value={value()}
+      onChange={field().handleChange}
+      onBlur={field().handleBlur}
+      validationState={errors().length > 0 ? "invalid" : "valid"}
       class={cn("group relative grid gap-1.5", local.class)}
       {...rest}
     >
       <Show when={local.label}>
-        <TextFieldLabel as={FieldLabel} data-slot="form-input-label">
+        <TextFieldLabel data-slot="form-input-label">
           {local.label}
         </TextFieldLabel>
       </Show>
@@ -77,15 +74,12 @@ export function FormInput<
       </Show>
       {local.children}
       <Show when={local.description}>
-        <TextFieldDescription
-          as={FieldDescription}
-          data-slot="form-input-description"
-        >
+        <TextFieldDescription data-slot="form-input-description">
           {local.description}
         </TextFieldDescription>
       </Show>
-      <TextFieldErrorMessage as={FieldMessage} data-slot="form-input-message">
-        {firstError()}
+      <TextFieldErrorMessage data-slot="form-input-error-message">
+        {squash(errors())}
       </TextFieldErrorMessage>
     </TextField>
   );

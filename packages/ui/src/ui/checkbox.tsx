@@ -2,7 +2,7 @@ import * as CheckboxPrimitive from "@kobalte/core/checkbox";
 import CheckIcon from "lucide-solid/icons/check";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
-import { labelVariants } from "./label.jsx"
+import { labelVariants } from "./label.jsx";
 
 const useCheckbox = CheckboxPrimitive.useCheckboxContext;
 
@@ -92,14 +92,14 @@ function CheckboxDescription(
   );
 }
 
-function CheckboxMessage(
+function CheckboxErrorMessage(
   props: ComponentProps<typeof CheckboxPrimitive.ErrorMessage>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <CheckboxPrimitive.ErrorMessage
-      data-slot="checkbox-message"
+      data-slot="checkbox-error-message"
       class={labelVariants({ variant: "error", class: local.class })}
       {...rest}
     />
@@ -113,7 +113,7 @@ export {
   // Forms
   CheckboxLabel,
   CheckboxDescription,
-  CheckboxMessage,
+  CheckboxErrorMessage,
   // Hooks
   useCheckbox,
 };

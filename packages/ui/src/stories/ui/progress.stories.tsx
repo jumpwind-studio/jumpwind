@@ -3,7 +3,7 @@ import {
   Progress,
   ProgressLabel,
   ProgressValueLabel,
-} from "../../ui/progress.jsx"
+} from "../../ui/progress.jsx";
 
 /**
  * Displays an indicator showing the completion progress of a task, typically

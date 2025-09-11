@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Label } from "../../ui/label.jsx"
+import { Label } from "../../ui/label.jsx";
 
 /**
  * Renders an accessible label associated with controls.

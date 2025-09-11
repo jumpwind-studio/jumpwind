@@ -18,7 +18,7 @@ import {
   MenubarSubContent,
   MenubarSubTrigger,
   MenubarTrigger,
-} from "../../ui/menubar.jsx"
+} from "../../ui/menubar.jsx";
 
 type MenubarStoryComponent = Component<
   PickPartial<ComponentProps<typeof Menubar>, "children">

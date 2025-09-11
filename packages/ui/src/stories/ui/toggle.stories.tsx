@@ -3,7 +3,7 @@ import BoldIcon from "lucide-solid/icons/bold";
 import ItalicIcon from "lucide-solid/icons/italic";
 import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Toggle } from "../../ui/toggle.jsx"
+import { Toggle } from "../../ui/toggle.jsx";
 
 type ToggleStoryComponent = Component<
   PickPartial<ComponentProps<typeof Toggle>, "children">

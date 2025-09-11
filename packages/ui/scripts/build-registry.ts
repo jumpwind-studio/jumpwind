@@ -23,8 +23,8 @@ const buildRegistryItem = Effect.fn("scripts/build-registry-item")(function* (
 
   const hasFiles = item.files?.length;
   const hookPath = hasFiles
-    ? `@/registry/${item.files[0]?.path}`
-    : `@/registry/${registry.name}/${type}/${item.name}`;
+    ? `../src/${item.files[0]?.path}`
+    : `../src/${registry.name}/${type}/${item.name}`;
 
   return {
     [item.name]: {

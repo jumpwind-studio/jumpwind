@@ -6,10 +6,7 @@ import {
   useContext,
 } from "solid-js";
 import { cn } from "../lib/utils.js";
-import {
-  type ToggleVariantProps,
-  toggleVariants,
-} from "./toggle.jsx"
+import { type ToggleVariantProps, toggleVariants } from "./toggle.jsx";
 
 const useToggleGroup = ToggleGroupPrimitive.useToggleGroupContext;
 

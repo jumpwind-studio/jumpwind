@@ -2,7 +2,7 @@ import type { PickPartial } from "@jumpwind/utils";
 import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Button } from "../../ui/button.jsx"
+import { Button } from "../../ui/button.jsx";
 import {
   Sheet,
   SheetClose,
@@ -12,7 +12,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../../ui/sheet.jsx"
+} from "../../ui/sheet.jsx";
 
 type SheetStoryComponent = Component<
   PickPartial<ComponentProps<typeof Sheet>, "children">

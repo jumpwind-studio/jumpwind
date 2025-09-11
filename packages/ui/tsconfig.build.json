@@ -16,7 +16,6 @@
     "moduleResolution": "bundler",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
       "@jumpwind/ui/*": ["./src/*"],
       "@jumpwind/ui": ["./src/index.ts"]
     }

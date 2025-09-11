@@ -2,10 +2,7 @@ import BoldIcon from "lucide-solid/icons/bold";
 import ItalicIcon from "lucide-solid/icons/italic";
 import UnderlineIcon from "lucide-solid/icons/underline";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "../../ui/toggle-group.jsx"
+import { ToggleGroup, ToggleGroupItem } from "../../ui/toggle-group.jsx";
 
 /**
  * A set of two-state buttons that can be toggled on or off.

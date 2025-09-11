@@ -3,7 +3,7 @@ import Loader2Icon from "lucide-solid/icons/loader-2";
 import MailIcon from "lucide-solid/icons/mail";
 import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Button } from "../../ui/button.jsx"
+import { Button } from "../../ui/button.jsx";
 
 type ButtonStoryComponent = Component<
   PickPartial<ComponentProps<typeof Button>, "children">

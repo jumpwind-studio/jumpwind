@@ -1,7 +1,7 @@
 import type { PickPartial } from "@jumpwind/utils";
 import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Skeleton } from "../../ui/skeleton.jsx"
+import { Skeleton } from "../../ui/skeleton.jsx";
 
 type SkeletonStoryComponent = Component<
   PickPartial<ComponentProps<typeof Skeleton>, "children">

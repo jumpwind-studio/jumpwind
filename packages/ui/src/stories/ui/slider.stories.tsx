@@ -6,7 +6,7 @@ import {
   SliderLabel,
   SliderTrack,
   SliderValueLabel,
-} from "../../ui/slider.jsx"
+} from "../../ui/slider.jsx";
 
 type SliderStoryComponent = Component<
   PickPartial<ComponentProps<typeof Slider>, "children">

@@ -7,7 +7,7 @@ import {
   splitProps,
 } from "solid-js";
 import { cn } from "../lib/utils.js";
-import { labelVariants } from "./label.jsx"
+import { labelVariants } from "./label.jsx";
 
 const useSlider = SliderPrimitive.useSliderContext;
 

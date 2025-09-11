@@ -2,12 +2,7 @@ import type { PickPartial } from "@jumpwind/utils";
 import type { Component, ComponentProps } from "solid-js";
 import { expect, fn, userEvent } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import {
-  Otp,
-  OtpGroup,
-  OtpSeparator,
-  OtpSlot,
-} from "../../ui/input-otp.jsx"
+import { Otp, OtpGroup, OtpSeparator, OtpSlot } from "../../ui/input-otp.jsx";
 
 type OtpStoryComponent = Component<
   PickPartial<ComponentProps<typeof Otp>, "children">

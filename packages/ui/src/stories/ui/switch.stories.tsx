@@ -1,7 +1,7 @@
 import { expect, userEvent } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Label } from "../../ui/label.jsx"
-import { Switch, SwitchLabel } from "../../ui/switch.jsx"
+import { Label } from "../../ui/label.jsx";
+import { Switch, SwitchLabel } from "../../ui/switch.jsx";
 
 /**
  * A control that allows the user to toggle between checked and not checked.

@@ -7,7 +7,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "../../ui/accordion.jsx"
+} from "../../ui/accordion.jsx";
 
 type AccordionStoryComponent = Component<
   PickPartial<ComponentProps<typeof Accordion>, "children">

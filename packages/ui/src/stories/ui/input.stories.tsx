@@ -2,9 +2,9 @@ import type { PickPartial } from "@jumpwind/utils";
 import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Button } from "../../ui/button.jsx"
-import { Input } from "../../ui/input.jsx"
-import { Label } from "../../ui/label.jsx"
+import { Button } from "../../ui/button.jsx";
+import { Input } from "../../ui/input.jsx";
+import { Label } from "../../ui/label.jsx";
 
 type InputStoryComponent = Component<
   PickPartial<ComponentProps<typeof Input>, "children">

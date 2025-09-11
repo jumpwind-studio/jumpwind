@@ -3,12 +3,12 @@ import ChevronsUpDown from "lucide-solid/icons/chevrons-up-down";
 import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Button } from "../../ui/button.jsx"
+import { Button } from "../../ui/button.jsx";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "../../ui/collapsible.jsx"
+} from "../../ui/collapsible.jsx";
 
 type CollapsibleStoryComponent = Component<
   PickPartial<ComponentProps<typeof Collapsible>, "children">

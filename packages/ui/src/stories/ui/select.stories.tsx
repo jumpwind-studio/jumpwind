@@ -9,7 +9,7 @@ import {
   SelectSection,
   SelectTrigger,
   SelectValue,
-} from "../../ui/select.jsx"
+} from "../../ui/select.jsx";
 
 const options = [
   {

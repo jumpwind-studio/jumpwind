@@ -4,22 +4,18 @@ import CheckIcon from "lucide-solid/icons/check";
 import ChevronDownIcon from "lucide-solid/icons/chevron-down";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
+import { labelVariants } from "./label.jsx";
 
 const useSelect = SelectPrimitive.useSelectContext;
 
-function Select<TOption, TGroup = never>(
-  props: ComponentProps<typeof SelectPrimitive.Root<TOption, TGroup>>,
+function Select<TOption>(
+  props: ComponentProps<typeof SelectPrimitive.Root<TOption>>,
 ) {
-  const [local, rest] = splitProps(props, ["children"]);
-
   return (
-    <SelectPrimitive.Root<TOption, TGroup>
+    <SelectPrimitive.Root<TOption, never, "div">
       data-slot="select"
-      multiple={false}
-      {...rest}
-    >
-      {local.children}
-    </SelectPrimitive.Root>
+      {...props}
+    />
   );
 }
 
@@ -32,7 +28,12 @@ function SelectHiddenSelect(
 function SelectValue<TOption>(
   props: ComponentProps<typeof SelectPrimitive.Value<TOption>>,
 ) {
-  return <SelectPrimitive.Value<TOption> data-slot="select-value" {...props} />;
+  return (
+    <SelectPrimitive.Value<TOption, "span">
+      data-slot="select-value"
+      {...props}
+    />
+  );
 }
 
 function SelectTrigger(
@@ -60,7 +61,7 @@ function SelectTrigger(
   );
 }
 
-function SelectContent(
+function SelectContent<TOption>(
   props: ComponentProps<typeof SelectPrimitive.Content> & {
     position?: "item-aligned" | "popper";
   },
@@ -91,7 +92,7 @@ function SelectContent(
         )}
         {...rest}
       >
-        <SelectPrimitive.Listbox
+        <SelectPrimitive.Listbox<TOption>
           class={cn(
             "p-1",
             local.position === "popper" &&
@@ -103,9 +104,7 @@ function SelectContent(
   );
 }
 
-function SelectSection(
-  props: ComponentProps<typeof SelectPrimitive.Section<"li">>,
-) {
+function SelectSection(props: ComponentProps<typeof SelectPrimitive.Section>) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
@@ -154,21 +153,43 @@ function SelectSeparator(
 }
 
 function SelectLabel(props: ComponentProps<typeof SelectPrimitive.Label>) {
-  return <SelectPrimitive.Label data-slot="select-label" {...props} />;
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <SelectPrimitive.Label
+      data-slot="select-label"
+      class={labelVariants({ variant: "label", class: local.class })}
+      {...rest}
+    />
+  );
 }
 
 function SelectDescription(
   props: ComponentProps<typeof SelectPrimitive.Description>,
 ) {
+  const [local, rest] = splitProps(props, ["class"]);
+
   return (
-    <SelectPrimitive.Description data-slot="select-description" {...props} />
+    <SelectPrimitive.Description
+      data-slot="select-description"
+      class={labelVariants({ variant: "description", class: local.class })}
+      {...rest}
+    />
   );
 }
 
-function SelectMessage(
+function SelectErrorMessage(
   props: ComponentProps<typeof SelectPrimitive.ErrorMessage>,
 ) {
-  return <SelectPrimitive.ErrorMessage data-slot="select-message" {...props} />;
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <SelectPrimitive.ErrorMessage
+      data-slot="select-error-message"
+      class={labelVariants({ variant: "error", class: local.class })}
+      {...rest}
+    />
+  );
 }
 
 export {
@@ -183,7 +204,7 @@ export {
   // Forms
   SelectLabel,
   SelectDescription,
-  SelectMessage,
+  SelectErrorMessage,
   // Hooks
   useSelect,
 };

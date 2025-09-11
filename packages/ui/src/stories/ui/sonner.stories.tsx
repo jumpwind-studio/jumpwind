@@ -3,8 +3,8 @@ import { toast } from "solid-sonner";
 import { action } from "storybook/actions";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Button } from "../../ui/button.jsx"
-import { Toaster } from "../../ui/sonner.jsx"
+import { Button } from "../../ui/button.jsx";
+import { Toaster } from "../../ui/sonner.jsx";
 
 type SonnerStoryComponent = Component<ComponentProps<typeof Toaster>>;
 

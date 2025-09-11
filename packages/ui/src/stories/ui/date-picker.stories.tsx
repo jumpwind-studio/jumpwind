@@ -4,16 +4,12 @@ import { createSignal, Show } from "solid-js";
 import { action } from "storybook/actions";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Button } from "../../ui/button.jsx"
-import { Calendar } from "../../ui/calendar.jsx"
-import { DatePicker } from "../../ui/date-picker.jsx"
-import { Input } from "../../ui/input.jsx"
-import { Label } from "../../ui/label.jsx"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "../../ui/popover.jsx"
+import { Button } from "../../ui/button.jsx";
+import { Calendar } from "../../ui/calendar.jsx";
+import { DatePicker } from "../../ui/date-picker.jsx";
+import { Input } from "../../ui/input.jsx";
+import { Label } from "../../ui/label.jsx";
+import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover.jsx";
 
 /**
  * A window overlaid on either the primary window or another dialog window,

@@ -1,7 +1,7 @@
 import * as ProgressPrimitive from "@kobalte/core/progress";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
-import { Label } from "./label.jsx"
+import { Label } from "./label.jsx";
 
 const useProgress = ProgressPrimitive.useProgressContext;
 

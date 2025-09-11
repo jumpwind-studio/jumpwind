@@ -1,21 +1,17 @@
 import type * as CheckboxPrimitive from "@kobalte/core/checkbox";
 import { useStore } from "@tanstack/solid-form";
 import { Show, splitProps } from "solid-js";
-import { type FieldApi, useField } from "../form/context.jsx"
-import {
-  FieldDescription,
-  FieldLabel,
-  FieldMessage,
-} from "../form/field.jsx"
-import { squash } from "../form/utils.jsx"
 import {
   Checkbox,
   CheckboxControl,
   CheckboxDescription,
+  CheckboxErrorMessage,
   CheckboxInput,
   CheckboxLabel,
-  CheckboxMessage,
-} from "../ui/checkbox.jsx"
+} from "../ui/checkbox.jsx";
+import { type FieldApi, useField } from "./context.jsx";
+import { FieldDescription, FieldLabel, FieldMessage } from "./field.jsx";
+import { squash } from "./utils.jsx";
 
 export interface FormCheckboxProps
   extends CheckboxPrimitive.CheckboxRootOptions {
@@ -52,21 +48,18 @@ export function FormCheckbox(props: FormCheckboxProps) {
       <CheckboxControl data-slot="form-checkbox-control" />
       <div class="space-y-1 leading-none">
         <Show when={local.label}>
-          <CheckboxLabel as={FieldLabel} data-slot="form-checkbox-label">
+          <CheckboxLabel data-slot="form-checkbox-label">
             {local.label}
           </CheckboxLabel>
         </Show>
         <Show when={local.description}>
-          <CheckboxDescription
-            as={FieldDescription}
-            data-slot="form-checkbox-description"
-          >
+          <CheckboxDescription data-slot="form-checkbox-description">
             {local.description}
           </CheckboxDescription>
         </Show>
-        <CheckboxMessage as={FieldMessage} data-slot="form-checkbox-message">
+        <CheckboxErrorMessage data-slot="form-checkbox-error-message">
           {squash(errors())}
-        </CheckboxMessage>
+        </CheckboxErrorMessage>
       </div>
     </Checkbox>
   );

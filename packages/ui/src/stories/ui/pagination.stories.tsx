@@ -9,7 +9,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "../../ui/pagination.jsx"
+} from "../../ui/pagination.jsx";
 
 type PaginationStoryComponent = Component<
   PickPartial<ComponentProps<typeof Pagination>, "children">

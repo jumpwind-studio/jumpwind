@@ -22,7 +22,6 @@
       "project": "all",
       "test": "all"
     },
-    "includes": ["!**/*.stories.tsx", "!**/scripts"],
     "rules": {
       "recommended": true,
       "nursery": {
@@ -72,6 +71,9 @@
     "formatter": {
       "enabled": true,
       "trailingCommas": "all"
+    },
+    "linter": {
+      "enabled": true
     }
   },
   "css": {

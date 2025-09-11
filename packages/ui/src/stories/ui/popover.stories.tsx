@@ -2,12 +2,8 @@ import type { PickPartial } from "@jumpwind/utils";
 import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Button } from "../../ui/button.jsx"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "../../ui/popover.jsx"
+import { Button } from "../../ui/button.jsx";
+import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover.jsx";
 
 type PopoverStoryComponent = Component<
   PickPartial<ComponentProps<typeof Popover>, "children">

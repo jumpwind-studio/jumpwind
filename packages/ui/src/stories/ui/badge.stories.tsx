@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Badge } from "../../ui/badge.jsx"
+import { Badge } from "../../ui/badge.jsx";
 
 /**
  * Displays a badge or a component that looks like a badge.

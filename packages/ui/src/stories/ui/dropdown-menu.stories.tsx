@@ -5,7 +5,7 @@ import SearchIcon from "lucide-solid/icons/search";
 import UserPlusIcon from "lucide-solid/icons/user-plus";
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Button } from "../../ui/button.jsx"
+import { Button } from "../../ui/button.jsx";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -22,7 +22,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "../../ui/dropdown-menu.jsx"
+} from "../../ui/dropdown-menu.jsx";
 
 /**
  * Displays a menu to the user — such as a set of actions or functions —

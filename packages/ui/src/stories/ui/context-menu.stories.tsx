@@ -16,7 +16,7 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
   ContextMenuTrigger,
-} from "../../ui/context-menu.jsx"
+} from "../../ui/context-menu.jsx";
 
 type ContextMenuStoryComponent = Component<
   PickPartial<ComponentProps<typeof ContextMenu>, "children">

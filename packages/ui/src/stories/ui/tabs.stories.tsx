@@ -2,12 +2,7 @@ import type { PickPartial } from "@jumpwind/utils";
 import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent, waitFor } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "../../ui/tabs.jsx"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs.jsx";
 
 type TabsStoryComponent = Component<
   PickPartial<ComponentProps<typeof Tabs>, "children">

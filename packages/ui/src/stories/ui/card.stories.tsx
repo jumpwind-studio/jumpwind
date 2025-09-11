@@ -1,7 +1,7 @@
 import BellRingIcon from "lucide-solid/icons/bell-ring";
 import { For } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Button } from "../../ui/button.jsx"
+import { Button } from "../../ui/button.jsx";
 import {
   Card,
   CardAction,
@@ -10,7 +10,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../ui/card.jsx"
+} from "../../ui/card.jsx";
 
 const notifications = [
   {

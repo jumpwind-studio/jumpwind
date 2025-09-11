@@ -2,7 +2,7 @@ import type { PickPartial } from "@jumpwind/utils";
 import type { Component, ComponentProps } from "solid-js";
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Button } from "../../ui/button.jsx"
+import { Button } from "../../ui/button.jsx";
 import {
   Dialog,
   DialogClose,
@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../../ui/dialog.jsx"
+} from "../../ui/dialog.jsx";
 
 type DialogStoryComponent = Component<
   PickPartial<ComponentProps<typeof Dialog>, "children">

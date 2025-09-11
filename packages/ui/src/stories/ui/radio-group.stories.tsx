@@ -6,7 +6,7 @@ import {
   RadioGroup,
   RadioGroupItem,
   RadioGroupItemLabel,
-} from "../../ui/radio-group.jsx"
+} from "../../ui/radio-group.jsx";
 
 type RadioGroupStoryComponent = Component<
   PickPartial<ComponentProps<typeof RadioGroup>, "children">

@@ -1,6 +1,6 @@
 import { type ComponentProps, Show, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
-import { Label } from "../ui/label.jsx"
+import { Label } from "../ui/label.jsx";
 
 function FieldLabel(props: ComponentProps<"label">) {
   const [local, rest] = splitProps(props, ["class"]);

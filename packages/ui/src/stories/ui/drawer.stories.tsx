@@ -2,7 +2,7 @@ import type { PickPartial } from "@jumpwind/utils";
 import type { Component, ComponentProps } from "solid-js";
 import { expect, fn, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Button } from "../../ui/button.jsx"
+import { Button } from "../../ui/button.jsx";
 import {
   Drawer,
   DrawerClose,
@@ -12,7 +12,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../../ui/drawer.jsx"
+} from "../../ui/drawer.jsx";
 
 type DrawerStoryComponent = Component<
   PickPartial<ComponentProps<typeof Drawer>, "children">

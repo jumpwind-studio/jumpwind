@@ -20,8 +20,8 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "./dialog.jsx"
-import { Skeleton } from "./skeleton.jsx"
+} from "./dialog.jsx";
+import { Skeleton } from "./skeleton.jsx";
 
 const useCommand = CommandPrimitive.useCommandState;
 

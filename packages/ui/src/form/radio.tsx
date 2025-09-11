@@ -1,21 +1,15 @@
 import type * as RadioGroupPrimitive from "@kobalte/core/radio-group";
-import { type AnyFieldApi, useStore } from "@tanstack/solid-form";
+import { useStore } from "@tanstack/solid-form";
 import { For, Show, splitProps } from "solid-js";
-import {
-  FieldDescription,
-  FieldLabel,
-  FieldMessage,
-} from "../form/field.jsx"
 import {
   RadioGroup,
   RadioGroupDescription,
   RadioGroupErrorMessage,
   RadioGroupItem,
-  RadioGroupItemControl,
-  RadioGroupItemInput,
-  RadioGroupItemLabel,
   RadioGroupLabel,
-} from "../ui/radio-group.jsx"
+} from "../ui/radio-group.jsx";
+import { type FieldApi, useField } from "./context.jsx";
+import { squash } from "./utils.js";
 
 export type Option = {
   label: string;
@@ -23,20 +17,15 @@ export type Option = {
   disabled?: boolean;
 };
 
-export type FormRadioGroupProps<
-  TOption extends Option,
-  TField extends AnyFieldApi = AnyFieldApi,
-> = RadioGroupPrimitive.RadioGroupRootOptions & {
-  field: TField;
-  items: TOption<InferFieldType<TField>>[];
+export type FormRadioGroupProps = RadioGroupPrimitive.RadioGroupRootOptions & {
+  field: FieldApi<string>;
+  items: Option[];
   class?: string;
   description?: string;
   label?: string;
 };
 
-export function FormRadioGroup<TField extends AnyFieldApi = AnyFieldApi>(
-  props: FormRadioGroupProps<TField>,
-) {
+export function FormRadioGroup(props: FormRadioGroupProps) {
   const [local, rest] = splitProps(props, [
     "field",
     "class",
@@ -45,51 +34,39 @@ export function FormRadioGroup<TField extends AnyFieldApi = AnyFieldApi>(
     "items",
   ]);
 
-  const value = useStore(local.field.store, (state) => state.value);
-  const errors = useStore(local.field.store, (state) => state.meta.errors);
-  const hasError = () => errors()?.length > 0;
-  const firstError = () => errors().at(0);
-  const validationState = () => (hasError() ? "invalid" : "valid");
+  const field = useField<string>(() => local.field);
+  const value = useStore(field().store, (state) => state.value);
+  const errors = useStore(field().store, (state) => state.meta.errors);
 
   return (
     <RadioGroup
       data-slot="form-radio-group"
-      name={local.field.name}
-      value={local.field.state.value}
-      onChange={local.field.handleChange}
-      onBlur={local.field.handleBlur}
-      validationState={validationState()}
+      name={field().name}
+      value={value()}
+      onChange={field().handleChange}
+      onBlur={field().handleBlur}
+      validationState={errors().length > 0 ? "invalid" : "valid"}
       class={local.class}
       {...rest}
     >
       <Show when={local.label}>
-        <RadioGroupLabel as={FieldLabel} data-slot="form-radio-group-label">
+        <RadioGroupLabel data-slot="form-radio-group-label">
           {local.label}
         </RadioGroupLabel>
       </Show>
       <For each={local.items}>
         {(item) => (
-          <RadioGroupItem value={item.value}>
-            <RadioGroupItemInput aria-label={local.field.name} />
-            <RadioGroupItemControl />
-            <RadioGroupItemLabel>{item.label}</RadioGroupItemLabel>
-          </RadioGroupItem>
+          <RadioGroupItem value={item.value}>{item.label}</RadioGroupItem>
         )}
       </For>
       <div class="space-y-1 leading-none">
         <Show when={local.description}>
-          <RadioGroupDescription
-            as={FieldDescription}
-            data-slot="form-radio-group-description"
-          >
+          <RadioGroupDescription data-slot="form-radio-group-description">
             {local.description}
           </RadioGroupDescription>
         </Show>
-        <RadioGroupErrorMessage
-          as={FieldMessage}
-          data-slot="form-radio-group-error-message"
-        >
-          {firstError()}
+        <RadioGroupErrorMessage data-slot="form-radio-group-error-message">
+          {squash(errors())}
         </RadioGroupErrorMessage>
       </div>
     </RadioGroup>

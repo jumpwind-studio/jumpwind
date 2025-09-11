@@ -15,7 +15,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../../ui/dropdown-menu.jsx"
+} from "../../ui/dropdown-menu.jsx";
 import {
   Sidebar,
   SidebarContent,
@@ -29,7 +29,7 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
-} from "../../ui/sidebar.jsx"
+} from "../../ui/sidebar.jsx";
 
 type SidebarStoryComponent = Component<
   PickPartial<ComponentProps<typeof Sidebar>, "children">

@@ -1,6 +1,6 @@
 import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { Commandbox } from "../../ui/commandbox.jsx"
+import { Commandbox } from "../../ui/commandbox.jsx";
 
 type CommandboxStoryComponent = Component<ComponentProps<typeof Commandbox>>;
 

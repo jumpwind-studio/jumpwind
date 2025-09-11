@@ -17,7 +17,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerVariants,
-} from "../../ui/navigation-menu.jsx"
+} from "../../ui/navigation-menu.jsx";
 
 function ListItem(props: ComponentProps<"li"> & { href: string }) {
   return (

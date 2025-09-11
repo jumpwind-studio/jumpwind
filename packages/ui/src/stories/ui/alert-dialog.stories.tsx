@@ -13,7 +13,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../../ui/alert-dialog.jsx";
-import { Button } from "../../ui/button.jsx"
+import { Button } from "../../ui/button.jsx";
 
 type AlertDialogStoryComponent = Component<
   PickPartial<ComponentProps<typeof AlertDialog>, "children">
