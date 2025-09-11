@@ -1,12 +1,7 @@
-import { Dynamic, type DynamicProps } from "@corvu/utils/dynamic";
+import { Dynamic } from "@corvu/utils/dynamic";
 import ChevronRightIcon from "lucide-solid/icons/chevron-right";
 import MoreHorizontalIcon from "lucide-solid/icons/more-horizontal";
-import {
-  type ComponentProps,
-  Show,
-  splitProps,
-  type ValidComponent,
-} from "solid-js";
+import { type ComponentProps, Show, splitProps } from "solid-js";
 import { cn } from "@/registry/jumpwind/lib/utils";
 
 function Breadcrumb(props: ComponentProps<"nav">) {
@@ -40,14 +35,11 @@ function BreadcrumbItem(props: ComponentProps<"li">) {
   );
 }
 
-function BreadcrumbLink<T extends ValidComponent = "a">(
-  props: DynamicProps<T, ComponentProps<T>>,
-) {
+function BreadcrumbLink(props: ComponentProps<"a">) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <Dynamic
-      as="a"
       data-slot="breadcrumb-link"
       class={cn("transition-colors hover:text-foreground", local.class)}
       {...rest}
@@ -59,13 +51,12 @@ function BreadcrumbPage(props: ComponentProps<"span">) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
-    // biome-ignore lint/a11y/useFocusableInteractive: Required
     <span
       data-slot="breadcrumb-page"
-      aria-current="page"
-      aria-disabled="true"
-      class={cn("font-normal text-foreground", local.class)}
       role="link"
+      aria-disabled="true"
+      aria-current="page"
+      class={cn("font-normal text-foreground", local.class)}
       {...rest}
     />
   );
@@ -77,9 +68,9 @@ function BreadcrumbSeparator(props: ComponentProps<"li">) {
   return (
     <li
       data-slot="breadcrumb-separator"
+      role="presentation"
       aria-hidden="true"
       class={cn("[&>svg]:size-3.5", local.class)}
-      role="presentation"
       {...rest}
     >
       <Show when={local.children} fallback={<ChevronRightIcon />}>
@@ -95,9 +86,9 @@ function BreadcrumbEllipsis(props: ComponentProps<"span">) {
   return (
     <span
       data-slot="breadcrumb-ellipsis"
+      role="presentation"
       aria-hidden="true"
       class={cn("flex size-9 items-center justify-center", local.class)}
-      role="presentation"
       {...rest}
     >
       <MoreHorizontalIcon class="size-4" />
@@ -108,10 +99,10 @@ function BreadcrumbEllipsis(props: ComponentProps<"span">) {
 
 export {
   Breadcrumb,
-  BreadcrumbEllipsis,
+  BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
+  BreadcrumbEllipsis,
 };
