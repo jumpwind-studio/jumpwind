@@ -2,7 +2,7 @@ import type { PickPartial } from "@jumpwind/utils";
 import { createForm } from "@tanstack/solid-form";
 import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { FormCheckbox } from "@/registry/jumpwind/form/checkbox";
+import { FormCheckbox } from "../../form/checkbox.jsx";
 
 const form = createForm(() => ({
   defaultValues: {

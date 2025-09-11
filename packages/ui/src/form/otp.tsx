@@ -2,12 +2,6 @@ import type { AnyFieldApi } from "@tanstack/solid-form";
 import type * as OtpPrimitive from "corvu/otp-field";
 import type { ValidComponent } from "solid-js";
 import { Show, splitProps } from "solid-js";
-import { Form } from "@/registry/jumpwind/form";
-import {
-  FieldDescription,
-  FieldLabel,
-  FieldMessage,
-} from "@/registry/jumpwind/form/field";
 import { cn } from "../lib/utils.js";
 import {
   Otp,
@@ -15,7 +9,9 @@ import {
   OtpHiddenInput,
   OtpSeparator,
   OtpSlot,
-} from "@/registry/jumpwind/ui/input-otp";
+} from "../ui/input-otp.jsx";
+import { FieldDescription, FieldLabel, FieldMessage } from "./field.jsx";
+import { squash } from "./utils.js";
 
 export type OtpFieldProps<
   TField extends AnyFieldApi,
@@ -39,7 +35,7 @@ export function OtpField<
     ["disabled", "required", "onComplete"],
   );
 
-  const firstError = () => Form.squash(local.field);
+  const firstError = () => squash(local.field);
   const validationState = () => (firstError() != null ? "invalid" : "valid");
 
   return (

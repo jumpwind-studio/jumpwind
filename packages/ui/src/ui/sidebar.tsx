@@ -19,24 +19,20 @@ import {
   type ValidComponent,
 } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
-import { useIsMobile } from "@/registry/jumpwind/hook/use-is-mobile";
+import { useIsMobile } from "../hook/use-is-mobile.js";
 import { cn } from "../lib/utils.js";
-import { Button } from "./button.jsx"
-import { Input } from "./input.jsx"
-import { Separator } from "./separator.jsx"
+import { Button } from "./button.jsx";
+import { Input } from "./input.jsx";
+import { Separator } from "./separator.jsx";
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "./sheet.jsx"
-import { Skeleton } from "./skeleton.jsx"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "./tooltip.jsx"
+} from "./sheet.jsx";
+import { Skeleton } from "./skeleton.jsx";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip.jsx";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 1 week

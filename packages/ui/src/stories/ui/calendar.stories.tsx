@@ -4,7 +4,7 @@ import type { Component, ComponentProps } from "solid-js";
 import { action } from "storybook/actions";
 import { expect, userEvent } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { cn } from "@/registry/jumpwind/lib/utils";
+import { cn } from "../../lib/utils.js";
 import {
   Calendar,
   CalendarBody,
@@ -19,7 +19,7 @@ import {
   CalendarPrevMonth,
   CalendarRow,
   CalendarTable,
-} from "../../ui/calendar.jsx"
+} from "../../ui/calendar.jsx";
 
 type CalendarStoryComponent = Component<
   PickPartial<

@@ -2,13 +2,13 @@ import createControllableSignal from "@corvu/utils/create/controllableSignal";
 import type * as SelectPrimitive from "@kobalte/core/select";
 import { useStore } from "@tanstack/solid-form";
 import { Show, splitProps } from "solid-js";
-import { type FieldApi, useField } from "@/registry/jumpwind/form/context";
+import { type FieldApi, useField } from "../form/context.jsx"
 import {
   FieldDescription,
   FieldLabel,
   FieldMessage,
-} from "@/registry/jumpwind/form/field";
-import { squash } from "@/registry/jumpwind/form/utils";
+} from "../form/field.jsx"
+import { squash } from "../form/utils.jsx"
 import { cn } from "../lib/utils.js";
 import {
   Select,
@@ -20,7 +20,7 @@ import {
   SelectMessage,
   SelectTrigger,
   SelectValue,
-} from "@/registry/jumpwind/ui/select";
+} from "../ui/select.jsx"
 
 export type Option<TValue extends string = string> = {
   value: TValue;

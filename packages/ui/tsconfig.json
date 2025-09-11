@@ -7,6 +7,7 @@
     "jsxImportSource": "solid-js",
 
     "moduleResolution": "bundler",
+    "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],

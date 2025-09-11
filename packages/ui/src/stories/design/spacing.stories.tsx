@@ -1,6 +1,5 @@
 import { For, splitProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { generateTokens } from "@/registry/jumpwind/stories/design/utils";
 import {
   Table,
   TableBody,
@@ -8,7 +7,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../ui/table.jsx"
+} from "../../ui/table.jsx";
+import { generateTokens } from "./utils.js";
 
 type Spacing = {
   name: string;

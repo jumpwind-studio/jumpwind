@@ -1,13 +1,13 @@
 import type * as CheckboxPrimitive from "@kobalte/core/checkbox";
 import { useStore } from "@tanstack/solid-form";
 import { Show, splitProps } from "solid-js";
-import { type FieldApi, useField } from "@/registry/jumpwind/form/context";
+import { type FieldApi, useField } from "../form/context.jsx"
 import {
   FieldDescription,
   FieldLabel,
   FieldMessage,
-} from "@/registry/jumpwind/form/field";
-import { squash } from "@/registry/jumpwind/form/utils";
+} from "../form/field.jsx"
+import { squash } from "../form/utils.jsx"
 import {
   Checkbox,
   CheckboxControl,
@@ -15,7 +15,7 @@ import {
   CheckboxInput,
   CheckboxLabel,
   CheckboxMessage,
-} from "@/registry/jumpwind/ui/checkbox";
+} from "../ui/checkbox.jsx"
 
 export interface FormCheckboxProps
   extends CheckboxPrimitive.CheckboxRootOptions {

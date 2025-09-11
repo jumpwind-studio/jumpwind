@@ -1,5 +1,5 @@
 import { useStore } from "@tanstack/solid-form";
-import type { FieldApi } from "@/registry/jumpwind/form/context";
+import type { FieldApi } from "./context.jsx";
 
 export function isErrored(...errors: unknown[]) {
   return errors.length > 0;

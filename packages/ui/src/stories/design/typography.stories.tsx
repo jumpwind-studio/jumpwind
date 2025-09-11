@@ -6,8 +6,7 @@ import {
   splitProps,
 } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
-import { cn } from "@/registry/jumpwind/lib/utils";
-import { generateTokens } from "@/registry/jumpwind/stories/design/utils";
+import { cn } from "../../lib/utils.js";
 import {
   Table,
   TableBody,
@@ -15,7 +14,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../ui/table.jsx"
+} from "../../ui/table.jsx";
+import { generateTokens } from "./utils.js";
 
 type Typography = {
   name: string;

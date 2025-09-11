@@ -16,18 +16,14 @@ import {
   useContext,
 } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
-import { useIsMobile } from "@/registry/jumpwind/hook/use-is-mobile";
+import { useIsMobile } from "../hook/use-is-mobile.js";
 import { cn } from "../lib/utils.js";
-import { Button } from "./button.jsx"
-import { Drawer, DrawerContent } from "./drawer.jsx"
-import { Separator } from "./separator.jsx"
-import { Skeleton } from "./skeleton.jsx"
-import { TextField, TextFieldInput } from "./text-field.jsx"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "./tooltip.jsx"
+import { Button } from "./button.jsx";
+import { Drawer, DrawerContent } from "./drawer.jsx";
+import { Separator } from "./separator.jsx";
+import { Skeleton } from "./skeleton.jsx";
+import { TextField, TextFieldInput } from "./text-field.jsx";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip.jsx";
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;

@@ -5,7 +5,7 @@ import {
   FieldDescription,
   FieldLabel,
   FieldMessage,
-} from "@/registry/jumpwind/form/field";
+} from "../form/field.jsx"
 import {
   RadioGroup,
   RadioGroupDescription,
@@ -15,7 +15,7 @@ import {
   RadioGroupItemInput,
   RadioGroupItemLabel,
   RadioGroupLabel,
-} from "@/registry/jumpwind/ui/radio-group";
+} from "../ui/radio-group.jsx"
 
 export type Option = {
   label: string;

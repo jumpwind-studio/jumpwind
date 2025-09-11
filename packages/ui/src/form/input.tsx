@@ -1,11 +1,7 @@
 import type * as TextFieldPrimitive from "@kobalte/core/text-field";
 import { type AnyFieldApi, useStore } from "@tanstack/solid-form";
 import { type JSX, Show, splitProps } from "solid-js";
-import {
-  FieldDescription,
-  FieldLabel,
-  FieldMessage,
-} from "@/registry/jumpwind/form/field";
+import { FieldDescription, FieldLabel, FieldMessage } from "../form/field.jsx";
 import { cn } from "../lib/utils.js";
 import {
   TextField,
@@ -14,7 +10,7 @@ import {
   TextFieldInput,
   TextFieldLabel,
   TextFieldTextarea,
-} from "@/registry/jumpwind/ui/text-field";
+} from "../ui/text-field.jsx";
 
 export interface FormInputProps<
   TField extends AnyFieldApi = AnyFieldApi,

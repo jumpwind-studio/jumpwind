@@ -5,8 +5,8 @@ import * as BunRuntime from "@effect/platform-bun/BunRuntime";
 import * as Console from "effect/Console";
 import * as Effect from "effect/Effect";
 import * as Schema from "effect/Schema";
-import { Registry, type RegistryItem } from "@/src/registry/schema";
 import registry from "../registry.json" with { type: "json" };
+import { Registry, type RegistryItem } from "../src/registry/schema.js";
 
 const buildRegistryItem = Effect.fn("scripts/build-registry-item")(function* (
   item: RegistryItem,
@@ -66,7 +66,7 @@ const buildRegistryFile = Effect.fn("scripts/build-registry")(function* (
   // yield* Effect.logInfo(oneFile);
   let hasAllDeps = false;
   let onImport = true;
-  const deps = [];
+  const deps: string[] = [];
   const regex = /from\s+"([^"]*)"/g;
   for (let line of oneFile.split("\n")) {
     yield* Effect.logInfo(line);

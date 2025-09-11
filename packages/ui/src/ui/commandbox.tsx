@@ -8,6 +8,8 @@ import {
   Show,
   splitProps,
 } from "solid-js";
+import { cn } from "../lib/utils.js";
+import { Button } from "../ui/button.jsx";
 import {
   Command,
   CommandEmpty,
@@ -15,14 +17,8 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "./command.jsx"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "./popover.jsx"
-import { cn } from "../lib/utils.js";
-import { Button } from "../ui/button.jsx";
+} from "./command.jsx";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover.jsx";
 
 type Option = {
   value: string;
