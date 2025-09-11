@@ -1,19 +1,37 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@jumpwind/tsconfig/build.json",
+  "extends": ["@jumpwind/tsconfig/build.json", "./tsconfig.json"],
   "compilerOptions": {
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "noEmit": false,
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@jumpwind/ui/*": ["./src/*"],
+      "@jumpwind/ui": ["./src/index.ts"]
+    }
   },
+  "include": ["src/**/*"],
   "exclude": [
     "node_modules",
     "dist",
     "scripts",
     "vite.config.ts",
-    "vitest.config.ts"
+    "vitest.config.ts",
+    "**/*.stories.tsx",
+    "**/*.stories.ts",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/__tests__/**/*"
   ]
 }

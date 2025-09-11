@@ -15,7 +15,6 @@ export * from "./date-picker.jsx";
 export * from "./dialog.jsx";
 export * from "./drawer.jsx";
 export * from "./dropdown-menu.jsx";
-export * from "./dynamic.jsx";
 export * from "./flex.jsx";
 export * from "./grid.jsx";
 export * from "./hover-card.jsx";
