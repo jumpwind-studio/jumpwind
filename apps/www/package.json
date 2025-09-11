@@ -12,10 +12,10 @@
     "start": "vite start"
   },
   "dependencies": {
+    "@jumpwind/ui": "workspace:*",
     "@corvu/utils": "catalog:frontend",
     "@effect/platform": "catalog:effect",
     "@effect/platform-bun": "catalog:effect",
-    "@jumpwind/ui": "workspace:*",
     "@kobalte/core": "catalog:frontend",
     "@tanstack/solid-router": "^1.131.35",
     "@tanstack/solid-start": "^1.131.35",

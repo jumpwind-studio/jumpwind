@@ -1,0 +1,27 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "dev": {
+      "with": ["dev:styles", "dev:types"]
+    },
+    "dev:styles": {
+      "cache": false,
+      "persistent": true
+    },
+    "dev:types": {
+      "cache": false,
+      "persistent": true
+    },
+    // Build
+    "build": {
+      "dependsOn": ["build:styles", "build:types"]
+    },
+    "build:styles": {
+      "outputs": ["dist/**"]
+    },
+    "build:types": {
+      "outputs": ["dist/**"]
+    }
+  }
+}

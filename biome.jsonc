@@ -12,9 +12,9 @@
       "!**/dist",
       "!**/node_modules",
       "!**/.dev",
-      "!**/routeTree.gen.ts",
-      "!./tsconfig.json",
-      "!**/package.json"
+      "!**/routeTree.gen.ts"
+      // "!./tsconfig.json"
+      // "!**/package.json"
     ]
   },
   "linter": {

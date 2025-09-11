@@ -4,29 +4,39 @@
   "type": "module",
   "license": "MIT",
   "private": true,
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": "./src/index.ts",
     "./*": "./registry/jumpwind/ui/*.tsx",
     "./src/*": "./src/*.ts",
     "./utils": "./registry/jumpwind/lib/utils.ts",
-    "./styles.css": "./registry/jumpwind/styles/styles.css",
-    "./registry.json": "./registry.json"
+    "./styles.css": "./dist/index.css",
+    "./registry.json": "./dist/registry.json"
   },
-  "files": ["registry/jumpwind/styles/styles.css"],
   "scripts": {
     "build": "vite build",
+    "build:styles": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
+    "build:types": "tsc",
+    "check:unused-dependencies": "depcheck",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "vite build --watch",
+    "dev:styles": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
+    "dev:types": "tsc --watch",
     "format": "biome check",
     "format:fix": "biome check . --fix",
-    "test": "bun --bun vitest",
-    "typecheck": "tsc --noEmit",
     "registry:build": "shadcn registry:build && bun run format:fix",
     "registry:script": "bun run ./scripts/build-registry.ts",
+    "storybook": "bun run --bun storybook:dev",
     "storybook:build": "storybook build",
     "storybook:dev": "storybook dev -p 6006",
-    "storybook": "bun run --bun storybook:dev",
-    "storybook:preview": "serve storybook-static"
+    "storybook:preview": "serve storybook-static",
+    "test": "bun --bun vitest",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@chromatic-com/storybook": "^4.1.1",
@@ -65,10 +75,14 @@
     "tailwind-variants": "catalog:frontend",
     "tailwindcss": "catalog:frontend",
     "tw-animate-css": "catalog:frontend",
-    "typescript": "catalog:",
     "vite": "catalog:frontend",
     "vite-plugin-solid": "catalog:frontend",
     "vite-tsconfig-paths": "catalog:frontend",
     "vitest": "catalog:frontend"
+  },
+  "devDependencies": {
+    "@types/bun": "catalog:",
+    "depcheck": "catalog:",
+    "typescript": "catalog:"
   }
 }

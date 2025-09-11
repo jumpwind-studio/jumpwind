@@ -10,12 +10,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   build: {
     lib: {
-      entry: path.resolve(__dirname, "./src/index.ts"),
-      name: "@jumpwind/ui",
-      fileName: "jumpwind",
+      entry: path.resolve(__dirname, "src/index.ts"),
+      name: "@repo/ui",
+      fileName: "index",
+      formats: ["es"],
     },
     rollupOptions: {
-      external: [/effect/],
+      external: ["solid-js", "solid-js/web", /effect/],
       output: {
         globals: {
           "@effect/platform-bun/BunContext": "BunContext",
