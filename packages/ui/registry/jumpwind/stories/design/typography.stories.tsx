@@ -6,6 +6,7 @@ import {
   splitProps,
 } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
+import { cn } from "@/registry/jumpwind/lib/utils";
 import { generateTokens } from "@/registry/jumpwind/stories/design/utils";
 import {
   Table,
@@ -41,8 +42,6 @@ const TokenTable = (props: TypographyRowProps) => {
 
   const styles = () => window.getComputedStyle(document.body);
 
-  const style = () => styles().getPropertyValue(local.style);
-
   const properties = () =>
     generateTokens(tokenProps.prefix, tokenProps.tokens, {
       name: tokenProps.name,
@@ -53,44 +52,42 @@ const TokenTable = (props: TypographyRowProps) => {
     }));
 
   createEffect(() => {
-    // console.log(styles());
-    console.log("STYLE", `${local.style} => ${style()}`);
     console.log("PROPS", properties());
   });
 
   return (
-    <Table class={local.class}>
+    <Table class={cn("min-w-96", local.class)}>
       <TableHeader>
         <TableRow>
-          <TableHead>Property</TableHead>
+          <TableHead>Selector</TableHead>
           <TableHead>Name</TableHead>
+          <TableHead>Token</TableHead>
           <TableHead>Value</TableHead>
           <TableHead>Preview</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         <For each={properties()}>
-          {(property) => {
-            return (
-              <TableRow>
-                <TableCell>
-                  <For each={local.style.split(",")}>{(v) => <p>{v}</p>}</For>
-                </TableCell>
-                <TableCell>{property.name}</TableCell>
-                <TableCell>{property.value}</TableCell>
-                <TableCell>
-                  <div
-                    class="line-clamp-1"
-                    style={{
-                      [local.style]: property.style,
-                    }}
-                  >
-                    {local.children}
-                  </div>
-                </TableCell>
-              </TableRow>
-            );
-          }}
+          {(property) => (
+            <TableRow>
+              <TableCell>{local.style}</TableCell>
+              <TableCell>{property.name}</TableCell>
+              <TableCell>{property.value}</TableCell>
+              <TableCell>
+                <For each={property.style.split(",")}>{(v) => <p>{v}</p>}</For>
+              </TableCell>
+              <TableCell>
+                <div
+                  class="line-clamp-1"
+                  style={{
+                    [local.style]: property.style,
+                  }}
+                >
+                  {local.children}
+                </div>
+              </TableCell>
+            </TableRow>
+          )}
         </For>
       </TableBody>
     </Table>
@@ -100,13 +97,16 @@ const TokenTable = (props: TypographyRowProps) => {
 /**
  * Typography tokens for the design system.
  */
-const meta = {
+const meta: Meta<TypographyRowProps> = {
   title: "@jumpwind/design/Typography",
   argTypes: {},
   args: {
     children: "Typeface",
   },
   render: (args) => <TokenTable {...args} />,
+  parameters: {
+    layout: "padded",
+  },
 } satisfies Meta<TypographyRowProps>;
 
 export default meta;
@@ -121,7 +121,6 @@ export const FontFamily: Story = {
     style: "font-family",
     prefix: "font",
     tokens: ["sans", "serif", "mono"],
-    // value: (value, prefix) => `--${prefix}-${value}`,
   },
 };
 
@@ -132,8 +131,7 @@ export const FontSize: Story = {
   args: {
     style: "font-size",
     prefix: "text",
-    tokens: ["xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl"],
-    // value: (value, prefix) => `--${prefix}-${value}`,
+    tokens: ["xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl", "5xl"],
   },
 };
 
@@ -143,7 +141,7 @@ export const FontSize: Story = {
 export const FontWeight: Story = {
   args: {
     style: "font-weight",
-    prefix: "font",
+    prefix: "font-weight",
     tokens: [
       "thin",
       "extralight",
@@ -155,7 +153,6 @@ export const FontWeight: Story = {
       "extrabold",
       "black",
     ],
-    value: (value, prefix) => `--${prefix}-${value}`,
   },
 };
 
@@ -167,6 +164,5 @@ export const LetterSpacing: Story = {
     style: "letter-spacing",
     prefix: "tracking",
     tokens: ["tighter", "tight", "normal", "wide", "wider", "widest"],
-    value: (value, prefix) => `--${prefix}-${value}`,
   },
 };

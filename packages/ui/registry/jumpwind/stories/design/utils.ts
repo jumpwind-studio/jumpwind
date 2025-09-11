@@ -100,33 +100,9 @@ export function generateTokens<
   options?: TokenGenerationOptions<TValue, TPrefix>,
 ): Token<TValue, TPrefix>[] {
   return tokens.map((token) => ({
-    name: resolveName(prefix, token, options?.name),
+    name: token.toString(),
     value: resolveValue(prefix, token, options?.value),
   })) as Token<TValue, TPrefix>[];
-}
-
-/**
- * Resolves the final name for a token based on prefix and custom transform.
- */
-function resolveName<TValue extends string | number, TPrefix extends string>(
-  _prefix: TPrefix,
-  token: TValue,
-  _nameResolver?: string | NameTransformer<TValue, TPrefix>,
-): TPrefix extends "" ? string : `${TPrefix}-${string}` {
-  return token.toString();
-  // const resolvedName = nameResolver
-  //   ? typeof nameResolver === "function"
-  //     ? nameResolver(token, prefix)
-  //     : nameResolver
-  //   : String(token);
-  //
-  // if (prefix === "") {
-  //   return resolvedName as TPrefix extends "" ? string : `${TPrefix}-${string}`;
-  // }
-  //
-  // return `${prefix}-${resolvedName}` as TPrefix extends ""
-  //   ? string
-  //   : `${TPrefix}-${string}`;
 }
 
 /**
