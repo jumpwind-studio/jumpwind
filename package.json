@@ -27,6 +27,7 @@
       "packages/*"
     ],
     "catalog": {
+      "@types/bun": "^1.2.21",
       "typescript": "^5.9.2"
     },
     "catalogs": {

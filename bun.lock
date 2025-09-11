@@ -98,11 +98,14 @@
         "tailwind-variants": "catalog:frontend",
         "tailwindcss": "catalog:frontend",
         "tw-animate-css": "catalog:frontend",
-        "typescript": "catalog:",
         "vite": "catalog:frontend",
         "vite-plugin-solid": "catalog:frontend",
         "vite-tsconfig-paths": "catalog:frontend",
         "vitest": "catalog:frontend",
+      },
+      "devDependencies": {
+        "@types/bun": "catalog:",
+        "typescript": "catalog:",
       },
     },
     "packages/utils": {
@@ -119,6 +122,7 @@
     },
   },
   "catalog": {
+    "@types/bun": "^1.2.21",
     "typescript": "^5.9.2",
   },
   "catalogs": {
