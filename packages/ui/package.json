@@ -8,25 +8,23 @@
     "**/*.css"
   ],
   "files": [
-    "dist"
+    "dist",
+    "registry/jumpwind/styles/styles.css"
   ],
   "exports": {
     ".": "./src/index.ts",
-    "./*": "./registry/jumpwind/ui/*.tsx",
     "./src/*": "./src/*.ts",
+    "./*": "./registry/jumpwind/ui/*.tsx",
     "./utils": "./registry/jumpwind/lib/utils.ts",
-    "./styles.css": "./dist/index.css",
-    "./registry.json": "./dist/registry.json"
+    "./styles.css": "./registry/jumpwind/styles/styles.css",
+    "./registry.json": "./registry.json",
+    "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "vite build",
-    "build:styles": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
-    "build:types": "tsc",
+    "build": "tsc -p tsconfig.build.json && vite build",
     "check:unused-dependencies": "depcheck",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "dev": "vite build --watch",
-    "dev:styles": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
-    "dev:types": "tsc --watch",
     "format": "biome check",
     "format:fix": "biome check . --fix",
     "registry:build": "shadcn registry:build && bun run format:fix",

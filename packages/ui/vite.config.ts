@@ -16,7 +16,7 @@ export default defineConfig({
       formats: ["es"],
     },
     rollupOptions: {
-      external: ["solid-js", "solid-js/web", /effect/],
+      external: [/effect/, "solid-js", "solid-js/web", "tailwindcss"],
       output: {
         globals: {
           "@effect/platform-bun/BunContext": "BunContext",
