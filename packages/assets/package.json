@@ -4,10 +4,12 @@
   "type": "module",
   "license": "MIT",
   "private": true,
+  "files": [
+    "src/fonts/**/*"
+  ],
   "exports": {
-    ".": "./src/index.ts",
-    "./fonts": "./src/fonts",
-    "./src/*": "./src/*.ts",
+    "./fonts/*": "./src/fonts/*",
+    "./styles/*": "./src/styles/*.css",
     "./internal/*": null,
     "./package.json": "./package.json"
   },

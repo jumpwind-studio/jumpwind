@@ -1,0 +1,31 @@
+@font-face {
+  font-family: Inter;
+  font-weight: 100 900;
+  font-display: swap;
+  font-optical-sizing: auto;
+  src: url("./variable/Inter.ttf") format("truetype-variations");
+}
+
+@font-face {
+  font-family: Geist;
+  font-weight: 100 900;
+  font-display: swap;
+  font-optical-sizing: auto;
+  src: url("./variable/Geist.ttf") format("truetype-variations");
+}
+
+@font-face {
+  font-family: WorkSans;
+  font-weight: 100 900;
+  font-display: swap;
+  font-optical-sizing: auto;
+  src: url("./variable/WorkSans.ttf") format("truetype-variations");
+}
+
+@font-face {
+  font-family: GeistMono;
+  font-weight: 100 900;
+  font-display: swap;
+  font-optical-sizing: auto;
+  src: url("./GeistMono[wght].woff2") format("woff2");
+}
