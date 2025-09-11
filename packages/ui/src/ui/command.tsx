@@ -20,8 +20,8 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/registry/jumpwind/ui/dialog";
-import { Skeleton } from "@/registry/jumpwind/ui/skeleton";
+} from "./dialog.jsx"
+import { Skeleton } from "./skeleton.jsx"
 
 const useCommand = CommandPrimitive.useCommandState;
 

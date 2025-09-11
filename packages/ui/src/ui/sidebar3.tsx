@@ -18,16 +18,16 @@ import {
 import { tv, type VariantProps } from "tailwind-variants";
 import { useIsMobile } from "@/registry/jumpwind/hook/use-is-mobile";
 import { cn } from "../lib/utils.js";
-import { Button } from "@/registry/jumpwind/ui/button";
-import { Drawer, DrawerContent } from "@/registry/jumpwind/ui/drawer";
-import { Separator } from "@/registry/jumpwind/ui/separator";
-import { Skeleton } from "@/registry/jumpwind/ui/skeleton";
-import { TextField, TextFieldInput } from "@/registry/jumpwind/ui/text-field";
+import { Button } from "./button.jsx"
+import { Drawer, DrawerContent } from "./drawer.jsx"
+import { Separator } from "./separator.jsx"
+import { Skeleton } from "./skeleton.jsx"
+import { TextField, TextFieldInput } from "./text-field.jsx"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/registry/jumpwind/ui/tooltip";
+} from "./tooltip.jsx"
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;

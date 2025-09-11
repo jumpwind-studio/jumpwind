@@ -15,12 +15,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/registry/jumpwind/ui/command";
+} from "./command.jsx"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/registry/jumpwind/ui/popover";
+} from "./popover.jsx"
 import { cn } from "../lib/utils.js";
 import { Button } from "../ui/button.jsx";
 

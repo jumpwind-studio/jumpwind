@@ -2,7 +2,7 @@ import createControllableSignal from "@corvu/utils/create/controllableSignal";
 import CalendarIcon from "lucide-solid/icons/calendar";
 import { type ComponentProps, Show, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
-import { Button } from "@/registry/jumpwind/ui/button";
+import { Button } from "./button.jsx"
 import {
   Calendar,
   CalendarBody,
@@ -17,12 +17,12 @@ import {
   CalendarPrevMonth,
   CalendarRow,
   CalendarTable,
-} from "@/registry/jumpwind/ui/calendar";
+} from "./calendar.jsx"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/registry/jumpwind/ui/popover";
+} from "./popover.jsx"
 
 type DatePickerProps = Partial<
   Pick<

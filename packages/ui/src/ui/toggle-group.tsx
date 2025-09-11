@@ -9,7 +9,7 @@ import { cn } from "../lib/utils.js";
 import {
   type ToggleVariantProps,
   toggleVariants,
-} from "@/registry/jumpwind/ui/toggle";
+} from "./toggle.jsx"
 
 const useToggleGroup = ToggleGroupPrimitive.useToggleGroupContext;
 

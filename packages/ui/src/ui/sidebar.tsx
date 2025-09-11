@@ -21,22 +21,22 @@ import {
 import { tv, type VariantProps } from "tailwind-variants";
 import { useIsMobile } from "@/registry/jumpwind/hook/use-is-mobile";
 import { cn } from "../lib/utils.js";
-import { Button } from "@/registry/jumpwind/ui/button";
-import { Input } from "@/registry/jumpwind/ui/input";
-import { Separator } from "@/registry/jumpwind/ui/separator";
+import { Button } from "./button.jsx"
+import { Input } from "./input.jsx"
+import { Separator } from "./separator.jsx"
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@/registry/jumpwind/ui/sheet";
-import { Skeleton } from "@/registry/jumpwind/ui/skeleton";
+} from "./sheet.jsx"
+import { Skeleton } from "./skeleton.jsx"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/registry/jumpwind/ui/tooltip";
+} from "./tooltip.jsx"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 1 week

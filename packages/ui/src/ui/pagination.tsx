@@ -3,10 +3,7 @@ import ChevronRightIcon from "lucide-solid/icons/chevron-right";
 import MoreHorizontalIcon from "lucide-solid/icons/more-horizontal";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
-import {
-  type ButtonVariantProps,
-  buttonVariants,
-} from "@/registry/jumpwind/ui/button";
+import { type ButtonVariantProps, buttonVariants } from "./button.jsx";
 
 const Pagination = (props: ComponentProps<"nav">) => {
   const [local, rest] = splitProps(props, ["class"]);
