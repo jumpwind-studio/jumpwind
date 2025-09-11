@@ -162,13 +162,11 @@ function Sidebar(
     props,
   );
 
-  const [local, rest] = splitProps(defaultedProps, [
-    "class",
-    "children",
-    "collapsible",
-    "side",
-    "variant",
-  ]);
+  const [local, _, rest] = splitProps(
+    defaultedProps,
+    ["class", "children", "collapsible", "side", "variant"],
+    ["role"],
+  );
 
   const { dataset, isOpen, setIsOpen, isMobile } = useSidebar();
 
@@ -240,7 +238,7 @@ function Sidebar(
       </Match>
 
       <Match when={isMobile()}>
-        <Sheet open={isOpen()} onOpenChange={setIsOpen} {...rest}>
+        <Sheet open={isOpen()} onOpenChange={setIsOpen}>
           <SheetContent
             data-slot="sidebar"
             data-sidebar="sidebar"

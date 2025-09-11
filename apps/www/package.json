@@ -8,7 +8,6 @@
   "scripts": {
     "dev": "vite dev",
     "dev:debug": "vite dev --debug",
-    "build": "vite build && tsc --noEmit",
     "start": "vite start"
   },
   "dependencies": {
