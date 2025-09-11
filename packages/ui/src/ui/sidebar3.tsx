@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noDocumentCookie: Will be deleted */
 import createControllableSignal from "@corvu/utils/create/controllableSignal";
 import { DynamicButton } from "@corvu/utils/dynamic";
 import type { TooltipContentProps } from "@kobalte/core/tooltip";

@@ -99,11 +99,12 @@ function FormLabel(props: ComponentProps<"label">) {
   const formItem = useFormItem();
 
   return (
+    // biome-ignore lint/a11y/noLabelWithoutControl: Valid usage
     <label
       data-slot="form-label"
-      bool:data-error={!!formItem.error()}
-      class={cn("data-[error=true]:text-destructive", local.class)}
       for={formItem.formControlId}
+      bool:data-error={formItem.error()}
+      class={cn("data-[error=true]:text-destructive", local.class)}
       {...rest}
     />
   );

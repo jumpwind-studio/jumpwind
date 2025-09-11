@@ -13,8 +13,6 @@
       "!**/node_modules",
       "!**/.dev",
       "!**/routeTree.gen.ts"
-      // "!./tsconfig.json"
-      // "!**/package.json"
     ]
   },
   "linter": {
@@ -24,6 +22,7 @@
       "project": "all",
       "test": "all"
     },
+    "includes": ["!**/*.stories.tsx", "!**/scripts"],
     "rules": {
       "recommended": true,
       "nursery": {

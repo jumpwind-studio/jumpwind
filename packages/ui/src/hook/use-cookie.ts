@@ -11,6 +11,7 @@ export function useCookie(name: string) {
   const setCookie = (value: string, options?: CookieSerializeOptions): void => {
     if (isServer) return;
     const serialized = serialize(name, value, options);
+    // biome-ignore lint/suspicious/noDocumentCookie: Valid usage
     document.cookie = serialized;
   };
 
