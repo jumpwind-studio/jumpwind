@@ -1,8 +1,8 @@
-import { Registry } from "@jumpwind/ui";
 import { json } from "@tanstack/solid-start";
 import { createServerFileRoute } from "@tanstack/solid-start/server";
 import * as Effect from "effect/Effect";
 import * as Option from "effect/Option";
+import * as Registry from "@/lib/registry";
 import { serverRuntime } from "@/lib/runtime";
 
 export const ServerRoute = createServerFileRoute(
@@ -10,7 +10,7 @@ export const ServerRoute = createServerFileRoute(
 ).methods({
   GET: async ({ params }) => {
     const program = Effect.gen(function* () {
-      const registry = yield* Registry.Registry;
+      const registry = yield* Registry.RegistryApi;
       const item = yield* registry.getItem(params.name);
       return json(Option.getOrThrow(item), { status: 200 });
     }).pipe(

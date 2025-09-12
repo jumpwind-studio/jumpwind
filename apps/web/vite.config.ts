@@ -9,17 +9,19 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  resolve: {
-    conditions: ["development", "solid", "browser"],
-  },
+  // resolve: {
+  //   conditions: ["development", "solid", "browser"],
+  // },
   plugins: [
-    tsconfigPaths(),
+    tsconfigPaths({
+      projects: ["./tsconfig.json"],
+    }),
     tailwindcss(),
     tanstackStart({
-      target: "bun",
+      // target: "bun",
       customViteSolidPlugin: true,
     }),
-    solid(),
+    solid({ ssr: true }),
     // visualizer({
     //   open: true,
     //   gzipSize: true,

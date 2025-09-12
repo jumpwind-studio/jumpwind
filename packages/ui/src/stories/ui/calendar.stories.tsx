@@ -1,5 +1,4 @@
 import type { PickPartial } from "@jumpwind/utils";
-import * as Duration from "effect/Duration";
 import { type Component, type ComponentProps, splitProps } from "solid-js";
 import { action } from "storybook/actions";
 import { expect, userEvent } from "storybook/test";
@@ -118,8 +117,8 @@ export const Multiple: Story = {
     min: 1,
     initialValue: [
       new Date(Date.now()),
-      new Date(Date.now() + Duration.toMillis("2 days")),
-      new Date(Date.now() + Duration.toMillis("8 days")),
+      new Date(Date.now() + 172_800_000), // 2 days
+      new Date(Date.now() + 691_200_000), // 8 days
     ],
   },
 };
@@ -132,7 +131,7 @@ export const Range: Story = {
     mode: "range",
     initialValue: {
       from: new Date(),
-      to: new Date(Date.now() + Duration.toMillis("1 week")),
+      to: new Date(Date.now() + 604_800_000, // 1 week
     },
   },
 };
@@ -144,10 +143,10 @@ export const Disabled: Story = {
   args: {
     disabled: (date) =>
       [
-        date.getTime() + Duration.toMillis("1 day"),
-        date.getTime() + Duration.toMillis("2 days"),
-        date.getTime() + Duration.toMillis("3 days"),
-        date.getTime() + Duration.toMillis("5 days"),
+        date.getTime() + 86_400_000, // 1 day"
+        date.getTime() + 172_800_000, // 2 days
+        date.getTime() + 259_200_000, // 3 days"
+        date.getTime() + 432_000_000, // 5 days"
       ]?.some((dt) => date.getTime() === dt),
   },
 };

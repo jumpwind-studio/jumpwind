@@ -6,21 +6,16 @@
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
 
-    "isolatedDeclarations": true,
     "moduleResolution": "bundler",
     "rootDir": "./src",
-    "baseUrl": ".",
-    "paths": {
-      "@jumpwind/ui/*": ["./src/*"],
-      "@jumpwind/ui": ["./src/index.ts"]
-    }
+    "baseUrl": "."
   },
-  "include": ["src/**/*"],
   "exclude": [
     "node_modules",
     "dist",
     "scripts",
     "vite.config.ts",
-    "vitest.config.ts"
+    "vitest.config.ts",
+    "tsdown.config.ts"
   ]
 }

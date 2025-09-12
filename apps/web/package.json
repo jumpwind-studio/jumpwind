@@ -6,9 +6,9 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "dev": "bunx --bun vite dev",
-    "dev:debug": "bunx --bun vite dev --debug",
-    "start": "bunx --bun vite start"
+    "dev": "vite dev",
+    "dev:debug": "bun --bun vite dev --debug",
+    "start": "bun --bun vite start"
   },
   "dependencies": {
     "@jumpwind/ui": "workspace:*",
@@ -20,6 +20,7 @@
     "@tanstack/solid-router": "^1.131.41",
     "@tanstack/solid-start": "^1.131.41",
     "@unpic/solid": "catalog:frontend",
+    "cmdk-solid": "catalog:frontend",
     "corvu": "catalog:frontend",
     "effect": "catalog:effect",
     "lucide-solid": "catalog:frontend",

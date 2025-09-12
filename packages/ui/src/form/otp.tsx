@@ -13,7 +13,7 @@ import {
 import { FieldDescription, FieldLabel, FieldMessage } from "./field.jsx";
 import { squash } from "./utils.js";
 
-export type OtpFieldProps<
+export type FormOtpProps<
   TField extends AnyFieldApi,
   T extends ValidComponent = "div",
 > = Partial<OtpPrimitive.RootProps<T>> & {
@@ -25,10 +25,10 @@ export type OtpFieldProps<
   required: boolean;
 };
 
-export function OtpField<
+export function FormOtp<
   TField extends AnyFieldApi,
   T extends ValidComponent = "div",
->(props: OtpPrimitive.DynamicProps<T, OtpFieldProps<TField, T>>) {
+>(props: OtpPrimitive.DynamicProps<T, FormOtpProps<TField, T>>) {
   const [local, rootProps, rest] = splitProps(
     props,
     ["field", "class", "label", "description"],

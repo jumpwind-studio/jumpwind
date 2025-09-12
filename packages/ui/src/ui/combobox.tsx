@@ -5,7 +5,7 @@ import type { ComponentProps } from "solid-js";
 import { Show, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
 
-const useCombobox = ComboboxPrimitive.useComboboxContext();
+const useCombobox = ComboboxPrimitive.useComboboxContext;
 
 function Combobox(props: ComponentProps<typeof ComboboxPrimitive.Root>) {
   return <ComboboxPrimitive.Root data-slot="combobox" {...props} />;
