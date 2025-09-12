@@ -1,0 +1,24 @@
+/**
+ * Creates a full-screen background gradient that serves as an overscroll boundary effect.
+ * This pseudo-element covers the entire viewport and displays a sharp horizontal color
+ * transition at the center, splitting the screen into two distinct color regions.
+ *
+ * The effect becomes visible when users overscroll beyond the document boundaries,
+ * providing a polished visual continuation that matches the site's color scheme
+ * rather than showing default browser overscroll backgrounds.
+ *
+ * Variables:
+ * --color-overscroll-top: Color for the top half of the screen
+ * --color-overscroll-bottom: Color for the bottom half of the screen
+ */
+:root::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    /* biome-ignore lint/correctness/noInvalidDirectionInLinearGradient: Required */
+    var(--color-overscroll-top) 49.99%,
+    var(--color-overscroll-bottom) 50%
+  );
+  z-index: -1;
+}
