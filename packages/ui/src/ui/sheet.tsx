@@ -1,13 +1,19 @@
 import * as SheetPrimitive from "corvu/drawer";
 import XIcon from "lucide-solid/icons/x";
-import { type ComponentProps, mergeProps, splitProps } from "solid-js";
+import {
+  type ComponentProps,
+  type JSX,
+  mergeProps,
+  Show,
+  splitProps,
+} from "solid-js";
 import { tv } from "tailwind-variants";
 import { cn } from "../lib/utils.js";
 
 const useSheet = SheetPrimitive.useContext;
 
 const sheetVariants = tv({
-  base: "fixed z-50 flex flex-col gap-4 bg-background shadow-lg transition ease-in-out data-closed:animate-out data-open:animate-in data-closed:duration-300 data-open:duration-500",
+  base: "fixed z-50 flex flex-col gap-4 bg-background shadow-lg transition ease-in-out data-closed:animate-out data-open:animate-in data-closed:duration-300 data-open:duration-500 data-transitioning:transition-transform data-transitioning:duration-500",
   variants: {
     side: {
       right:
@@ -61,8 +67,12 @@ function SheetOverlay(props: ComponentProps<typeof SheetPrimitive.Overlay>) {
   );
 }
 
-function SheetContent(props: ComponentProps<typeof SheetPrimitive.Content>) {
-  const [local, rest] = splitProps(props, ["class", "children"]);
+function SheetContent(
+  props: ComponentProps<typeof SheetPrimitive.Content> & {
+    Icon?: JSX.Element;
+  },
+) {
+  const [local, rest] = splitProps(props, ["class", "children", "Icon"]);
 
   const sheet = useSheet();
 
@@ -74,18 +84,17 @@ function SheetContent(props: ComponentProps<typeof SheetPrimitive.Content>) {
         class={cn(
           sheetVariants({
             side: sheet.side(),
-            class: [
-              "data-transitioning:transition-transform data-transitioning:duration-500",
-              local.class,
-            ],
           }),
+          local.class,
         )}
         {...rest}
       >
         {local.children}
         <SheetPrimitive.Close class="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-open:bg-secondary">
           <span class="sr-only">Close</span>
-          <XIcon class="size-4" />
+          <Show when={local.Icon} fallback={<XIcon class="size-4" />}>
+            {local.Icon}
+          </Show>
         </SheetPrimitive.Close>
       </SheetPrimitive.Content>
     </SheetPortal>

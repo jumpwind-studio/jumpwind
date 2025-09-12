@@ -131,7 +131,7 @@ export const Range: Story = {
     mode: "range",
     initialValue: {
       from: new Date(),
-      to: new Date(Date.now() + 604_800_000, // 1 week
+      to: new Date(Date.now() + 604_800_000), // 1 week
     },
   },
 };

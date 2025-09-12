@@ -6,9 +6,8 @@ import { ErrorBoundary } from "@/components/error-boundary";
 import { NotFound } from "@/components/not-found";
 import { Providers } from "@/components/providers";
 import { SiteHeader } from "@/components/site-header";
-import { THEME_HEADER_SCRIPT } from "@/components/theme";
-import { SiteLayout } from "@/layouts/site-layout";
 import { seo } from "@/lib/seo";
+
 import appCss from "@/styles/app.css?url";
 
 export const Route = createRootRoute({
@@ -50,7 +49,7 @@ export const Route = createRootRoute({
       { rel: "manifest", href: "/site.webmanifest", color: "#fffff" },
       { rel: "icon", href: "/favicon.ico" },
     ],
-    scripts: [{ children: THEME_HEADER_SCRIPT }],
+    // scripts: [{ children: THEME_HEADER_SCRIPT }],
     // biome-ignore-end format: end
   }),
   errorComponent: ErrorBoundary,
@@ -63,8 +62,10 @@ function RootDocument(props: FlowProps) {
     <>
       <HeadContent />
       <Providers>
-        <SiteHeader />
-        <SiteLayout class="antialiased">{props.children}</SiteLayout>
+        <div>
+          <SiteHeader />
+          <main class="flex h-screen flex-col">{props.children}</main>
+        </div>
       </Providers>
       <Scripts />
     </>

@@ -7,12 +7,12 @@ export function SiteLayout(props: ComponentProps<"div">) {
   return (
     <div
       class={cn(
-        "flex h-full min-h-[calc(100%-var(--header-height))] flex-col justify-center",
+        "flex min-h-[calc(100%-var(--header-height))] flex-col justify-center",
         local.class,
       )}
       {...rest}
     >
-      {props.children}
+      {local.children}
     </div>
   );
 }
