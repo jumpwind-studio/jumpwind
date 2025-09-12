@@ -6,9 +6,9 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "dev": "vite dev",
-    "dev:debug": "vite dev --debug",
-    "start": "vite start"
+    "dev": "bunx --bun vite dev",
+    "dev:debug": "bunx --bun vite dev --debug",
+    "start": "bunx --bun vite start"
   },
   "dependencies": {
     "@jumpwind/ui": "workspace:*",

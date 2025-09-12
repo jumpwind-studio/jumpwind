@@ -1,6 +1,6 @@
 import type { PickPartial } from "@jumpwind/utils";
 import * as Duration from "effect/Duration";
-import type { Component, ComponentProps } from "solid-js";
+import { type Component, type ComponentProps, splitProps } from "solid-js";
 import { action } from "storybook/actions";
 import { expect, userEvent } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
@@ -46,39 +46,53 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-  render: ({ children, ...args }) => (
-    <Calendar {...args} class={cn("rounded-md border", args.class)}>
-      <CalendarHeader>
-        <CalendarPrevMonth />
-        <CalendarLabel />
-        <CalendarNextMonth />
-      </CalendarHeader>
-      <CalendarTable>
-        <CalendarHead>
-          <CalendarHeadRow>
-            {(weekday) => (
-              <CalendarHeadCell>
-                {weekday().toLocaleString("en", { weekday: "short" })}
-              </CalendarHeadCell>
-            )}
-          </CalendarHeadRow>
-        </CalendarHead>
-        <CalendarBody>
-          {(week) => (
-            <CalendarRow week={week()}>
-              {(day) => (
-                <CalendarCell>
-                  <CalendarCellTrigger day={day()}>
-                    {day().toLocaleString("en-US", { day: "2-digit" })}
-                  </CalendarCellTrigger>
-                </CalendarCell>
+  render: (args) => {
+    const [local, calendar, rest] = splitProps(
+      args,
+      ["class", "children"],
+      ["mode", "value", "onValueChange", "initialValue"],
+    );
+    return (
+      <Calendar<"single">
+        class={cn("rounded-md border", local.class)}
+        mode="single"
+        initialValue={calendar.initialValue}
+        value={calendar.value}
+        onValueChange={calendar.onValueChange}
+        {...rest}
+      >
+        <CalendarHeader>
+          <CalendarPrevMonth />
+          <CalendarLabel />
+          <CalendarNextMonth />
+        </CalendarHeader>
+        <CalendarTable>
+          <CalendarHead>
+            <CalendarHeadRow>
+              {(weekday) => (
+                <CalendarHeadCell>
+                  {weekday().toLocaleString("en", { weekday: "short" })}
+                </CalendarHeadCell>
               )}
-            </CalendarRow>
-          )}
-        </CalendarBody>
-      </CalendarTable>
-    </Calendar>
-  ),
+            </CalendarHeadRow>
+          </CalendarHead>
+          <CalendarBody>
+            {(week) => (
+              <CalendarRow week={week()}>
+                {(day) => (
+                  <CalendarCell>
+                    <CalendarCellTrigger day={day()}>
+                      {day().toLocaleString("en-US", { day: "2-digit" })}
+                    </CalendarCellTrigger>
+                  </CalendarCell>
+                )}
+              </CalendarRow>
+            )}
+          </CalendarBody>
+        </CalendarTable>
+      </Calendar>
+    );
+  },
 } satisfies Meta<CalendarStoryComponent>;
 
 export default meta;

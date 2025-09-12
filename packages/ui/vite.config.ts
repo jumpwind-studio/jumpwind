@@ -69,10 +69,18 @@ export default defineConfig({
       fileName: (_, entryName) => `${entryName}.js`,
     },
     rollupOptions: {
-      external: ["solid-js", "solid-js/web", "tailwindcss", /lucide-solid/],
+      external: [
+        "solid-js",
+        "solid-js/store",
+        "solid-js/web",
+        "tailwindcss",
+        /lucide-solid/,
+      ],
       output: {
         globals: {
           "solid-js": "Solid",
+          "solid-js/web": "SolidWeb",
+          "solid-js/store": "SolidStore",
         },
       },
     },
