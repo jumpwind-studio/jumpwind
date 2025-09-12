@@ -8,7 +8,12 @@
 
     "moduleResolution": "bundler",
     "rootDir": "./src",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@jumpwind/ui/*": ["./src/*"],
+      "@jumpwind/ui": ["./src/index.ts"],
+      "@/*": ["./src/*"]
+    }
   },
   "exclude": [
     "node_modules",

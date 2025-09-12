@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "@jumpwind/ui",
+  "name": "jumpwind/ui",
   "homepage": "https://registry.jumpwindstudios.com/ui",
   "items": [
     {
@@ -9,7 +9,8 @@
       "dependencies": ["tailwind-variants"],
       "files": [
         {
-          "path": "registry/jumpwind/lib/utils.ts",
+          "target": "registry/{style}/lib/utils.ts",
+          "path": "src/lib/utils.ts",
           "type": "registry:lib"
         }
       ]
@@ -19,7 +20,8 @@
       "type": "registry:hook",
       "files": [
         {
-          "path": "registry/jumpwind/hook/use-is-mobile.ts",
+          "target": "registry/{style}/hooks/use-is-mobile.ts",
+          "path": "src/hooks/use-is-mobile.ts",
           "type": "registry:hook"
         }
       ]
@@ -30,7 +32,8 @@
       "dependencies": ["corvu/accordion"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/accordion.tsx",
+          "target": "registry/{style}/ui/accordion.tsx",
+          "path": "src/ui/accordion.tsx",
           "type": "registry:ui"
         }
       ]
@@ -40,7 +43,8 @@
       "type": "registry:ui",
       "files": [
         {
-          "path": "registry/jumpwind/ui/alert.tsx",
+          "target": "registry/{style}/ui/alert.tsx",
+          "path": "src/ui/alert.tsx",
           "type": "registry:ui"
         }
       ]
@@ -52,7 +56,8 @@
       "registryDependencies": ["button"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/alert-dialog.tsx",
+          "target": "registry/{style}/ui/alert-dialog.tsx",
+          "path": "src/ui/alert-dialog.tsx",
           "type": "registry:ui"
         }
       ]
@@ -63,7 +68,8 @@
       "dependencies": ["@kobalte/core/image"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/avatar.tsx",
+          "target": "registry/{style}/ui/avatar.tsx",
+          "path": "src/ui/avatar.tsx",
           "type": "registry:ui"
         }
       ]
@@ -74,7 +80,8 @@
       "dependencies": ["@corvu/utils/dynamic"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/badge.tsx",
+          "target": "registry/{style}/ui/badge.tsx",
+          "path": "src/ui/badge.tsx",
           "type": "registry:ui"
         }
       ]
@@ -86,7 +93,8 @@
       "description": "A button component.",
       "files": [
         {
-          "path": "registry/jumpwind/ui/button.tsx",
+          "target": "registry/{style}/ui/button.tsx",
+          "path": "src/ui/button.tsx",
           "type": "registry:ui"
         }
       ]
@@ -98,7 +106,8 @@
       "registryDependencies": ["button"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/calendar.tsx",
+          "target": "registry/{style}/ui/calendar.tsx",
+          "path": "src/ui/calendar.tsx",
           "type": "registry:ui"
         }
       ]
@@ -108,7 +117,8 @@
       "type": "registry:ui",
       "files": [
         {
-          "path": "registry/jumpwind/ui/card.tsx",
+          "target": "registry/{style}/ui/card.tsx",
+          "path": "src/ui/card.tsx",
           "type": "registry:ui"
         }
       ]
@@ -119,7 +129,8 @@
       "dependencies": ["@kobalte/core/checkbox"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/checkbox.tsx",
+          "target": "registry/{style}/ui/checkbox.tsx",
+          "path": "src/ui/checkbox.tsx",
           "type": "registry:ui"
         }
       ]
@@ -130,7 +141,8 @@
       "dependencies": ["corvu/disclosure"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/collapsible.tsx",
+          "target": "registry/{style}/ui/collapsible.tsx",
+          "path": "src/ui/collapsible.tsx",
           "type": "registry:ui"
         }
       ]
@@ -142,7 +154,8 @@
       "registryDependencies": ["dialog"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/command.tsx",
+          "target": "registry/{style}/ui/dialog.tsx",
+          "path": "src/ui/command.tsx",
           "type": "registry:ui"
         }
       ]
@@ -152,7 +165,8 @@
       "type": "registry:ui",
       "files": [
         {
-          "path": "registry/jumpwind/ui/container.tsx",
+          "target": "registry/{style}/ui/container.tsx",
+          "path": "src/ui/container.tsx",
           "type": "registry:ui"
         }
       ]
@@ -163,7 +177,8 @@
       "dependencies": ["@kobalte/core/context-menu"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/context-menu.tsx",
+          "target": "registry/{style}/ui/context-menu.tsx",
+          "path": "src/ui/context-menu.tsx",
           "type": "registry:ui"
         }
       ]
@@ -174,7 +189,8 @@
       "devDependencies": ["button", "calendar", "popover"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/date-picker.tsx",
+          "target": "registry/{style}/ui/date-picker.tsx",
+          "path": "src/ui/date-picker.tsx",
           "type": "registry:ui"
         }
       ]
@@ -185,7 +201,8 @@
       "dependencies": ["corvu/dialog"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/dialog.tsx",
+          "target": "registry/{style}/ui/dialog.tsx",
+          "path": "src/ui/dialog.tsx",
           "type": "registry:ui"
         }
       ]
@@ -196,7 +213,8 @@
       "dependencies": ["corvu/drawer"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/drawer.tsx",
+          "target": "registry/{style}/ui/drawer.tsx",
+          "path": "src/ui/drawer.tsx",
           "type": "registry:ui"
         }
       ]
@@ -207,7 +225,8 @@
       "dependencies": ["@kobalte/core/dropdown-menu"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/dropdown-menu.tsx",
+          "target": "registry/{style}/ui/dropdown-menu.tsx",
+          "path": "src/ui/dropdown-menu.tsx",
           "type": "registry:ui"
         }
       ]
@@ -217,7 +236,8 @@
       "type": "registry:ui",
       "files": [
         {
-          "path": "registry/jumpwind/ui/flex.tsx",
+          "target": "registry/{style}/ui/flex.tsx",
+          "path": "src/ui/flex.tsx",
           "type": "registry:ui"
         }
       ]
@@ -229,7 +249,8 @@
       "registryDependencies": ["button", "label"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/form.tsx",
+          "target": "registry/{style}/ui/form.tsx",
+          "path": "src/ui/form.tsx",
           "type": "registry:ui"
         }
       ]
@@ -239,7 +260,8 @@
       "type": "registry:ui",
       "files": [
         {
-          "path": "registry/jumpwind/ui/grid.tsx",
+          "target": "registry/{style}/ui/grid.tsx",
+          "path": "src/ui/grid.tsx",
           "type": "registry:ui"
         }
       ]
@@ -250,7 +272,8 @@
       "dependencies": ["@kobalte/core/hover-card"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/hover-card.tsx",
+          "target": "registry/{style}/ui/hover-card.tsx",
+          "path": "src/ui/hover-card.tsx",
           "type": "registry:ui"
         }
       ]
@@ -260,7 +283,8 @@
       "type": "registry:ui",
       "files": [
         {
-          "path": "registry/jumpwind/ui/input.tsx",
+          "target": "registry/{style}/ui/input.tsx",
+          "path": "src/ui/input.tsx",
           "type": "registry:ui"
         }
       ]
@@ -271,7 +295,8 @@
       "dependencies": ["corvu/otp-field"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/input-otp.tsx",
+          "target": "registry/{style}/ui/input-otp.tsx",
+          "path": "src/ui/input-otp.tsx",
           "type": "registry:ui"
         }
       ]
@@ -281,7 +306,8 @@
       "type": "registry:ui",
       "files": [
         {
-          "path": "registry/jumpwind/ui/label.tsx",
+          "target": "registry/{style}/ui/label.tsx",
+          "path": "src/ui/label.tsx",
           "type": "registry:ui"
         }
       ]
@@ -292,7 +318,8 @@
       "dependencies": ["@kobalte/core/link"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/link.tsx",
+          "target": "registry/{style}/ui/link.tsx",
+          "path": "src/ui/link.tsx",
           "type": "registry:ui"
         }
       ]
@@ -303,7 +330,8 @@
       "dependencies": ["@kobalte/core/menubar"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/menubar.tsx",
+          "target": "registry/{style}/ui/menubar.tsx",
+          "path": "src/ui/menubar.tsx",
           "type": "registry:ui"
         }
       ]
@@ -314,7 +342,8 @@
       "dependencies": ["@kobalte/core/number-field"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/number-field.tsx",
+          "target": "registry/{style}/ui/number-field.tsx",
+          "path": "src/ui/number-field.tsx",
           "type": "registry:ui"
         }
       ]
@@ -325,7 +354,8 @@
       "registryDependencies": ["button"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/pagination.tsx",
+          "target": "registry/{style}/ui/pagination.tsx",
+          "path": "src/ui/pagination.tsx",
           "type": "registry:ui"
         }
       ]
@@ -336,7 +366,8 @@
       "dependencies": ["corvu/popover"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/popover.tsx",
+          "target": "registry/{style}/ui/popover.tsx",
+          "path": "src/ui/popover.tsx",
           "type": "registry:ui"
         }
       ]
@@ -347,7 +378,8 @@
       "dependencies": ["@kobalte/core/progress"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/progress.tsx",
+          "target": "registry/{style}/ui/progress.tsx",
+          "path": "src/ui/progress.tsx",
           "type": "registry:ui"
         }
       ]
@@ -358,7 +390,8 @@
       "dependencies": ["@kobalte/core/radio-group"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/radio-group.tsx",
+          "target": "registry/{style}/ui/radio-group.tsx",
+          "path": "src/ui/radio-group.tsx",
           "type": "registry:ui"
         }
       ]
@@ -369,7 +402,8 @@
       "dependencies": ["corvu/resizable"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/resizable.tsx",
+          "target": "registry/{style}/ui/resizable.tsx",
+          "path": "src/ui/resizable.tsx",
           "type": "registry:ui"
         }
       ]
@@ -380,7 +414,8 @@
       "dependencies": ["@kobalte/core/select", "@kobalte/core/separator"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/select.tsx",
+          "target": "registry/{style}/ui/select.tsx",
+          "path": "src/ui/select.tsx",
           "type": "registry:ui"
         }
       ]
@@ -390,7 +425,8 @@
       "type": "registry:ui",
       "files": [
         {
-          "path": "registry/jumpwind/ui/separator.tsx",
+          "target": "registry/{style}/ui/separator.tsx",
+          "path": "src/ui/separator.tsx",
           "type": "registry:ui"
         }
       ]
@@ -401,7 +437,8 @@
       "dependencies": ["corvu/dialog"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/sheet.tsx",
+          "target": "registry/{style}/ui/sheet.tsx",
+          "path": "src/ui/sheet.tsx",
           "type": "registry:ui"
         }
       ]
@@ -420,7 +457,8 @@
       ],
       "files": [
         {
-          "path": "registry/jumpwind/ui/sidebar.tsx",
+          "target": "registry/{style}/ui/sidebar.tsx",
+          "path": "src/ui/sidebar.tsx",
           "type": "registry:ui"
         }
       ],
@@ -472,7 +510,8 @@
       "type": "registry:ui",
       "files": [
         {
-          "path": "registry/jumpwind/ui/skeleton.tsx",
+          "target": "registry/{style}/ui/skeleton.tsx",
+          "path": "src/ui/skeleton.tsx",
           "type": "registry:ui"
         }
       ]
@@ -483,7 +522,8 @@
       "dependencies": ["@kobalte/core/slider"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/slider.tsx",
+          "target": "registry/{style}/ui/slider.tsx",
+          "path": "src/ui/slider.tsx",
           "type": "registry:ui"
         }
       ]
@@ -494,7 +534,8 @@
       "dependencies": ["solid-sonner"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/sonner.tsx",
+          "target": "registry/{style}/ui/sonner.tsx",
+          "path": "src/ui/sonner.tsx",
           "type": "registry:ui"
         }
       ]
@@ -505,7 +546,8 @@
       "dependencies": ["@kobalte/core/switch"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/switch.tsx",
+          "target": "registry/{style}/ui/switch.tsx",
+          "path": "src/ui/switch.tsx",
           "type": "registry:ui"
         }
       ]
@@ -515,7 +557,8 @@
       "type": "registry:ui",
       "files": [
         {
-          "path": "registry/jumpwind/ui/table.tsx",
+          "target": "registry/{style}/ui/table.tsx",
+          "path": "src/ui/table.tsx",
           "type": "registry:ui"
         }
       ]
@@ -526,7 +569,8 @@
       "dependencies": ["@kobalte/core/tabs"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/tabs.tsx",
+          "target": "registry/{style}/ui/tabs.tsx",
+          "path": "src/ui/tabs.tsx",
           "type": "registry:ui"
         }
       ]
@@ -536,7 +580,8 @@
       "type": "registry:ui",
       "files": [
         {
-          "path": "registry/jumpwind/ui/textarea.tsx",
+          "target": "registry/{style}/ui/textarea.tsx",
+          "path": "src/ui/textarea.tsx",
           "type": "registry:ui"
         }
       ]
@@ -547,7 +592,8 @@
       "dependencies": ["@kobalte/core/text-field"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/text-field.tsx",
+          "target": "registry/{style}/ui/text-field.tsx",
+          "path": "src/ui/text-field.tsx",
           "type": "registry:ui"
         }
       ]
@@ -558,7 +604,8 @@
       "dependencies": ["@kobalte/core/toggle-button"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/toggle.tsx",
+          "target": "registry/{style}/ui/toggle.tsx",
+          "path": "src/ui/toggle.tsx",
           "type": "registry:ui"
         }
       ]
@@ -570,7 +617,8 @@
       "registryDependencies": ["toggle"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/toggle-group.tsx",
+          "target": "registry/{style}/ui/toggle-group.tsx",
+          "path": "src/ui/toggle-group.tsx",
           "type": "registry:ui"
         }
       ]
@@ -581,7 +629,8 @@
       "dependencies": ["corvu/tooltip"],
       "files": [
         {
-          "path": "registry/jumpwind/ui/tooltip.tsx",
+          "target": "registry/{style}/ui/tooltip.tsx",
+          "path": "src/ui/tooltip.tsx",
           "type": "registry:ui"
         }
       ]
