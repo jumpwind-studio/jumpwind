@@ -90,8 +90,8 @@
 }
 
 @theme inline {
-  --font-sans: Geist;
-  --font-display: Geist;
+  --font-sans: Inter;
+  --font-display: Inter;
   --font-mono: GeistMono;
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -219,22 +219,6 @@
     transition-property: transform;
     transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
     transition-duration: 500ms;
-  }
-
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-    @apply flex min-h-screen flex-col;
   }
 }
 

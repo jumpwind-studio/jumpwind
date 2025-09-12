@@ -1,12 +1,13 @@
 /// <reference types="vite/client" />
 
-import {
-  createRootRoute,
-  HeadContent,
-  Link,
-  Scripts,
-} from "@tanstack/solid-router";
-import type { JSX } from "solid-js";
+import { createRootRoute, HeadContent, Scripts } from "@tanstack/solid-router";
+import type { FlowProps } from "solid-js";
+import { ErrorBoundary } from "@/components/error-boundary";
+import { NotFound } from "@/components/not-found";
+import { Providers } from "@/components/providers";
+import { SiteHeader } from "@/components/site-header";
+import { THEME_HEADER_SCRIPT } from "@/components/theme";
+import { SiteLayout } from "@/layouts/site-layout";
 import { seo } from "@/lib/seo";
 import appCss from "@/styles/app.css?url";
 
@@ -49,91 +50,23 @@ export const Route = createRootRoute({
       { rel: "manifest", href: "/site.webmanifest", color: "#fffff" },
       { rel: "icon", href: "/favicon.ico" },
     ],
-    // scripts: [{ children: THEME_HEADER_SCRIPT }],
+    scripts: [{ children: THEME_HEADER_SCRIPT }],
     // biome-ignore-end format: end
   }),
-  // errorComponent: DefaultCatchBoundary,
-  // notFoundComponent: () => <NotFound />,
+  errorComponent: ErrorBoundary,
+  notFoundComponent: () => <NotFound />,
   shellComponent: RootDocument,
 });
 
-function RootDocument(props: { children: JSX.Element }) {
+function RootDocument(props: FlowProps) {
   return (
     <>
       <HeadContent />
-      <div class="flex gap-2 p-2 text-lg">
-        <Link
-          to="/"
-          activeProps={{
-            class: "font-bold",
-          }}
-          activeOptions={{ exact: true }}
-        >
-          Home
-        </Link>{" "}
-        <Link
-          to="/posts"
-          activeProps={{
-            class: "font-bold",
-          }}
-        >
-          Posts
-        </Link>{" "}
-        <Link
-          to="/users"
-          activeProps={{
-            class: "font-bold",
-          }}
-        >
-          Users
-        </Link>{" "}
-        <Link
-          to="/route-a"
-          activeProps={{
-            class: "font-bold",
-          }}
-        >
-          Pathless Layout
-        </Link>{" "}
-        <Link
-          to="/deferred"
-          activeProps={{
-            class: "font-bold",
-          }}
-        >
-          Deferred
-        </Link>{" "}
-        <Link
-          // @ts-expect-error
-          to="/this-route-does-not-exist"
-          activeProps={{
-            class: "font-bold",
-          }}
-        >
-          This Route Does Not Exist
-        </Link>
-      </div>
-      <hr />
-      {props.children}
+      <Providers>
+        <SiteHeader />
+        <SiteLayout class="antialiased">{props.children}</SiteLayout>
+      </Providers>
       <Scripts />
     </>
   );
 }
-
-//   shellComponent: RootDocument,
-// });
-//
-// function RootDocument(props: FlowProps) {
-//   return (
-//     <>
-//       <HeadContent />
-//       <Providers>
-//         <SiteHeader />
-//         <div class="font-regular tracking-wide antialiased">
-//           {props.children}
-//         </div>
-//       </Providers>
-//       <Scripts />
-//     </>
-//   );
-// }

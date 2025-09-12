@@ -1,13 +1,13 @@
-import { Registry } from "@jumpwind/ui";
 import * as Effect from "effect/Effect";
 import * as Layer from "effect/Layer";
 import * as Logger from "effect/Logger";
 import * as LogLevel from "effect/LogLevel";
 import * as ManagedRuntime from "effect/ManagedRuntime";
+import * as Registry from "@/lib/registry";
 
 export namespace ServerRuntime {
   export const layer = Layer.mergeAll(
-    Registry.Registry.Live,
+    Registry.RegistryApi.Live,
     Logger.minimumLogLevel(
       import.meta.env.DEV ? LogLevel.Debug : LogLevel.Info,
     ),

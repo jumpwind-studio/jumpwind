@@ -6,7 +6,8 @@
   "private": true,
   "files": [
     "dist",
-    "./registry.json"
+    "./registry.json",
+    "./src/styles/*.css"
   ],
   "scripts": {
     "build": "bun --bun tsdown",
@@ -130,7 +131,8 @@
     "./tooltip": "./src/ui/tooltip.tsx",
     "./typography": "./src/ui/typography.tsx",
     "./package.json": "./package.json",
-    "./registry.json": "./registry.json"
+    "./registry.json": "./registry.json",
+    "./styles.css": "./src/styles/styles.css"
   },
   "publishConfig": {
     "exports": {
