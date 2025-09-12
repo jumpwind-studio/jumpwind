@@ -9,6 +9,9 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  resolve: {
+    conditions: ["development", "solid", "browser"],
+  },
   plugins: [
     tsconfigPaths(),
     tailwindcss(),
@@ -16,8 +19,7 @@ export default defineConfig({
       target: "bun",
       customViteSolidPlugin: true,
     }),
-    // solid(),
-    solid({ ssr: true }),
+    solid(),
     // visualizer({
     //   open: true,
     //   gzipSize: true,
