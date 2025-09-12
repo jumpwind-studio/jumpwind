@@ -30,6 +30,7 @@
         "lucide-solid": "catalog:frontend",
         "solid-js": "catalog:frontend",
         "solid-sonner": "catalog:frontend",
+        "tailwind-variants": "catalog:frontend",
       },
       "devDependencies": {
         "@tailwindcss/vite": "catalog:frontend",
@@ -38,7 +39,6 @@
         "shadcn": "catalog:frontend",
         "solid-devtools": "catalog:frontend",
         "tailwind-merge": "catalog:frontend",
-        "tailwind-variants": "catalog:frontend",
         "tailwindcss": "catalog:frontend",
         "tw-animate-css": "catalog:frontend",
         "typescript": "catalog:",
@@ -78,6 +78,8 @@
         "solid-js": "catalog:frontend",
         "solid-persistent": "catalog:frontend",
         "solid-sonner": "catalog:frontend",
+        "tailwind-merge": "catalog:frontend",
+        "tailwind-variants": "catalog:frontend",
       },
       "devDependencies": {
         "@chromatic-com/storybook": "^4.1.1",
@@ -96,8 +98,6 @@
         "shadcn": "catalog:frontend",
         "storybook": "^9.1.5",
         "storybook-solidjs-vite": "^9.0.3",
-        "tailwind-merge": "catalog:frontend",
-        "tailwind-variants": "catalog:frontend",
         "tailwindcss": "catalog:frontend",
         "tsdown": "^0.15.0",
         "tsup-preset-solid": "^2.2.0",

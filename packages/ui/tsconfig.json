@@ -6,6 +6,7 @@
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
 
+    "isolatedDeclarations": true,
     "moduleResolution": "bundler",
     "rootDir": "./src",
     "baseUrl": ".",

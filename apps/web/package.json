@@ -24,12 +24,12 @@
     "effect": "catalog:effect",
     "lucide-solid": "catalog:frontend",
     "solid-js": "catalog:frontend",
-    "solid-sonner": "catalog:frontend"
+    "solid-sonner": "catalog:frontend",
+    "tailwind-variants": "catalog:frontend"
   },
   "devDependencies": {
     "@tailwindcss/vite": "catalog:frontend",
     "tailwind-merge": "catalog:frontend",
-    "tailwind-variants": "catalog:frontend",
     "@tanstack/solid-router-devtools": "^1.131.41",
     "shadcn": "catalog:frontend",
     "rollup-plugin-visualizer": "^6.0.3",

@@ -1,6 +1,5 @@
 import { Button } from "@jumpwind/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@jumpwind/ui/sheet";
-import { cn } from "@jumpwind/ui/utils";
 import BriefcaseIcon from "lucide-solid/icons/briefcase";
 import FileTextIcon from "lucide-solid/icons/file-text";
 import HelpCircleIcon from "lucide-solid/icons/help-circle";
@@ -10,6 +9,7 @@ import TagIcon from "lucide-solid/icons/tag";
 import { For } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import { Link } from "@/components/ui/link";
+import { cn } from "@/lib/utils";
 
 export function SiteHeader() {
   const links = [
