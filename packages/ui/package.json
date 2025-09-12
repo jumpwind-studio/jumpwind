@@ -27,6 +27,7 @@
   "dependencies": {
     "@corvu/utils": "catalog:frontend",
     "@kobalte/core": "catalog:frontend",
+    "@jumpwind/tsconfig": "workspace:*",
     "@jumpwind/utils": "workspace:*",
     "@solid-primitives/rootless": "catalog:frontend",
     "@solid-primitives/keyboard": "catalog:frontend",
