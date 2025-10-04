@@ -1,17 +1,65 @@
-import { type ComponentProps, splitProps } from "solid-js";
+import {
+  type Accessor,
+  type ComponentProps,
+  createContext,
+  mergeProps,
+  splitProps,
+} from "solid-js";
 import { cn } from "../lib/utils.js";
 
 type Key = KeyboardEvent[keyof Pick<KeyboardEvent, "key">];
 type Modifier = keyof Pick<KeyboardEvent, "ctrlKey" | "metaKey" | "altKey">;
 
-function Kbd(props: ComponentProps<"span"> & { modifiers?: Modifier[] }) {
+interface KbdContextValue {
+  modifiers?: Accessor<Modifier[]>;
+  separator?: Accessor<string>;
+}
+
+const KbdContext = createContext<KbdContextValue>({
+  modifiers: () => [],
+  separator: () => "+",
+});
+
+function KbdGroup(
+  props: ComponentProps<"div"> & {
+    modifiers?: Modifier[];
+    separator?: string;
+  },
+) {
+  const defaultedProps = mergeProps({ modifiers: [], separator: "+" }, props);
+
+  const [local, rest] = splitProps(defaultedProps, [
+    "class",
+    "modifiers",
+    "separator",
+  ]);
+
+  return (
+    <KbdContext.Provider
+      value={{
+        modifiers: () => local.modifiers,
+        separator: () => local.separator,
+      }}
+    >
+      <div
+        data-slot="kbd-group"
+        class={cn("inline-flex items-center gap-1", local.class)}
+        {...rest}
+      />
+    </KbdContext.Provider>
+  );
+}
+
+function Kbd(props: ComponentProps<"kbd">) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
-    <span
+    <kbd
       data-slot="kbd"
       class={cn(
-        "pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 align-middle font-medium font-mono text-[10px] text-muted-foreground opacity-100",
+        "pointer-events-none inline-flex h-5 w-fit min-w-5 select-none items-center justify-center gap-1 rounded-sm bg-muted px-1 font-medium font-sans text-muted-foreground text-xs",
+        "[&_svg:not([class*='size-'])]:size-3",
+        "[[data-slot=tooltip-content]_&]:bg-background/20 [[data-slot=tooltip-content]_&]:text-background dark:[[data-slot=tooltip-content]_&]:bg-background/10",
         local.class,
       )}
       {...rest}
@@ -45,12 +93,4 @@ function KbdSeparator(props: ComponentProps<"span">) {
   );
 }
 
-function KbdKey(
-  props: Omit<ComponentProps<"kbd">, "aria-label"> & {
-    "aria-label"?: Key | (string & {});
-  },
-) {
-  return <kbd data-slot="kbd-key" {...props} />;
-}
-
-export { Kbd, KbdModifier, KbdKey, KbdSeparator };
+export { KbdGroup, KbdModifier, Kbd, KbdSeparator };
