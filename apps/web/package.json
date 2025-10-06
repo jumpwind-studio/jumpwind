@@ -11,12 +11,13 @@
     "start": "bun --bun vite start"
   },
   "dependencies": {
-    "@jumpwind/ui": "workspace:*",
-    "@jumpwind/tsconfig": "workspace:*",
     "@corvu/utils": "catalog:frontend",
     "@effect/platform": "catalog:effect",
     "@effect/platform-bun": "catalog:effect",
+    "@jumpwind/tsconfig": "workspace:*",
+    "@jumpwind/ui": "workspace:*",
     "@kobalte/core": "catalog:frontend",
+    "@tailwindcss/vite": "catalog:frontend",
     "@tanstack/solid-router": "^1.131.41",
     "@tanstack/solid-start": "^1.131.41",
     "@unpic/solid": "catalog:frontend",
@@ -26,17 +27,16 @@
     "lucide-solid": "catalog:frontend",
     "solid-js": "catalog:frontend",
     "solid-sonner": "catalog:frontend",
-    "tailwind-variants": "catalog:frontend"
+    "tailwind-merge": "catalog:frontend",
+    "tailwind-variants": "catalog:frontend",
+    "tailwindcss": "catalog:frontend",
+    "tw-animate-css": "catalog:frontend"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "catalog:frontend",
-    "tailwind-merge": "catalog:frontend",
     "@tanstack/solid-router-devtools": "^1.131.41",
     "shadcn": "catalog:frontend",
     "rollup-plugin-visualizer": "^6.0.3",
     "solid-devtools": "catalog:frontend",
-    "tailwindcss": "catalog:frontend",
-    "tw-animate-css": "catalog:frontend",
     "typescript": "catalog:",
     "vite": "catalog:frontend",
     "vite-plugin-solid": "catalog:frontend",

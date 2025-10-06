@@ -345,6 +345,16 @@ export class RegistryApi extends Effect.Service<RegistryApi>()("RegistryApi", {
         const registry = yield* cachedRegistry;
         return registry;
       }),
+      getCategory: Effect.fn("get-category")(function* (category: string) {
+        const registry = yield* cachedRegistry;
+        const files = registry.items
+          .filter((c) => c.categories?.includes(category))
+          .flatMap((component) => component?.files ?? []);
+        if (!files) return Option.none();
+        return yield* Effect.all(files.map(readRegistryItem), {
+          concurrency: "unbounded",
+        });
+      }),
       getItem: Effect.fn("get-item")(
         function* (name: string) {
           const registry = yield* cachedRegistry;

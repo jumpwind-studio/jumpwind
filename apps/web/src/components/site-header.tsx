@@ -7,6 +7,7 @@ import {
 } from "@jumpwind/ui/sheet";
 import MenuIcon from "lucide-solid/icons/menu";
 import { createSignal, For } from "solid-js";
+import { SignIn } from "@/components/sign-in";
 import { Link } from "@/components/ui/link";
 import { cn } from "@/lib/utils";
 
@@ -47,6 +48,7 @@ export function SiteHeader() {
               </Link>
             )}
           </For>
+          <SignIn />
         </div>
 
         {/* Mobile Nav */}
