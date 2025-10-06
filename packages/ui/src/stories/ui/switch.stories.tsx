@@ -1,7 +1,12 @@
 import { expect, userEvent } from "storybook/test";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { Label } from "../../ui/label.jsx";
-import { Switch, SwitchLabel } from "../../ui/switch.jsx";
+import {
+  Switch,
+  SwitchControl,
+  SwitchInput,
+  SwitchLabel,
+} from "../../ui/switch.jsx";
 
 /**
  * A control that allows the user to toggle between checked and not checked.
@@ -16,9 +21,11 @@ const meta = {
   render: (args) => (
     <div class="flex items-center space-x-2">
       <Switch {...args}>
+        <SwitchInput />
         <SwitchLabel as={Label} for={args.id}>
           Airplane Mode
         </SwitchLabel>
+        <SwitchControl />
       </Switch>
     </div>
   ),

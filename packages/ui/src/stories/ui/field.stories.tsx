@@ -5,7 +5,9 @@ import { Button } from "../../ui/button.jsx";
 import {
   Checkbox,
   CheckboxControl,
+  CheckboxDescription,
   CheckboxInput,
+  CheckboxLabel,
 } from "../../ui/checkbox.jsx";
 import {
   Field,
@@ -21,8 +23,12 @@ import {
 import { Input } from "../../ui/input.jsx";
 import {
   RadioGroup,
+  RadioGroupDescription,
   RadioGroupItem,
+  RadioGroupItemControl,
+  RadioGroupItemInput,
   RadioGroupItemLabel,
+  RadioGroupLabel,
 } from "../../ui/radio-group.jsx";
 import {
   Select,
@@ -31,8 +37,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../ui/select.jsx";
-import { Slider } from "../../ui/slider.jsx";
-import { Switch } from "../../ui/switch.jsx";
+import {
+  Slider,
+  SliderFill,
+  SliderLabel,
+  SliderThumb,
+  SliderTrack,
+  SliderValueLabel,
+} from "../../ui/slider.jsx";
+import {
+  Switch,
+  SwitchControl,
+  SwitchDescription,
+  SwitchInput,
+  SwitchLabel,
+} from "../../ui/switch.jsx";
+import {
+  TextField,
+  TextFieldDescription,
+  TextFieldInput,
+  TextFieldLabel,
+} from "../../ui/text-field.jsx";
 import { Textarea } from "../../ui/textarea.jsx";
 
 type FieldStoryComponent = Component<
@@ -58,34 +83,27 @@ const meta: Meta<FieldStoryComponent> = {
               All transactions are secure and encrypted
             </FieldDescription>
             <FieldGroup>
-              <Field>
-                <FieldLabel for="checkout-7j9-card-name-43j">
-                  Name on Card
-                </FieldLabel>
-                <Input
-                  id="checkout-7j9-card-name-43j"
-                  placeholder="Evil Rabbit"
-                  required
-                />
-              </Field>
-              <Field>
-                <FieldLabel for="checkout-7j9-card-number-uw1">
-                  Card Number
-                </FieldLabel>
-                <Input
-                  id="checkout-7j9-card-number-uw1"
+              <TextField as={Field}>
+                <TextFieldLabel as={FieldLabel}>Name on Card</TextFieldLabel>
+                <TextFieldInput as={Input} placeholder="Evil Rabbit" required />
+              </TextField>
+              <TextField as={Field}>
+                <TextFieldLabel as={FieldLabel}>Card Number</TextFieldLabel>
+                <TextFieldInput
+                  as={Input}
                   placeholder="1234 5678 9012 3456"
                   required
                 />
-                <FieldDescription>
+                <TextFieldDescription>
                   Enter your 16-digit card number
-                </FieldDescription>
-              </Field>
+                </TextFieldDescription>
+              </TextField>
               <div class="grid grid-cols-3 gap-4">
                 <Field>
-                  <FieldLabel for="checkout-exp-month-ts6">Month</FieldLabel>
+                  <FieldLabel>Month</FieldLabel>
                   <Select
                     defaultValue=""
+                    placeholder="MM"
                     options={[
                       "01",
                       "02",
@@ -105,16 +123,15 @@ const meta: Meta<FieldStoryComponent> = {
                         {props.item.textValue}
                       </SelectItem>
                     )}
-                    placeholder="MM"
                   >
-                    <SelectTrigger id="checkout-exp-month-ts6">
+                    <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent />
                   </Select>
                 </Field>
                 <Field>
-                  <FieldLabel for="checkout-7j9-exp-year-f59">Year</FieldLabel>
+                  <FieldLabel>Year</FieldLabel>
                   <Select
                     defaultValue=""
                     options={["2024", "2025", "2026", "2027", "2028", "2029"]}
@@ -126,16 +143,16 @@ const meta: Meta<FieldStoryComponent> = {
                     placeholder="YYYY"
                     sameWidth={false}
                   >
-                    <SelectTrigger id="checkout-7j9-exp-year-f59">
+                    <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent />
                   </Select>
                 </Field>
-                <Field>
-                  <FieldLabel for="checkout-7j9-cvv">CVV</FieldLabel>
-                  <Input id="checkout-7j9-cvv" placeholder="123" required />
-                </Field>
+                <TextField as={Field}>
+                  <TextFieldLabel as={FieldLabel}>CVV</TextFieldLabel>
+                  <TextFieldInput as={Input} placeholder="123" required />
+                </TextField>
               </div>
             </FieldGroup>
           </FieldSet>
@@ -147,14 +164,11 @@ const meta: Meta<FieldStoryComponent> = {
             </FieldDescription>
             <FieldGroup>
               <Field orientation="horizontal">
-                <Checkbox id="checkout-7j9-same-as-shipping-wgm" defaultChecked>
+                <Checkbox defaultChecked>
                   <CheckboxInput />
                   <CheckboxControl />
                 </Checkbox>
-                <FieldLabel
-                  for="checkout-7j9-same-as-shipping-wgm"
-                  class="font-normal"
-                >
+                <FieldLabel class="font-normal">
                   Same as shipping address
                 </FieldLabel>
               </Field>
@@ -163,11 +177,8 @@ const meta: Meta<FieldStoryComponent> = {
           <FieldSet>
             <FieldGroup>
               <Field>
-                <FieldLabel for="checkout-7j9-optional-comments">
-                  Comments
-                </FieldLabel>
+                <FieldLabel>Comments</FieldLabel>
                 <Textarea
-                  id="checkout-7j9-optional-comments"
                   placeholder="Add any additional comments"
                   class="resize-none"
                 />
@@ -195,24 +206,24 @@ export const DefaultStory: Story = {
 };
 export const InputStory: Story = {
   name: "Input",
-  render: (_props) => (
+  render: () => (
     <div class="w-full max-w-md">
       <FieldSet>
         <FieldGroup>
-          <Field>
-            <FieldLabel for="username">Username</FieldLabel>
-            <Input id="username" type="text" placeholder="Max Leiter" />
-            <FieldDescription>
+          <TextField as={Field}>
+            <TextFieldLabel as={FieldLabel}>Username</TextFieldLabel>
+            <TextFieldInput as={Input} type="text" placeholder="Max Leiter" />
+            <TextFieldDescription as={FieldDescription}>
               Choose a unique username for your account.
-            </FieldDescription>
-          </Field>
-          <Field>
-            <FieldLabel for="password">Password</FieldLabel>
-            <FieldDescription>
+            </TextFieldDescription>
+          </TextField>
+          <TextField as={Field}>
+            <TextFieldLabel as={FieldLabel}>Password</TextFieldLabel>
+            <TextFieldDescription as={FieldDescription}>
               Must be at least 8 characters long.
-            </FieldDescription>
-            <Input id="password" type="password" placeholder="********" />
-          </Field>
+            </TextFieldDescription>
+            <TextFieldInput as={Input} type="password" placeholder="********" />
+          </TextField>
         </FieldGroup>
       </FieldSet>
     </div>
@@ -225,9 +236,8 @@ export const TextareaStory: Story = {
       <FieldSet>
         <FieldGroup>
           <Field>
-            <FieldLabel for="feedback">Feedback</FieldLabel>
+            <FieldLabel>Feedback</FieldLabel>
             <Textarea
-              id="feedback"
               placeholder="Your feedback helps us improve..."
               rows={4}
             />
@@ -243,33 +253,41 @@ export const TextareaStory: Story = {
 export const SelectStory: Story = {
   name: "Select",
 };
+
 export const SliderStory: Story = {
   name: "Slider",
   render: () => {
-    const [value, setValue] = createSignal<[number, number]>([3, 5]);
+    const [values, setValues] = createSignal<[number, number]>([200, 800]);
+
     return (
       <div class="w-full max-w-md">
-        <Field>
-          <FieldTitle>Price Range</FieldTitle>
-          <FieldDescription>
-            Set your budget range ($
-            <span class="font-medium tabular-nums">{value()[0]}</span> -{" "}
-            <span class="font-medium tabular-nums">{value()[1]}</span>).
-          </FieldDescription>
-          <Slider
-            value={value()}
-            onValueChange={setValue}
-            max={1000}
-            min={0}
-            step={10}
-            class="mt-2 w-full"
-            aria-label="Price Range"
+        <Slider
+          as={Field}
+          value={values()}
+          onChange={setValues}
+          maxValue={1000}
+          minValue={0}
+          step={10}
+          getValueLabel={(params) =>
+            `Set your budget range $${params.values[0]} - $${params.values[1]}.`
+          }
+        >
+          <SliderLabel as={FieldTitle}>Price Range</SliderLabel>
+          <SliderValueLabel
+            as={FieldDescription}
+            class="font-medium tabular-nums"
           />
-        </Field>
+          <SliderTrack class="mt-2 w-full" aria-label="Price Range">
+            <SliderFill />
+            <SliderThumb />
+            <SliderThumb />
+          </SliderTrack>
+        </Slider>
       </div>
     );
   },
 };
+
 export const FieldsetStory: Story = {
   name: "Fieldset",
   render: () => (
@@ -280,25 +298,26 @@ export const FieldsetStory: Story = {
           We need your address to deliver your order.
         </FieldDescription>
         <FieldGroup>
-          <Field>
-            <FieldLabel for="street">Street Address</FieldLabel>
-            <Input id="street" type="text" placeholder="123 Main St" />
-          </Field>
+          <TextField as={Field}>
+            <TextFieldLabel as={FieldLabel}>Street Address</TextFieldLabel>
+            <TextFieldInput as={Input} type="text" placeholder="123 Main St" />
+          </TextField>
           <div class="grid grid-cols-2 gap-4">
-            <Field>
-              <FieldLabel for="city">City</FieldLabel>
-              <Input id="city" type="text" placeholder="New York" />
-            </Field>
-            <Field>
-              <FieldLabel for="zip">Postal Code</FieldLabel>
-              <Input id="zip" type="text" placeholder="90502" />
-            </Field>
+            <TextField as={Field}>
+              <TextFieldLabel as={FieldLabel}>City</TextFieldLabel>
+              <TextFieldInput as={Input} type="text" placeholder="New York" />
+            </TextField>
+            <TextField>
+              <TextFieldLabel as={FieldLabel}>Postal Code</TextFieldLabel>
+              <TextFieldInput as={Input} type="text" placeholder="90502" />
+            </TextField>
           </div>
         </FieldGroup>
       </FieldSet>
     </div>
   ),
 };
+
 export const CheckboxStory: Story = {
   name: "Checkbox",
   render: () => (
@@ -312,125 +331,151 @@ export const CheckboxStory: Story = {
             Select the items you want to show on the desktop.
           </FieldDescription>
           <FieldGroup class="gap-3">
-            <Field orientation="horizontal">
-              <Checkbox id="finder-pref-9k2-hard-disks-ljj" />
-              <FieldLabel
-                for="finder-pref-9k2-hard-disks-ljj"
-                class="font-normal"
-                defaultChecked
-              >
+            <Checkbox as={Field} orientation="horizontal">
+              <CheckboxInput />
+              <CheckboxControl />
+              <CheckboxLabel as={FieldLabel} defaultChecked class="font-normal">
                 Hard disks
-              </FieldLabel>
-            </Field>
-            <Field orientation="horizontal">
-              <Checkbox id="finder-pref-9k2-external-disks-1yg" />
-              <FieldLabel
-                for="finder-pref-9k2-external-disks-1yg"
-                class="font-normal"
-              >
+              </CheckboxLabel>
+            </Checkbox>
+            <Checkbox as={Field} orientation="horizontal">
+              <CheckboxInput />
+              <CheckboxControl />
+              <CheckboxLabel as={FieldLabel} class="font-normal">
                 External disks
-              </FieldLabel>
-            </Field>
-            <Field orientation="horizontal">
-              <Checkbox id="finder-pref-9k2-cds-dvds-fzt" />
-              <FieldLabel
-                for="finder-pref-9k2-cds-dvds-fzt"
-                class="font-normal"
-              >
+              </CheckboxLabel>
+            </Checkbox>
+            <Checkbox as={Field} orientation="horizontal">
+              <CheckboxInput />
+              <CheckboxControl />
+              <CheckboxLabel as={FieldLabel} class="font-normal">
                 CDs, DVDs, and iPods
-              </FieldLabel>
-            </Field>
-            <Field orientation="horizontal">
-              <Checkbox id="finder-pref-9k2-connected-servers-6l2" />
-              <FieldLabel
-                for="finder-pref-9k2-connected-servers-6l2"
-                class="font-normal"
-              >
+              </CheckboxLabel>
+            </Checkbox>
+            <Checkbox as={Field} orientation="horizontal">
+              <CheckboxInput />
+              <CheckboxControl />
+              <CheckboxLabel as={FieldLabel} class="font-normal">
                 Connected servers
-              </FieldLabel>
-            </Field>
+              </CheckboxLabel>
+            </Checkbox>
           </FieldGroup>
         </FieldSet>
         <FieldSeparator />
-        <Field orientation="horizontal">
-          <Checkbox id="finder-pref-9k2-sync-folders-nep" defaultChecked />
+        <Checkbox as={Field} orientation="horizontal" defaultChecked>
+          <CheckboxInput />
+          <CheckboxControl />
           <FieldContent>
-            <FieldLabel for="finder-pref-9k2-sync-folders-nep">
+            <CheckboxLabel as={FieldLabel}>
               Sync Desktop & Documents folders
-            </FieldLabel>
-            <FieldDescription>
+            </CheckboxLabel>
+            <CheckboxDescription as={FieldDescription}>
               Your Desktop & Documents folders are being synced with iCloud
               Drive. You can access them from other devices.
-            </FieldDescription>
+            </CheckboxDescription>
           </FieldContent>
-        </Field>
+        </Checkbox>
       </FieldGroup>
     </div>
   ),
 };
+
 export const RadioStory: Story = {
   name: "Radio",
+  render: () => (
+    <div class="w-full max-w-md">
+      <RadioGroup as={FieldSet} defaultValue="monthly">
+        <RadioGroupLabel as={FieldLabel}>Subscription Plan</RadioGroupLabel>
+        <RadioGroupDescription as={FieldDescription}>
+          Yearly and lifetime plans offer significant savings.
+        </RadioGroupDescription>
+        <Field>
+          <RadioGroupItem as={Field} value="monthly" orientation="horizontal">
+            <RadioGroupItemInput />
+            <RadioGroupItemControl />
+            <RadioGroupItemLabel as={FieldLabel} class="font-normal">
+              Monthly ($9.99/month)
+            </RadioGroupItemLabel>
+          </RadioGroupItem>
+          <RadioGroupItem as={Field} value="yearly" orientation="horizontal">
+            <RadioGroupItemInput />
+            <RadioGroupItemControl />
+            <RadioGroupItemLabel as={FieldLabel} class="font-normal">
+              Yearly ($99.99/year)
+            </RadioGroupItemLabel>
+          </RadioGroupItem>
+          <RadioGroupItem as={Field} value="lifetime" orientation="horizontal">
+            <RadioGroupItemInput />
+            <RadioGroupItemControl />
+            <RadioGroupItemLabel as={FieldLabel} class="font-normal">
+              Lifetime ($299.99)
+            </RadioGroupItemLabel>
+          </RadioGroupItem>
+        </Field>
+      </RadioGroup>
+    </div>
+  ),
 };
+
 export const SwitchStory: Story = {
   name: "Switch",
   render: () => (
     <div class="w-full max-w-md">
-      <Field orientation="horizontal">
+      <Switch as={Field} orientation="horizontal">
+        <SwitchInput />
         <FieldContent>
-          <FieldLabel for="2fa">Multi-factor authentication</FieldLabel>
-          <FieldDescription>
+          <SwitchLabel as={FieldLabel}>Multi-factor authentication</SwitchLabel>
+          <SwitchDescription as={FieldDescription}>
             Enable multi-factor authentication. If you do not have a two-factor
             device, you can use a one-time code sent to your email.
-          </FieldDescription>
+          </SwitchDescription>
         </FieldContent>
-        <Switch id="2fa" />
-      </Field>
+        <SwitchControl />
+      </Switch>
     </div>
   ),
 };
+
 export const ChoiceCardStory: Story = {
   name: "Choice Card",
   render: () => (
     <div class="w-full max-w-md">
       <FieldGroup>
-        <FieldSet>
-          <FieldLabel for="compute-environment-p8w">
-            Compute Environment
-          </FieldLabel>
-          <FieldDescription>
+        <RadioGroup as={FieldSet} defaultValue="kubernetes">
+          <RadioGroupLabel as={FieldLabel}>Compute Environment</RadioGroupLabel>
+          <RadioGroupDescription as={FieldDescription}>
             Select the compute environment for your cluster.
-          </FieldDescription>
-          <RadioGroup defaultValue="kubernetes">
-            <RadioGroupItem value="kubernetes">
-              <FieldLabel as={RadioGroupItemLabel}>
-                <Field orientation="horizontal">
-                  <FieldContent>
-                    <FieldTitle>Kubernetes</FieldTitle>
-                    <FieldDescription>
-                      Run GPU workloads on a K8s configured cluster.
-                    </FieldDescription>
-                  </FieldContent>
-                </Field>
-              </FieldLabel>
-            </RadioGroupItem>
-            <RadioGroupItem value="vm">
-              <FieldLabel as={RadioGroupItemLabel}>
-                <Field orientation="horizontal">
-                  <FieldContent>
-                    <FieldTitle>Virtual Machine</FieldTitle>
-                    <FieldDescription>
-                      Access a VM configured cluster to run GPU workloads.
-                    </FieldDescription>
-                  </FieldContent>
-                </Field>
-              </FieldLabel>
-            </RadioGroupItem>
-          </RadioGroup>
-        </FieldSet>
+          </RadioGroupDescription>
+          <RadioGroupItem value="kubernetes">
+            <RadioGroupItemLabel as={FieldLabel}>
+              <Field orientation="horizontal">
+                <FieldContent>
+                  <FieldTitle>Kubernetes</FieldTitle>
+                  <FieldDescription>
+                    Run GPU workloads on a K8s configured cluster.
+                  </FieldDescription>
+                </FieldContent>
+              </Field>
+            </RadioGroupItemLabel>
+          </RadioGroupItem>
+          <RadioGroupItem value="vm">
+            <FieldLabel as={RadioGroupItemLabel}>
+              <Field orientation="horizontal">
+                <FieldContent>
+                  <FieldTitle>Virtual Machine</FieldTitle>
+                  <FieldDescription>
+                    Access a VM configured cluster to run GPU workloads.
+                  </FieldDescription>
+                </FieldContent>
+              </Field>
+            </FieldLabel>
+          </RadioGroupItem>
+        </RadioGroup>
       </FieldGroup>
     </div>
   ),
 };
+
 export const FieldGroupStory: Story = {
   name: "Field Group",
   render: () => (
@@ -443,12 +488,18 @@ export const FieldGroupStory: Story = {
             research or image generation.
           </FieldDescription>
           <FieldGroup data-slot="checkbox-group">
-            <Field orientation="horizontal">
-              <Checkbox id="push" defaultChecked disabled />
-              <FieldLabel for="push" class="font-normal">
+            <Checkbox
+              as={Field}
+              orientation="horizontal"
+              defaultChecked
+              disabled
+            >
+              <CheckboxInput />
+              <CheckboxControl />
+              <CheckboxLabel as={FieldLabel} class="font-normal">
                 Push notifications
-              </FieldLabel>
-            </Field>
+              </CheckboxLabel>
+            </Checkbox>
           </FieldGroup>
         </FieldSet>
         <FieldSeparator />
@@ -459,18 +510,20 @@ export const FieldGroupStory: Story = {
             <a href="#">Manage tasks</a>
           </FieldDescription>
           <FieldGroup data-slot="checkbox-group">
-            <Field orientation="horizontal">
-              <Checkbox id="push-tasks" />
-              <FieldLabel for="push-tasks" class="font-normal">
+            <Checkbox as={Field} orientation="horizontal">
+              <CheckboxInput />
+              <CheckboxControl />
+              <CheckboxLabel as={FieldLabel} class="font-normal">
                 Push notifications
-              </FieldLabel>
-            </Field>
-            <Field orientation="horizontal">
-              <Checkbox id="email-tasks" />
-              <FieldLabel for="email-tasks" class="font-normal">
+              </CheckboxLabel>
+            </Checkbox>
+            <Checkbox as={Field} orientation="horizontal">
+              <CheckboxInput />
+              <CheckboxControl />
+              <CheckboxLabel as={FieldLabel} class="font-normal">
                 Email notifications
-              </FieldLabel>
-            </Field>
+              </CheckboxLabel>
+            </Checkbox>
           </FieldGroup>
         </FieldSet>
       </FieldGroup>

@@ -4,7 +4,7 @@ import CheckIcon from "lucide-solid/icons/check";
 import ChevronDownIcon from "lucide-solid/icons/chevron-down";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
-import { labelVariants } from "./label.jsx";
+import { Field, FieldDescription, FieldError, FieldLabel } from "./field.jsx";
 
 const useSelect = SelectPrimitive.useSelectContext;
 
@@ -13,6 +13,7 @@ function Select<TOption>(
 ) {
   return (
     <SelectPrimitive.Root<TOption, never, "div">
+      as={Field}
       data-slot="select"
       {...props}
     />
@@ -153,13 +154,11 @@ function SelectSeparator(
 }
 
 function SelectLabel(props: ComponentProps<typeof SelectPrimitive.Label>) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <SelectPrimitive.Label
+      as={FieldLabel}
       data-slot="select-label"
-      class={labelVariants({ variant: "label", class: local.class })}
-      {...rest}
+      {...props}
     />
   );
 }
@@ -167,27 +166,23 @@ function SelectLabel(props: ComponentProps<typeof SelectPrimitive.Label>) {
 function SelectDescription(
   props: ComponentProps<typeof SelectPrimitive.Description>,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <SelectPrimitive.Description
+      as={FieldDescription}
       data-slot="select-description"
-      class={labelVariants({ variant: "description", class: local.class })}
-      {...rest}
+      {...props}
     />
   );
 }
 
-function SelectErrorMessage(
+function SelectError(
   props: ComponentProps<typeof SelectPrimitive.ErrorMessage>,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <SelectPrimitive.ErrorMessage
-      data-slot="select-error-message"
-      class={labelVariants({ variant: "error", class: local.class })}
-      {...rest}
+      as={FieldError}
+      data-slot="select-error"
+      {...props}
     />
   );
 }
@@ -204,7 +199,7 @@ export {
   // Forms
   SelectLabel,
   SelectDescription,
-  SelectErrorMessage,
+  SelectError,
   // Hooks
   useSelect,
 };

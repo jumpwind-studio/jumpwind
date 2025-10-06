@@ -1,6 +1,8 @@
 import type { PickPartial } from "@jumpwind/utils";
+import ArrowUpRightIcon from "lucide-solid/icons/arrow-up-right";
 import BellIcon from "lucide-solid/icons/bell";
 import CloudIcon from "lucide-solid/icons/cloud";
+import FolderCodeIcon from "lucide-solid/icons/folder-code";
 import PlusIcon from "lucide-solid/icons/plus";
 import RefreshCcwIcon from "lucide-solid/icons/refresh-ccw";
 import SearchIcon from "lucide-solid/icons/search";
@@ -33,20 +35,36 @@ type EmptyStoryComponent = Component<
 const meta = {
   title: "@jumpwind/ui/Empty",
   component: Empty as EmptyStoryComponent,
-  args: {
-    children: "Button",
-  },
-  argTypes: {
-    children: {
-      control: "text",
-    },
-  },
   parameters: {
     layout: "centered",
   },
-  render: (args) => (
-    <Empty {...args}>
-      <Button>{args.children}</Button>
+  render: () => (
+    <Empty>
+      <EmptyHeader>
+        <EmptyMedia variant="icon">
+          <FolderCodeIcon />
+        </EmptyMedia>
+        <EmptyTitle>No Projects Yet</EmptyTitle>
+        <EmptyDescription>
+          You haven&apos;t created any projects yet. Get started by creating
+          your first project.
+        </EmptyDescription>
+      </EmptyHeader>
+      <EmptyContent>
+        <div class="flex gap-2">
+          <Button>Create Project</Button>
+          <Button variant="outline">Import Project</Button>
+        </div>
+      </EmptyContent>
+      <Button
+        as="a"
+        variant="link"
+        class="text-muted-foreground"
+        size="sm"
+        href="#"
+      >
+        Learn More <ArrowUpRightIcon />
+      </Button>
     </Empty>
   ),
 } satisfies Meta<EmptyStoryComponent>;

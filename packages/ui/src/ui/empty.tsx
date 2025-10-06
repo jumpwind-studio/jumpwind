@@ -2,6 +2,9 @@ import { type ComponentProps, mergeProps, splitProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 import { cn } from "../lib/utils.js";
 
+/**
+ * Wraps the EmptyHeader and EmptyContent components.
+ */
 function Empty(props: ComponentProps<"div">) {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -17,6 +20,9 @@ function Empty(props: ComponentProps<"div">) {
   );
 }
 
+/**
+ * Wraps the empty media, title, and description.
+ */
 function EmptyHeader(props: ComponentProps<"div">) {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -47,6 +53,10 @@ const emptyMediaVariants = tv({
 
 type EmptyMediaVariantProps = VariantProps<typeof emptyMediaVariants>;
 
+/**
+ * Media of the empty state such as an icon or an image.
+ * Can also be used to display other components such as an avatar.
+ */
 function EmptyMedia(props: ComponentProps<"div"> & EmptyMediaVariantProps) {
   const defaultedProps = mergeProps({ variant: "default" as const }, props);
   const [local, rest] = splitProps(defaultedProps, ["class", "variant"]);
@@ -63,6 +73,9 @@ function EmptyMedia(props: ComponentProps<"div"> & EmptyMediaVariantProps) {
   );
 }
 
+/**
+ * Title of the empty state.
+ */
 function EmptyTitle(props: ComponentProps<"div">) {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -75,6 +88,9 @@ function EmptyTitle(props: ComponentProps<"div">) {
   );
 }
 
+/**
+ * Description of the empty state.
+ */
 function EmptyDescription(props: ComponentProps<"p">) {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -90,6 +106,9 @@ function EmptyDescription(props: ComponentProps<"p">) {
   );
 }
 
+/**
+ * Content of the empty state such as a button, input or a link.
+ */
 function EmptyContent(props: ComponentProps<"div">) {
   const [local, rest] = splitProps(props, ["class"]);
 

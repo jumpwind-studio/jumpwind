@@ -1,22 +1,23 @@
-import type * as CheckboxPrimitive from "@kobalte/core/checkbox";
+import type * as SwitchPrimitive from "@kobalte/core/switch";
 import { useStore } from "@tanstack/solid-form";
 import { Show, splitProps } from "solid-js";
+import { FieldContent } from "../ui/field.jsx";
 import {
-  Checkbox,
-  CheckboxControl,
-  CheckboxDescription,
-  CheckboxError,
-  CheckboxInput,
-  CheckboxLabel,
-} from "../ui/checkbox.jsx";
+  Switch,
+  SwitchControl,
+  SwitchDescription,
+  SwitchError,
+  SwitchInput,
+  SwitchLabel,
+} from "../ui/switch.jsx";
 import { useField } from "./context.js";
 import type { FormProps } from "./types.js";
 import { squash } from "./utils.js";
 
-export interface FormCheckboxProps
-  extends FormProps<CheckboxPrimitive.CheckboxRootOptions> {}
+export interface FormSwitchProps
+  extends FormProps<SwitchPrimitive.SwitchRootOptions> {}
 
-export function FormCheckbox(props: FormCheckboxProps) {
+export function FormSwitch(props: FormSwitchProps) {
   const [local, rest] = splitProps(props, [
     "field",
     "class",
@@ -29,8 +30,8 @@ export function FormCheckbox(props: FormCheckboxProps) {
   const errors = useStore(field().store, (state) => state.meta.errors);
 
   return (
-    <Checkbox
-      data-slot="form-checkbox"
+    <Switch
+      data-slot="form-switch"
       name={field().name}
       checked={value()}
       onChange={field().handleChange}
@@ -39,23 +40,21 @@ export function FormCheckbox(props: FormCheckboxProps) {
       class={local.class}
       {...rest}
     >
-      <CheckboxInput data-slot="form-checkbox-input" />
-      <CheckboxControl data-slot="form-checkbox-control" />
-      <div class="space-y-1 leading-none">
+      <SwitchInput data-slot="form-switch-input" />
+      <FieldContent>
         <Show when={local.label}>
-          <CheckboxLabel data-slot="form-checkbox-label">
-            {local.label}
-          </CheckboxLabel>
+          <SwitchLabel data-slot="form-switch-label">{local.label}</SwitchLabel>
         </Show>
         <Show when={local.description}>
-          <CheckboxDescription data-slot="form-checkbox-description">
+          <SwitchDescription data-slot="form-switch-description">
             {local.description}
-          </CheckboxDescription>
+          </SwitchDescription>
         </Show>
-        <CheckboxError data-slot="form-checkbox-error">
+        <SwitchError data-slot="form-switch-error">
           {squash(errors())}
-        </CheckboxError>
-      </div>
-    </Checkbox>
+        </SwitchError>
+      </FieldContent>
+      <SwitchControl data-slot="form-switch-control" />
+    </Switch>
   );
 }

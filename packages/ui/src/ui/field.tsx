@@ -1,11 +1,16 @@
+import { isFunction } from "@corvu/utils";
+import createOnce from "@corvu/utils/create/once";
 import {
   type ComponentProps,
-  createMemo,
   For,
+  type JSX,
+  Match,
   mergeProps,
   type ParentProps,
   Show,
+  Switch,
   splitProps,
+  untrack,
 } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 import { cn } from "../lib/utils.js";
@@ -66,7 +71,7 @@ function FieldGroup(props: ComponentProps<"div">) {
 }
 
 const fieldVariants = tv({
-  base: "group/field flex w-full gap-3 data-[invalid=true]:text-destructive",
+  base: "group/field flex w-full gap-3 data-invalid:text-destructive data-[invalid=true]:text-destructive",
   variants: {
     orientation: {
       vertical: ["flex-col [&>*]:w-full [&>.sr-only]:w-auto"],
@@ -125,55 +130,6 @@ function FieldContent(props: ComponentProps<"div">) {
   );
 }
 
-function FieldLabel(props: ComponentProps<typeof Label>) {
-  const [local, rest] = splitProps(props, ["class"]);
-
-  return (
-    <Label
-      data-slot="field-label"
-      class={cn(
-        "group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50",
-        "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:rounded-md has-[>[data-slot=field]]:border [&>*]:data-[slot=field]:p-4",
-        "has-data-[state=checked]:border-primary has-data-[state=checked]:bg-primary/5 dark:has-data-[state=checked]:bg-primary/10",
-        local.class,
-      )}
-      {...rest}
-    />
-  );
-}
-
-function FieldTitle(props: ComponentProps<"div">) {
-  const [local, rest] = splitProps(props, ["class"]);
-
-  return (
-    <div
-      data-slot="field-label"
-      class={cn(
-        "flex w-fit items-center gap-2 font-medium text-sm leading-snug group-data-[disabled=true]/field:opacity-50",
-        local.class,
-      )}
-      {...rest}
-    />
-  );
-}
-
-function FieldDescription(props: ComponentProps<"p">) {
-  const [local, rest] = splitProps(props, ["class"]);
-
-  return (
-    <p
-      data-slot="field-description"
-      class={cn(
-        "font-normal text-muted-foreground text-sm leading-normal group-has-[[data-orientation=horizontal]]/field:text-balance",
-        "nth-last-2:-mt-1 [[data-variant=legend]+&]:-mt-1.5 last:mt-0",
-        "[&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4",
-        local.class,
-      )}
-      {...rest}
-    />
-  );
-}
-
 function FieldSeparator(props: ParentProps<ComponentProps<"div">>) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
@@ -200,50 +156,107 @@ function FieldSeparator(props: ParentProps<ComponentProps<"div">>) {
   );
 }
 
-// TODO: incomplete
-function FieldError(
-  props: ComponentProps<"div"> & {
-    errors?: Array<{ message?: string }>;
+function FieldTitle(props: ComponentProps<"div">) {
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <div
+      data-slot="field-title"
+      class={cn(
+        "flex w-fit items-center gap-2 font-medium text-sm leading-snug group-data-[disabled=true]/field:opacity-50",
+        local.class,
+      )}
+      {...rest}
+    />
+  );
+}
+
+function FieldLabel(props: ComponentProps<typeof Label>) {
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <Label
+      data-slot="field-label"
+      class={cn(
+        "group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50",
+        "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:rounded-md has-[>[data-slot=field]]:border [&>*]:data-[slot=field]:p-4",
+        "has-data-[state=checked]:border-primary has-data-[state=checked]:bg-primary/5 dark:has-data-[state=checked]:bg-primary/10",
+        local.class,
+      )}
+      {...rest}
+    />
+  );
+}
+
+function FieldDescription(props: ComponentProps<"p">) {
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <p
+      data-slot="field-description"
+      class={cn(
+        "font-normal text-muted-foreground text-sm leading-normal group-has-[[data-orientation=horizontal]]/field:text-balance",
+        "nth-last-2:-mt-1 [[data-variant=legend]+&]:-mt-1.5 last:mt-0",
+        "[&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4",
+        local.class,
+      )}
+      {...rest}
+    />
+  );
+}
+
+function FieldError<Errors extends { message?: string }[]>(
+  props: Omit<ComponentProps<"div">, "children"> & {
+    errors?: Errors;
+    children?: JSX.Element | ((errors?: Errors) => JSX.Element);
   },
 ) {
   const [local, rest] = splitProps(props, ["class", "children", "errors"]);
 
-  const content = createMemo(() => {
-    if (local.children) {
-      return local.children;
-    }
+  const memoizedChildren = createOnce(() => local.children);
 
-    if (local.errors?.length === 1 && local.errors[0]?.message) {
-      return local.errors?.[0].message;
+  const resolveChildren = () => {
+    const children = memoizedChildren()();
+    if (isFunction(children)) {
+      return children(local.errors);
     }
-
-    return (
-      <Show when={local.errors}>
-        <ul class="ml-4 flex list-disc flex-col gap-1">
-          <For each={local.errors}>
-            {(error) => (
-              <Show when={error?.message}>
-                <li>{error.message}</li>
-              </Show>
-            )}
-          </For>
-        </ul>
-      </Show>
-    );
-  });
+    return children;
+  };
 
   return (
-    <Show when={content()}>
-      {(content) => (
-        <div
-          role="alert"
-          data-slot="field-error"
-          class={cn("font-normal text-destructive text-sm", local.class)}
-          {...rest}
-        >
-          {content()}
-        </div>
-      )}
+    <Show when={resolveChildren() || local.errors}>
+      <div
+        role="alert"
+        data-slot="field-error"
+        class={cn("font-normal text-destructive text-sm", local.class)}
+        {...rest}
+      >
+        <Switch>
+          <Match when={resolveChildren()}>
+            {untrack(() => resolveChildren())}
+          </Match>
+          <Match when={local.errors}>
+            {(errors) => (
+              <Show
+                when={errors().length === 1 && errors()[0]?.message}
+                fallback={
+                  <ul class="ml-4 flex list-disc flex-col gap-1">
+                    <For each={errors()}>
+                      {(error) => (
+                        <Show when={error?.message}>
+                          {(message) => <li>{message()}</li>}
+                        </Show>
+                      )}
+                    </For>
+                  </ul>
+                }
+              >
+                {(message) => message()}
+              </Show>
+            )}
+          </Match>
+        </Switch>
+      </div>
     </Show>
   );
 }

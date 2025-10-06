@@ -7,7 +7,7 @@ import {
   splitProps,
 } from "solid-js";
 import { cn } from "../lib/utils.js";
-import { labelVariants } from "./label.jsx";
+import { Field, FieldDescription, FieldError, FieldLabel } from "./field.jsx";
 
 const useSlider = SliderPrimitive.useSliderContext;
 
@@ -46,6 +46,7 @@ function Slider(props: ComponentProps<typeof SliderPrimitive.Root>) {
 
   return (
     <SliderPrimitive.Root
+      as={Field}
       data-slot="slider"
       data-orientation={rest.orientation}
       value={local.value}
@@ -131,25 +132,21 @@ function SliderTrack(props: ComponentProps<typeof SliderPrimitive.Track>) {
 function SliderValueLabel(
   props: ComponentProps<typeof SliderPrimitive.ValueLabel>,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <SliderPrimitive.ValueLabel
+      as={FieldDescription}
       data-slot="slider-value-label"
-      class={labelVariants({ variant: "label", class: local.class })}
-      {...rest}
+      {...props}
     />
   );
 }
 
 function SliderLabel(props: ComponentProps<typeof SliderPrimitive.Label>) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <SliderPrimitive.Label
+      as={FieldLabel}
       data-slot="slider-label"
-      class={labelVariants({ variant: "label", class: local.class })}
-      {...rest}
+      {...props}
     />
   );
 }
@@ -157,27 +154,23 @@ function SliderLabel(props: ComponentProps<typeof SliderPrimitive.Label>) {
 function SliderDescription(
   props: ComponentProps<typeof SliderPrimitive.Description>,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <SliderPrimitive.Description
+      as={FieldDescription}
       data-slot="slider-description"
-      class={labelVariants({ variant: "description", class: local.class })}
-      {...rest}
+      {...props}
     />
   );
 }
 
-function SliderErrorMessage(
+function SliderError(
   props: ComponentProps<typeof SliderPrimitive.ErrorMessage>,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <SliderPrimitive.ErrorMessage
-      data-slot="slider-error-message"
-      class={labelVariants({ variant: "error", class: local.class })}
-      {...rest}
+      as={FieldError}
+      data-slot="slider-error"
+      {...props}
     />
   );
 }
@@ -185,11 +178,13 @@ function SliderErrorMessage(
 export {
   Slider,
   SliderTrack,
+  SliderThumb,
+  SliderFill,
   SliderValueLabel,
   // Forms
   SliderLabel,
   SliderDescription,
-  SliderErrorMessage,
+  SliderError,
   // Hooks
   useSlider,
 };

@@ -1,9 +1,14 @@
 import * as RadioGroupPrimitive from "@kobalte/core/radio-group";
-// import DotIcon from "lucide-solid/icons/dot";
 import CircleIcon from "lucide-solid/icons/circle";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
-import { labelVariants } from "./label.jsx";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+  FieldSet,
+} from "./field.jsx";
 
 const useRadioGroup = RadioGroupPrimitive.useRadioGroupContext;
 
@@ -12,6 +17,7 @@ function RadioGroup(props: ComponentProps<typeof RadioGroupPrimitive.Root>) {
 
   return (
     <RadioGroupPrimitive.Root
+      as={FieldSet}
       data-slot="radio-group"
       class={cn("grid gap-3", local.class)}
       {...rest}
@@ -22,36 +28,57 @@ function RadioGroup(props: ComponentProps<typeof RadioGroupPrimitive.Root>) {
 function RadioGroupItem(
   props: ComponentProps<typeof RadioGroupPrimitive.Item>,
 ) {
-  const [local, rest] = splitProps(props, ["class", "children"]);
+  const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <RadioGroupPrimitive.Item
+      as={Field}
       data-slot="radio-group-item"
       class={cn("flex items-center gap-x-2", local.class)}
       {...rest}
+    />
+  );
+}
+
+function RadioGroupItemInput(
+  props: ComponentProps<typeof RadioGroupPrimitive.ItemInput>,
+) {
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <RadioGroupPrimitive.ItemInput
+      data-slot="radio-group-input"
+      class={cn("peer", local.class)}
+      {...rest}
+    />
+  );
+}
+
+function RadioGroupItemControl(
+  props: ComponentProps<typeof RadioGroupPrimitive.ItemControl>,
+) {
+  const [local, rest] = splitProps(props, ["class"]);
+
+  return (
+    <RadioGroupPrimitive.ItemControl
+      data-slot="radio-group-control"
+      class={cn(
+        // Base
+        "relative aspect-square size-4 shrink-0 rounded-full border border-input text-primary shadow-xs outline-none transition-[color,box-shadow] dark:bg-input/30",
+        // Focus-visible
+        "focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
+        // Disabled
+        "disabled:cursor-not-allowed disabled:opacity-50",
+        // Invalid
+        "aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40",
+        local.class,
+      )}
+      {...rest}
     >
-      <RadioGroupPrimitive.ItemInput
-        data-slot="radio-group-input"
-        class="peer"
-      />
-      <RadioGroupPrimitive.ItemControl
-        data-slot="radio-group-control"
-        class={cn(
-          "relative aspect-square size-4 shrink-0 rounded-full border border-input text-primary shadow-xs outline-none transition-[color,box-shadow] dark:bg-input/30",
-          // Focus-visible
-          "focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
-          // Disabled
-          "disabled:cursor-not-allowed disabled:opacity-50",
-          // Invalid
-          "aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40",
-        )}
-      >
-        <RadioGroupPrimitive.ItemIndicator data-slot="radio-group-indicator">
-          <CircleIcon class="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 size-2 fill-primary" />
-        </RadioGroupPrimitive.ItemIndicator>
-      </RadioGroupPrimitive.ItemControl>
-      {local.children}
-    </RadioGroupPrimitive.Item>
+      <RadioGroupPrimitive.ItemIndicator data-slot="radio-group-indicator">
+        <CircleIcon class="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 size-2 fill-primary" />
+      </RadioGroupPrimitive.ItemIndicator>
+    </RadioGroupPrimitive.ItemControl>
   );
 }
 
@@ -62,6 +89,7 @@ function RadioGroupItemLabel(
 
   return (
     <RadioGroupPrimitive.ItemLabel
+      as={FieldLabel}
       data-slot="radio-group-item-label"
       class={cn(
         "font-medium text-primary text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
@@ -75,13 +103,11 @@ function RadioGroupItemLabel(
 function RadioGroupLabel(
   props: ComponentProps<typeof RadioGroupPrimitive.Label>,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <RadioGroupPrimitive.Label
+      as={FieldLabel}
       data-slot="radio-group-label"
-      class={labelVariants({ variant: "label", class: local.class })}
-      {...rest}
+      {...props}
     />
   );
 }
@@ -89,27 +115,23 @@ function RadioGroupLabel(
 function RadioGroupDescription(
   props: ComponentProps<typeof RadioGroupPrimitive.Description>,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <RadioGroupPrimitive.Description
+      as={FieldDescription}
       data-slot="radio-group-description"
-      class={labelVariants({ variant: "description", class: local.class })}
-      {...rest}
+      {...props}
     />
   );
 }
 
-function RadioGroupErrorMessage(
+function RadioGroupError(
   props: ComponentProps<typeof RadioGroupPrimitive.ErrorMessage>,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <RadioGroupPrimitive.ErrorMessage
-      data-slot="radio-group-error-message"
-      class={labelVariants({ variant: "error", class: local.class })}
-      {...rest}
+      as={FieldError}
+      data-slot="radio-group-error"
+      {...props}
     />
   );
 }
@@ -117,11 +139,13 @@ function RadioGroupErrorMessage(
 export {
   RadioGroup,
   RadioGroupItem,
+  RadioGroupItemInput,
+  RadioGroupItemControl,
   RadioGroupItemLabel,
   // Forms
   RadioGroupLabel,
   RadioGroupDescription,
-  RadioGroupErrorMessage,
+  RadioGroupError,
   // Hooks
   useRadioGroup,
 };

@@ -28,7 +28,8 @@
     "@kobalte/core": "catalog:frontend",
     "corvu": "catalog:frontend",
     "lucide-solid": "catalog:frontend",
-    "solid-js": "catalog:frontend"
+    "solid-js": "catalog:frontend",
+    "solid-charts": "catalog:frontend"
   },
   "dependencies": {
     "@jumpwind/tsconfig": "workspace:*",
@@ -190,7 +191,9 @@
       "./toggle-group": "./dist/toggle-group.js",
       "./tooltip": "./dist/tooltip.js",
       "./typography": "./dist/typography.js",
-      "./package.json": "./package.json"
+      "./package.json": "./package.json",
+      "./registry.json": "./registry.json",
+      "./styles.css": "./src/styles/styles.css"
     }
   }
 }

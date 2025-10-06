@@ -20,7 +20,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "../../ui/command.jsx";
-import { Kbd, KbdKey, KbdModifier } from "../../ui/kbd.jsx";
+import { Kbd, KbdGroup, KbdModifier } from "../../ui/kbd.jsx";
 
 const items = [
   {
@@ -166,7 +166,7 @@ export const WithDialog = {
   render: () => {
     const [isOpen, setIsOpen] = createSignal(false);
 
-    createShortcut(["Control", "J"], setIsOpen);
+    createShortcut(["Ctrl", "J"], setIsOpen);
 
     return (
       <>
@@ -179,10 +179,10 @@ export const WithDialog = {
           class="p-2 text-muted-foreground text-sm"
         >
           Press{" "}
-          <Kbd>
+          <KbdGroup>
             <KbdModifier>⌘</KbdModifier>
-            <KbdKey>J</KbdKey>
-          </Kbd>
+            <Kbd>J</Kbd>
+          </KbdGroup>
         </button>
         <CommandDialog open={isOpen()} onOpenChange={setIsOpen}>
           <CommandInput placeholder="Search..." />

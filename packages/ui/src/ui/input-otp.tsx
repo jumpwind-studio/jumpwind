@@ -50,17 +50,12 @@ function OtpSlot(
 ) {
   const [local, rest] = splitProps(props, ["class", "index"]);
 
-  const context = OtpPrimitive.useContext();
+  const otp = useOtp();
 
-  const char = () => {
-    return context.value()[local.index];
-  };
-  const isActive = () => {
-    return context.activeSlots().includes(local.index);
-  };
-  const showFakeCaret = () => {
-    return context.isInserting() && context.value().length === props.index;
-  };
+  const char = () => otp.value()[local.index];
+  const isActive = () => otp.activeSlots().includes(local.index);
+  const showFakeCaret = () =>
+    otp.isInserting() && otp.value().length === props.index;
 
   return (
     <div

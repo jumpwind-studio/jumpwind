@@ -20,6 +20,9 @@ const KbdContext = createContext<KbdContextValue>({
   separator: () => "+",
 });
 
+/**
+ * Group Kbd components together.
+ */
 function KbdGroup(
   props: ComponentProps<"div"> & {
     modifiers?: Modifier[];
@@ -50,6 +53,9 @@ function KbdGroup(
   );
 }
 
+/**
+ * Display a keyboard key.
+ */
 function Kbd(props: ComponentProps<"kbd">) {
   const [local, rest] = splitProps(props, ["class"]);
 

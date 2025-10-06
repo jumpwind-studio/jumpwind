@@ -5,6 +5,8 @@ import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
   RadioGroup,
   RadioGroupItem,
+  RadioGroupItemControl,
+  RadioGroupItemInput,
   RadioGroupItemLabel,
 } from "../../ui/radio-group.jsx";
 
@@ -28,6 +30,8 @@ const meta = {
       <For each={["Default", "Comfortable", "Compact"]}>
         {(item) => (
           <RadioGroupItem value={item}>
+            <RadioGroupItemInput />
+            <RadioGroupItemControl />
             <RadioGroupItemLabel>{item}</RadioGroupItemLabel>
           </RadioGroupItem>
         )}

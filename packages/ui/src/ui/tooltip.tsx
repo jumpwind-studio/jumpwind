@@ -53,7 +53,14 @@ function TooltipContent(
         {...rest}
       >
         {local.children}
-        <TooltipPrimitive.Arrow class="z-50 size-2.5 translate-y-[calc(-50%+3.5px)] rounded-[2px] text-primary" />
+        <TooltipPrimitive.Arrow
+          class={cn(
+            "z-50 text-primary",
+            "size-2.5",
+            "rounded-[2px]",
+            // 'translate-y-[calc(-50%+3.5px)]'
+          )}
+        />
       </TooltipPrimitive.Content>
     </TooltipPrimitive.Portal>
   );

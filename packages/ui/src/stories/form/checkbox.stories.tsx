@@ -1,8 +1,8 @@
 import type { PickPartial } from "@jumpwind/utils";
-import { createForm } from "@tanstack/solid-form";
 import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { FormCheckbox } from "../../form/checkbox.jsx";
+import { createForm } from "../../form/context.js";
 
 const form = createForm(() => ({
   defaultValues: {
@@ -25,9 +25,13 @@ const meta = {
     disabled: false,
   },
   render: (args) => (
-    <form.Field name="terms">
-      <FormCheckbox {...args} />
-    </form.Field>
+    <form.AppForm>
+      <form.AppField name="terms">
+        {(field) => (
+          <field.Checkbox label="Accept terms and conditions" {...args} />
+        )}
+      </form.AppField>
+    </form.AppForm>
   ),
   parameters: {
     layout: "centered",

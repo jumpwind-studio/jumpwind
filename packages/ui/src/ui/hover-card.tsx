@@ -42,7 +42,10 @@ function HoverCardContent(
       <HoverCardPrimitive.Content
         data-slot="hover-card-content"
         class={cn(
-          "data-closed:fade-out-0 data-expanded:fade-in-0 data-closed:zoom-out-95 data-expanded:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-64 origin-(--kb-hovercard-content-transform-origin) rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-hidden data-closed:animate-out data-expanded:animate-in",
+          "z-50 w-64 origin-(--kb-hovercard-content-transform-origin) rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-hidden",
+          "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+          "data-expanded:fade-in-0 data-expanded:zoom-in-95 data-expanded:animate-in",
+          "data-closed:fade-out-0 data-closed:zoom-out-95 data-closed:animate-out",
           local.class,
         )}
         {...rest}

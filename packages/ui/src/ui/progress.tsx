@@ -1,7 +1,7 @@
 import * as ProgressPrimitive from "@kobalte/core/progress";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
-import { Label } from "./label.jsx";
+import { type LabelVariantProps, labelVariants } from "./label.jsx";
 
 const useProgress = ProgressPrimitive.useProgressContext;
 
@@ -11,14 +11,17 @@ function Progress(props: ComponentProps<typeof ProgressPrimitive.Root>) {
   return (
     <ProgressPrimitive.Root
       data-slot="progress"
-      class={cn("flex flex-col gap-y-2", local.class)}
+      class={cn("flex w-full flex-col gap-y-2", local.class)}
       {...rest}
     >
       {local.children}
-      <ProgressPrimitive.Track class="relative h-2 w-full overflow-hidden rounded-full bg-primary/20">
+      <ProgressPrimitive.Track class="h-2 w-full overflow-hidden rounded-full bg-primary/20">
         <ProgressPrimitive.Fill
           data-slot="progress-indicator"
-          class="h-full w-(--kb-progress-fill-width) flex-1 bg-primary transition-all"
+          class={cn(
+            "h-full w-(--kb-progress-fill-width) flex-1 bg-primary transition-all",
+            "data-[progress=complete]:bg-primary/80",
+          )}
         />
       </ProgressPrimitive.Track>
     </ProgressPrimitive.Root>
@@ -26,13 +29,19 @@ function Progress(props: ComponentProps<typeof ProgressPrimitive.Root>) {
 }
 
 function ProgressValueLabel(
-  props: ComponentProps<typeof ProgressPrimitive.ValueLabel>,
+  props: ComponentProps<typeof ProgressPrimitive.ValueLabel> &
+    LabelVariantProps,
 ) {
+  const [local, rest] = splitProps(props, ["class", "variant"]);
+
   return (
     <ProgressPrimitive.ValueLabel
       data-slot="progress-value-label"
-      as={Label}
-      {...props}
+      class={labelVariants({
+        variant: local.variant,
+        class: local.class,
+      })}
+      {...rest}
     />
   );
 }

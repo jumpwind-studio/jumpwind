@@ -1,8 +1,8 @@
-import type { AnyFieldApi } from "@tanstack/solid-form";
+import { useStore } from "@tanstack/solid-form";
 import type * as OtpPrimitive from "corvu/otp-field";
-import type { ValidComponent } from "solid-js";
 import { Show, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
+import { FieldDescription, FieldError, FieldLabel } from "../ui/field.jsx";
 import {
   Otp,
   OtpGroup,
@@ -10,52 +10,44 @@ import {
   OtpSeparator,
   OtpSlot,
 } from "../ui/input-otp.jsx";
-import { FieldDescription, FieldLabel, FieldMessage } from "./field.jsx";
+import { useField } from "./context.js";
+import type { FormProps } from "./types.js";
 import { squash } from "./utils.js";
 
-export type FormOtpProps<
-  TField extends AnyFieldApi,
-  T extends ValidComponent = "div",
-> = Partial<OtpPrimitive.RootProps<T>> & {
-  class?: string;
-  field: TField;
-  label: string;
-  description: string;
-  disabled: boolean;
-  required: boolean;
-};
+export interface FormOtpProps
+  extends FormProps<Omit<OtpPrimitive.RootProps, "maxLength">> {}
 
-export function FormOtp<
-  TField extends AnyFieldApi,
-  T extends ValidComponent = "div",
->(props: OtpPrimitive.DynamicProps<T, FormOtpProps<TField, T>>) {
-  const [local, rootProps, rest] = splitProps(
-    props,
-    ["field", "class", "label", "description"],
-    ["disabled", "required", "onComplete"],
-  );
+export function FormOtp(props: FormOtpProps) {
+  const [local, rest] = splitProps(props, [
+    "field",
+    "class",
+    "label",
+    "description",
+    "value",
+  ]);
 
-  const firstError = () => squash(local.field);
-  const validationState = () => (firstError() != null ? "invalid" : "valid");
+  const field = useField<string>(() => local.field);
+  const value = useStore(field().store, (state) => state.value);
+  const errors = useStore(field().store, (state) => state.meta.errors);
 
   return (
     <Otp
       data-slot="form-otp"
-      name={local.field.name}
-      value={local.field.state.value}
-      onValueChange={local.field.handleChange}
-      validationState={validationState()}
+      name={field().name}
+      value={value()}
+      onValueChange={field().handleChange}
+      onBlur={field().handleBlur}
+      validationState={errors().length > 0 ? "invalid" : "valid"}
       maxLength={6}
       class={cn("group relative", local.class)}
-      {...rootProps}
       {...rest}
     >
       <Show when={local.label}>
         <FieldLabel data-slot="form-otp-label">{local.label}</FieldLabel>
       </Show>
       <OtpHiddenInput
-        aria-label={local.field.name}
-        onBlur={local.field.handleBlur}
+        data-slot="form-otp-hidden-input"
+        aria-label={local.label}
       />
       <OtpGroup>
         <OtpSlot index={0} />
@@ -73,7 +65,7 @@ export function FormOtp<
           {local.description}
         </FieldDescription>
       </Show>
-      <FieldMessage data-slot="form-otp-message">{firstError()}</FieldMessage>
+      <FieldError data-slot="form-otp-error">{squash(errors())}</FieldError>
     </Otp>
   );
 }

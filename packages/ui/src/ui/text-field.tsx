@@ -2,18 +2,16 @@ import * as TextFieldPrimitive from "@kobalte/core/text-field";
 import type { ComponentProps } from "solid-js";
 import { splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
-import { labelVariants } from "./label.jsx";
+import { Field, FieldDescription, FieldError, FieldLabel } from "./field.jsx";
 
 const useTextField = TextFieldPrimitive.useTextFieldContext;
 
-function TextField(
-  props: ComponentProps<typeof TextFieldPrimitive.Root<"div">>,
-) {
+function TextField(props: ComponentProps<typeof TextFieldPrimitive.Root>) {
   const [local, rest] = splitProps(props, ["class", "as"]);
 
   return (
     <TextFieldPrimitive.Root
-      as="div"
+      as={Field}
       data-slot="text-field"
       class={cn("space-y-1", local.class)}
       {...rest}
@@ -22,7 +20,7 @@ function TextField(
 }
 
 const TextFieldInput = (
-  props: ComponentProps<typeof TextFieldPrimitive.Input<"input">>,
+  props: ComponentProps<typeof TextFieldPrimitive.Input>,
 ) => {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -40,7 +38,7 @@ const TextFieldInput = (
 };
 
 function TextFieldTextarea(
-  props: ComponentProps<typeof TextFieldPrimitive.TextArea<"textarea">>,
+  props: ComponentProps<typeof TextFieldPrimitive.TextArea>,
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
@@ -60,13 +58,11 @@ function TextFieldTextarea(
 function TextFieldLabel(
   props: ComponentProps<typeof TextFieldPrimitive.Label>,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <TextFieldPrimitive.Label
+      as={FieldLabel}
       data-slot="text-field-label"
-      class={labelVariants({ variant: "description", class: local.class })}
-      {...rest}
+      {...props}
     />
   );
 }
@@ -74,27 +70,23 @@ function TextFieldLabel(
 function TextFieldDescription(
   props: ComponentProps<typeof TextFieldPrimitive.Description>,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <TextFieldPrimitive.Description
+      as={FieldDescription}
       data-slot="text-field-description"
-      class={labelVariants({ variant: "description", class: local.class })}
-      {...rest}
+      {...props}
     />
   );
 }
 
-function TextFieldErrorMessage(
+function TextFieldError(
   props: ComponentProps<typeof TextFieldPrimitive.ErrorMessage>,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <TextFieldPrimitive.ErrorMessage
-      data-slot="text-field-error-message"
-      class={labelVariants({ variant: "error", class: local.class })}
-      {...rest}
+      as={FieldError}
+      data-slot="text-field-error"
+      {...props}
     />
   );
 }
@@ -106,7 +98,7 @@ export {
   // Form
   TextFieldDescription,
   TextFieldLabel,
-  TextFieldErrorMessage,
+  TextFieldError,
   // Hooks
   useTextField,
 };

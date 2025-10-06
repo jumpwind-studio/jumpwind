@@ -260,8 +260,8 @@ export const ButtonStory: Story = {
               size="icon-xs"
             >
               <StarIcon
-                data-favorite={isFavorite()}
-                class="data-[favorite=true]:fill-blue-600 data-[favorite=true]:stroke-blue-600"
+                bool:data-favorite={isFavorite()}
+                class="data-favorite:fill-blue-600 data-favorite:stroke-blue-600"
               />
             </InputGroupButton>
           </InputGroupAddon>

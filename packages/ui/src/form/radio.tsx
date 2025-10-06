@@ -4,11 +4,15 @@ import { For, Show, splitProps } from "solid-js";
 import {
   RadioGroup,
   RadioGroupDescription,
-  RadioGroupErrorMessage,
+  RadioGroupError,
   RadioGroupItem,
+  RadioGroupItemControl,
+  RadioGroupItemInput,
+  RadioGroupItemLabel,
   RadioGroupLabel,
 } from "../ui/radio-group.jsx";
-import { type FieldApi, useField } from "./context.jsx";
+import { useField } from "./context.js";
+import type { FormProps } from "./types.js";
 import { squash } from "./utils.js";
 
 type Option = {
@@ -17,13 +21,10 @@ type Option = {
   disabled?: boolean;
 };
 
-export type FormRadioGroupProps = RadioGroupPrimitive.RadioGroupRootOptions & {
-  field: FieldApi<string>;
-  items: Option[];
-  class?: string;
-  description?: string;
-  label?: string;
-};
+export type FormRadioGroupProps =
+  FormProps<RadioGroupPrimitive.RadioGroupRootOptions> & {
+    items: Option[];
+  };
 
 export function FormRadioGroup(props: FormRadioGroupProps) {
   const [local, rest] = splitProps(props, [
@@ -56,7 +57,11 @@ export function FormRadioGroup(props: FormRadioGroupProps) {
       </Show>
       <For each={local.items}>
         {(item) => (
-          <RadioGroupItem value={item.value}>{item.label}</RadioGroupItem>
+          <RadioGroupItem value={item.value}>
+            <RadioGroupItemInput />
+            <RadioGroupItemControl />
+            <RadioGroupItemLabel>{item.label}</RadioGroupItemLabel>
+          </RadioGroupItem>
         )}
       </For>
       <div class="space-y-1 leading-none">
@@ -65,9 +70,9 @@ export function FormRadioGroup(props: FormRadioGroupProps) {
             {local.description}
           </RadioGroupDescription>
         </Show>
-        <RadioGroupErrorMessage data-slot="form-radio-group-error-message">
+        <RadioGroupError data-slot="form-radio-group-error">
           {squash(errors())}
-        </RadioGroupErrorMessage>
+        </RadioGroupError>
       </div>
     </RadioGroup>
   );

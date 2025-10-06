@@ -1,11 +1,12 @@
-import { useStore } from "@tanstack/solid-form";
-import type { FieldApi } from "./context.jsx";
+import { type AnyFieldApi, useStore } from "@tanstack/solid-form";
 
 export function isErrored(...errors: unknown[]) {
   return errors.length > 0;
 }
 
-export function useIsErrored<TData>(field: FieldApi<TData>) {
+export function useIsErrored<FieldApi extends AnyFieldApi = AnyFieldApi>(
+  field: FieldApi,
+) {
   return useStore(field.store, (state) => isErrored(state.meta.errors));
 }
 
@@ -13,7 +14,9 @@ export function getValidationState(...errors: unknown[]) {
   return errors.length > 0 ? "invalid" : "valid";
 }
 
-export function useValidationState<TData>(field: FieldApi<TData>) {
+export function useValidationState<FieldApi extends AnyFieldApi = AnyFieldApi>(
+  field: FieldApi,
+) {
   return useStore(field.store, (state) =>
     getValidationState(state.meta.errors),
   );
@@ -32,8 +35,8 @@ export function squash(...errors: unknown[]) {
   return String(err);
 }
 
-export function useSquash<TData>(field: FieldApi<TData>) {
+export function useSquash<FieldApi extends AnyFieldApi = AnyFieldApi>(
+  field: FieldApi,
+) {
   return useStore(field.store, (state) => squash(state.meta.errors));
 }
-
-export function pretty<TData>(_field: FieldApi<TData>) {}

@@ -5,12 +5,13 @@ import { Button } from "./button.jsx";
 import { Input } from "./input.jsx";
 import { Textarea } from "./textarea.jsx";
 
-function InputGroup(props: ComponentProps<"fieldset">) {
+function InputGroup(props: ComponentProps<"div">) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
-    <fieldset
+    <div
       data-slot="input-group"
+      role="group"
       class={cn(
         "group/input-group relative flex w-full items-center rounded-md border border-input shadow-xs outline-none transition-[color,box-shadow] dark:bg-input/30",
         "h-9 has-[>textarea]:h-auto",
@@ -64,12 +65,13 @@ function InputGroupAddon(
 
   return (
     <div
-      role="group"
       data-slot="input-group-addon"
+      role="group"
       data-align={local.align}
-      class={cn(
-        inputGroupAddonVariants({ align: local.align, class: local.class }),
-      )}
+      class={inputGroupAddonVariants({
+        align: local.align,
+        class: local.class,
+      })}
       onClick={(e) => {
         if ((e.target as HTMLElement).closest("button")) {
           return;
@@ -82,6 +84,7 @@ function InputGroupAddon(
 }
 
 const inputGroupButtonVariants = tv({
+  // extend: buttonVariants, // TODO: audit this
   base: "text-sm shadow-none flex gap-2 items-center",
   variants: {
     size: {
@@ -106,9 +109,9 @@ function InputGroupButton(
 ) {
   const defaultedProps = mergeProps(
     {
-      variant: "ghost" as const,
-      size: "xs" as const,
-    },
+      variant: "ghost",
+      size: "xs",
+    } satisfies InputGroupButtonVariantProps,
     props,
   );
 
@@ -123,9 +126,7 @@ function InputGroupButton(
       type="button"
       data-size={local.size}
       variant={local.variant}
-      class={cn(
-        inputGroupButtonVariants({ size: local.size, class: local.class }),
-      )}
+      class={inputGroupButtonVariants({ size: local.size, class: local.class })}
       {...rest}
     />
   );

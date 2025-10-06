@@ -4,6 +4,8 @@ import MoreHorizontalIcon from "lucide-solid/icons/more-horizontal";
 import { type ComponentProps, Show, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
 
+const useBreadcrumbs = BreadcrumbPrimitive.useBreadcrumbsContext;
+
 function Breadcrumb(props: ComponentProps<typeof BreadcrumbPrimitive.Root>) {
   return (
     <BreadcrumbPrimitive.Root
@@ -115,4 +117,6 @@ export {
   BreadcrumbPage,
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
+  // Hooks
+  useBreadcrumbs,
 };

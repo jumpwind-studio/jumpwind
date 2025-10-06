@@ -6,14 +6,15 @@ import {
   Select,
   SelectContent,
   SelectDescription,
-  SelectErrorMessage,
+  SelectError,
   SelectHiddenSelect,
   SelectItem,
   SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "../ui/select.jsx";
-import { type FieldApi, useField } from "./context.jsx";
+import { useField } from "./context.js";
+import type { FormProps } from "./types.js";
 import { squash } from "./utils.js";
 
 type Option = {
@@ -22,15 +23,9 @@ type Option = {
   disabled?: boolean;
 };
 
-export type FormSelectProps = SelectPrimitive.SelectRootOptions<
-  Option,
-  never
-> & {
-  field?: FieldApi<string>;
-  class?: string;
-  description?: string;
-  label?: string;
-};
+export type FormSelectProps = FormProps<
+  SelectPrimitive.SelectRootOptions<Option>
+>;
 
 export function FormSelect(props: FormSelectProps) {
   const [local, _, rest] = splitProps(
@@ -82,9 +77,9 @@ export function FormSelect(props: FormSelectProps) {
         </SelectValue>
       </SelectTrigger>
       <SelectContent<Option> data-slot="form-select-content" />
-      <SelectErrorMessage data-slot="form-select-error-message">
+      <SelectError data-slot="form-select-error">
         {squash(errors())}
-      </SelectErrorMessage>
+      </SelectError>
     </Select>
   );
 }

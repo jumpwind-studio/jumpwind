@@ -1,31 +1,28 @@
 import type * as TextFieldPrimitive from "@kobalte/core/text-field";
 import { useStore } from "@tanstack/solid-form";
-import { type JSX, Show, splitProps } from "solid-js";
+import { Show, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
 import {
   TextField,
   TextFieldDescription,
   TextFieldError,
-  TextFieldInput,
   TextFieldLabel,
+  TextFieldTextarea,
 } from "../ui/text-field.jsx";
 import { useField } from "./context.js";
 import type { FormProps } from "./types.js";
 import { squash } from "./utils.js";
 
-export interface FormInputProps
-  extends FormProps<TextFieldPrimitive.TextFieldRootOptions> {
-  placeholder?: string;
-  autocomplete?: JSX.HTMLAutocomplete;
-  type?: JSX.InputHTMLAttributes<HTMLInputElement>["type"];
-}
+export interface FormTextareaProps
+  extends FormProps<TextFieldPrimitive.TextFieldRootOptions> {}
 
-export function FormInput(props: FormInputProps) {
+export function FormTextarea(props: FormTextareaProps) {
   const [local, rest] = splitProps(props, [
     "field",
     "class",
     "label",
     "description",
+    "value",
   ]);
 
   const field = useField<string>(() => local.field);
@@ -34,13 +31,13 @@ export function FormInput(props: FormInputProps) {
 
   return (
     <TextField
-      data-slot="form-input"
+      data-slot="form-textarea"
       name={field().name}
       value={value()}
       onChange={field().handleChange}
       onBlur={field().handleBlur}
       validationState={errors().length > 0 ? "invalid" : "valid"}
-      class={cn("group relative grid gap-1.5", local.class)}
+      class={cn("group relative grid gap-1", local.class)}
       {...rest}
     >
       <Show when={local.label}>
@@ -48,7 +45,11 @@ export function FormInput(props: FormInputProps) {
           {local.label}
         </TextFieldLabel>
       </Show>
-      <TextFieldInput data-slot="form-input-input" aria-label={local.label} />
+      <TextFieldTextarea
+        data-slot="form-input-textarea"
+        aria-label={local.label}
+        autoResize
+      />
       <Show when={local.description}>
         <TextFieldDescription data-slot="form-input-description">
           {local.description}

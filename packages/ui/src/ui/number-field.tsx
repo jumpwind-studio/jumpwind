@@ -3,17 +3,17 @@ import ChevronDownIcon from "lucide-solid/icons/chevron-down";
 import ChevronUpIcon from "lucide-solid/icons/chevron-up";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
-import { labelVariants } from "./label.jsx";
+import { Field, FieldDescription, FieldError, FieldLabel } from "./field.jsx";
 
 const useNumberField = NumberFieldPrimitive.useNumberFieldContext;
 
-function NumberFieldRoot(
+function NumberField(
   props: ComponentProps<typeof NumberFieldPrimitive.Root<"div">>,
 ) {
   const [local, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <NumberFieldPrimitive.Root as="div" data-slot="number-field" {...rest}>
+    <NumberFieldPrimitive.Root as={Field} data-slot="number-field" {...rest}>
       <div class={cn("grid gap-1.5 *:not-first:mt-2", local.class)}>
         {local.children}
       </div>
@@ -29,8 +29,8 @@ function NumberFieldHiddenInput(
   return (
     <NumberFieldPrimitive.HiddenInput
       data-slot="number-field-hidden-input"
-      class={cn(local.class)}
       type="number"
+      class={cn(local.class)}
       {...rest}
     />
   );
@@ -116,13 +116,11 @@ function NumberFieldDecrementTrigger(
 function NumberFieldLabel(
   props: ComponentProps<typeof NumberFieldPrimitive.Label>,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <NumberFieldPrimitive.Label
+      as={FieldLabel}
       data-slot="number-field-label"
-      class={labelVariants({ variant: "label", class: local.class })}
-      {...rest}
+      {...props}
     />
   );
 }
@@ -130,33 +128,29 @@ function NumberFieldLabel(
 function NumberFieldDescription(
   props: ComponentProps<typeof NumberFieldPrimitive.Description>,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <NumberFieldPrimitive.Description
+      as={FieldDescription}
       data-slot="number-field-description"
-      class={labelVariants({ variant: "description", class: local.class })}
-      {...rest}
+      {...props}
     />
   );
 }
 
-function NumberFieldErrorMessage(
+function NumberFieldError(
   props: ComponentProps<typeof NumberFieldPrimitive.ErrorMessage>,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <NumberFieldPrimitive.ErrorMessage
-      data-slot="number-field-error-message"
-      class={labelVariants({ variant: "error", class: local.class })}
-      {...rest}
+      as={FieldError}
+      data-slot="number-field-error"
+      {...props}
     />
   );
 }
 
 export {
-  NumberFieldRoot,
+  NumberField,
   NumberFieldHiddenInput,
   NumberFieldGroup,
   NumberFieldInput,
@@ -165,7 +159,7 @@ export {
   // Forms
   NumberFieldLabel,
   NumberFieldDescription,
-  NumberFieldErrorMessage,
+  NumberFieldError,
   // Hooks
   useNumberField,
 };

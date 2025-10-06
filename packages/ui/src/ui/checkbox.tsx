@@ -2,7 +2,7 @@ import * as CheckboxPrimitive from "@kobalte/core/checkbox";
 import CheckIcon from "lucide-solid/icons/check";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
-import { labelVariants } from "./label.jsx";
+import { FieldDescription, FieldError, FieldLabel } from "./field.jsx";
 
 const useCheckbox = CheckboxPrimitive.useCheckboxContext;
 
@@ -11,6 +11,7 @@ function Checkbox(props: ComponentProps<typeof CheckboxPrimitive.Root>) {
 
   return (
     <CheckboxPrimitive.Root
+      // as={Field}
       data-slot="checkbox"
       class={cn(
         // "group relative flex items-start space-x-2",
@@ -67,13 +68,11 @@ function CheckboxControl(
 }
 
 function CheckboxLabel(props: ComponentProps<typeof CheckboxPrimitive.Label>) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <CheckboxPrimitive.Label
+      as={FieldLabel}
       data-slot="checkbox-label"
-      class={labelVariants({ variant: "label", class: local.class })}
-      {...rest}
+      {...props}
     />
   );
 }
@@ -81,27 +80,23 @@ function CheckboxLabel(props: ComponentProps<typeof CheckboxPrimitive.Label>) {
 function CheckboxDescription(
   props: ComponentProps<typeof CheckboxPrimitive.Description>,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <CheckboxPrimitive.Description
+      as={FieldDescription}
       data-slot="checkbox-description"
-      class={labelVariants({ variant: "description", class: local.class })}
-      {...rest}
+      {...props}
     />
   );
 }
 
-function CheckboxErrorMessage(
+function CheckboxError(
   props: ComponentProps<typeof CheckboxPrimitive.ErrorMessage>,
 ) {
-  const [local, rest] = splitProps(props, ["class"]);
-
   return (
     <CheckboxPrimitive.ErrorMessage
-      data-slot="checkbox-error-message"
-      class={labelVariants({ variant: "error", class: local.class })}
-      {...rest}
+      as={FieldError}
+      data-slot="checkbox-error"
+      {...props}
     />
   );
 }
@@ -113,7 +108,7 @@ export {
   // Forms
   CheckboxLabel,
   CheckboxDescription,
-  CheckboxErrorMessage,
+  CheckboxError,
   // Hooks
   useCheckbox,
 };
