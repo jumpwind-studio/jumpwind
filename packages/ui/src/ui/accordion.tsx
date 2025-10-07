@@ -9,10 +9,11 @@ const useAccordionDisclosure = AccordionPrimitive.useDisclosureContext;
 
 function Accordion(
   props: Omit<ComponentProps<typeof AccordionPrimitive.Root>, "multiple"> & {
+    class?: string;
     type?: "single" | "multiple";
   },
 ) {
-  const [local, rest] = splitProps(props, ["type"]);
+  const [local, rest] = splitProps(props, ["class", "type"]);
 
   const multiple = (): boolean => {
     if ("multiple" in props && typeof props.multiple === "boolean")
@@ -22,11 +23,13 @@ function Accordion(
   };
 
   return (
-    <AccordionPrimitive.Root
-      data-slot="accordion"
-      multiple={multiple()}
-      {...rest}
-    />
+    <div class={local.class}>
+      <AccordionPrimitive.Root
+        data-slot="accordion"
+        multiple={multiple()}
+        {...rest}
+      />
+    </div>
   );
 }
 
@@ -70,9 +73,7 @@ function AccordionContent(
   return (
     <AccordionPrimitive.Content
       data-slot="accordion-content"
-      class={
-        "overflow-hidden text-sm data-collapsed:animate-collapse data-expanded:animate-expand"
-      }
+      class="overflow-hidden text-sm data-collapsed:animate-collapse data-expanded:animate-expand"
       {...rest}
     >
       <div class={cn("pt-0 pb-4", local.class)}>{local.children}</div>

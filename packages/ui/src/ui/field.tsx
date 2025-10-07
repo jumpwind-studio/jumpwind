@@ -71,7 +71,7 @@ function FieldGroup(props: ComponentProps<"div">) {
 }
 
 const fieldVariants = tv({
-  base: "group/field flex w-full gap-3 data-invalid:text-destructive data-[invalid=true]:text-destructive",
+  base: "group/field flex w-full gap-3 data-[invalid=true]:text-destructive",
   variants: {
     orientation: {
       vertical: ["flex-col [&>*]:w-full [&>.sr-only]:w-auto"],
@@ -107,9 +107,10 @@ function Field(props: ComponentProps<"div"> & FieldVariantProps) {
       data-slot="field"
       role="group"
       data-orientation={local.orientation}
-      class={cn(
-        fieldVariants({ orientation: local.orientation, class: local.class }),
-      )}
+      class={fieldVariants({
+        orientation: local.orientation,
+        class: local.class,
+      })}
       {...rest}
     />
   );

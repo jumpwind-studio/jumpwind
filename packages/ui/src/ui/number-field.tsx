@@ -3,7 +3,9 @@ import ChevronDownIcon from "lucide-solid/icons/chevron-down";
 import ChevronUpIcon from "lucide-solid/icons/chevron-up";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
+import { Button } from "./button.jsx";
 import { Field, FieldDescription, FieldError, FieldLabel } from "./field.jsx";
+import { Input } from "./input.jsx";
 
 const useNumberField = NumberFieldPrimitive.useNumberFieldContext;
 
@@ -58,7 +60,7 @@ function NumberFieldInput(
 
   return (
     <NumberFieldPrimitive.Input
-      as="input"
+      as={Input}
       data-slot="number-field-input"
       class={cn(
         "flex-1 bg-background px-3 py-2 text-foreground tabular-nums",
@@ -76,15 +78,16 @@ function NumberFieldIncrementTrigger(
 
   return (
     <NumberFieldPrimitive.IncrementTrigger
-      as="button"
+      as={Button}
       data-slot="number-field-increment-trigger"
+      variant="outline"
       class={cn(
-        "-me-px flex h-1/2 w-6 flex-1 items-center justify-center border border-input bg-background text-muted-foreground/80 text-sm transition-[color,box-shadow] hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+        // "-me-px flex h-1/2 w-6 flex-1 items-center justify-center border border-input bg-background text-muted-foreground/80 text-sm transition-[color,box-shadow] hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
         local.class,
       )}
       {...rest}
     >
-      <ChevronUpIcon class="size-4">
+      <ChevronUpIcon>
         <title>Increment</title>
       </ChevronUpIcon>
     </NumberFieldPrimitive.IncrementTrigger>
@@ -98,15 +101,16 @@ function NumberFieldDecrementTrigger(
 
   return (
     <NumberFieldPrimitive.DecrementTrigger
-      as="button"
+      as={Button}
       data-slot="number-field-decrement-trigger"
+      variant="outline"
       class={cn(
-        "-me-px -mt-px flex h-1/2 w-6 flex-1 items-center justify-center border border-input bg-background text-muted-foreground/80 text-sm transition-[color,box-shadow] hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+        // "-me-px -mt-px flex h-1/2 w-6 flex-1 items-center justify-center border border-input bg-background text-muted-foreground/80 text-sm transition-[color,box-shadow] hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
         local.class,
       )}
       {...rest}
     >
-      <ChevronDownIcon class="size-4">
+      <ChevronDownIcon>
         <title>Decrement</title>
       </ChevronDownIcon>
     </NumberFieldPrimitive.DecrementTrigger>

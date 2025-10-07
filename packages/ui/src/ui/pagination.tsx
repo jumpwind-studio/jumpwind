@@ -18,7 +18,7 @@ const Pagination = (props: ComponentProps<"nav">) => {
   );
 };
 
-const PaginationContent = (props: ComponentProps<"ul">) => {
+function PaginationContent(props: ComponentProps<"ul">) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
@@ -28,18 +28,15 @@ const PaginationContent = (props: ComponentProps<"ul">) => {
       {...rest}
     />
   );
-};
+}
 
-const PaginationItem = (props: ComponentProps<"li">) => {
+function PaginationItem(props: ComponentProps<"li">) {
   return <li data-class="pagination-item" {...props} />;
-};
+}
 
-const PaginationLink = (
-  props: ComponentProps<"a"> &
-    ButtonVariantProps & {
-      isActive?: boolean;
-    },
-) => {
+function PaginationLink(
+  props: ComponentProps<"a"> & ButtonVariantProps & { isActive?: boolean },
+) {
   const defaultedProps = mergeProps(
     { size: "icon" } satisfies typeof props,
     props,
@@ -59,15 +56,15 @@ const PaginationLink = (
       bool:data-active={local.isActive}
       class={buttonVariants({
         size: local.size,
-        variant: local.variant ?? (local.isActive ? "outline" : "ghost"),
+        variant: local.isActive ? "outline" : "ghost",
         class: local.class,
       })}
       {...rest}
     />
   );
-};
+}
 
-const PaginationPrevious = (props: ComponentProps<typeof PaginationLink>) => {
+function PaginationPrevious(props: ComponentProps<typeof PaginationLink>) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
@@ -79,12 +76,12 @@ const PaginationPrevious = (props: ComponentProps<typeof PaginationLink>) => {
       {...rest}
     >
       <ChevronLeftIcon class="size-4" />
-      <span>Previous</span>
+      <span class="hidden sm:block">Previous</span>
     </PaginationLink>
   );
-};
+}
 
-const PaginationNext = (props: ComponentProps<typeof PaginationLink>) => {
+function PaginationNext(props: ComponentProps<typeof PaginationLink>) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
@@ -95,27 +92,27 @@ const PaginationNext = (props: ComponentProps<typeof PaginationLink>) => {
       class={cn("gap-1 px-2.5 sm:pl-2.5", local.class)}
       {...rest}
     >
-      <span>Next</span>
+      <span class="hidden sm:block">Next</span>
       <ChevronRightIcon class="size-4" />
     </PaginationLink>
   );
-};
+}
 
-const PaginationEllipsis = (props: ComponentProps<"span">) => {
+function PaginationEllipsis(props: ComponentProps<"span">) {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
     <span
       data-slot="pagination-ellipsis"
       aria-hidden
-      class={cn("flex h-9 w-9 items-center justify-center", local.class)}
+      class={cn("flex size-9 items-center justify-center", local.class)}
       {...rest}
     >
-      <MoreHorizontalIcon class="h-4 w-4" />
+      <MoreHorizontalIcon class="size-4" />
       <span class="sr-only">More pages</span>
     </span>
   );
-};
+}
 
 export {
   Pagination,

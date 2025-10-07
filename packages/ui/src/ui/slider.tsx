@@ -7,7 +7,6 @@ import {
   splitProps,
 } from "solid-js";
 import { cn } from "../lib/utils.js";
-import { Field, FieldDescription, FieldError, FieldLabel } from "./field.jsx";
 
 const useSlider = SliderPrimitive.useSliderContext;
 
@@ -46,7 +45,6 @@ function Slider(props: ComponentProps<typeof SliderPrimitive.Root>) {
 
   return (
     <SliderPrimitive.Root
-      as={Field}
       data-slot="slider"
       data-orientation={rest.orientation}
       value={local.value}
@@ -57,46 +55,15 @@ function Slider(props: ComponentProps<typeof SliderPrimitive.Root>) {
       class={cn(
         "relative flex w-full touch-none select-none flex-col items-center gap-y-3 data-disabled:opacity-50",
         "data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col",
+
+        // "relative flex w-full touch-none select-none items-center data-[disabled]:opacity-50",
+        // "data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col",
+
+        // "relative flex w-full touch-none select-none items-center data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col data-[disabled]:opacity-50",
         local.class,
       )}
       {...rest}
     />
-  );
-}
-
-function SliderFill(props: ComponentProps<typeof SliderPrimitive.Fill>) {
-  const [local, rest] = splitProps(props, ["class"]);
-
-  return (
-    <SliderPrimitive.Fill
-      data-slot="slider-fill"
-      class={cn(
-        "absolute rounded-full bg-primary",
-        "data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full",
-        local.class,
-      )}
-      {...rest}
-    />
-  );
-}
-
-function SliderThumb(props: ComponentProps<typeof SliderPrimitive.Thumb>) {
-  const [local, rest] = splitProps(props, ["class"]);
-
-  return (
-    <SliderPrimitive.Thumb
-      data-slot="slider-thumb"
-      data-orientation={rest.orientation}
-      class={cn(
-        // "block size-4 shrink-0 rounded-full border border-primary bg-background shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:outline-hidden focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50",
-        "block size-4 shrink-0 rounded-full border border-primary bg-background shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:outline-hidden focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50",
-        "data-[orientation=horizontal]:top-[-6px] data-[orientation=vertical]:right-[-6px]",
-        local.class,
-      )}
-      {...rest}
-    >
-      <SliderPrimitive.Input data-slot="slider-input" />
-    </SliderPrimitive.Thumb>
   );
 }
 
@@ -129,50 +96,74 @@ function SliderTrack(props: ComponentProps<typeof SliderPrimitive.Track>) {
   );
 }
 
-function SliderValueLabel(
-  props: ComponentProps<typeof SliderPrimitive.ValueLabel>,
-) {
+function SliderFill(props: ComponentProps<typeof SliderPrimitive.Fill>) {
+  const [local, rest] = splitProps(props, ["class"]);
+
   return (
-    <SliderPrimitive.ValueLabel
-      as={FieldDescription}
-      data-slot="slider-value-label"
-      {...props}
+    <SliderPrimitive.Fill
+      data-slot="slider-fill"
+      class={cn(
+        "absolute rounded-full bg-primary",
+        "data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full",
+        local.class,
+      )}
+      {...rest}
     />
   );
 }
 
-function SliderLabel(props: ComponentProps<typeof SliderPrimitive.Label>) {
+function SliderThumb(props: ComponentProps<typeof SliderPrimitive.Thumb>) {
+  const [local, rest] = splitProps(props, ["class"]);
+
   return (
-    <SliderPrimitive.Label
-      as={FieldLabel}
-      data-slot="slider-label"
-      {...props}
-    />
+    <SliderPrimitive.Thumb
+      data-slot="slider-thumb"
+      data-orientation={rest.orientation}
+      // class={cn(
+      // "block size-4 shrink-0 rounded-full border border-primary bg-background shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:outline-hidden focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50",
+
+      // Commented out
+      // "block size-4 shrink-0 rounded-full border border-primary bg-background shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:outline-hidden focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50",
+      // "data-[orientation=horizontal]:top-[-6px] data-[orientation=vertical]:right-[-6px]",
+
+      // "block size-4 shrink-0 rounded-full border border-primary bg-white shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:outline-hidden focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50",
+
+      // "top-[-6px] block size-5 rounded-full border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+      //   local.class,
+      // )}
+
+      class="top-[-5px] block size-4 shrink-0 rounded-full border border-primary bg-white shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:outline-hidden focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50"
+      {...rest}
+    >
+      <SliderPrimitive.Input data-slot="slider-input" />
+    </SliderPrimitive.Thumb>
   );
+}
+
+function SliderValueLabel(
+  props: ComponentProps<typeof SliderPrimitive.ValueLabel>,
+) {
+  return (
+    <SliderPrimitive.ValueLabel data-slot="slider-value-label" {...props} />
+  );
+}
+
+function SliderLabel(props: ComponentProps<typeof SliderPrimitive.Label>) {
+  return <SliderPrimitive.Label data-slot="slider-label" {...props} />;
 }
 
 function SliderDescription(
   props: ComponentProps<typeof SliderPrimitive.Description>,
 ) {
   return (
-    <SliderPrimitive.Description
-      as={FieldDescription}
-      data-slot="slider-description"
-      {...props}
-    />
+    <SliderPrimitive.Description data-slot="slider-description" {...props} />
   );
 }
 
 function SliderError(
   props: ComponentProps<typeof SliderPrimitive.ErrorMessage>,
 ) {
-  return (
-    <SliderPrimitive.ErrorMessage
-      as={FieldError}
-      data-slot="slider-error"
-      {...props}
-    />
-  );
+  return <SliderPrimitive.ErrorMessage data-slot="slider-error" {...props} />;
 }
 
 export {

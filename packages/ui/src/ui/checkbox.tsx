@@ -2,7 +2,6 @@ import * as CheckboxPrimitive from "@kobalte/core/checkbox";
 import CheckIcon from "lucide-solid/icons/check";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
-import { FieldDescription, FieldError, FieldLabel } from "./field.jsx";
 
 const useCheckbox = CheckboxPrimitive.useCheckboxContext;
 
@@ -11,13 +10,8 @@ function Checkbox(props: ComponentProps<typeof CheckboxPrimitive.Root>) {
 
   return (
     <CheckboxPrimitive.Root
-      // as={Field}
       data-slot="checkbox"
-      class={cn(
-        // "group relative flex items-start space-x-2",
-        "group/checkbox flex flex-row items-center gap-2",
-        local.class,
-      )}
+      class={cn("group/checkbox flex flex-row items-start gap-3", local.class)}
       {...rest}
     />
   );
@@ -68,13 +62,7 @@ function CheckboxControl(
 }
 
 function CheckboxLabel(props: ComponentProps<typeof CheckboxPrimitive.Label>) {
-  return (
-    <CheckboxPrimitive.Label
-      as={FieldLabel}
-      data-slot="checkbox-label"
-      {...props}
-    />
-  );
+  return <CheckboxPrimitive.Label data-slot="checkbox-label" {...props} />;
 }
 
 function CheckboxDescription(
@@ -82,7 +70,6 @@ function CheckboxDescription(
 ) {
   return (
     <CheckboxPrimitive.Description
-      as={FieldDescription}
       data-slot="checkbox-description"
       {...props}
     />
@@ -93,11 +80,7 @@ function CheckboxError(
   props: ComponentProps<typeof CheckboxPrimitive.ErrorMessage>,
 ) {
   return (
-    <CheckboxPrimitive.ErrorMessage
-      as={FieldError}
-      data-slot="checkbox-error"
-      {...props}
-    />
+    <CheckboxPrimitive.ErrorMessage data-slot="checkbox-error" {...props} />
   );
 }
 

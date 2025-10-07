@@ -1,7 +1,6 @@
 import * as SwitchPrimitive from "@kobalte/core/switch";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
-import { Field, FieldDescription, FieldError, FieldLabel } from "./field.jsx";
 
 const useSwitch = SwitchPrimitive.useSwitchContext;
 
@@ -10,7 +9,6 @@ function Switch(props: ComponentProps<typeof SwitchPrimitive.Root>) {
 
   return (
     <SwitchPrimitive.Root
-      as={Field}
       data-slot="switch"
       class={cn("group relative flex items-center space-x-2", local.class)}
       {...rest}
@@ -59,37 +57,21 @@ function SwitchControl(props: ComponentProps<typeof SwitchPrimitive.Control>) {
 }
 
 function SwitchLabel(props: ComponentProps<typeof SwitchPrimitive.Label>) {
-  return (
-    <SwitchPrimitive.Label
-      as={FieldLabel}
-      data-slot="switch-label"
-      {...props}
-    />
-  );
+  return <SwitchPrimitive.Label data-slot="switch-label" {...props} />;
 }
 
 function SwitchDescription(
   props: ComponentProps<typeof SwitchPrimitive.Description>,
 ) {
   return (
-    <SwitchPrimitive.Description
-      as={FieldDescription}
-      data-slot="switch-description"
-      {...props}
-    />
+    <SwitchPrimitive.Description data-slot="switch-description" {...props} />
   );
 }
 
 function SwitchError(
   props: ComponentProps<typeof SwitchPrimitive.ErrorMessage>,
 ) {
-  return (
-    <SwitchPrimitive.ErrorMessage
-      as={FieldError}
-      data-slot="switch-error"
-      {...props}
-    />
-  );
+  return <SwitchPrimitive.ErrorMessage data-slot="switch-error" {...props} />;
 }
 
 export {

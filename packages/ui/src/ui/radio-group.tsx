@@ -2,13 +2,6 @@ import * as RadioGroupPrimitive from "@kobalte/core/radio-group";
 import CircleIcon from "lucide-solid/icons/circle";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-  FieldSet,
-} from "./field.jsx";
 
 const useRadioGroup = RadioGroupPrimitive.useRadioGroupContext;
 
@@ -17,7 +10,6 @@ function RadioGroup(props: ComponentProps<typeof RadioGroupPrimitive.Root>) {
 
   return (
     <RadioGroupPrimitive.Root
-      as={FieldSet}
       data-slot="radio-group"
       class={cn("grid gap-3", local.class)}
       {...rest}
@@ -32,7 +24,6 @@ function RadioGroupItem(
 
   return (
     <RadioGroupPrimitive.Item
-      as={Field}
       data-slot="radio-group-item"
       class={cn("flex items-center gap-x-2", local.class)}
       {...rest}
@@ -89,7 +80,6 @@ function RadioGroupItemLabel(
 
   return (
     <RadioGroupPrimitive.ItemLabel
-      as={FieldLabel}
       data-slot="radio-group-item-label"
       class={cn(
         "font-medium text-primary text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
@@ -103,13 +93,7 @@ function RadioGroupItemLabel(
 function RadioGroupLabel(
   props: ComponentProps<typeof RadioGroupPrimitive.Label>,
 ) {
-  return (
-    <RadioGroupPrimitive.Label
-      as={FieldLabel}
-      data-slot="radio-group-label"
-      {...props}
-    />
-  );
+  return <RadioGroupPrimitive.Label data-slot="radio-group-label" {...props} />;
 }
 
 function RadioGroupDescription(
@@ -117,7 +101,6 @@ function RadioGroupDescription(
 ) {
   return (
     <RadioGroupPrimitive.Description
-      as={FieldDescription}
       data-slot="radio-group-description"
       {...props}
     />
@@ -129,7 +112,6 @@ function RadioGroupError(
 ) {
   return (
     <RadioGroupPrimitive.ErrorMessage
-      as={FieldError}
       data-slot="radio-group-error"
       {...props}
     />
