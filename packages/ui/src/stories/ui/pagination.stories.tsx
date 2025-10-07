@@ -1,5 +1,5 @@
 import type { PickPartial } from "@jumpwind/utils";
-import type { Component, ComponentProps } from "solid-js";
+import { type Component, type ComponentProps, Index } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import {
   Pagination,
@@ -28,15 +28,15 @@ const meta = {
         <PaginationItem>
           <PaginationPrevious href="#" />
         </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">1</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">2</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">3</PaginationLink>
-        </PaginationItem>
+        <Index each={[1, 2, 3, 4]}>
+          {(index) => (
+            <PaginationItem>
+              <PaginationLink href="#" isActive={index() === 1}>
+                {index()}
+              </PaginationLink>
+            </PaginationItem>
+          )}
+        </Index>
         <PaginationItem>
           <PaginationEllipsis />
         </PaginationItem>

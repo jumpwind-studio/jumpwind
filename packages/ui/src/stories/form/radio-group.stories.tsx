@@ -1,33 +1,28 @@
 import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { createForm } from "../../form/context.js";
-import { FormSlider } from "../../form/slider.jsx";
+import { FormRadioGroup } from "../../form/radio.jsx";
 
-type SliderStoryComponent = Component<ComponentProps<typeof FormSlider>>;
+type RadioGroupStoryComponent = Component<
+  ComponentProps<typeof FormRadioGroup>
+>;
 
 /**
  * An input where the user selects a value from within a given range.
  */
 const meta = {
-  title: "@jumpwind/form/Slider",
-  component: FormSlider as SliderStoryComponent,
+  title: "@jumpwind/form/RadioGroup",
+  component: FormRadioGroup as RadioGroupStoryComponent,
   parameters: { layout: "padded" },
-  argTypes: {
-    minValue: {
-      control: { type: "range", min: 0, max: 100 },
-    },
-    maxValue: {
-      control: { type: "range", min: 0, max: 100 },
-    },
-  },
   args: {
-    minValue: 0,
-    maxValue: 2000,
-    defaultValue: [20, 500],
-    step: 10,
+    defaultValue: "3",
+    items: [
+      { label: "Monthly ($9.99/month)", value: "monthly" },
+      { label: "Yearly ($99.99/year)", value: "yearly" },
+      { label: "Lifetime ($299.99)", value: "lifetime" },
+    ],
     label: "Price Range",
-    getValueLabel: (params) =>
-      `Set your budge range $${params.values[0]} - $${params.values[1]}`,
+    description: "Yearly and lifetime plans offer significant savings.",
   },
   render: (args) => {
     const form = createForm(() => ({
@@ -38,12 +33,12 @@ const meta = {
     return (
       <form.AppForm>
         <form.AppField name="values" mode="array">
-          {(field) => <field.Slider {...args} />}
+          {(field) => <field.RadioGroup {...args} />}
         </form.AppField>
       </form.AppForm>
     );
   },
-} satisfies Meta<SliderStoryComponent>;
+} satisfies Meta<RadioGroupStoryComponent>;
 
 export default meta;
 

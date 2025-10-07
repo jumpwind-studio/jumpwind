@@ -32,10 +32,12 @@ const meta = {
   argTypes: {},
   render: (args) => (
     <AlertDialog {...args}>
-      <AlertDialogTrigger as={Button}>Open</AlertDialogTrigger>
+      <AlertDialogTrigger as={Button} variant="outline">
+        Show Dialog
+      </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete your
             account and remove your data from our servers.

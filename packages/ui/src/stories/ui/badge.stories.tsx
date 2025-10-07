@@ -1,3 +1,4 @@
+import BadgeCheckIcon from "lucide-solid/icons/badge-check";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { Badge } from "../../ui/badge.jsx";
 
@@ -57,4 +58,41 @@ export const Outline: Story = {
   args: {
     variant: "outline",
   },
+};
+
+export const Demo: Story = {
+  render: () => (
+    <div class="flex flex-col items-center gap-2">
+      <div class="flex w-full flex-wrap gap-2">
+        <Badge>Badge</Badge>
+        <Badge variant="secondary">Secondary</Badge>
+        <Badge variant="destructive">Destructive</Badge>
+        <Badge variant="outline">Outline</Badge>
+      </div>
+      <div class="flex w-full flex-wrap gap-2">
+        <Badge
+          variant="secondary"
+          class="bg-blue-500 text-white dark:bg-blue-600"
+        >
+          <BadgeCheckIcon />
+          Verified
+        </Badge>
+        <Badge class="h-5 min-w-5 rounded-full px-1 font-mono tabular-nums">
+          8
+        </Badge>
+        <Badge
+          class="h-5 min-w-5 rounded-full px-1 font-mono tabular-nums"
+          variant="destructive"
+        >
+          99
+        </Badge>
+        <Badge
+          class="h-5 min-w-5 rounded-full px-1 font-mono tabular-nums"
+          variant="outline"
+        >
+          20+
+        </Badge>
+      </div>
+    </div>
+  ),
 };
