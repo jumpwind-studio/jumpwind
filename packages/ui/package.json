@@ -98,6 +98,7 @@
     "./dialog": "./src/ui/dialog.tsx",
     "./drawer": "./src/ui/drawer.tsx",
     "./dropdown-menu": "./src/ui/dropdown-menu.tsx",
+    "./field": "./src/ui/field.tsx",
     "./flex": "./src/ui/flex.tsx",
     "./grid": "./src/ui/grid.tsx",
     "./hover-card": "./src/ui/hover-card.tsx",
