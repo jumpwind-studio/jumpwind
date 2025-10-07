@@ -2,6 +2,7 @@ import type * as NumberFieldPrimitive from "@kobalte/core/number-field";
 import { useStore } from "@tanstack/solid-form";
 import { Show, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
+import { ButtonGroup } from "../ui/button-group.jsx";
 import {
   NumberField,
   NumberFieldDecrementTrigger,
@@ -12,12 +13,14 @@ import {
   NumberFieldInput,
   NumberFieldLabel,
 } from "../ui/number-field.jsx";
-import { useField } from "./context.js";
 import type { FormProps } from "./types.js";
-import { squash } from "./utils.js";
+import { squash, useField } from "./utils.js";
 
 export interface FormNumberInputProps
-  extends FormProps<NumberFieldPrimitive.NumberFieldRootOptions> {}
+  extends FormProps<
+    NumberFieldPrimitive.NumberFieldRootOptions,
+    number | string
+  > {}
 
 export function FormNumberInput(props: FormNumberInputProps) {
   const [local, rest] = splitProps(props, [
@@ -47,15 +50,17 @@ export function FormNumberInput(props: FormNumberInputProps) {
           {local.label}
         </NumberFieldLabel>
       </Show>
-      <NumberFieldInput />
-      <NumberFieldHiddenInput />
-      <NumberFieldIncrementTrigger />
-      <NumberFieldDecrementTrigger />
       <Show when={local.description}>
         <NumberFieldDescription data-slot="form-number-input-description">
           {local.description}
         </NumberFieldDescription>
       </Show>
+      <NumberFieldHiddenInput />
+      <ButtonGroup>
+        <NumberFieldInput />
+        <NumberFieldIncrementTrigger />
+        <NumberFieldDecrementTrigger />
+      </ButtonGroup>
       <NumberFieldError data-slot="form-number-input-error">
         {squash(errors())}
       </NumberFieldError>

@@ -1,7 +1,12 @@
 import type * as SwitchPrimitive from "@kobalte/core/switch";
 import { useStore } from "@tanstack/solid-form";
 import { Show, splitProps } from "solid-js";
-import { FieldContent } from "../ui/field.jsx";
+import {
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "../ui/field.jsx";
 import {
   Switch,
   SwitchControl,
@@ -10,12 +15,11 @@ import {
   SwitchInput,
   SwitchLabel,
 } from "../ui/switch.jsx";
-import { useField } from "./context.js";
 import type { FormProps } from "./types.js";
-import { squash } from "./utils.js";
+import { squash, useField } from "./utils.js";
 
 export interface FormSwitchProps
-  extends FormProps<SwitchPrimitive.SwitchRootOptions> {}
+  extends FormProps<SwitchPrimitive.SwitchRootOptions, boolean> {}
 
 export function FormSwitch(props: FormSwitchProps) {
   const [local, rest] = splitProps(props, [
@@ -43,14 +47,19 @@ export function FormSwitch(props: FormSwitchProps) {
       <SwitchInput data-slot="form-switch-input" />
       <FieldContent>
         <Show when={local.label}>
-          <SwitchLabel data-slot="form-switch-label">{local.label}</SwitchLabel>
+          <SwitchLabel as={FieldLabel} data-slot="form-switch-label">
+            {local.label}
+          </SwitchLabel>
         </Show>
         <Show when={local.description}>
-          <SwitchDescription data-slot="form-switch-description">
+          <SwitchDescription
+            as={FieldDescription}
+            data-slot="form-switch-description"
+          >
             {local.description}
           </SwitchDescription>
         </Show>
-        <SwitchError data-slot="form-switch-error">
+        <SwitchError as={FieldError} data-slot="form-switch-error">
           {squash(errors())}
         </SwitchError>
       </FieldContent>

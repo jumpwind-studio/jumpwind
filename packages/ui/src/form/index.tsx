@@ -8,3 +8,4 @@ export * from "./select.jsx";
 export * from "./slider.jsx";
 export * from "./submit-button.jsx";
 export * from "./switch.jsx";
+export * from "./textarea.jsx";

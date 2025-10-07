@@ -9,12 +9,18 @@ import {
   CheckboxInput,
   CheckboxLabel,
 } from "../ui/checkbox.jsx";
-import { useField } from "./context.js";
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "../ui/field.jsx";
 import type { FormProps } from "./types.js";
-import { squash } from "./utils.js";
+import { squash, useField } from "./utils.js";
 
 export interface FormCheckboxProps
-  extends FormProps<CheckboxPrimitive.CheckboxRootOptions> {}
+  extends FormProps<CheckboxPrimitive.CheckboxRootOptions, boolean> {}
 
 export function FormCheckbox(props: FormCheckboxProps) {
   const [local, rest] = splitProps(props, [
@@ -39,23 +45,28 @@ export function FormCheckbox(props: FormCheckboxProps) {
       class={local.class}
       {...rest}
     >
-      <CheckboxInput data-slot="form-checkbox-input" />
-      <CheckboxControl data-slot="form-checkbox-control" />
-      <div class="space-y-1 leading-none">
-        <Show when={local.label}>
-          <CheckboxLabel data-slot="form-checkbox-label">
-            {local.label}
-          </CheckboxLabel>
-        </Show>
-        <Show when={local.description}>
-          <CheckboxDescription data-slot="form-checkbox-description">
-            {local.description}
-          </CheckboxDescription>
-        </Show>
-        <CheckboxError data-slot="form-checkbox-error">
-          {squash(errors())}
-        </CheckboxError>
-      </div>
+      <Field orientation="horizontal">
+        <CheckboxInput data-slot="form-checkbox-input" />
+        <CheckboxControl data-slot="form-checkbox-control" />
+        <FieldContent>
+          <Show when={local.label}>
+            <CheckboxLabel as={FieldLabel} data-slot="form-checkbox-label">
+              {local.label}
+            </CheckboxLabel>
+          </Show>
+          <Show when={local.description}>
+            <CheckboxDescription
+              as={FieldDescription}
+              data-slot="form-checkbox-description"
+            >
+              {local.description}
+            </CheckboxDescription>
+          </Show>
+          <CheckboxError as={FieldError} data-slot="form-checkbox-error">
+            {squash(errors())}
+          </CheckboxError>
+        </FieldContent>
+      </Field>
     </Checkbox>
   );
 }

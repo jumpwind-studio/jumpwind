@@ -1,4 +1,19 @@
 import { type AnyFieldApi, useStore } from "@tanstack/solid-form";
+import { type Accessor, createMemo } from "solid-js";
+import { useFieldContext } from "./context.js";
+import type { FieldApiWithData } from "./types.js";
+
+export function useField<TData = string>(
+  field?: Accessor<FieldApiWithData<TData> | undefined>,
+) {
+  return createMemo(() => {
+    const f = field?.();
+    if (f) return f;
+    const ctx = useFieldContext<TData>();
+    if (ctx) return ctx();
+    throw new Error("useField must be used inside a `Field` component.");
+  });
+}
 
 export function isErrored(...errors: unknown[]) {
   return errors.length > 0;

@@ -2,6 +2,8 @@ import type * as TextFieldPrimitive from "@kobalte/core/text-field";
 import { useStore } from "@tanstack/solid-form";
 import { Show, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
+import { FieldDescription, FieldError, FieldLabel } from "../ui/field.jsx";
+import { InputGroup } from "../ui/input-group.jsx";
 import {
   TextField,
   TextFieldDescription,
@@ -9,12 +11,13 @@ import {
   TextFieldLabel,
   TextFieldTextarea,
 } from "../ui/text-field.jsx";
-import { useField } from "./context.js";
 import type { FormProps } from "./types.js";
-import { squash } from "./utils.js";
+import { squash, useField } from "./utils.js";
 
 export interface FormTextareaProps
-  extends FormProps<TextFieldPrimitive.TextFieldRootOptions> {}
+  extends FormProps<TextFieldPrimitive.TextFieldRootOptions, string> {
+  placeholder?: string;
+}
 
 export function FormTextarea(props: FormTextareaProps) {
   const [local, rest] = splitProps(props, [
@@ -23,6 +26,7 @@ export function FormTextarea(props: FormTextareaProps) {
     "label",
     "description",
     "value",
+    "placeholder",
   ]);
 
   const field = useField<string>(() => local.field);
@@ -37,25 +41,31 @@ export function FormTextarea(props: FormTextareaProps) {
       onChange={field().handleChange}
       onBlur={field().handleBlur}
       validationState={errors().length > 0 ? "invalid" : "valid"}
-      class={cn("group relative grid gap-1", local.class)}
+      class={cn("", local.class)}
       {...rest}
     >
       <Show when={local.label}>
-        <TextFieldLabel data-slot="form-input-label">
+        <TextFieldLabel as={FieldLabel} data-slot="form-textarea-label">
           {local.label}
         </TextFieldLabel>
       </Show>
-      <TextFieldTextarea
-        data-slot="form-input-textarea"
-        aria-label={local.label}
-        autoResize
-      />
+      <InputGroup>
+        <TextFieldTextarea
+          data-slot="form-textarea-textarea"
+          aria-label={local.label}
+          placeholder={local.placeholder}
+          autoResize
+        />
+      </InputGroup>
       <Show when={local.description}>
-        <TextFieldDescription data-slot="form-input-description">
+        <TextFieldDescription
+          as={FieldDescription}
+          data-slot="form-textarea-description"
+        >
           {local.description}
         </TextFieldDescription>
       </Show>
-      <TextFieldError data-slot="form-input-error">
+      <TextFieldError as={FieldError} data-slot="form-textarea-error">
         {squash(errors())}
       </TextFieldError>
     </TextField>

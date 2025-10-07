@@ -1,7 +1,12 @@
 import type * as SliderPrimitive from "@kobalte/core/slider";
 import { useStore } from "@tanstack/solid-form";
 import { Index, Show, splitProps } from "solid-js";
-import { FieldContent } from "../ui/field.jsx";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "../ui/field.jsx";
 import {
   Slider,
   SliderDescription,
@@ -12,12 +17,11 @@ import {
   SliderTrack,
   SliderValueLabel,
 } from "../ui/slider.jsx";
-import { useField } from "./context.js";
 import type { FormProps } from "./types.js";
-import { squash } from "./utils.js";
+import { squash, useField } from "./utils.js";
 
 export interface FormSliderProps
-  extends FormProps<SliderPrimitive.SliderRootOptions> {}
+  extends FormProps<SliderPrimitive.SliderRootOptions, number[]> {}
 
 export function FormSlider(props: FormSliderProps) {
   const [local, rest] = splitProps(props, [
@@ -34,6 +38,7 @@ export function FormSlider(props: FormSliderProps) {
 
   return (
     <Slider
+      as={Field}
       data-slot="form-slider"
       name={field().name}
       value={value()}
@@ -43,25 +48,24 @@ export function FormSlider(props: FormSliderProps) {
       class={local.class}
       {...rest}
     >
-      <div class="flex flex-col group-data-orientation=horizontal:flex-row">
-        <FieldContent>
-          <Show when={local.label}>
-            <SliderLabel data-slot="form-slider-label">
-              {local.label}
-            </SliderLabel>
-          </Show>
-          <Show when={local.description}>
-            <SliderDescription data-slot="form-slider-description">
-              {local.description}
-            </SliderDescription>
-          </Show>
-        </FieldContent>
-        <SliderValueLabel
-          data-slot="form-slider-value-label"
-          class="self-end"
-        />
-      </div>
-      <SliderTrack data-slot="form-slider-track" class="mt-2 w-full">
+      <Show when={local.label}>
+        <SliderLabel as={FieldLabel} data-slot="form-slider-label">
+          {local.label}
+        </SliderLabel>
+      </Show>
+      <Show when={local.description}>
+        <SliderDescription
+          as={FieldDescription}
+          data-slot="form-slider-description"
+        >
+          {local.description}
+        </SliderDescription>
+      </Show>
+      <SliderValueLabel
+        as={FieldDescription}
+        data-slot="form-slider-value-label"
+      />
+      <SliderTrack data-slot="form-slider-track">
         <SliderFill />
         <Index each={value()}>
           {(_, index) => (
@@ -69,7 +73,7 @@ export function FormSlider(props: FormSliderProps) {
           )}
         </Index>
       </SliderTrack>
-      <SliderError data-slot="form-slider-error">
+      <SliderError as={FieldError} data-slot="form-slider-error">
         {squash(errors())}
       </SliderError>
     </Slider>

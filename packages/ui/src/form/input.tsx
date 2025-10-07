@@ -9,9 +9,8 @@ import {
   TextFieldInput,
   TextFieldLabel,
 } from "../ui/text-field.jsx";
-import { useField } from "./context.js";
 import type { FormProps } from "./types.js";
-import { squash } from "./utils.js";
+import { squash, useField } from "./utils.js";
 
 export interface FormInputProps
   extends FormProps<TextFieldPrimitive.TextFieldRootOptions> {

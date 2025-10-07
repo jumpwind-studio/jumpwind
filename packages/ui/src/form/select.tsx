@@ -1,6 +1,6 @@
 import type * as SelectPrimitive from "@kobalte/core/select";
 import { useStore } from "@tanstack/solid-form";
-import { Show, splitProps } from "solid-js";
+import { type Accessor, createMemo, on, Show, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
 import {
   Select,
@@ -13,9 +13,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select.jsx";
-import { useField } from "./context.js";
 import type { FormProps } from "./types.js";
-import { squash } from "./utils.js";
+import { squash, useField } from "./utils.js";
 
 type Option = {
   value: string;
@@ -23,8 +22,49 @@ type Option = {
   disabled?: boolean;
 };
 
+function isOptions(items: (Option | string)[]): items is Option[] {
+  return (
+    items.length > 0 &&
+    typeof items[0] === "object" &&
+    items[0] !== null &&
+    "label" in items[0] &&
+    "value" in items[0]
+  );
+}
+
+function isOption(value: Option | string): value is Option {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "label" in value &&
+    "value" in value
+  );
+}
+
+function resolveOptions(items: Accessor<(Option | string)[]>) {
+  return createMemo<Option[]>(
+    on(items, (items) =>
+      isOptions(items)
+        ? items
+        : items.map((item) =>
+            isOption(item)
+              ? item
+              : {
+                  value: item,
+                  label: String(item),
+                  disabled: false,
+                },
+          ),
+    ),
+  );
+}
+
 export type FormSelectProps = FormProps<
-  SelectPrimitive.SelectRootOptions<Option>
+  Exclude<
+    SelectPrimitive.SelectRootOptions<Option | string>,
+    { multiple: true }
+  >,
+  string
 >;
 
 export function FormSelect(props: FormSelectProps) {
@@ -35,8 +75,9 @@ export function FormSelect(props: FormSelectProps) {
   );
 
   const field = useField<string>(() => local.field);
+  const options = resolveOptions(() => local.options);
   const value = useStore(field().store, (state) =>
-    local.options.find((option) => option.value === state.value),
+    options().find((option) => option.value === state.value),
   );
   const errors = useStore(field().store, (state) => state.meta.errors);
 
@@ -45,7 +86,7 @@ export function FormSelect(props: FormSelectProps) {
       data-slot="form-select"
       {...rest}
       name={field().name}
-      options={local.options}
+      options={options()}
       optionValue="value"
       optionTextValue="label"
       optionDisabled="disabled"
@@ -59,8 +100,8 @@ export function FormSelect(props: FormSelectProps) {
       itemComponent={(props) => (
         <SelectItem item={props.item}>{props.item.textValue}</SelectItem>
       )}
-      class={cn("group relative grid max-w-52 gap-2", local.class)}
       multiple={false}
+      class={cn("group relative grid max-w-52 gap-2", local.class)}
     >
       <Show when={local.label}>
         <SelectLabel data-slot="form-select-label">{local.label}</SelectLabel>
