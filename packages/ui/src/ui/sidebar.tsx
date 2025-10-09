@@ -1,5 +1,4 @@
 import createControllableSignal from "@corvu/utils/create/controllableSignal";
-import createOnce from "@corvu/utils/create/once";
 import { Dynamic, type DynamicProps } from "@corvu/utils/dynamic";
 import { createShortcut } from "@solid-primitives/keyboard";
 import { serialize } from "cookie-es";
@@ -523,11 +522,14 @@ type SidebarMenuButtonVariantProps = VariantProps<
   typeof sidebarMenuButtonVariants
 >;
 
-function SidebarMenuButton(
-  props: ComponentProps<"button"> & {
+type SidebarMenuButtonProps<T extends ValidComponent = "button"> =
+  ComponentProps<T> & {
     isActive?: boolean;
     tooltip?: string | ComponentProps<typeof TooltipContent>;
-  } & SidebarMenuButtonVariantProps,
+  } & SidebarMenuButtonVariantProps;
+
+function SidebarMenuButton<T extends ValidComponent = "button">(
+  props: DynamicProps<T, SidebarMenuButtonProps<T>>,
 ) {
   const [local, rest] = splitProps(props, [
     "class",
@@ -539,21 +541,17 @@ function SidebarMenuButton(
 
   const { isMobile, dataset } = useSidebar();
 
-  // NOTE: Using `corvu` pattern for memoizing child components
-  // Okay to remove if overkill
-  const memoizedTooltip = createOnce(() => local.tooltip);
-
-  const tooltipProps = () => ({
-    ...(typeof local.tooltip === "string"
+  const tooltipProps = () =>
+    typeof local.tooltip === "string"
       ? { children: local.tooltip }
-      : local.tooltip),
-  });
+      : local.tooltip;
 
   return (
     <Show
       when={local.tooltip}
       fallback={
-        <button
+        <Dynamic
+          as="button"
           data-slot="sidebar-menu-button"
           data-sidebar="menu-button"
           data-size={local.size}
@@ -567,7 +565,7 @@ function SidebarMenuButton(
         />
       }
     >
-      <Tooltip>
+      <Tooltip placement="right">
         <TooltipTrigger
           data-slot="sidebar-menu-button"
           data-sidebar="menu-button"
@@ -581,8 +579,6 @@ function SidebarMenuButton(
           {...rest}
         />
         <TooltipContent
-          side="right"
-          align="center"
           hidden={dataset()["data-collapsed"] !== undefined || isMobile()}
           {...tooltipProps()}
         />
