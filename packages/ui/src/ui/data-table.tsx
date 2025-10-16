@@ -92,7 +92,9 @@ export interface DataTableChildrenProps<TData> {
   table: TanstackTable<TData>;
 }
 
-function DataTableRoot<TData, TValue>(props: DataTableProps<TData, TValue>) {
+function DataTableProvider<TData, TValue>(
+  props: DataTableProps<TData, TValue>,
+) {
   const [local, rest] = splitProps(props, ["columns", "data", "children"]);
 
   const [sorting, setSorting] = createSignal<SortingState>([]);
@@ -150,21 +152,34 @@ function DataTableRoot<TData, TValue>(props: DataTableProps<TData, TValue>) {
 
   return (
     <DataTableContext.Provider data-slot="data-table-root" value={{ table }}>
-      <div class="overflow-hidden rounded-md border">
-        <Table>{untrack(() => resolveChildren())}</Table>
-      </div>
+      {untrack(() => resolveChildren())}
     </DataTableContext.Provider>
   );
 }
 
-function DataTableHeader<TData>(props: ComponentProps<typeof TableHeader>) {
-  const [local, rest] = splitProps(props, ["class"]);
+function DataTableRoot(props: ComponentProps<typeof Table>) {
+  return (
+    <div class="overflow-hidden rounded-md border">
+      <Table data-class="data-table-root" {...props} />
+    </div>
+  );
+}
 
-  const { table } = useDataTable<TData>();
+function DataTableHeader<TData>(
+  props: ComponentProps<typeof TableHeader> & { table?: TanstackTable<TData> },
+) {
+  const [local, rest] = splitProps(props, ["class", "table"]);
+
+  const dataTable = useDataTable<TData>();
+  const table = () => (local?.table ? local.table : dataTable.table);
 
   return (
-    <TableHeader data-slot="data-table-header" class={local.class} {...rest}>
-      <For each={table.getHeaderGroups()}>
+    <TableHeader
+      data-slot="data-table-header"
+      class={cn(local.class)}
+      {...rest}
+    >
+      <For each={table().getHeaderGroups()}>
         {(headerGroup) => (
           <TableRow>
             <For each={headerGroup.headers}>
@@ -255,7 +270,7 @@ export function DataTableColumnHeader<TData, TValue>(
       fallback={<div class={cn(local.class)}>{local.title}</div>}
     >
       <div class={cn("flex items-center gap-2", local.class)} {...rest}>
-        <DropdownMenu data-slot="data-table-header">
+        <DropdownMenu data-slot="data-table-header" placement="top-start">
           <DropdownMenuTrigger
             as={Button}
             variant="ghost"
@@ -263,29 +278,29 @@ export function DataTableColumnHeader<TData, TValue>(
             class="-ml-3 h-8 data-expanded:bg-accent"
           >
             <span>{local.title}</span>
-            <Switch fallback={<ChevronsUpDownIcon />}>
+            <Switch fallback={<ChevronsUpDownIcon class="size-3.5" />}>
               <Match when={local.column.getIsSorted() === "desc"}>
-                <ArrowDownIcon />
+                <ArrowDownIcon class="size-3.5" />
               </Match>
               <Match when={local.column.getIsSorted() === "asc"}>
-                <ArrowUpIcon />
+                <ArrowUpIcon class="size-3.5" />
               </Match>
             </Switch>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="start">
+          <DropdownMenuContent>
             <DropdownMenuItem onClick={() => local.column.toggleSorting(false)}>
-              <ArrowUpIcon />
+              <ArrowUpIcon class="mr-2 size-3.5" />
               Asc
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => local.column.toggleSorting(true)}>
-              <ArrowDownIcon />
+              <ArrowDownIcon class="mr-2 size-3.5" />
               Desc
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => local.column.toggleVisibility(false)}
             >
-              <EyeOffIcon />
+              <EyeOffIcon class="mr-2 size-3.5" />
               Hide
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -295,11 +310,16 @@ export function DataTableColumnHeader<TData, TValue>(
   );
 }
 
-function DataTablePagination<TData>() {
+function DataTablePagination<TData>(props: ComponentProps<"div">) {
+  const [local, rest] = splitProps(props, ["class"]);
+
   const { table } = useDataTable<TData>();
 
   return (
-    <div class="flex items-center justify-between px-2">
+    <div
+      class={cn("flex items-center justify-between px-2", local.class)}
+      {...rest}
+    >
       <div class="flex-1 text-muted-foreground text-sm">
         {table.getFilteredSelectedRowModel().rows.length} of{" "}
         {table.getFilteredRowModel().rows.length} row(s) selected.
@@ -377,11 +397,17 @@ function DataTablePagination<TData>() {
   );
 }
 
-function DataTableViewOptions<TData>() {
+function DataTableViewOptions<TData>(
+  props: ComponentProps<typeof DropdownMenu>,
+) {
   const { table } = useDataTable<TData>();
 
   return (
-    <DropdownMenu data-slot="data-table-view-options">
+    <DropdownMenu
+      data-slot="data-table-view-options"
+      placement="top-end"
+      {...props}
+    >
       <DropdownMenuTrigger
         as={Button}
         variant="outline"
@@ -391,7 +417,7 @@ function DataTableViewOptions<TData>() {
         <Settings2Icon />
         View
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" class="w-[150px]">
+      <DropdownMenuContent class="w-[150px]">
         <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <For
@@ -418,6 +444,7 @@ function DataTableViewOptions<TData>() {
 }
 
 export {
+  DataTableProvider,
   DataTable,
   DataTableRoot,
   DataTableBody,

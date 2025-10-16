@@ -1,6 +1,7 @@
 import * as CheckboxPrimitive from "@kobalte/core/checkbox";
 import CheckIcon from "lucide-solid/icons/check";
-import { type ComponentProps, splitProps } from "solid-js";
+import MinusIcon from "lucide-solid/icons/minus";
+import { type ComponentProps, Match, Switch, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
 
 const useCheckbox = CheckboxPrimitive.useCheckboxContext;
@@ -34,6 +35,8 @@ function CheckboxControl(
 ) {
   const [local, rest] = splitProps(props, ["class"]);
 
+  const checkbox = useCheckbox();
+
   return (
     <CheckboxPrimitive.Control
       data-slot="checkbox-control"
@@ -53,9 +56,16 @@ function CheckboxControl(
     >
       <CheckboxPrimitive.Indicator
         data-slot="checkbox-indicator"
-        class="flex items-center justify-center text-current transition-none"
+        class="grid place-content-center text-current transition-none"
       >
-        <CheckIcon class="size-3.5" />
+        <Switch>
+          <Match when={checkbox.indeterminate()}>
+            <MinusIcon class="size-3.5" />
+          </Match>
+          <Match when={checkbox.checked()}>
+            <CheckIcon class="size-3.5" />
+          </Match>
+        </Switch>
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Control>
   );

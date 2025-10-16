@@ -47,8 +47,17 @@ function DropdownMenuContent(
       <DropdownMenuPrimitive.Content
         data-slot="dropdown-menu-content"
         class={cn(
-          "data-closed:fade-out-0 data-expanded:fade-in-0 data-closed:zoom-out-95 data-expanded:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 max-h-(--kb-popper-content-available-height) min-w-32 origin-(--kb-popper-content-overflow-padding) overflow-y-auto overflow-x-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-closed:animate-out data-expanded:animate-in",
+          "z-50 min-w-32 overflow-y-auto overflow-x-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md",
+          "max-h-(--kb-popper-content-available-height)",
           "origin-(--kb-menu-content-transform-origin)",
+          "data-expanded:fade-in-0 data-expanded:zoom-in-95 data-expanded:animate-in",
+          "data-closed:fade-out-0 data-closed:zoom-out-95 data-closed:animate-out",
+          "data-[placement*=bottom]:slide-in-from-top-2",
+          "data-[placement*=left]:slide-in-from-right-2",
+          "data-[placement*=right]:slide-in-from-left-2",
+          "data-[placement*=top]:slide-in-from-bottom-2",
+          // "origin-(--kb-popper-content-overflow-padding)", NOTE: unsure what to do with this
+          local.class,
           local.class,
         )}
         {...rest}
@@ -68,18 +77,25 @@ function DropdownMenuGroup(
 function DropdownMenuItem(
   props: ComponentProps<typeof DropdownMenuPrimitive.Item> & {
     inset?: boolean;
+    variant?: "default" | "destructive";
   },
 ) {
-  const [local, rest] = splitProps(props, ["class", "inset"]);
+  const [local, rest] = splitProps(props, ["class", "inset", "variant"]);
 
   return (
     <DropdownMenuPrimitive.Item
       data-slot="dropdown-menu-item"
+      bool:data-inset={local.inset}
+      data-variant={local.variant}
       class={cn(
-        "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-inset:pl-8 data-disabled:opacity-50",
+        "relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden",
+        "data-disabled:pointer-events-none data-disabled:opacity-50",
+        "[&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0",
+        "dark:data-[variant=destructive]:focus:bg-destructive/20",
+        "data-[variant=destructive]:*:[svg]:!text-destructive data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 data-[variant=destructive]:focus:text-destructive",
+        "data-inset:pl-8",
         local.class,
       )}
-      bool:data-inset={local.inset}
       {...rest}
     />
   );

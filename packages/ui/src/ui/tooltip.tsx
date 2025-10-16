@@ -10,6 +10,11 @@ function Tooltip(props: ComponentProps<typeof TooltipPrimitive.Root>) {
       openDelay: 0,
       skipDelayDuration: 300, // Match Radix default
       placement: "top",
+      floatingOptions: {
+        offset: {
+          mainAxis: 8,
+        },
+      },
     } satisfies Partial<typeof props>,
     props,
   );

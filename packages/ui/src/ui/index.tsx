@@ -15,6 +15,7 @@ export * from "./command.jsx";
 export * from "./commandbox.jsx";
 export * from "./container.jsx";
 export * from "./context-menu.jsx";
+export * from "./data-table.jsx";
 export * from "./date-picker.jsx";
 export * from "./dialog.jsx";
 export * from "./drawer.jsx";

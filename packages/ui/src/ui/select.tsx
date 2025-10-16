@@ -4,7 +4,6 @@ import CheckIcon from "lucide-solid/icons/check";
 import ChevronDownIcon from "lucide-solid/icons/chevron-down";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
-import { Field, FieldDescription, FieldError, FieldLabel } from "./field.jsx";
 
 const useSelect = SelectPrimitive.useSelectContext;
 
@@ -13,7 +12,6 @@ function Select<TOption>(
 ) {
   return (
     <SelectPrimitive.Root<TOption, never, "div">
-      as={Field}
       data-slot="select"
       {...props}
     />
@@ -154,37 +152,21 @@ function SelectSeparator(
 }
 
 function SelectLabel(props: ComponentProps<typeof SelectPrimitive.Label>) {
-  return (
-    <SelectPrimitive.Label
-      as={FieldLabel}
-      data-slot="select-label"
-      {...props}
-    />
-  );
+  return <SelectPrimitive.Label data-slot="select-label" {...props} />;
 }
 
 function SelectDescription(
   props: ComponentProps<typeof SelectPrimitive.Description>,
 ) {
   return (
-    <SelectPrimitive.Description
-      as={FieldDescription}
-      data-slot="select-description"
-      {...props}
-    />
+    <SelectPrimitive.Description data-slot="select-description" {...props} />
   );
 }
 
 function SelectError(
   props: ComponentProps<typeof SelectPrimitive.ErrorMessage>,
 ) {
-  return (
-    <SelectPrimitive.ErrorMessage
-      as={FieldError}
-      data-slot="select-error"
-      {...props}
-    />
-  );
+  return <SelectPrimitive.ErrorMessage data-slot="select-error" {...props} />;
 }
 
 export {
