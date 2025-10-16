@@ -129,7 +129,7 @@ export const WithInput: Story = {
               }
             }}
           />
-          <Popover open={open()} onOpenChange={setOpen}>
+          <Popover open={open()} onOpenChange={setOpen} placement="bottom-end">
             <PopoverTrigger
               as={Button}
               id="date-picker"
@@ -140,7 +140,6 @@ export const WithInput: Story = {
               <span class="sr-only">Select date</span>
             </PopoverTrigger>
             <PopoverContent
-              align="end"
               alignOffset={-8}
               sideOffset={10}
               class="w-auto overflow-hidden p-0"
