@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@jumpwind/tsconfig/base.json",
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "baseUrl": "."
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}

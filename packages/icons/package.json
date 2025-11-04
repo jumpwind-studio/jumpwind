@@ -1,0 +1,22 @@
+{
+  "name": "@jumpwind/icons",
+  "version": "0.0.1",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "exports": {
+    "./*": "./src/*",
+    "./internal/*": null,
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "format": "biome check",
+    "test": "bun run vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "solid-js": "catalog:frontend",
+    "typescript": "catalog:"
+  }
+}
