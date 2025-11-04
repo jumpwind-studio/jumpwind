@@ -1,8 +1,17 @@
-import { splitProps } from "solid-js";
-import { IconProps } from "./types";
+import { mergeProps, splitProps } from "solid-js";
+import type { IconProps } from "./types.ts";
 
 export default function BorderLeftIcon(props: IconProps) {
-  const [, rest] = splitProps(props, ["color"]);
+  const defaultedProps = mergeProps(
+    {
+      color: "currentColor",
+      title: "BorderLeftIcon",
+    } as const satisfies IconProps,
+    props,
+  );
+
+  const [local, rest] = splitProps(defaultedProps, ["color", "title"]);
+
   const color = () => props.color || "currentColor";
   return (
     <svg
@@ -18,7 +27,7 @@ export default function BorderLeftIcon(props: IconProps) {
         fill={color()}
         fill-rule="evenodd"
         clip-rule="evenodd"
-      ></path>
+      />
       <rect
         x="10"
         y="7"
@@ -27,7 +36,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 10 7)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="10"
         y="13"
@@ -36,7 +45,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 10 13)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="12"
         y="7"
@@ -45,7 +54,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 12 7)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="12"
         y="13"
@@ -54,7 +63,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 12 13)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="8"
         y="7"
@@ -63,7 +72,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 8 7)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="14"
         y="7"
@@ -72,7 +81,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 14 7)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="8"
         y="13"
@@ -81,7 +90,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 8 13)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="14"
         y="13"
@@ -90,7 +99,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 14 13)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="8"
         y="5"
@@ -99,7 +108,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 8 5)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="14"
         y="5"
@@ -108,7 +117,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 14 5)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="8"
         y="3"
@@ -117,7 +126,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 8 3)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="14"
         y="3"
@@ -126,7 +135,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 14 3)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="8"
         y="9"
@@ -135,7 +144,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 8 9)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="14"
         y="9"
@@ -144,7 +153,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 14 9)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="8"
         y="11"
@@ -153,7 +162,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 8 11)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="14"
         y="11"
@@ -162,7 +171,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 14 11)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="6"
         y="7"
@@ -171,7 +180,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 6 7)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="6"
         y="13"
@@ -180,7 +189,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 6 13)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="4"
         y="7"
@@ -189,7 +198,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 4 7)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="4"
         y="13"
@@ -198,7 +207,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 4 13)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="10"
         y="1"
@@ -207,7 +216,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 10 1)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="12"
         y="1"
@@ -216,7 +225,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 12 1)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="8"
         y="1"
@@ -225,7 +234,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 8 1)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="14"
         y="1"
@@ -234,7 +243,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 14 1)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="6"
         y="1"
@@ -243,7 +252,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 6 1)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="4"
         y="1"
@@ -252,7 +261,7 @@ export default function BorderLeftIcon(props: IconProps) {
         rx=".5"
         transform="rotate(90 4 1)"
         fill={color()}
-      ></rect>
+      />
     </svg>
   );
 }

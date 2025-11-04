@@ -1,8 +1,17 @@
-import { splitProps } from "solid-js";
-import { IconProps } from "./types";
+import { mergeProps, splitProps } from "solid-js";
+import type { IconProps } from "./types.ts";
 
 export default function CircleIcon(props: IconProps) {
-  const [, rest] = splitProps(props, ["color"]);
+  const defaultedProps = mergeProps(
+    {
+      color: "currentColor",
+      title: "CircleIcon",
+    } as const satisfies IconProps,
+    props,
+  );
+
+  const [local, rest] = splitProps(defaultedProps, ["color", "title"]);
+
   return (
     <svg
       width="15"
@@ -14,10 +23,10 @@ export default function CircleIcon(props: IconProps) {
     >
       <path
         d="M0.877075 7.49991C0.877075 3.84222 3.84222 0.877075 7.49991 0.877075C11.1576 0.877075 14.1227 3.84222 14.1227 7.49991C14.1227 11.1576 11.1576 14.1227 7.49991 14.1227C3.84222 14.1227 0.877075 11.1576 0.877075 7.49991ZM7.49991 1.82708C4.36689 1.82708 1.82708 4.36689 1.82708 7.49991C1.82708 10.6329 4.36689 13.1727 7.49991 13.1727C10.6329 13.1727 13.1727 10.6329 13.1727 7.49991C13.1727 4.36689 10.6329 1.82708 7.49991 1.82708Z"
-        fill={props.color || "currentColor"}
+        fill={local.color}
         fill-rule="evenodd"
         clip-rule="evenodd"
-      ></path>
+      />
     </svg>
   );
 }

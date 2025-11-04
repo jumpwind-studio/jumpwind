@@ -1,8 +1,17 @@
-import { splitProps } from "solid-js";
-import { IconProps } from "./types";
+import { mergeProps, splitProps } from "solid-js";
+import type { IconProps } from "./types.ts";
 
 export default function BorderBottomIcon(props: IconProps) {
-  const [, rest] = splitProps(props, ["color"]);
+  const defaultedProps = mergeProps(
+    {
+      color: "currentColor",
+      title: "BorderBottomIcon",
+    } as const satisfies IconProps,
+    props,
+  );
+
+  const [local, rest] = splitProps(defaultedProps, ["color", "title"]);
+
   const color = () => props.color || "currentColor";
   return (
     <svg
@@ -18,33 +27,33 @@ export default function BorderBottomIcon(props: IconProps) {
         fill={color()}
         fill-rule="evenodd"
         clip-rule="evenodd"
-      ></path>
-      <rect x="7" y="5" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="13" y="5" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="7" y="3" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="13" y="3" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="7" y="7" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="7" y="1" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="13" y="7" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="13" y="1" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="5" y="7" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="5" y="1" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="3" y="7" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="3" y="1" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="9" y="7" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="9" y="1" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="11" y="7" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="11" y="1" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="7" y="9" width="1" height="1" rx=".5" fill="currentColor"></rect>
-      <rect x="13" y="9" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="7" y="11" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="13" y="11" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="1" y="5" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="1" y="3" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="1" y="7" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="1" y="1" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="1" y="9" width="1" height="1" rx=".5" fill={color()}></rect>
-      <rect x="1" y="11" width="1" height="1" rx=".5" fill={color()}></rect>
+      />
+      <rect x="7" y="5" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="13" y="5" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="7" y="3" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="13" y="3" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="7" y="7" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="7" y="1" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="13" y="7" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="13" y="1" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="5" y="7" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="5" y="1" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="3" y="7" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="3" y="1" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="9" y="7" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="9" y="1" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="11" y="7" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="11" y="1" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="7" y="9" width="1" height="1" rx=".5" fill="currentColor" />
+      <rect x="13" y="9" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="7" y="11" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="13" y="11" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="1" y="5" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="1" y="3" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="1" y="7" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="1" y="1" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="1" y="9" width="1" height="1" rx=".5" fill={color()} />
+      <rect x="1" y="11" width="1" height="1" rx=".5" fill={color()} />
     </svg>
   );
 }

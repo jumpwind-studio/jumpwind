@@ -1,8 +1,17 @@
-import { splitProps } from "solid-js";
-import { IconProps } from "./types";
+import { mergeProps, splitProps } from "solid-js";
+import type { IconProps } from "./types.ts";
 
 export default function TriangleLeftIcon(props: IconProps) {
-  const [, rest] = splitProps(props, ["color"]);
+  const defaultedProps = mergeProps(
+    {
+      color: "currentColor",
+      title: "TriangleLeftIcon",
+    } as const satisfies IconProps,
+    props,
+  );
+
+  const [local, rest] = splitProps(defaultedProps, ["color", "title"]);
+
   return (
     <svg
       width="15"
@@ -14,10 +23,10 @@ export default function TriangleLeftIcon(props: IconProps) {
     >
       <path
         d="M9 4L9 11L4.5 7.5L9 4Z"
-        fill={props.color || "currentColor"}
+        fill={local.color}
         fill-rule="evenodd"
         clip-rule="evenodd"
-      ></path>
+      />
     </svg>
   );
 }

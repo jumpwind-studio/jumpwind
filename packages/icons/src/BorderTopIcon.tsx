@@ -1,8 +1,17 @@
-import { splitProps } from "solid-js";
-import { IconProps } from "./types";
+import { mergeProps, splitProps } from "solid-js";
+import type { IconProps } from "./types.ts";
 
 export default function BorderTopIcon(props: IconProps) {
-  const [, rest] = splitProps(props, ["color"]);
+  const defaultedProps = mergeProps(
+    {
+      color: "currentColor",
+      title: "BorderTopIcon",
+    } as const satisfies IconProps,
+    props,
+  );
+
+  const [local, rest] = splitProps(defaultedProps, ["color", "title"]);
+
   const color = () => props.color || "currentColor";
   return (
     <svg
@@ -18,7 +27,7 @@ export default function BorderTopIcon(props: IconProps) {
         fill={color()}
         fill-rule="evenodd"
         clip-rule="evenodd"
-      ></path>
+      />
       <rect
         x="8"
         y="10"
@@ -27,7 +36,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 8 10)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="2"
         y="10"
@@ -36,7 +45,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 2 10)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="8"
         y="12"
@@ -45,7 +54,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 8 12)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="2"
         y="12"
@@ -54,7 +63,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 2 12)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="8"
         y="8"
@@ -63,7 +72,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 8 8)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="8"
         y="14"
@@ -72,7 +81,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 8 14)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="2"
         y="8"
@@ -81,7 +90,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 2 8)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="2"
         y="14"
@@ -90,7 +99,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 2 14)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="10"
         y="8"
@@ -99,7 +108,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 10 8)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="10"
         y="14"
@@ -108,7 +117,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 10 14)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="12"
         y="8"
@@ -117,7 +126,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 12 8)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="12"
         y="14"
@@ -126,7 +135,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 12 14)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="6"
         y="8"
@@ -135,7 +144,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 6 8)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="6"
         y="14"
@@ -144,7 +153,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 6 14)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="4"
         y="8"
@@ -153,7 +162,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 4 8)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="4"
         y="14"
@@ -162,7 +171,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 4 14)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="8"
         y="6"
@@ -171,7 +180,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 8 6)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="2"
         y="6"
@@ -180,7 +189,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 2 6)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="8"
         y="4"
@@ -189,7 +198,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 8 4)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="2"
         y="4"
@@ -198,7 +207,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 2 4)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="14"
         y="10"
@@ -207,7 +216,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 14 10)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="14"
         y="12"
@@ -216,7 +225,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 14 12)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="14"
         y="8"
@@ -225,7 +234,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 14 8)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="14"
         y="14"
@@ -234,7 +243,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 14 14)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="14"
         y="6"
@@ -243,7 +252,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 14 6)"
         fill={color()}
-      ></rect>
+      />
       <rect
         x="14"
         y="4"
@@ -252,7 +261,7 @@ export default function BorderTopIcon(props: IconProps) {
         rx=".5"
         transform="rotate(-180 14 4)"
         fill={color()}
-      ></rect>
+      />
     </svg>
   );
 }

@@ -1,8 +1,17 @@
-import { splitProps } from "solid-js";
-import { IconProps } from "./types";
+import { mergeProps, splitProps } from "solid-js";
+import type { IconProps } from "./types.ts";
 
 export default function BorderRightIcon(props: IconProps) {
-  const [, rest] = splitProps(props, ["color"]);
+  const defaultedProps = mergeProps(
+    {
+      color: "currentColor",
+      title: "BorderRightIcon",
+    } as const satisfies IconProps,
+    props,
+  );
+
+  const [local, rest] = splitProps(defaultedProps, ["color", "title"]);
+
   const color = () => props.color || "currentColor";
   return (
     <svg
@@ -18,189 +27,189 @@ export default function BorderRightIcon(props: IconProps) {
         fill={color()}
         fill-rule="evenodd"
         clip-rule="evenodd"
-      ></path>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 5 7)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 5 13)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 3 7)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 3 13)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 7 7)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 1 7)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 7 13)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 1 13)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 7 5)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 1 5)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 7 3)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 1 3)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 7 9)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 1 9)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 7 11)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 1 11)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 9 7)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 9 13)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 11 7)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 11 13)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 5 1)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 3 1)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 7 1)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 1 1)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 9 1)"
         fill={color()}
-      ></rect>
+      />
       <rect
         width="1"
         height="1"
         rx=".5"
         transform="matrix(0 1 1 0 11 1)"
         fill={color()}
-      ></rect>
+      />
     </svg>
   );
 }
