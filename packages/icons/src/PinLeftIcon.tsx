@@ -1,5 +1,5 @@
 import { mergeProps, splitProps } from "solid-js";
-import type { IconProps } from "./types.ts";
+import type { IconProps } from "./types.js";
 
 export default function PinLeftIcon(props: IconProps) {
   const defaultedProps = mergeProps(
