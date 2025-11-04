@@ -22,6 +22,7 @@ export default function RulerSquareIcon(props: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
     >
+      <title>{local.title}</title>
       <path
         opacity=".05"
         d="M6.78296 13.376C8.73904 9.95284 8.73904 5.04719 6.78296 1.62405L7.21708 1.37598C9.261 4.95283 9.261 10.0472 7.21708 13.624L6.78296 13.376Z"

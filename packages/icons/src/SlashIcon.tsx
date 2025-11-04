@@ -21,6 +21,7 @@ export default function SlashIcon(props: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
     >
+      <title>{local.title}</title>
       <path
         d="M4.10876 14L9.46582 1H10.8178L5.46074 14H4.10876Z"
         fill={local.color}

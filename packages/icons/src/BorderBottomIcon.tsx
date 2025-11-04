@@ -22,6 +22,7 @@ export default function BorderBottomIcon(props: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
     >
+      <title>{local.title}</title>
       <path
         d="M1 13.25L14 13.25V14.75L1 14.75V13.25Z"
         fill={color()}

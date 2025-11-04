@@ -21,6 +21,7 @@ export default function BorderWidthIcon(props: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
     >
+      <title>{local.title}</title>
       <path
         d="M1 3H14V4H1V3ZM1 6H14V8H1V6ZM14 10.25H1V12.75H14V10.25Z"
         fill={local.color}

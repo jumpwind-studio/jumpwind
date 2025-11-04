@@ -21,6 +21,7 @@ export default function TriangleLeftIcon(props: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
     >
+      <title>{local.title}</title>
       <path
         d="M9 4L9 11L4.5 7.5L9 4Z"
         fill={local.color}

@@ -22,6 +22,7 @@ export default function BorderRightIcon(props: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
     >
+      <title>{local.title}</title>
       <path
         d="M13.25 1L13.25 14L14.75 14L14.75 1L13.25 1Z"
         fill={color()}

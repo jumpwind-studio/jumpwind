@@ -22,6 +22,7 @@ export default function BorderNoneIcon(props: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
     >
+      <title>{local.title}</title>
       <rect x="7" y="5.025" width="1" height="1" rx=".5" fill={color()} />
       <rect x="13" y="5.025" width="1" height="1" rx=".5" fill={color()} />
       <rect x="7" y="3.025" width="1" height="1" rx=".5" fill={color()} />

@@ -21,6 +21,7 @@ export default function TriangleRightIcon(props: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
     >
+      <title>{local.title}</title>
       <path
         d="M6 11L6 4L10.5 7.5L6 11Z"
         fill={local.color}

@@ -22,6 +22,7 @@ export default function DragHandleDots1Icon(props: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
     >
+      <title>{local.title}</title>
       <circle cx="4.5" cy="2.5" r=".6" fill={color()} />
       <circle cx="4.5" cy="4.5" r=".6" fill={color()} />
       <circle cx="4.5" cy="6.499" r=".6" fill={color()} />
