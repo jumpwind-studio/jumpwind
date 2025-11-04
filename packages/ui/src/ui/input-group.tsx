@@ -1,7 +1,7 @@
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
 import { tv, type VariantProps } from "tailwind-variants";
 import { cn } from "../lib/utils.js";
-import { Button } from "./button.jsx";
+import { Button, buttonVariants } from "./button.jsx";
 import { Input } from "./input.jsx";
 import { Textarea } from "./textarea.jsx";
 
@@ -14,7 +14,7 @@ function InputGroup(props: ComponentProps<"div">) {
       role="group"
       class={cn(
         "group/input-group relative flex w-full items-center rounded-md border border-input shadow-xs outline-none transition-[color,box-shadow] dark:bg-input/30",
-        "h-9 has-[>textarea]:h-auto",
+        "h-9 min-w-0 has-[>textarea]:h-auto",
 
         // Variants based on alignment.
         "has-[>[data-align=inline-start]]:[&>input]:pl-2",
@@ -59,7 +59,7 @@ type InputGroupAddonVariantProps = VariantProps<typeof inputGroupAddonVariants>;
 function InputGroupAddon(
   props: ComponentProps<"div"> & InputGroupAddonVariantProps,
 ) {
-  const defaultedProps = mergeProps({ align: "inline-start" as const }, props);
+  const defaultedProps = mergeProps({ align: "inline-start" } as const, props);
 
   const [local, rest] = splitProps(defaultedProps, ["class", "align"]);
 
@@ -84,7 +84,7 @@ function InputGroupAddon(
 }
 
 const inputGroupButtonVariants = tv({
-  // extend: buttonVariants, // TODO: audit this
+  extend: buttonVariants, // TODO: audit this
   base: "text-sm shadow-none flex gap-2 items-center",
   variants: {
     size: {
@@ -123,6 +123,7 @@ function InputGroupButton(
 
   return (
     <Button
+      data-slot="input-group-button"
       type="button"
       data-size={local.size}
       variant={local.variant}

@@ -215,13 +215,9 @@ function FieldError<Errors extends { message?: string }[]>(
   const [local, rest] = splitProps(props, ["class", "children", "errors"]);
 
   const memoizedChildren = createOnce(() => local.children);
-
   const resolveChildren = () => {
     const children = memoizedChildren()();
-    if (isFunction(children)) {
-      return children(local.errors);
-    }
-    return children;
+    return isFunction(children) ? children(local.errors) : children;
   };
 
   return (

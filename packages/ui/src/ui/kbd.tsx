@@ -70,13 +70,9 @@ function KbdGroup(
   };
 
   const memoizedChildren = createOnce(() => local.children);
-
   const resolveChildren = () => {
     const children = memoizedChildren()();
-    if (isFunction(children)) {
-      return children(childrenProps);
-    }
-    return children;
+    return isFunction(children) ? children(childrenProps) : children;
   };
 
   return (

@@ -21,7 +21,9 @@ function Select<TOption>(
 function SelectHiddenSelect(
   props: ComponentProps<typeof SelectPrimitive.HiddenSelect>,
 ) {
-  return <SelectPrimitive.HiddenSelect data-slot="hidden-select" {...props} />;
+  return (
+    <SelectPrimitive.HiddenSelect data-slot="select-hidden-select" {...props} />
+  );
 }
 
 function SelectValue<TOption>(
