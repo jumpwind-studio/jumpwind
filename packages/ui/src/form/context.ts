@@ -27,7 +27,6 @@ export const { useAppForm: createForm, withForm } = createFormHook({
     Checkbox: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormCheckbox }))),
     NumberInput: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormNumberInput }))),
     Otp: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormOtp }))),
-    RadioGroup: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormRadioGroup }))),
     Select: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormSelect }))),
     Slider: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormSlider }))),
     Switch: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormSwitch }))),
@@ -40,6 +39,17 @@ export const { useAppForm: createForm, withForm } = createFormHook({
     InputDescription: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormInputDescription }))),
     InputError: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormInputError }))),
     // RadioGroup
+    RadioGroupField: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormRadioGroupField }))),
+    RadioGroupRoot: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormRadioGroupRoot }))),
+    RadioGroupLabel: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormRadioGroupLabel }))),
+    RadioGroupDescription: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormRadioGroupDescription }))),
+    RadioGroupError: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormRadioGroupError }))),
+
+    RadioItemField: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormRadioItemField }))),
+    RadioItemRoot: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormRadioItemRoot }))),
+    RadioItemInput: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormRadioItemInput }))),
+    RadioItemControl: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormRadioItemControl }))),
+    RadioItemLabel: lazy(() => import("@jumpwind/ui/form").then((m) => ({ default: m.FormRadioItemLabel }))),
   },
 });
 // biome-ignore-end format: Formatting

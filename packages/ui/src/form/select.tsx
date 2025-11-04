@@ -1,6 +1,6 @@
-import type * as SelectPrimitive from "@kobalte/core/select";
+import * as SelectPrimitive from "@kobalte/core/select";
 import { useStore } from "@tanstack/solid-form";
-import { type Accessor, createMemo, on, Show, splitProps } from "solid-js";
+import { type ComponentProps, createMemo, Show, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
 import {
   Select,
@@ -41,31 +41,62 @@ function isOption(value: Option | string): value is Option {
   );
 }
 
-function resolveOptions(items: Accessor<(Option | string)[]>) {
-  return createMemo<Option[]>(
-    on(items, (items) =>
-      isOptions(items)
-        ? items
-        : items.map((item) =>
-            isOption(item)
-              ? item
-              : {
-                  value: item,
-                  label: String(item),
-                  disabled: false,
-                },
-          ),
-    ),
-  );
+function resolveOption(item: Option | string): Option {
+  return isOption(item)
+    ? item
+    : { value: item, label: String(item), disabled: false };
 }
 
-export type FormSelectProps = FormProps<
-  Exclude<
-    SelectPrimitive.SelectRootOptions<Option | string>,
-    { multiple: true }
+function resolveOptions(items: Array<Option | string>): Option[] {
+  return isOptions(items) ? items : items.map(resolveOption);
+}
+
+export interface FormSelectProps<T extends Option | string>
+  extends FormProps<
+    Exclude<
+      SelectPrimitive.SelectRootOptions<Option | string>,
+      { multiple: true }
+    >,
+    Option | string
+  > {
+  options: T[];
+}
+
+function FormSelectRoot(
+  props: FormProps<
+    ComponentProps<typeof SelectPrimitive.Root<Option, never>>,
+    Option
   >,
-  string
->;
+) {
+  const [local, rest] = splitProps(props, ["field", "class", "options"]);
+
+  const field = useField<Option>(() => local.field);
+  const options = createMemo(() => resolveOptions(local.options));
+  const value = useStore(field().store, (state) =>
+    options().find((option) => option.value === state.value.value),
+  );
+  const validationState = useStore(field().store, (state) =>
+    state.meta.errors.length > 0 ? "invalid" : "valid",
+  );
+
+  return (
+    <SelectPrimitive.Root<Option, never>
+      data-slot="form-select-root"
+      multiple={false}
+      name={field().name}
+      options={options()}
+      value={value()}
+      onChange={(value) => {
+        if (!value) return;
+        return field().handleChange(value);
+      }}
+      onBlur={field().handleBlur}
+      validationState={validationState()}
+      class={cn("group relative grid gap-1.5", local.class)}
+      {...rest}
+    />
+  );
+}
 
 export function FormSelect(props: FormSelectProps) {
   const [local, _, rest] = splitProps(
