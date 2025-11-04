@@ -26,8 +26,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../../ui/dropdown-menu";
-import { Input } from "../../ui/input";
+} from "../../ui/dropdown-menu.tsx";
+import { Input } from "../../ui/input.tsx";
 
 type DataTableStoryComponent = Component<ComponentProps<typeof DataTable>>;
 
