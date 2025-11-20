@@ -1,6 +1,5 @@
+import { CheckIcon, MinusIcon } from "@jumpwind/icons";
 import * as CheckboxPrimitive from "@kobalte/core/checkbox";
-import CheckIcon from "lucide-solid/icons/check";
-import MinusIcon from "lucide-solid/icons/minus";
 import { type ComponentProps, Match, Switch, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
 

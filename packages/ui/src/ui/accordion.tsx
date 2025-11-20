@@ -1,5 +1,5 @@
+import { ChevronDownIcon } from "@jumpwind/icons";
 import * as AccordionPrimitive from "corvu/accordion";
-import ChevronDownIcon from "lucide-solid/icons/chevron-down";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
 

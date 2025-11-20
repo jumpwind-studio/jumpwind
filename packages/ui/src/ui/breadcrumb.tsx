@@ -1,6 +1,5 @@
+import { ChevronRightIcon, DotsHorizontalIcon } from "@jumpwind/icons";
 import * as BreadcrumbPrimitive from "@kobalte/core/breadcrumbs";
-import ChevronRightIcon from "lucide-solid/icons/chevron-right";
-import MoreHorizontalIcon from "lucide-solid/icons/more-horizontal";
 import { type ComponentProps, Show, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
 
@@ -104,7 +103,7 @@ function BreadcrumbEllipsis(props: ComponentProps<"span">) {
       {...rest}
     >
       <span class="sr-only">More</span>
-      <MoreHorizontalIcon class="size-4" />
+      <DotsHorizontalIcon class="size-4" />
     </span>
   );
 }

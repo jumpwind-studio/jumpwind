@@ -1,5 +1,5 @@
+import { CircleIcon } from "@jumpwind/icons";
 import * as RadioGroupPrimitive from "@kobalte/core/radio-group";
-import CircleIcon from "lucide-solid/icons/circle";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
 

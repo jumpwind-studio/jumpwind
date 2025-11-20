@@ -1,6 +1,17 @@
 import { isFunction } from "@corvu/utils";
 import createOnce from "@corvu/utils/create/once";
 import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  CaretSortIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  DoubleArrowLeftIcon,
+  DoubleArrowRightIcon,
+  EyeNoneIcon,
+  GearIcon,
+} from "@jumpwind/icons";
+import {
   type Column,
   type ColumnDef,
   type ColumnFiltersState,
@@ -14,15 +25,6 @@ import {
   type Table as TanstackTable,
   type VisibilityState,
 } from "@tanstack/solid-table";
-import ArrowDownIcon from "lucide-solid/icons/arrow-down";
-import ArrowUpIcon from "lucide-solid/icons/arrow-up";
-import ChevronLeftIcon from "lucide-solid/icons/chevron-left";
-import ChevronRightIcon from "lucide-solid/icons/chevron-right";
-import ChevronsLeftIcon from "lucide-solid/icons/chevrons-left";
-import ChevronsRightIcon from "lucide-solid/icons/chevrons-right";
-import ChevronsUpDownIcon from "lucide-solid/icons/chevrons-up-down";
-import EyeOffIcon from "lucide-solid/icons/eye-off";
-import Settings2Icon from "lucide-solid/icons/settings-2";
 import {
   type Accessor,
   type ComponentProps,
@@ -275,7 +277,7 @@ export function DataTableColumnHeader<TData, TValue>(
             class="-ml-3 h-8 data-expanded:bg-accent"
           >
             <span>{local.title}</span>
-            <Switch fallback={<ChevronsUpDownIcon class="size-3.5" />}>
+            <Switch fallback={<CaretSortIcon class="size-3.5" />}>
               <Match when={local.column.getIsSorted() === "desc"}>
                 <ArrowDownIcon class="size-3.5" />
               </Match>
@@ -297,7 +299,7 @@ export function DataTableColumnHeader<TData, TValue>(
             <DropdownMenuItem
               onClick={() => local.column.toggleVisibility(false)}
             >
-              <EyeOffIcon class="mr-2 size-3.5" />
+              <EyeNoneIcon class="mr-2 size-3.5" />
               Hide
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -356,7 +358,7 @@ function DataTablePagination<TData>(props: ComponentProps<"div">) {
             disabled={!table.getCanPreviousPage()}
           >
             <span class="sr-only">Go to first page</span>
-            <ChevronsLeftIcon />
+            <DoubleArrowLeftIcon />
           </Button>
           <Button
             variant="outline"
@@ -386,7 +388,7 @@ function DataTablePagination<TData>(props: ComponentProps<"div">) {
             disabled={!table.getCanNextPage()}
           >
             <span class="sr-only">Go to last page</span>
-            <ChevronsRightIcon />
+            <DoubleArrowRightIcon />
           </Button>
         </div>
       </div>
@@ -411,7 +413,7 @@ function DataTableViewOptions<TData>(
         size="sm"
         class="ml-auto hidden h-8 lg:flex"
       >
-        <Settings2Icon />
+        <GearIcon />
         View
       </DropdownMenuTrigger>
       <DropdownMenuContent class="w-[150px]">

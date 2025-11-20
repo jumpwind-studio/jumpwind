@@ -1,6 +1,5 @@
+import { CheckIcon } from "@jumpwind/icons";
 import * as ComboboxPrimitive from "@kobalte/core/combobox";
-import CheckIcon from "lucide-solid/icons/check";
-import ChevronsUpDown from "lucide-solid/icons/chevrons-up-down";
 import type { ComponentProps } from "solid-js";
 import { Show, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";

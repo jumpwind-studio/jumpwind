@@ -71,6 +71,7 @@
       "name": "@jumpwind/ui",
       "version": "0.0.1",
       "dependencies": {
+        "@jumpwind/icons": "workspace:*",
         "@jumpwind/tsconfig": "workspace:*",
         "@jumpwind/utils": "workspace:*",
         "@solid-primitives/keyboard": "catalog:frontend",

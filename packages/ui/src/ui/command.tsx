@@ -1,11 +1,9 @@
 import { isFunction } from "@corvu/utils";
 import createControllableSignal from "@corvu/utils/create/controllableSignal";
 import createOnce from "@corvu/utils/create/once";
+import { LoaderCircleIcon, MagnifyingGlassIcon } from "@jumpwind/icons";
 import { createShortcut } from "@solid-primitives/keyboard";
-// import { Command as CommandPrimitive, useCommandState } from "cmdk-solid";
 import * as CommandPrimitive from "cmdk-solid";
-import LoaderCircleIcon from "lucide-solid/icons/loader-circle";
-import SearchIcon from "lucide-solid/icons/search";
 import {
   type ComponentProps,
   mergeProps,
@@ -66,7 +64,7 @@ function CommandInput(
           "group-data-loading/command:block",
         )}
       />
-      <SearchIcon
+      <MagnifyingGlassIcon
         class={cn(
           "size-4 shrink-0 opacity-50",
           "group-data-loading/command:hidden",

@@ -32,6 +32,7 @@
     "solid-charts": "catalog:frontend"
   },
   "dependencies": {
+    "@jumpwind/icons": "workspace:*",
     "@jumpwind/tsconfig": "workspace:*",
     "@jumpwind/utils": "workspace:*",
     "@solid-primitives/keyboard": "catalog:frontend",

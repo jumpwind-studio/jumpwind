@@ -1,6 +1,5 @@
+import { FontBoldIcon, FontItalicIcon } from "@jumpwind/icons";
 import type { PickPartial } from "@jumpwind/utils";
-import BoldIcon from "lucide-solid/icons/bold";
-import ItalicIcon from "lucide-solid/icons/italic";
 import type { Component, ComponentProps } from "solid-js";
 import type { Meta, StoryObj } from "storybook-solidjs-vite";
 import { Toggle } from "../../ui/toggle.jsx";
@@ -21,7 +20,7 @@ const meta = {
     },
   },
   args: {
-    children: <BoldIcon class="h-4 w-4" />,
+    children: <FontBoldIcon class="h-4 w-4" />,
     "aria-label": "Toggle bold",
   },
   parameters: {
@@ -45,7 +44,7 @@ export const Default: Story = {};
 export const Outline: Story = {
   args: {
     variant: "outline",
-    children: <ItalicIcon class="h-4 w-4" />,
+    children: <FontItalicIcon class="h-4 w-4" />,
     "aria-label": "Toggle italic",
   },
 };
@@ -56,7 +55,7 @@ export const Outline: Story = {
 export const WithText: Story = {
   render: (args) => (
     <Toggle {...args}>
-      <ItalicIcon class="mr-2 h-4 w-4" />
+      <FontItalicIcon class="mr-2 h-4 w-4" />
       Italic
     </Toggle>
   ),

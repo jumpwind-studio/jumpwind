@@ -1,6 +1,8 @@
-import ChevronLeftIcon from "lucide-solid/icons/chevron-left";
-import ChevronRightIcon from "lucide-solid/icons/chevron-right";
-import MoreHorizontalIcon from "lucide-solid/icons/more-horizontal";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  DotsHorizontalIcon,
+} from "@jumpwind/icons";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
 import { type ButtonVariantProps, buttonVariants } from "./button.jsx";
@@ -108,7 +110,7 @@ function PaginationEllipsis(props: ComponentProps<"span">) {
       class={cn("flex size-9 items-center justify-center", local.class)}
       {...rest}
     >
-      <MoreHorizontalIcon class="size-4" />
+      <DotsHorizontalIcon class="size-4" />
       <span class="sr-only">More pages</span>
     </span>
   );

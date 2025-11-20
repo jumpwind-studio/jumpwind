@@ -1,7 +1,5 @@
+import { CheckIcon, ChevronRightIcon, CircleIcon } from "@jumpwind/icons";
 import * as ContextMenuPrimitive from "@kobalte/core/context-menu";
-import CheckIcon from "lucide-solid/icons/check";
-import ChevronRightIcon from "lucide-solid/icons/chevron-right";
-import CircleIcon from "lucide-solid/icons/circle";
 import { type ComponentProps, mergeProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
 

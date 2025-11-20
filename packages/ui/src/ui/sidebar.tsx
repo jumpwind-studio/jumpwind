@@ -1,8 +1,8 @@
 import createControllableSignal from "@corvu/utils/create/controllableSignal";
 import { Dynamic, type DynamicProps } from "@corvu/utils/dynamic";
+import { PanelLeftIcon } from "@jumpwind/icons";
 import { createShortcut } from "@solid-primitives/keyboard";
 import { serialize } from "cookie-es";
-import PanelLeftIcon from "lucide-solid/icons/panel-left";
 import {
   type Accessor,
   type ComponentProps,

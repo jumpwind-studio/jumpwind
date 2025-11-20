@@ -1,6 +1,5 @@
+import { ChevronDownIcon, ChevronUpIcon } from "@jumpwind/icons";
 import * as NumberFieldPrimitive from "@kobalte/core/number-field";
-import ChevronDownIcon from "lucide-solid/icons/chevron-down";
-import ChevronUpIcon from "lucide-solid/icons/chevron-up";
 import { type ComponentProps, splitProps } from "solid-js";
 import { cn } from "../lib/utils.js";
 import { Button } from "./button.jsx";

@@ -137,7 +137,6 @@ function SearchControl<TOption>(
               type="button"
               onClick={(e) => {
                 e.preventDefault();
-                console.log("clicked!!");
                 state.clear();
                 search.setQuery(() => "");
               }}

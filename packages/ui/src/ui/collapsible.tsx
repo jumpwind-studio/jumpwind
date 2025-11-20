@@ -4,20 +4,8 @@ import { cn } from "../lib/utils.js";
 
 const useCollapsible = CollapsiblePrimitive.useContext;
 
-function Collapsible(
-  props: ComponentProps<typeof CollapsiblePrimitive.Root> & {
-    class?: string;
-  },
-) {
-  const [local, rest] = splitProps(props, ["class", "children"]);
-
-  return (
-    <div class={local.class}>
-      <CollapsiblePrimitive.Root data-slot="collapsible" {...rest}>
-        {local.children}
-      </CollapsiblePrimitive.Root>
-    </div>
-  );
+function Collapsible(props: ComponentProps<typeof CollapsiblePrimitive.Root>) {
+  return <CollapsiblePrimitive.Root data-slot="collapsible" {...props} />;
 }
 
 function CollapsibleTrigger(
