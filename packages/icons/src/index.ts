@@ -193,6 +193,7 @@ export { default as LinkedInLogoIcon } from "./LinkedInLogoIcon.jsx";
 export { default as LinkNone1Icon } from "./LinkNone1Icon.jsx";
 export { default as LinkNone2Icon } from "./LinkNone2Icon.jsx";
 export { default as ListBulletIcon } from "./ListBulletIcon.jsx";
+export { default as LoaderCircleIcon } from "./LoaderCircleIcon.jsx"; // Non-standard
 export { default as LockClosedIcon } from "./LockClosedIcon.jsx";
 export { default as LockOpen1Icon } from "./LockOpen1Icon.jsx";
 export { default as LockOpen2Icon } from "./LockOpen2Icon.jsx";
