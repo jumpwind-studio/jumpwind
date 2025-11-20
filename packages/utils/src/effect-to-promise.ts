@@ -1,3 +1,6 @@
+/**
+ * Original source: https://x.com/dillon_mulroy/status/1916254144094212555
+ */
 import { Cause, type Effect, Exit, Runtime } from "effect";
 
 const PromiseSettledResult = {
