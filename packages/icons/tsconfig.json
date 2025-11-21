@@ -3,7 +3,9 @@
   "extends": "@jumpwind/tsconfig/base.json",
   "compilerOptions": {
     "moduleResolution": "bundler",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
